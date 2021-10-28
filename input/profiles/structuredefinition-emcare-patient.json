@@ -30,7 +30,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Patient",
-  "baseDefinition": "http://fhir.org/guides/who/emcare-cds/StructureDefinition/emcare-base-patient",
+  "baseDefinition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emc-base-patient",
   "derivation": "constraint",
   "differential": {
     "element": [ {
@@ -147,16 +147,16 @@
       "id": "Patient.identifier",
       "path": "Patient.identifier"
     }, {
-      "id": "Patient.identifier.extension.extension:value[x]",
-      "path": "Patient.identifier.extension.extension",
-      "sliceName": "value[x]",
+      "id": "Patient.identifier.extension:unknown",
+      "path": "Patient.identifier.extension",
+      "sliceName": "unknown",
       "short": "Child's Identity unknown/prefer to remain anonymous",
       "comment": "This field should only be used if the client has identity concerns - Should this be the case then a  Unique Identification EMCare.A.DE02 should be used to auto generate a unique ID - the only required fields to be completed would then be age and sex.  All other fields will become optional for the registration.",
       "min": 0,
       "max": "1",
       "type": [ {
         "code": "Extension",
-        "profile": [ "http://fhir.org/guides/who/emc-cds/StructureDefinition/valuex" ]
+        "profile": [ "http://fhir.org/guides/who/emc-cds/StructureDefinition/unknown" ]
       } ],
       "mapping": [ {
         "identity": "EmCare",
@@ -205,23 +205,12 @@
       "id": "RelatedPerson.telecom",
       "path": "RelatedPerson.telecom"
     }, {
-      "id": "RelatedPerson.telecom.value[x]",
-      "path": "RelatedPerson.telecom.value[x]",
+      "id": "RelatedPerson.telecom.value",
+      "path": "RelatedPerson.telecom.value",
       "short": "Caregiver's Mobile telephone number",
       "min": 0,
       "max": "1",
-      "type": [ {
-        "code": "Code"
-      } ],
       "mustSupport": true,
-      "binding": {
-        "extension": [ {
-          "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-          "valueString": "Caregiver's Work telephone number"
-        } ],
-        "strength": "required",
-        "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de37"
-      },
       "mapping": [ {
         "identity": "EmCare",
         "map": "EmCare.A.DE35"

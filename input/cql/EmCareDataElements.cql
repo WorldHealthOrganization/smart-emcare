@@ -26,7 +26,6 @@ define "Provide an estimated age or estimated date of birth":
 */
 define "Visit date":
   [Encounter] E
-    return E.period.start
 
 
 /*
@@ -36,7 +35,6 @@ define "Visit date":
 */
 define "Person accompanying child today is same as the primary Caregiver":
   [Encounter] E
-    return E.participant.type
 
 
 /*
@@ -46,7 +44,6 @@ define "Person accompanying child today is same as the primary Caregiver":
 */
 define "Person accompanying child today's First Name":
   [Encounter] E
-    return E.participant.individual.name.given
 
 
 /*
@@ -56,7 +53,6 @@ define "Person accompanying child today's First Name":
 */
 define "Person accompanying child today's Last Name":
   [Encounter] E
-    return E.participant.individual.name.family
 
 
 /*
@@ -66,7 +62,6 @@ define "Person accompanying child today's Last Name":
 */
 define "Person accompanying child today's contact's phone number":
   [Encounter] E
-    return E.participant.individual.telecom.contactPoint.system.phone
 
 
 /*
@@ -76,7 +71,6 @@ define "Person accompanying child today's contact's phone number":
 */
 define "Person accompanying child today's Relationship to Client":
   [Encounter] E
-    return E.participant.individual.RelatedPerson
 
 
 /*
@@ -86,7 +80,6 @@ define "Person accompanying child today's Relationship to Client":
 */
 define "Type of Visit":
   [Encounter: Cx."Type of Visit"] E
-    return E.type
 
 
 /*
@@ -185,8 +178,8 @@ define "Primary Caregiver's Relationship to Client":
   @description: Client's Caregiver's mobile telephone number
 */
 define "Caregiver's Mobile telephone number":
-  [Patient: Cx."Caregiver's Mobile telephone number"] P
-    return P.telecom.value as FHIR.Code
+  [Patient] P
+    return P.telecom.value
 
 
 /*
@@ -196,7 +189,7 @@ define "Caregiver's Mobile telephone number":
 */
 define "Child's Identity unknown/prefer to remain anonymous":
   [Patient] P
-    return P.identifier.extension.value as FHIR.boolean
+    return P.identifier.unknown
 
 
 /*
@@ -247,7 +240,9 @@ define "Biological Mother Vital Status":
   @description: The client's visit is for a new consultation
 */
 define "Type of Consultation":
-  [Encounter: Cx."Type of Consultation"]
+  [Encounter: Cx."Type of Consultation"] E
+    return E.type
+
 
 /*
   @dataElement: EmCare.B3.DE05 Is the child sick today
@@ -255,5 +250,9 @@ define "Type of Consultation":
   @description: The client's visit is for a well child but the child is also presenting as sick
 */
 define "Is the child sick today":
-  [Observation: Cx."Is the child sick today"]
+  [Observation: Cx."Is the child sick today"] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+    return O.value as FHIR.CodeableConcept
+
 

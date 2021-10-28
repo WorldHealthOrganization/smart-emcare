@@ -1,0 +1,151 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "emcare-encounter",
+  "url": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-encounter",
+  "name": "EmCare Encounter",
+  "title": "EmCare Encounter",
+  "status": "draft",
+  "experimental": false,
+  "description": "EmCare Encounter",
+  "useContext": [ {
+    "code": {
+      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+      "code": "task",
+      "display": "Workflow Task"
+    },
+    "valueCodeableConcept": {
+      "coding": [ {
+        "system": "http://fhir.org/guides/who/emc-cds/CodeSystem/activity-codes",
+        "code": "EmCare.A4.",
+        "display": "Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details"
+      } ]
+    }
+  } ],
+  "fhirVersion": "4.0.1",
+  "mapping": [ {
+    "identity": "EmCare",
+    "uri": "PLACEHOLDER - URI",
+    "name": "Digital Adaptation Kit for Emergency Care"
+  } ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Encounter",
+  "baseDefinition": "http://fhir.org/guides/who/emcare-cds/StructureDefinition/emcare-base-encounter",
+  "derivation": "constraint",
+  "differential": {
+    "element": [ {
+      "id": "Encounter",
+      "path": "Encounter",
+      "mustSupport": false
+    }, {
+      "id": "Encounter.participant",
+      "path": "Encounter.participant"
+    }, {
+      "id": "Encounter.participant.individual",
+      "path": "Encounter.participant.individual"
+    }, {
+      "id": "Encounter.participant.individual.RelatedPerson",
+      "path": "Encounter.participant.individual.RelatedPerson",
+      "short": "Person accompanying child today's Relationship to Client",
+      "comment": "Input code options as per EmCare.A.DE24 to EmCare.A.DE31",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE43"
+      } ]
+    }, {
+      "id": "Encounter.participant.individual.name",
+      "path": "Encounter.participant.individual.name"
+    }, {
+      "id": "Encounter.participant.individual.name.family",
+      "path": "Encounter.participant.individual.name.family",
+      "short": "Person accompanying child today's Last Name",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE41"
+      } ]
+    }, {
+      "id": "Encounter.participant.individual.name.given",
+      "path": "Encounter.participant.individual.name.given",
+      "short": "Person accompanying child today's First Name",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE40"
+      } ]
+    }, {
+      "id": "Encounter.participant.individual.telecom",
+      "path": "Encounter.participant.individual.telecom"
+    }, {
+      "id": "Encounter.participant.individual.telecom.contactPoint",
+      "path": "Encounter.participant.individual.telecom.contactPoint"
+    }, {
+      "id": "Encounter.participant.individual.telecom.contactPoint.system",
+      "path": "Encounter.participant.individual.telecom.contactPoint.system"
+    }, {
+      "id": "Encounter.participant.individual.telecom.contactPoint.system.phone",
+      "path": "Encounter.participant.individual.telecom.contactPoint.system.phone",
+      "short": "Person accompanying child today's contact's phone number",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE42"
+      } ]
+    }, {
+      "id": "Encounter.participant.type",
+      "path": "Encounter.participant.type",
+      "short": "Person accompanying child today is same as the primary Caregiver",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE39"
+      } ]
+    }, {
+      "id": "Encounter.period",
+      "path": "Encounter.period"
+    }, {
+      "id": "Encounter.period.start",
+      "path": "Encounter.period.start",
+      "short": "Visit date",
+      "comment": "The encounter date may be system generated, but there is a requirement to be able to back-enter data",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE07"
+      } ]
+    }, {
+      "id": "Encounter.type",
+      "path": "Encounter.type",
+      "short": "Type of Visit",
+      "comment": "Asked during every contact",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString": "Type of Visit"
+        } ],
+        "strength": "required",
+        "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b2-de01"
+      },
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.B2.DE01"
+      } ]
+    } ]
+  }
+}

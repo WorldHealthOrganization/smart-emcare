@@ -16,13 +16,20 @@ codesystem "Extended Codes CodeSystem codes": 'http://fhir.org/guides/who/emc-cd
 
 // Value Sets
 valueset "Provide an estimated age or estimated date of birth": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de12'
-valueset "Sex": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de16'
-valueset "Primary Caregiver's Relationship to Client": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de24'
+valueset "Provide an estimated age or estimated date of birth Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de13'
+valueset "sex": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de16'
+valueset "Sex Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de17'
+valueset "Relationship to Client": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de24'
+valueset "Primary Caregiver's Relationship to Client Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de25'
 valueset "MTH": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de33'
 valueset "FTH": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de34'
 valueset "Caregiver wants to receive SMS or other messages regarding the child's visits and health status": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de38'
+valueset "Person accompanying child today's Relationship to Client": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de43'
 valueset "Type of Visit": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b2-de01'
+valueset "Type of Visit Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b2-de02'
+valueset "Reason for Consultation": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de01'
+valueset "Reason for Consultation Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de02'
 valueset "Is the child sick today": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de05'
-valueset "Type of Consultation": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de06'
+valueset "Type of Consultation Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de07'
 
 // Codes

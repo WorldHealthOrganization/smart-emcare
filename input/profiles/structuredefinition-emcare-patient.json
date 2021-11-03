@@ -30,7 +30,7 @@
   "kind": "resource",
   "abstract": false,
   "type": "Patient",
-  "baseDefinition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emc-base-patient",
+  "baseDefinition": "http://fhir.org/guides/who/core/StructureDefinition/who-patient",
   "derivation": "constraint",
   "differential": {
     "element": [ {
@@ -78,51 +78,19 @@
         "map": "EmCare.A.DE08"
       } ]
     }, {
-      "id": "Patient.contact",
-      "path": "Patient.contact"
-    }, {
-      "id": "Patient.contact.name",
-      "path": "Patient.contact.name"
-    }, {
-      "id": "Patient.contact.name.family",
-      "path": "Patient.contact.name.family",
-      "short": "Primary Caregiver Last Name",
+      "id": "Patient.extension:birthDateEstimator",
+      "path": "Patient.extension",
+      "sliceName": "birthDateEstimator",
+      "short": "Provide an estimated age or estimated date of birth",
       "min": 0,
       "max": "1",
-      "mustSupport": true,
+      "type": [ {
+        "code": "Extension",
+        "profile": [ "http://fhir.org/guides/who/emc-cds/StructureDefinition/birthdateestimator" ]
+      } ],
       "mapping": [ {
         "identity": "EmCare",
-        "map": "EmCare.A.DE23"
-      } ]
-    }, {
-      "id": "Patient.contact.name.given",
-      "path": "Patient.contact.name.given",
-      "short": "Primary Caregiver First Name",
-      "min": 0,
-      "max": "1",
-      "mustSupport": true,
-      "mapping": [ {
-        "identity": "EmCare",
-        "map": "EmCare.A.DE21"
-      } ]
-    }, {
-      "id": "Patient.contact.relationship",
-      "path": "Patient.contact.relationship",
-      "short": "Primary Caregiver's Relationship to Client",
-      "min": 0,
-      "max": "1",
-      "mustSupport": true,
-      "binding": {
-        "extension": [ {
-          "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-          "valueString": "Primary Caregiver's Relationship to Client"
-        } ],
-        "strength": "required",
-        "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de24"
-      },
-      "mapping": [ {
-        "identity": "EmCare",
-        "map": "EmCare.A.DE24"
+        "map": "EmCare.A.DE12"
       } ]
     }, {
       "id": "Patient.gender",
@@ -134,7 +102,7 @@
       "binding": {
         "extension": [ {
           "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-          "valueString": "Sex"
+          "valueString": "sex"
         } ],
         "strength": "required",
         "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de16"
@@ -214,6 +182,25 @@
       "mapping": [ {
         "identity": "EmCare",
         "map": "EmCare.A.DE35"
+      } ]
+    }, {
+      "id": "value[x]",
+      "path": "value[x]",
+      "short": "Sex",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString": "Sex Choices"
+        } ],
+        "strength": "required",
+        "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de17"
+      },
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE16"
       } ]
     } ]
   }

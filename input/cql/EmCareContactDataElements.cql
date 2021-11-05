@@ -12,6 +12,14 @@ include EmCareConcepts called Cx
 context Encounter
 
 /*
+  @dataElement: EmCare.A.DE38 Caregiver wants to receive SMS or other messages regarding the child's visits and health status
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: The caregiver wants to receive SMS or other messages regarding the client's contacts/visits and health status
+*/
+define "Caregiver wants to receive SMS or other messages regarding the child's visits and health status":
+  [CommunicationRequest]
+
+/*
   @dataElement: EmCare.A.DE07 Visit date
   @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
   @description: The date and time of the client's visit
@@ -139,30 +147,6 @@ define "Child's Identity unknown/prefer to remain anonymous":
 define "Provide an estimated age or estimated date of birth":
   WC.Only(
   [Patient]
-
-/*
-  @dataElement: EmCare.A.DE38 Caregiver wants to receive SMS or other messages regarding the child's visits and health status
-  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
-  @description: The caregiver wants to receive SMS or other messages regarding the client's contacts/visits and health status
-*/
-define "Caregiver wants to receive SMS or other messages regarding the child's visits and health status":
-  [Patient]
-
-/*
-  @dataElement: EmCare.A.DE21 Primary Caregiver First Name
-  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
-  @description: The client's primary Caregiver's first name
-*/
-define "Primary Caregiver First Name":
-  [RelatedPerson]
-
-/*
-  @dataElement: EmCare.A.DE22 Primary Caregiver Middle Name
-  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
-  @description: The client's primary Caregiver's middle name
-*/
-define "Primary Caregiver Middle Name":
-  [RelatedPerson]
 
 /*
   @dataElement: EmCare.A.DE23 Primary Caregiver Last Name

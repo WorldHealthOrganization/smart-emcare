@@ -3,11 +3,11 @@ SET tooling_jar=tooling-1.3.1-SNAPSHOT-jar-with-dependencies.jar
 SET input_cache_path=%~dp0input-cache
 SET datadictionary_directory=input/l2
 REM the next 3 lines need to be edited for ANC
-SET datadictionary_filename=%datadictionary_directory%\Em Care - Stage 1 - Core Data Dictionary_2021-11-30.xlsx
+SET datadictionary_filename=%datadictionary_directory%\Em Care - Stage 1 - Core Data Dictionary_2021-12-16.xlsx
 REM datadictionary_filename=%datadictionary_directory%\WHO-ANC.xlsx
 REM datadictionary_filename=%datadictionary_directory%\Em Care - Stage 1 - Core Data DictionaryMarcoRafael_v2.xlsx
 
-SET datadictionary_sheetname=EmCare.A. Registration
+SET datadictionary_sheetname=EmCare.A. Registration,EmCare.B6. Measurements,EmCare.B7. LTI DangerSigns
 SET scope=EmCare
 SET tooling=%input_cache_path%\%tooling_jar%
 SET upper_path=%%~dpx

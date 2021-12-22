@@ -1,0 +1,76 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "emcare-relatedperson-mother",
+  "url": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-relatedperson-mother",
+  "name": "EmCare RelatedPerson Mother",
+  "title": "EmCare RelatedPerson Mother",
+  "status": "draft",
+  "experimental": false,
+  "description": "EmCare RelatedPerson Mother",
+  "useContext": [ {
+    "code": {
+      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+      "code": "task",
+      "display": "Workflow Task"
+    },
+    "valueCodeableConcept": {
+      "coding": [ {
+        "system": "http://fhir.org/guides/who/emc-cds/CodeSystem/activity-codes",
+        "code": "EmCare.A4.",
+        "display": "Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details"
+      } ]
+    }
+  } ],
+  "fhirVersion": "4.0.1",
+  "mapping": [ {
+    "identity": "EmCare",
+    "uri": "PLACEHOLDER - URI",
+    "name": "Digital Adaptation Kit for Emergency Care"
+  } ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "RelatedPerson",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+  "derivation": "constraint",
+  "differential": {
+    "element": [ {
+      "id": "RelatedPerson",
+      "path": "RelatedPerson",
+      "mustSupport": false
+    }, {
+      "id": "RelatedPerson.extension:vitalStatus",
+      "path": "RelatedPerson.extension",
+      "sliceName": "vitalStatus",
+      "short": "Biological Mother Vital Status",
+      "min": 0,
+      "max": "*",
+      "type": [ {
+        "code": "Extension",
+        "profile": [ "http://fhir.org/guides/who/emc-cds/StructureDefinition/vitalstatus" ]
+      } ],
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE31"
+      } ]
+    }, {
+      "id": "RelatedPerson.relationship",
+      "path": "RelatedPerson.relationship",
+      "short": "Relationship Mother",
+      "min": 0,
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString": "MTH"
+        } ],
+        "strength": "required",
+        "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de33"
+      },
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.A.DE33"
+      } ]
+    } ]
+  }
+}

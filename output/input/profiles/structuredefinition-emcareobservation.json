@@ -1,0 +1,83 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "emcareobservation",
+  "url": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcareobservation",
+  "name": "EmCareObservation",
+  "title": "EmCareObservation",
+  "status": "draft",
+  "experimental": false,
+  "description": "EmCareObservation",
+  "useContext": [ {
+    "code": {
+      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+      "code": "task",
+      "display": "Workflow Task"
+    },
+    "valueCodeableConcept": {
+      "coding": [ {
+        "system": "http://fhir.org/guides/who/emc-cds/CodeSystem/activity-codes",
+        "code": "EmCare.B6.",
+        "display": "Measurements"
+      } ]
+    }
+  } ],
+  "fhirVersion": "4.0.1",
+  "mapping": [ {
+    "identity": "EmCare",
+    "uri": "PLACEHOLDER - URI",
+    "name": "Digital Adaptation Kit for Emergency Care"
+  } ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://fhir.org/guides/who/anc-cds/StructureDefinition/who-observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [ {
+      "id": "Observation",
+      "path": "Observation",
+      "mustSupport": false
+    }, {
+      "id": "Observation.code",
+      "path": "Observation.code",
+      "short": "Axillary Temperature",
+      "comment": "The thresholds for infant age up to 2 months are based on axillary temperature",
+      "min": 1,
+      "max": "1",
+      "fixedCodeableConcept": {
+        "coding": [ {
+          "system": "http://fhir.org/guides/who/emc-cds/CodeSystem/emc-custom-codes",
+          "code": "EmCare.B6.DE02",
+          "display": "Prefer to take Rectal Temperature"
+        } ]
+      },
+      "mustSupport": true,
+      "binding": {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString": "Axillary Temperature"
+        } ],
+        "strength": "required",
+        "valueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b6-de01"
+      },
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.B6.DE01"
+      } ]
+    }, {
+      "id": "Observation.effective[x]",
+      "path": "Observation.effective[x]",
+      "short": "Date of measurement",
+      "min": 0,
+      "max": "1",
+      "type": [ {
+        "code": "dateTime"
+      } ],
+      "mustSupport": true,
+      "mapping": [ {
+        "identity": "EmCare",
+        "map": "EmCare.B6.DE22"
+      } ]
+    } ]
+  }
+}

@@ -92,6 +92,15 @@ define "First name":
     return First(WC.Official(P.name).given)
 
 /*
+  @dataElement: EmCare.A.DE05 Middle Name
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: Client's middle name
+*/
+define "Middle Name":
+  [Patient] P
+    return Last(WC.Official(P.name).given)
+
+/*
   @dataElement: EmCare.A.DE06 Last name
   @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
   @description: Client's family name or last name

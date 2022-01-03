@@ -22,7 +22,7 @@ Data elements for this activity can be collected using the [EmCareA4](Questionna
 |EmCare.A.DE20|Address|Client's home address or address that the client is consenting to disclose|string|[Patient.address.line](StructureDefinition-emcare-patient.html)|
 |EmCare.A.DE35|Caregiver's Mobile telephone number|Client's Caregiver's mobile telephone number|string|[RelatedPerson.telecom.value](StructureDefinition-emcare-patient.html)|
 |EmCare.A.DE03|Child's Identity unknown/prefer to remain anonymous|The client's identity is unknown or the client's prefers to remain anonymous|boolean|[Patient.identifier.unknown](StructureDefinition-emcare-patient.html)|
-|EmCare.A.DE12|Provide an estimated age or estimated date of birth|The client/caregiver will provide an estimated age or estimated date of birth|Code|[Patient.birthDateEstimator](StructureDefinition-emcare-patient.html)|
+|EmCare.A.DE12|Provide an estimated age or estimated date of birth|The client/caregiver will provide an estimated age or estimated date of birth|CodeableConcept|[Patient.birthDateEstimator](StructureDefinition-emcare-patient.html)|
 |EmCare.A.DE21|Primary Caregiver First Name|The client's primary Caregiver's first name|string|[RelatedPerson.name.given[0]](StructureDefinition-emcare-relatedperson-caregiver.html)|
 |EmCare.A.DE22|Primary Caregiver Middle Name|The client's primary Caregiver's middle name|string|[RelatedPerson.name.given[1]](StructureDefinition-emcare-relatedperson-caregiver.html)|
 |EmCare.A.DE23|Primary Caregiver Last Name|The client's primary Caregiver's last name|string|[RelatedPerson.name.family](StructureDefinition-emcare-relatedperson-caregiver.html)|

@@ -248,3 +248,58 @@ define "Is the child sick today":
       and Last(Split(O.encounter.reference, '/')) = Encounter.id
 
 
+/* Stage 2.1*/
+
+/*
+  @dataElement: EmCare.B6.DE01 Axillary Temperature
+  @activity: EmCare.B3. Determine Reason for Consultation
+  @description: The client's axillary temperature in degrees Celsius (temperature taken under the armpit)
+*/
+define "Axillary Temperature":
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+      and Last(Split(O.encounter.reference, '/')) = Encounter.id
+    return O.code.value as FHIR.Quantity
+
+
+/*
+  @dataElement: EmCare.B6.DE18 Visually assess for whether underweight (for drug dose calculation)
+  @activity: EmCare.B3. Determine Reason for Consultation
+  @description: The health care worker visually assesses for whether underweight (for drug dosing calculations)
+*/
+define "Visually assess for whether underweight (for drug dose calculation)":
+  WC.from(
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+      and Last(Split(O.encounter.reference, '/')) = Encounter.id
+  ).code
+
+
+/*
+  @dataElement: EmCare.B6.DE22 Date of measurement
+  @activity: EmCare.B3. Determine Reason for Consultation
+  @description: The date when the measurement was taken
+*/
+define "Date of measurement":
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+      and Last(Split(O.encounter.reference, '/')) = Encounter.id
+    return O.effective as FHIR.dateTime
+
+
+/*
+  @dataElement: EmCare.B6.DE04 Thermometer not available
+  @activity: EmCare.B6. Measurements
+  @description: A thermometer is not available to accurately measure the client's temperature
+*/
+define "Thermometer not available":
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+      and Last(Split(O.encounter.reference, '/')) = Encounter.id
+    return O.code.value as FHIR.boolean
+
+

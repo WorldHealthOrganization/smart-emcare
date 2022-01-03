@@ -31,5 +31,13 @@ valueset "Reason for Consultation": 'http://fhir.org/guides/who/emc-cds/ValueSet
 valueset "Reason for Consultation Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de02'
 valueset "Is the child sick today": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de05'
 valueset "Type of Consultation Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b3-de07'
+valueset "Visually assess for whether underweight (for drug dose calculation) Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b6-de19'
+valueset "Convulsing Now Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de03'
+valueset "NumberOfConvultions": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de04'
+valueset "Number of convulsions in this illness Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de05'
+valueset "Vomiting": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de10'
+valueset "Vomiting Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de11'
+valueset "OralFluidTestResult": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de14'
+valueset "Oral Fluid Test Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b7-de15'
 
 // Codes

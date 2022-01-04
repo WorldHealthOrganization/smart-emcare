@@ -5,10 +5,10 @@ Specifically:
 
 |DAK Artifact|Version|Description|IG Artifact|
 |----|----|----|----|
-|WHO-EmCare-CoreDataElements.xlsx|2021-02-17|Data Elements|Concepts, ValueSets, ConceptMaps, and Profiles|
-|WHO-EmCare-DecisionTables.xlsx|2021-02-17|Decision Tables|PlanDefinitions, Libraries, and CQL source|
-|WHO-EmCare-Measure.xlsx|2021-02-17|Indicators|Measures|
-|WHO-EmCare-TasteCase.xlsx|2021-02-17|Test cases|GuidanceResponse, Parameters, test cases data (in progress)|
+|WHO-EmCare-CoreDataElements.xlsx|2022-01-04|Data Elements|Concepts, ValueSets, ConceptMaps, and Profiles|
+|WHO-EmCare-DecisionTables.xlsx|2022-01-04|Decision Tables|PlanDefinitions, Libraries, and CQL source|
+|WHO-EmCare-Measure.xlsx|N/A|Indicators|Measures|
+|WHO-EmCare-TestCase.xlsx|N/A|Test cases|GuidanceResponse, Parameters, test cases data (in progress)|
 
 
 ## Data Elements

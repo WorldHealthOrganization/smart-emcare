@@ -1,119 +1,426 @@
 {
-  "resourceType": "Questionnaire",
   "id": "EmCareB6",
-  "extension": [ {
-    "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-    "valueCode": "shareable"
-  }, {
-    "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-    "valueCode": "computable"
-  }, {
-    "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-    "valueCode": "publishable"
-  }, {
-    "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
-    "valueCode": "structured"
-  } ],
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
+    ],
+    "tag": [
+      {
+        "system": "",
+        "version": "0.1",
+        "code": ""
+      },
+      {
+        "code": "lformsVersion: 29.2.1"
+      }
+    ]
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/variable",
+      "valueExpression": {
+        "name": "weight-measured-or-estimated",
+        "expression": "iif (%resource.item I where (I.linkId = '1' and I.answer[0].value <> 0), %resource.item I where (I.linkId = '1' and I.answer[0].value <> 0), %resource.item I where (I.linkId = '1' and I.answer[0].value <> 0) (I.linkId = '3' and I.answer[0].value <> 0))",
+        "language": "text/fhirpath"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/variable",
+      "valueExpression": {
+        "name": "age-month",
+        "expression": "Patient.age",
+        "language": "text/fhirpath"
+      }
+    }
+
+  ],
+  "subjectType": [
+    "Patient"
+  ],
+  "status": "active",
+  "experimental": false,
+  "description": "Temperature, Weight, NUAC and z-score measurement",
   "url": "http://fhir.org/guides/who/emc-cds/Questionnaire/EmCareB6",
   "name": "EmCareB6",
   "title": "EmCare.B6. Measurements",
-  "status": "active",
-  "experimental": false,
-  "description": "TODO: description goes here",
-  "useContext": [ {
-    "code": {
-      "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
-      "code": "task",
-      "display": "Workflow Task"
+  "resourceType": "Questionnaire",
+  "item": [
+    {
+      "type": "decimal",
+      "code": [],
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+          "valueDecimal": 30
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+          "valueDecimal": 45
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "display": "°C"
+          }
+        }
+      ],
+      "required": false,
+      "linkId": "1",
+      "text": "Axillary Temperature",
+      "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-observation#code.value[x]"
     },
-    "valueCodeableConcept": {
-      "coding": [ {
-        "system": "http://fhir.org/guides/who/emc-cds/CodeSystem/activity-codes",
-        "code": "EmCare.B6.",
-        "display": "Measurements"
-      } ]
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "2",
+      "text": "Prefer to take Rectal Temperature",
+      "enableWhen": [
+        {
+          "answerBoolean": false,
+          "question": "1",
+          "operator": "exists"
+        }
+      ]
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+          "valueDecimal": 30
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+          "valueDecimal": 45
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "valueCoding": {
+            "display": "°C"
+          }
+        }
+      ],
+      "required": false,
+      "linkId": "3",
+      "text": "Rectal Temperature",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "2",
+          "operator": "="
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "4",
+      "text": "Thermometer not available",
+      "enableWhen": [
+        {
+          "answerBoolean": false,
+          "question": "1",
+          "operator": "exists"
+        },
+        {
+          "answerBoolean": false,
+          "question": "3",
+          "operator": "exists"
+        }
+      ],
+      "enableBehavior": "all",
+      "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-device#code.value[x]"
+    },
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "5",
+      "text": "Hot to Touch",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "4",
+          "operator": "="
+        }
+      ]
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+          "valueDecimal": 0.1
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+          "valueDecimal": 40
+        }
+      ],
+      "required": false,
+      "linkId": "6",
+      "text": "Weight"
+    },
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "7",
+      "text": "Weight cannot be measured"
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "8",
+      "text": "Estimated Weight",
+      "description": "autocalculated based on previous measure OR on age with z-score for weight for age = 0 (done on pre-population of the questionnaire)",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "7",
+          "operator": "="
+        }
+      ]
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "9",
+      "text": "Height",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/cql",
+            "expression": "(%resource.item I where (I.linkId = '6' and I.answer[0].value <> 0) or (I.linkId = '8' and I.answer[0].value <> 0) ) and (%resource.extension.variables v where v.name = age-month and v.value > 24 )"
+          }
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "10",
+      "text": "Prefer to measure length",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "6",
+          "operator": "exists"
+        },
+        {
+          "answerBoolean": true,
+          "question": "8",
+          "operator": "exists"
+        }
+      ],
+      "enableBehavior": "any"
+    },
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "11",
+      "text": "Height cannot be measured",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "6",
+          "operator": "exists"
+        },
+        {
+          "answerBoolean": true,
+          "question": "8",
+          "operator": "exists"
+        }
+      ],
+      "enableBehavior": "any"
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "12",
+      "text": "Length",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "10",
+          "operator": "="
+        }
+      ],
+      "TODO":"add age to be prefiled and gender, should be active if age is < 2 year"
+    },
+    {
+      "type": "boolean",
+      "code": [],
+      "required": false,
+      "linkId": "13",
+      "text": "Length cannot be measured",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "10",
+          "operator": "="
+        }
+      ]
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "14",
+      "text": "Weight for Height (WFH) Z Scores",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "9",
+          "operator": "exists"
+        },{
+          "answerBoolean": false,
+          "question": "10",
+          "operator": "="
+        }
+      ],
+      "enableBehavior": "all",
+      "readOnly": true,
+      "extension" : [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/cqf-expression",
+          "valueExpression": {
+            "name": "wfh-z-score",
+            "expression": " (%resource.item I where (I.linkId = '6' and I.answer[0].value <> 12) -0.7 - wfh-mean ) div wfh-sd ",
+            "language": "text/fhirpath"
+          }
+        },{
+          "url": "http://hl7.org/fhir/StructureDefinition/variable",
+          "valueExpression": {
+            "name": "wfh-mean",
+            "expression": "iif(Patient.gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6))",
+            "language": "text/fhirpath"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/variable",
+          "valueExpression": {
+            "name": "wfh-sd",
+            "expression": "iif( weight-measured-or-estimated <wfh-mean, iif(Patient.gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6)),iif(Patient.gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6)))",
+            "description": "SD for weight < mean",
+            "language": "text/fhirpath"
+          }
+        }
+      ]
+
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "15",
+      "text": "Weight for Length (WFL) Z Scores",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "12",
+          "operator": "exists"
+        },{
+          "answerBoolean": true,
+          "question": "10",
+          "operator": "="
+        }
+      ],"enableBehavior": "any",
+      "readOnly": true,
+      "extension" : [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/cqf-expression",
+          "valueExpression": {
+            "name": "wfl-z-score",
+            "expression": "iif(%resource.item I where (I.linkId = '10' and I.answer[0].value <> 0), (%resource.item I where (I.linkId = '6' and I.answer[0].value <> 12) -0.7 - wfl-mean ) div wfl-sd )",
+            "language": "text/fhirpath"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/variable",
+          "valueExpression": {
+            "name": "wfl-mean",
+            "expression": "iif(Patient.gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6))",
+            "language": "text/fhirpath"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/variable",
+          "valueExpression": {
+            "name": "wfl-sd",
+            "expression": "iif( weight-measured-or-estimated <wfh-mean, iif(Patient.gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6)),iif(Patient.gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6)))",
+            "description": "SD for weight < mean",
+            "language": "text/fhirpath"
+          }
+        }
+      ]
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "16",
+      "text": "Weight for Age (WFA) Z Scores",
+      "enableWhen": [
+        {
+          "answerBoolean": true,
+          "question": "6",
+          "operator": "exists"
+        }
+      ],
+      "enableBehavior": "any",
+      "readOnly": true,
+      "extension" : [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/cqf-expression",
+          "valueExpression": {
+            "name": "wfa-mean",
+            "expression": "iif(gender = 'female',-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6),-1670.35773088757+(111.645960743292)*age +(-3.08619277841078)*age.power(2)+(0.0452651890625972)*age.power(3)+(-0.000370917340284857)*age.power(4)+(1.60995536263767E-06)*age.power(5)+(-2.88994147680349E-09)*age.power(6))",
+            "language": "text/fhirpath"
+          }
+        }
+      ]
+    },
+    {
+      "type": "decimal",
+      "code": [],
+      "required": false,
+      "linkId": "17",
+      "text": "MUAC (Mid Upper Arm Circumference)"
+    },
+    {
+      "type": "choice",
+      "code": [],
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ],
+            "text": "Drop down"
+          }
+        }
+      ],
+      "required": false,
+      "linkId": "18",
+      "text": "Visually assess for whether underweight (for drug dose calculation)",
+      "answerValueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b6-de19",
+      "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-observation#code"
     }
-  } ],
-  "item": [ {
-    "linkId": "1",
-    "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-observation#code.value[x]",
-    "text": "Axillary Temperature",
-    "type": "quantity"
-  }, {
-    "linkId": "2",
-    "text": "Prefer to take Rectal Temperature",
-    "type": "boolean"
-  }, {
-    "linkId": "3",
-    "text": "Rectal Temperature",
-    "type": "quantity"
-  }, {
-    "linkId": "4",
-    "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-device#code.value[x]",
-    "text": "Thermometer not available",
-    "type": "boolean"
-  }, {
-    "linkId": "5",
-    "text": "Hot to Touch",
-    "type": "boolean"
-  }, {
-    "linkId": "6",
-    "text": "Weight",
-    "type": "quantity"
-  }, {
-    "linkId": "7",
-    "text": "Weight cannot be measured",
-    "type": "boolean"
-  }, {
-    "linkId": "8",
-    "text": "Estimated Weight",
-    "type": "quantity"
-  }, {
-    "linkId": "9",
-    "text": "Height",
-    "type": "quantity"
-  }, {
-    "linkId": "10",
-    "text": "Prefer to measure length",
-    "type": "boolean"
-  }, {
-    "linkId": "11",
-    "text": "Height cannot be measured",
-    "type": "boolean"
-  }, {
-    "linkId": "12",
-    "text": "Length",
-    "type": "quantity"
-  }, {
-    "linkId": "13",
-    "text": "Length cannot be measured",
-    "type": "boolean"
-  }, {
-    "linkId": "14",
-    "text": "Weight for Height (WFH) Z Scores",
-    "type": "integer"
-  }, {
-    "linkId": "15",
-    "text": "Weight for Length (WFL) Z Scores",
-    "type": "integer"
-  }, {
-    "linkId": "16",
-    "text": "Weight for Age (WFA) Z Scores",
-    "type": "integer"
-  }, {
-    "linkId": "17",
-    "text": "MUAC (Mid Upper Arm Circumference)",
-    "type": "quantity"
-  }, {
-    "linkId": "18",
-    "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-observation#code",
-    "text": "Visually assess for whether underweight (for drug dose calculation)",
-    "type": "choice",
-    "answerValueSet": "http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b6-de19"
-  }, {
-    "linkId": "19",
-    "definition": "http://fhir.org/guides/who/emc-cds/StructureDefinition/emcare-observation#effective[x]",
-    "text": "Date of measurement",
-    "type": "dateTime"
-  } ]
+  ]
 }

@@ -5,8 +5,11 @@ Data elements for this activity can be collected using the [EmCareA4](Questionna
 
 |Id|Label|Description|Type|Profile Path|
 |---|---|---|---|---|
-|EmCare.A.DE38|Caregiver wants to receive SMS or other messages regarding the child's visits and health status|The caregiver wants to receive SMS or other messages regarding the client's contacts/visits and health status|Code|[CommunicationRequest.medium.sms](StructureDefinition-emcare-a-de38.html)|
+|EmCare.A.DE46|CommunicationRequest recipient|This is needed to link the CommunicationRequest to the Caregiver|Reference(RelatedPerson)|[CommunicationRequest.recipient](StructureDefinition-emcare-communcationrequest.html)|
+|EmCare.A.DE38|Caregiver wants to receive SMS or other messages regarding the child's visits and health status|The caregiver wants to receive SMS or other messages regarding the client's contacts/visits and health status|Code|[CommunicationRequest.medium.sms](StructureDefinition-emcare-communcationrequest.html)|
 |EmCare.A.DE07|Visit date|The date and time of the client's visit|dateTime|[Encounter.period.start](StructureDefinition-emcare-encounter.html)|
+|EmCare.A.DE44|Person accompanying child today|null|Reference(RelatedPerson)|[Encounter.participant.individual](StructureDefinition-emcare-encounter.html)|
+|EmCare.A.DE45|Participant type Person accompanying child|null|CodeableConcept|[Encounter.participant.type](StructureDefinition-emcare-encounter.html)|
 |EmCare.A.DE40|Person accompanying child today's First Name|First name of person accompanying child today when client has not arrived with the primary Caregiver|string|[RelatedPerson.name.given](StructureDefinition-emcare-encounter.html)|
 |EmCare.A.DE41|Person accompanying child today's Last Name|Last name of person accompanying child today when client has not arrived with the primary Caregiver|string|[RelatedPerson.name.family](StructureDefinition-emcare-encounter.html)|
 |EmCare.A.DE42|Person accompanying child today's contact's phone number|Phone number of the visit Caregiver|null|[RelatedPerson.telecom.contactPoint.system.phone](StructureDefinition-emcare-encounter.html)|

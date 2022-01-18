@@ -24,6 +24,7 @@ valueset "Primary Caregiver's Relationship to Client Choices": 'http://fhir.org/
 valueset "MTH": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de33'
 valueset "FTH": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de34'
 valueset "Caregiver wants to receive SMS or other messages regarding the child's visits and health status": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de38'
+valueset "ESC": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de45'
 valueset "Person accompanying child today's Relationship to Client": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-a-de43'
 valueset "Type of Visit": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b2-de01'
 valueset "Type of Visit Choices": 'http://fhir.org/guides/who/emc-cds/ValueSet/emcare-b2-de02'

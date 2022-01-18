@@ -28,6 +28,22 @@
   ];
   fhir:DomainResource.extension [
      fhir:index 0;
+     fhir:Extension.url [ fhir:value "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability" ];
+     fhir:Extension.valueCode [ fhir:value "shareable" ]
+  ], [
+     fhir:index 1;
+     fhir:Extension.url [ fhir:value "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability" ];
+     fhir:Extension.valueCode [ fhir:value "computable" ]
+  ], [
+     fhir:index 2;
+     fhir:Extension.url [ fhir:value "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability" ];
+     fhir:Extension.valueCode [ fhir:value "publishable" ]
+  ], [
+     fhir:index 3;
+     fhir:Extension.url [ fhir:value "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel" ];
+     fhir:Extension.valueCode [ fhir:value "structured" ]
+  ], [
+     fhir:index 4;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "age " ];
@@ -35,7 +51,7 @@
        fhir:Expression.expression [ fhir:value "%resource.item I where I.linkId = 'ageMonth'" ]
      ]
   ], [
-     fhir:index 1;
+     fhir:index 5;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "isFemale" ];
@@ -43,7 +59,7 @@
        fhir:Expression.expression [ fhir:value "%resource.item I where I.linkId = 'isFemale'" ]
      ]
   ], [
-     fhir:index 2;
+     fhir:index 6;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/cqf-variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "wfa-sd" ];
@@ -51,7 +67,7 @@
        fhir:Expression.expression [ fhir:value "iif(%qItem.isFemale,-1670.35773088757+(111.645960743292)*%ressource.age +(-3.08619277841078)*%ressource.age.power(2)+(0.0452651890625972)*%ressource.age.power(3)+(-0.000370917340284857)*%ressource.age.power(4)+(1.60995536263767E-06)*%ressource.age.power(5)+(-2.88994147680349E-09)*%ressource.age.power(6),-1670.35773088757+(111.645960743292)*%ressource.age +(-3.08619277841078)*%ressource.age.power(2)+(0.0452651890625972)*%qitem.age.power(3)+(-0.000370917340284857)*%ressource.age.power(4)+(1.60995536263767E-06)*%ressource.age.power(5)+(-2.88994147680349E-09)*%ressource.age.power(6))" ]
      ]
   ], [
-     fhir:index 3;
+     fhir:index 7;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/cqf-variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "wfa-mean" ];
@@ -59,7 +75,7 @@
        fhir:Expression.expression [ fhir:value "iif(%qItem.isFemale,-1670.35773088757+(111.645960743292)*%ressource.age +(-3.08619277841078)*%ressource.age.power(2)+(0.0452651890625972)*%ressource.age.power(3)+(-0.000370917340284857)*%ressource.age.power(4)+(1.60995536263767E-06)*%ressource.age.power(5)+(-2.88994147680349E-09)*%ressource.age.power(6),-1670.35773088757+(111.645960743292)*%ressource.age +(-3.08619277841078)*%ressource.age.power(2)+(0.0452651890625972)*%qitem.age.power(3)+(-0.000370917340284857)*%ressource.age.power(4)+(1.60995536263767E-06)*%ressource.age.power(5)+(-2.88994147680349E-09)*%ressource.age.power(6))" ]
      ]
   ], [
-     fhir:index 4;
+     fhir:index 8;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "muac" ];
@@ -67,7 +83,7 @@
        fhir:Expression.expression [ fhir:value "(%resource.item I where I.linkId = '17')[0].answer[0].value" ]
      ]
   ], [
-     fhir:index 5;
+     fhir:index 9;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "weight-wfa" ];
@@ -75,7 +91,7 @@
        fhir:Expression.expression [ fhir:value "%ressource.muac * %ressource.wfa-sd + %ressource.wfa-mean" ]
      ]
   ], [
-     fhir:index 6;
+     fhir:index 10;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "weight-measured-or-estimated" ];
@@ -83,7 +99,7 @@
        fhir:Expression.expression [ fhir:value "iif (%resource.item I where (I.linkId = '6' and I.answer[0].value <> 0), %resource.item I where (I.linkId = '6' and I.answer[0].value <> 0), iif (%resource.item I where (I.linkId = 'previousWeight' and I.answer[0].value <> 0),%resource.item I where (I.linkId = 'previousWeight' and I.answer[0].value <> 0), %resource.item I where (I.linkId = '8' and I.answer[0].value <> 0)))" ]
      ]
   ], [
-     fhir:index 7;
+     fhir:index 11;
      fhir:Extension.url [ fhir:value "http://hl7.org/fhir/StructureDefinition/variable" ];
      fhir:Extension.valueExpression [
        fhir:Expression.name [ fhir:value "weight" ];
@@ -101,7 +117,7 @@
      fhir:value "Patient";
      fhir:index 0
   ];
-  fhir:Questionnaire.date [ fhir:value "2022-01-10T12:56:19+00:00"^^xsd:dateTime];
+  fhir:Questionnaire.date [ fhir:value "2022-01-18T13:14:09+00:00"^^xsd:dateTime];
   fhir:Questionnaire.publisher [ fhir:value "World Health Organization (WHO)"];
   fhir:Questionnaire.contact [
      fhir:index 0;

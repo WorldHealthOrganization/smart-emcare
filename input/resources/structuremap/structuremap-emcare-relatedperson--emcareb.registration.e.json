@@ -1,0 +1,75 @@
+{
+    "resourceType": "StructureMap",
+    "id": "emcare-relatedperson--EmCareB.Registration.E",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureMap/structuremap-emcare-relatedperson--emcareb.registration.e",
+    "name": "emcare-relatedperson--EmCareB.Registration.E",
+    "status": "draft",
+    "structure": [
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/questionnaire-emcareb.registration.e",
+            "mode": "source",
+            "alias": "emcareb.registration.e"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Profile/profile-emcare-relatedperson-",
+            "mode": "target",
+            "alias": "emcare-relatedperson-"
+        }
+    ],
+    "group": [
+        {
+            "name": "main",
+            "typeMode": "types",
+            "input": [
+                {
+                    "name": "qr",
+                    "type": "emcareb.registration.e",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "emcare-relatedperson-",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "EmCare.A.DE40",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE40' as a then { a -> tgt.name.given[0] = a 'EmCare.A.DE40-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE41",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE41' as a then { a -> tgt.name.family = a 'EmCare.A.DE41-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE42",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE42' as a then { tgt.telecom as tel then {  a -> tel.system = 'http://hl7.org/fhir/contact-point-system#phone', tel.use = translate('{{cs_url}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'), tel.value = a 'phone-1';}  'EmCare.A.DE42-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE43",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE43' as a then { a where a= 'EmCare.A.DE30' then {a-> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') 'person accomp' ;} 'intenal code';\na where a != 'EmCare.A.DE30' then {a-> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode')  'person accomp unkown' ;} 'EmCare.A.DE43-1'; }"
+                }
+            ]
+        }
+    ]
+}

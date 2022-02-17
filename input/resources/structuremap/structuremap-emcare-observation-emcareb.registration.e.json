@@ -1,0 +1,93 @@
+{
+    "resourceType": "StructureMap",
+    "id": "1403",
+    "meta": {
+        "versionId": "4",
+        "lastUpdated": "2022-02-17T12:51:28.472000+00:00"
+    },
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureMap/structuremap-emcare-observation-emcareb.registration.e&quot; = &quot;emcare-observation-EmCareB.Registration.E&quot;\r\n\r\n\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/questionnaire-emcareb.registration.e&quot; alias 'emcareb.registration.e' as source\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Profile/profile-emcare-observation&quot; alias 'emcare-observation' as target\r\n\r\ngroup main(source qr : 'emcareb.registration.e', target tgt : 'emcare-observation') {\r\n  qr.item as item then {\r\n    item.answer first where (item.linkId = 'EmCare.B3.DE05') as a then {\r\n      a -&gt; tgt.code = a &quot;DE05-1&quot;;\r\n    } &quot;DE05&quot;;\r\n  } &quot;e-emcare-observation&quot;;\r\n}\r\n\r\n</pre></div>"
+    },
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureMap/structuremap-emcare-observation-emcareb.registration.e",
+    "name": "emcare-observation-EmCareB.Registration.E",
+    "status": "draft",
+    "structure": [
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/questionnaire-emcareb.registration.e",
+            "mode": "source",
+            "alias": "'emcareb.registration.e'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Profile/profile-emcare-observation",
+            "mode": "target",
+            "alias": "'emcare-observation'"
+        }
+    ],
+    "group": [
+        {
+            "name": "main",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "qr",
+                    "type": "'emcareb.registration.e'",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "'emcare-observation'",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "itemsemcareb.registration.e-emcare-observation",
+                    "source": [
+                        {
+                            "context": "qr",
+                            "element": "item",
+                            "variable": "item"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "EmCare.B3.DE05",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "condition": "(item.linkId = 'EmCare.B3.DE05') as a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE05-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "code",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

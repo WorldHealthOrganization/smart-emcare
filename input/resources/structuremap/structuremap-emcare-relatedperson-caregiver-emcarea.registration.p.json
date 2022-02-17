@@ -1,0 +1,102 @@
+{
+    "resourceType": "StructureMap",
+    "id": "emcare-relatedperson-caregiver-EmCareA.Registration.P",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureMap/structuremap-emcare-relatedperson-caregiver-emcarea.registration.p",
+    "name": "emcare-relatedperson-caregiver-EmCareA.Registration.P",
+    "status": "draft",
+    "structure": [
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/questionnaire-emcarea.registration.p",
+            "mode": "source",
+            "alias": "emcarea.registration.p"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Profile/profile-emcare-relatedperson-caregiver",
+            "mode": "target",
+            "alias": "emcare-relatedperson-caregiver"
+        }
+    ],
+    "group": [
+        {
+            "name": "main",
+            "typeMode": "types",
+            "input": [
+                {
+                    "name": "qr",
+                    "type": "emcarea.registration.p",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "emcare-relatedperson-caregiver",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "EmCare.A.DE21",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE21' as a then { a -> tgt.name.given[0] = a 'EmCare.A.DE21-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE22",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE22' as a then { a -> tgt.name.given[1] = a 'EmCare.A.DE22-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE23",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE23' as a then { a -> tgt.name.family = a 'EmCare.A.DE23-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE35",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE35' as a then {  tgt.telecom as tel then {  a -> tel.system = 'http://hl7.org/fhir/contact-point-system#phone', tel.use = translate('{{cs_concept}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'), tel.value = a 'mphone-1';} 'EmCare.A.DE35-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE36",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE36' as a then { tgt.telecom as tel then {  a -> tel.system = 'http://hl7.org/fhir/contact-point-system#phone', tel.use = translate('{{cs_concept}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'), tel.value = a 'hphone-1';} 'EmCare.A.DE36-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE37",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE37' as a then { tgt.telecom as tel then {  a -> tel.system = 'http://hl7.org/fhir/contact-point-system#phone', tel.use = translate('{{cs_concept}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'), tel.value = a 'wphone-1';} 'EmCare.A.DE37-1'; }"
+                },
+                {
+                    "name": "EmCare.A.DE24",
+                    "source": [
+                        {
+                            "context": "item"
+                        }
+                    ],
+                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE24' as a then { { a where a= 'EmCare.A.DE30' then {a -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') and a != 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') 'set caregiver'; } 'if caregiver not parent';} 'EmCare.A.DE24-1'; }"
+                }
+            ]
+        }
+    ]
+}

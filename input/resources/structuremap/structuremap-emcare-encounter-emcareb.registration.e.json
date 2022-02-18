@@ -1,82 +1,257 @@
 {
     "resourceType": "StructureMap",
     "id": "emcare-encounter-EmCareB.Registration.E",
-    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureMap/structuremap-emcare-encounter-emcareb.registration.e",
+    "meta": {
+        "versionId": "9",
+        "lastUpdated": "2022-02-18T13:20:29.975000+00:00"
+    },
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://test.ahdis.ch/matchbox/fhir/StructureMap/structuremap-emcare-encounter-emcareb.registration.e&quot; = &quot;emcare-encounter-EmCareB.Registration.E&quot;\r\n\r\n\r\nuses &quot;https://test.ahdis.ch/matchbox/fhir/Questionnaire/questionnaire-emcareb.registration.e&quot; alias 'emcareb.registration.e' as source\r\nuses &quot;https://test.ahdis.ch/matchbox/fhir/Profile/profile-emcare-encounter&quot; alias 'emcare-encounter' as target\r\n\r\ngroup main(source qr : 'emcareb.registration.e', target tgt : 'emcare-encounter') {\r\n  qr.item as item then {\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE44' then {\r\n      tgt.participant as participant then {\r\n        a -&gt; participant.individual = a &quot;set-participant&quot;;\r\n      } &quot;DE44-1&quot;;\r\n    } &quot;DE44&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B2.DE01' then {\r\n      a -&gt; tgt.type = a &quot;DE01-1&quot;;\r\n    } &quot;DE01&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE01' then {\r\n      a -&gt; tgt.reasonCode = a &quot;DE01-1&quot;;\r\n    } &quot;DE01&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE06' then {\r\n      a -&gt; tgt.type = a &quot;DE06-1&quot;;\r\n    } &quot;DE06&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE09' then {\r\n      tgt.extension as ext where ext.url = 'https://test.ahdis.ch/matchbox/fhir/Extension/refered' then {\r\n        a -&gt; ext.valueBoolean = a &quot;set-bool&quot;;\r\n      } &quot;DE09-1&quot;;\r\n    } &quot;DE09&quot;;\r\n  } &quot;e-emcare-encounter&quot;;\r\n}\r\n\r\n</pre></div>"
+    },
+    "url": "https://test.ahdis.ch/matchbox/fhir/StructureMap/structuremap-emcare-encounter-emcareb.registration.e",
     "name": "emcare-encounter-EmCareB.Registration.E",
     "status": "draft",
     "structure": [
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/questionnaire-emcareb.registration.e",
+            "url": "https://test.ahdis.ch/matchbox/fhir/Questionnaire/questionnaire-emcareb.registration.e",
             "mode": "source",
-            "alias": "emcareb.registration.e"
+            "alias": "'emcareb.registration.e'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Profile/profile-emcare-encounter",
+            "url": "https://test.ahdis.ch/matchbox/fhir/Profile/profile-emcare-encounter",
             "mode": "target",
-            "alias": "emcare-encounter"
+            "alias": "'emcare-encounter'"
         }
     ],
     "group": [
         {
             "name": "main",
-            "typeMode": "types",
+            "typeMode": "none",
             "input": [
                 {
                     "name": "qr",
-                    "type": "emcareb.registration.e",
+                    "type": "'emcareb.registration.e'",
                     "mode": "source"
                 },
                 {
                     "name": "tgt",
-                    "type": "emcare-encounter",
+                    "type": "'emcare-encounter'",
                     "mode": "target"
                 }
             ],
             "rule": [
                 {
-                    "name": "EmCare.A.DE44",
+                    "name": "itemsemcareb.registration.e-emcare-encounter",
                     "source": [
                         {
-                            "context": "item"
+                            "context": "qr",
+                            "element": "item",
+                            "variable": "item"
                         }
                     ],
-                    "documentation": "item.answer first where item.linkId = 'EmCare.A.DE44' as a then { a -> tgt.participant.individual = a 'EmCare.A.DE44-1'; }"
-                },
-                {
-                    "name": "EmCare.B2.DE01",
-                    "source": [
+                    "rule": [
                         {
-                            "context": "item"
-                        }
-                    ],
-                    "documentation": "item.answer first where item.linkId = 'EmCare.B2.DE01' as a then { a -> tgt.type = a 'EmCare.B2.DE01-1'; }"
-                },
-                {
-                    "name": "EmCare.B3.DE01",
-                    "source": [
+                            "name": "EmCare.A.DE44",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.A.DE44'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.A.DE44-1",
+                                    "source": [
+                                        {
+                                            "context": "tgt",
+                                            "element": "participant",
+                                            "variable": "participant"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "set-participant",
+                                            "source": [
+                                                {
+                                                    "context": "a"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "participant",
+                                                    "contextType": "variable",
+                                                    "element": "individual",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "a"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         {
-                            "context": "item"
-                        }
-                    ],
-                    "documentation": "item.answer first where item.linkId = 'EmCare.B3.DE01' as a then { a -> tgt.reasonCode = a 'EmCare.B3.DE01-1'; }"
-                },
-                {
-                    "name": "EmCare.B3.DE06",
-                    "source": [
+                            "name": "EmCare.B2.DE01",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B2.DE01'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B2.DE01-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "type",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         {
-                            "context": "item"
-                        }
-                    ],
-                    "documentation": "item.answer first where item.linkId = 'EmCare.B3.DE06' as a then { a -> tgt.type = a 'EmCare.B3.DE06-1'; }"
-                },
-                {
-                    "name": "EmCare.B3.DE09",
-                    "source": [
+                            "name": "EmCare.B3.DE01",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE01'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE01-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "reasonCode",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
                         {
-                            "context": "item"
+                            "name": "EmCare.B3.DE06",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE06'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE06-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "type",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "EmCare.B3.DE09",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE09'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE09-1",
+                                    "source": [
+                                        {
+                                            "context": "tgt",
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "condition": "ext.url = 'https://test.ahdis.ch/matchbox/fhir/Extension/refered'"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "set-bool",
+                                            "source": [
+                                                {
+                                                    "context": "a"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "ext",
+                                                    "contextType": "variable",
+                                                    "element": "valueBoolean",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "a"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
                         }
-                    ],
-                    "documentation": "item.answer first where item.linkId = 'EmCare.B3.DE09' as a then { a -> tgt.extension('{{canocical_base}/Extension/refered}').valueBoolean = a 'EmCare.B3.DE09-1'; }"
+                    ]
                 }
             ]
         }

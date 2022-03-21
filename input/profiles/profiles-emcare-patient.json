@@ -60,15 +60,19 @@
                 ]
             },
             {
-                "id": "Patient.identifier.extension.anonymous",
-                "path": "Patient.identifier.extension.anonymous",
+                "id": "Patient.extension.anonymous",
+                "path": "Patient.extension",
+                "sliceName": "anonymous ",
                 "short": "Child's Identity unknown/prefer to remain anonymous",
                 "definition": "The client's identity is unknown or the client's prefers to remain anonymous",
                 "min": 0,
-                "max": "*",
+                "max": " 1",
                 "type": [
                     {
-                        "code": "boolean"
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous"
+                        ]
                     }
                 ],
                 "mapping": [
@@ -157,15 +161,19 @@
                 ]
             },
             {
-                "id": "Patient.birthTime",
-                "path": "Patient.birthTime",
+                "id": "Patient.extension.birthTime",
+                "path": "Patient.extension",
+                "sliceName": "birthTime ",
                 "short": "Time of Birth",
                 "definition": "The client's time of birth (if <1 day old)",
                 "min": 0,
-                "max": "*",
+                "max": " 1",
                 "type": [
                     {
-                        "code": "time"
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthTime"
+                        ]
                     }
                 ],
                 "mapping": [
@@ -176,27 +184,21 @@
                 ]
             },
             {
-                "id": "Patient.birthDateEstimator",
-                "path": "Patient.birthDateEstimator",
+                "id": "Patient.extension.birthDateEstimator",
+                "path": "Patient.extension",
+                "sliceName": "birthDateEstimator ",
                 "short": "Provide an estimated age or estimated date of birth",
                 "definition": "The client/caregiver will provide an estimated age or estimated date of birth",
                 "min": 0,
-                "max": "*",
+                "max": " 1",
                 "type": [
                     {
-                        "code": "CodeableConcept"
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator"
+                        ]
                     }
                 ],
-                "binding": {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-                            "valueString": "dob-estimator"
-                        }
-                    ],
-                    "strength": "extensible",
-                    "valueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//ValueSet/valueset-dob-estimator"
-                },
                 "mapping": [
                     {
                         "identity": "EmCare",
@@ -253,17 +255,18 @@
                 ]
             },
             {
-                "id": "Patient.contact.caregiver",
-                "path": "Patient.contact.caregiver",
+                "id": "Patient.extension.caregiver",
+                "path": "Patient.extension",
+                "sliceName": "caregiver ",
                 "short": "Caregiver",
                 "definition": "the child could have been created from the mother therefore a relatedpersom may already exist",
-                "min": 0,
-                "max": "*",
+                "min": 1,
+                "max": " *",
                 "type": [
                     {
-                        "code": "Reference",
-                        "targetProfile": [
-                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/EmCare-RelatedPerson"
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/caregiver"
                         ]
                     }
                 ],
@@ -271,6 +274,52 @@
                     {
                         "identity": "EmCare",
                         "map": "EmCare.A.DE47"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.extension.motherVitalStatus",
+                "path": "Patient.extension",
+                "sliceName": "motherVitalStatus ",
+                "short": "Biological Mother Vital Status",
+                "definition": "The client's mother and father's vital status",
+                "min": 0,
+                "max": " 1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/motherVitalStatus"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE31"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.extension.fatherVitalStatus",
+                "path": "Patient.extension",
+                "sliceName": "fatherVitalStatus ",
+                "short": "Biological Father Vital Status",
+                "definition": "The client's mother and father's vital status",
+                "min": 0,
+                "max": " 1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/fatherVitalStatus"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE32"
                     }
                 ]
             }

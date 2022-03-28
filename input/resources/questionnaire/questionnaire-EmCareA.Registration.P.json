@@ -33,7 +33,7 @@
         },
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-communcationrequest-emcarea.registration.p"
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-communicationrequest-emcarea.registration.p"
         }
     ],
     "status": "active",
@@ -114,22 +114,6 @@
             "designNote": "status::draft"
         },
         {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "hidden"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "hidden"
-                    }
-                }
-            ],
             "linkId": "EmCare.A.DE10",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/codesystem-emcare-custom-codes",
             "text": "Age auto-calculated (presented as number of years, months, days) of the client based on date of birth OR estimated age OR based on auto-calculation from estimaged date of birth",
@@ -149,6 +133,20 @@
                             }
                         ],
                         "text": "Check-box"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE09'.answer.value is empty"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE09'.answer.value is empty"
                     }
                 }
             ],
@@ -172,6 +170,20 @@
                         ],
                         "text": "Drop down"
                     }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE11'.answer.value = true"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE11'.answer.value = true"
+                    }
                 }
             ],
             "linkId": "EmCare.A.DE12",
@@ -179,6 +191,72 @@
             "text": "The client/caregiver will provide an estimated age or estimated date of birth",
             "type": "choice",
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/valueset-dob-estimator",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE12'.answer.value.code = \"EmCare.A.DE13\""
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE12'.answer.value.code = \"EmCare.A.DE13\""
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE14.1",
+            "text": "The Caregiver provides the age in weeks/days/hours",
+            "type": "number",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE12'.answer.value.code = \"EmCare.A.DE14\""
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE12'.answer.value.code = \"EmCare.A.DE14\""
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE13.1",
+            "text": "The age of the client is estimated based on information provided by the caregiver",
+            "type": "text",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE12'.answer.value.code = \"EmCare.A.DE15\""
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE12'.answer.value.code = \"EmCare.A.DE15\""
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE15.1",
+            "text": "Estimated Date of Birth of the Client",
+            "type": "date",
             "designNote": "status::draft"
         },
         {
@@ -223,14 +301,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 }
             ],
@@ -244,14 +322,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 }
             ],
@@ -267,14 +345,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 }
             ],
@@ -290,14 +368,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 }
             ],
@@ -348,14 +426,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%EmCare.A.DE47 is empty"
+                        "expression": "%\"EmCare.A.DE47\".answer.value is empty"
                     }
                 }
             ],
@@ -380,6 +458,20 @@
                         ],
                         "text": "Drop down"
                     }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE24'.answer.value is not \"EmCare.A.DE25\""
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE24'.answer.value is not \"EmCare.A.DE25\""
+                    }
                 }
             ],
             "linkId": "EmCare.A.DE31",
@@ -402,6 +494,20 @@
                             }
                         ],
                         "text": "Drop down"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE24'.answer.value is not \"EmCare.A.DE26\""
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%'EmCare.A.DE24'.answer.value is not \"EmCare.A.DE26\""
                     }
                 }
             ],

@@ -1,7 +1,7 @@
 {
     "resourceType": "PlanDefinition",
     "id": "EmCareDT01",
-    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/PlanDefinition/EmCareDT01",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//PlanDefinition/EmCareDT01",
     "identifier": [
         {
             "use": "official",
@@ -20,246 +20,353 @@
     },
     "status": "active",
     "experimental": false,
-    "date": "2022-04-05T06:45:02+00:00",
+    "date": "2022-04-20T10:16:45+00:00",
     "library": [
         "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/EmCareDT01"
     ],
     "action": [
         {
+            "id": "EmCareDT01",
+            "description": "Register a child < 5 years",
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/q.EmCareB.Registration.P"
+        },
+        {
+            "id": "EmCareDT02",
+            "description": "Register the child in the encounter",
+            "trigger": [
+                {
+                    "type": "named-event",
+                    "name": "q.EmCareB.Registration.P"
+                }
+            ],
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "now() -  5 years > %subject.BirthDate"
+                    }
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/q.EmCareB.Registration.E"
+        },
+        {
+            "id": "EmCareDT03",
+            "description": "Determine Basic Anthropometric and others measurement",
+            "trigger": [
+                {
+                    "type": "named-event",
+                    "name": "q.EmCareB.Registration.E"
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/q.EmCare.B6.Measurements"
+        },
+        {
+            "id": "EmCareDT04",
+            "description": "Evaluate DangerSigns",
+            "trigger": [
+                {
+                    "type": "named-event",
+                    "name": "q.EmCare.B6.Measurements"
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/EmCare.B7.LTI-DangerSigns"
+        },
+        {
+            "id": "EmCareDT05",
+            "description": "Assess sick child for Symptoms",
+            "trigger": [
+                {
+                    "type": "named-event",
+                    "name": "EmCare.B7.LTI-DangerSigns"
+                }
+            ],
             "action": [
                 {
-                    "action": [
+                    "id": "EmCareDT05.1",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Cough or Difficulty Breathing",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.1",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for Cough or Difficulty Breathing",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "(Patient.hasCondition( \"Yes\"))\n  OR (Patient.hasCondition( \"Yes\"))",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for Cough or Difficulty Breathing"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Cough')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Difficulty Breathing')"
+                            }
+                        }
+                    ],
+                    "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/EmCare.B10.Cough-or-Difficulty-Breathing"
+                },
+                {
+                    "id": "EmCareDT05.2",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Cough or Difficulty Breathing",
+                    "condition": [
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Difficulty Breathing')"
+                            }
+                        }
+                    ],
+                    "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Questionnaire/EmCare.B10.Cough-or-Difficulty-Breathing"
+                },
+                {
+                    "id": "EmCareDT05.3",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Diarrhoea / Dehydration",
+                    "condition": [
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Diarrhoea')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.4",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Fever",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.3",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for Diarrhoea / Dehydration",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"Yes\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for Diarrhoea / Dehydration"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.5",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Fever",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.4",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for Fever",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "((Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\"))\n  OR (Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\")))\n  OR (Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\"))",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for Fever"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever) OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.6",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Fever",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.7",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for FeverTHENCarry out Signs (physical examination) for Skin or Mouth or Eye Problem",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for FeverTHENCarry out Signs (physical examination) for Skin or Mouth or Eye Problem"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever) OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.7",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for FeverTHENCarry out Signs (physical examination) for Skin or Mouth or Eye Problem",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.8",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for FeverTHENCarry out Signs (physical examination) for Ear Problem",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for FeverTHENCarry out Signs (physical examination) for Ear Problem"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.8",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for FeverTHENCarry out Signs (physical examination) for Ear Problem",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.9",
-                            "title": "Carry out Signs (physical examination) for Fever.",
-                            "description": "Carry out Signs (physical examination) for Fever.",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\" ) OR Patient.hasCondition( \"Yes\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.9",
+                    "description": "Carry out Signs (physical examination) for Fever.",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.10",
-                            "title": "Carry out Health Prevention questionnaire",
-                            "description": "Carry out Health Prevention questionnaire",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"No\" ) OR Patient.hasCondition( \"No\" ) OR Patient.hasCondition( \"No\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.10",
+                    "description": "Carry out Health Prevention questionnaire",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.11",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for Ear Problem",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "((Patient.hasCondition( \"Yes\"))\n  OR (Patient.hasCondition( \"Yes\")))\n  OR (Patient.hasCondition( \"Yes\"))",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for Ear Problem"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Measured Fever') OR PatienthasConditionDuringEncounter('Hot to Touch') OR PatienthasConditionDuringEncounter('Fever Reported')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Ear Problem')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.11",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Ear Problem",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.14",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for Skin or Mouth or Eye Problem (Eye Problem)",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"Yes\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for Skin or Mouth or Eye Problem (Eye Problem)"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Ear Problem')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Ear Pain')"
+                            }
                         }
                     ]
                 },
                 {
-                    "action": [
+                    "id": "EmCareDT05.12",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Ear Problem",
+                    "condition": [
                         {
-                            "id": "EmCareDT01.15",
-                            "description": "Carry out Health Prevention questionnaire AND Carry out Signs (physical examination) for Skin or Mouth or Eye Problem (Skin Problem)",
-                            "condition": [
-                                {
-                                    "kind": "applicability",
-                                    "expression": {
-                                        "description": "Patient.hasCondition( \"Yes\")",
-                                        "language": "text/cql-expression"
-                                    }
-                                }
-                            ],
-                            "action": [
-                                {
-                                    "title": "Carry out Health Prevention questionnaire "
-                                },
-                                {
-                                    "title": " Carry out Signs (physical examination) for Skin or Mouth or Eye Problem (Skin Problem)"
-                                }
-                            ]
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Ear Pain')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Ear Discharge')"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "EmCareDT05.13",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Ear Problem",
+                    "condition": [
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Ear Discharge')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Eye Problem')"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "EmCareDT05.14",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Skin or Mouth or Eye Problem (Eye Problem)",
+                    "condition": [
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Eye Problem')"
+                            }
+                        },
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Skin Problem')"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "EmCareDT05.15",
+                    "description": "Carry out Health Prevention questionnaire | Carry out Signs (physical examination) for Skin or Mouth or Eye Problem (Skin Problem)",
+                    "condition": [
+                        {
+                            "kind": "start",
+                            "expression": {
+                                "language": "text/cql-expression",
+                                "expression": "PatienthasConditionDuringEncounter('Skin Problem')"
+                            }
                         }
                     ]
                 }

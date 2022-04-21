@@ -12,7 +12,7 @@
   <title value="WHO Appointment"/>
   <status value="draft"/>
   <experimental value="false"/>
-  <date value="2022-01-18T13:14:09+00:00"/>
+  <date value="2022-04-21T10:41:40+00:00"/>
   <publisher value="World Health Organization (WHO)"/>
   <contact>
     <telecom>
@@ -82,16 +82,16 @@
         <key value="app-3"/>
         <severity value="error"/>
         <human value="Only proposed or cancelled appointments can be missing start/end dates"/>
-        <expression value="(start.exists() and end.exists()) or (status in (&#39;proposed&#39; | &#39;cancelled&#39; | &#39;waitlist&#39;))"/>
-        <xpath value="((exists(f:start) and exists(f:end)) or (f:status/@value=&#39;proposed&#39;) or (f:status/@value=&#39;cancelled&#39;) or (f:status/@value=&#39;waitlist&#39;))"/>
+        <expression value="(start.exists() and end.exists()) or (status in ('proposed' | 'cancelled' | 'waitlist'))"/>
+        <xpath value="((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled') or (f:status/@value='waitlist'))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Appointment"/>
       </constraint>
       <constraint>
         <key value="app-4"/>
         <severity value="error"/>
         <human value="Cancelation reason is only used for appointments that have been cancelled, or no-show"/>
-        <expression value="Appointment.cancelationReason.exists() implies (Appointment.status=&#39;no-show&#39; or Appointment.status=&#39;cancelled&#39;)"/>
-        <xpath value="not(exists(f:cancellationReason)) or f:status/@value=(&#39;no-show&#39;, &#39;cancelled&#39;)"/>
+        <expression value="Appointment.cancelationReason.exists() implies (Appointment.status='no-show' or Appointment.status='cancelled')"/>
+        <xpath value="not(exists(f:cancellationReason)) or f:status/@value=('no-show', 'cancelled')"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Appointment"/>
       </constraint>
       <constraint>
@@ -106,8 +106,8 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <xpath value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -152,7 +152,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="Act[@moodCode &lt;= &#39;INT&#39;]"/>
+        <map value="Act[@moodCode &lt;= 'INT']"/>
       </mapping>
       <mapping>
         <identity value="ical"/>
@@ -209,7 +209,7 @@
       <path value="Appointment.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."/>
-      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it&#39;s narrative along with other profiles, value sets, etc."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it's narrative along with other profiles, value sets, etc."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -229,7 +229,7 @@
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="true"/>
-      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation"/>
+      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation"/>
       <isSummary value="true"/>
     </element>
     <element id="Appointment.language">
@@ -374,7 +374,7 @@
     <element id="Appointment.modifierExtension">
       <path value="Appointment.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -462,7 +462,7 @@
       <path value="Appointment.status"/>
       <short value="proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist"/>
       <definition value="The overall status of the Appointment. Each of the participants has their own participation status which indicates their involvement in the process, however this status indicates the shared status."/>
-      <comment value="If the Appointment&#39;s status is &quot;cancelled&quot; then all participants are expected to have their calendars released for the appointment period, and as such any Slots that were marked as BUSY can be re-set to FREE.&#xA;&#xA;This element is labeled as a modifier because the status contains the code entered-in-error that mark the Appointment as not currently valid."/>
+      <comment value="If the Appointment's status is &quot;cancelled&quot; then all participants are expected to have their calendars released for the appointment period, and as such any Slots that were marked as BUSY can be re-set to FREE.&#xA;&#xA;This element is labeled as a modifier because the status contains the code entered-in-error that mark the Appointment as not currently valid."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -793,7 +793,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".inboundRelationship[@typeCode = &#39;RSON&#39;].observation"/>
+        <map value=".inboundRelationship[@typeCode = 'RSON'].observation"/>
       </mapping>
     </element>
     <element id="Appointment.priority">
@@ -914,7 +914,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".inboundRelationship[@typeCode = &#39;SPRT&#39;].observation"/>
+        <map value=".inboundRelationship[@typeCode = 'SPRT'].observation"/>
       </mapping>
       <mapping>
         <identity value="ical"/>
@@ -1041,7 +1041,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".activityTime[@xsi:type = (&#39;SXPR_TS&#39;, &#39;PIVL_TS&#39;)].width"/>
+        <map value=".activityTime[@xsi:type = ('SXPR_TS', 'PIVL_TS')].width"/>
       </mapping>
       <mapping>
         <identity value="ical"/>
@@ -1051,7 +1051,7 @@
     <element id="Appointment.slot">
       <path value="Appointment.slot"/>
       <short value="The slots that this appointment is filling"/>
-      <definition value="The slots from the participants&#39; schedules that will be filled by the appointment."/>
+      <definition value="The slots from the participants' schedules that will be filled by the appointment."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1075,7 +1075,7 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value=".outboundRelationship[@typeCode = &#39;REFR&#39;].act[@classCode = &#39;ACT&#39;][@moodCode = &#39;SLOT&#39;]"/>
+        <map value=".outboundRelationship[@typeCode = 'REFR'].act[@classCode = 'ACT'][@moodCode = 'SLOT']"/>
       </mapping>
     </element>
     <element id="Appointment.created">
@@ -1151,7 +1151,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".subjectOf.observation[@moodCode = &#39;EVN&#39;][code = &#39;annotation&#39;].value"/>
+        <map value=".subjectOf.observation[@moodCode = 'EVN'][code = 'annotation'].value"/>
       </mapping>
       <mapping>
         <identity value="ical"/>
@@ -1188,7 +1188,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".subjectOf.observation[@moodCode = &#39;EVN&#39;][code = &#39;annotation&#39;].value"/>
+        <map value=".subjectOf.observation[@moodCode = 'EVN'][code = 'annotation'].value"/>
       </mapping>
       <mapping>
         <identity value="ical"/>
@@ -1227,7 +1227,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".outboundRelationship[@typeCode = &#39;FLFS&#39;].act[@classCode &lt; &#39;ActCareProvisionRequestType&#39;][@moodCode = &#39;RQO&#39;]"/>
+        <map value=".outboundRelationship[@typeCode = 'FLFS'].act[@classCode &lt; 'ActCareProvisionRequestType'][@moodCode = 'RQO']"/>
       </mapping>
     </element>
     <element id="Appointment.participant">
@@ -1250,6 +1250,7 @@
         <human value="Either the type or actor on the participant SHALL be specified"/>
         <expression value="type.exists() or actor.exists()"/>
         <xpath value="(exists(f:type) or exists(f:actor))"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Appointment"/>
       </constraint>
       <constraint>
         <key value="ele-1"/>
@@ -1346,7 +1347,7 @@
     <element id="Appointment.participant.modifierExtension">
       <path value="Appointment.participant.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -1630,7 +1631,7 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".activityTime[@xsi:type = (&#39;SXPR_TS&#39;, &#39;PIVL_TS&#39;)]"/>
+        <map value=".activityTime[@xsi:type = ('SXPR_TS', 'PIVL_TS')]"/>
       </mapping>
     </element>
   </snapshot>

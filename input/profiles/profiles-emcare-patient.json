@@ -20,6 +20,46 @@
                 "path": "Patient"
             },
             {
+                "id": "Patient.identifier.value.universalID",
+                "path": "Patient.identifier.value",
+                "sliceName": "universalID",
+                "short": "Unique identification",
+                "definition": "Unique identifier provided or a universal ID, if used in the country",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE01"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.identifier.value.generatedID",
+                "path": "Patient.identifier.value",
+                "sliceName": "generatedID",
+                "short": "Unique identification",
+                "definition": "Auto-generated unique identification if used by the implementation",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE02"
+                    }
+                ]
+            },
+            {
                 "id": "Patient.extension.anonymous",
                 "path": "Patient.extension",
                 "sliceName": "anonymous ",
@@ -39,6 +79,84 @@
                     {
                         "identity": "EmCare",
                         "map": "EmCare.A.DE03"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.name.given.firstName",
+                "path": "Patient.name.given",
+                "sliceName": "firstName",
+                "short": "First name",
+                "definition": "Client's first name",
+                "min": 1,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE04"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.name.given.middleName",
+                "path": "Patient.name.given",
+                "sliceName": "middleName",
+                "short": "Middle Name",
+                "definition": "Client's middle name",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE05"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.name.family",
+                "path": "Patient.name.family",
+                "short": "Last name",
+                "definition": "Client's family name or last name",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE06"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.birthDate",
+                "path": "Patient.birthDate",
+                "short": "Date of birth",
+                "definition": "The client's date of birth (DOB), if known, OR the estimated date of birth IF not known (see EmCare.A.DE10)",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "date"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE08"
                     }
                 ]
             },
@@ -85,6 +203,54 @@
                     {
                         "identity": "EmCare",
                         "map": "EmCare.A.DE12"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.gender",
+                "path": "Patient.gender",
+                "short": "Sex",
+                "definition": "The Sex of the client",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "CodeableConcept"
+                    }
+                ],
+                "binding": {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+                            "valueString": "sex-of-the-client"
+                        }
+                    ],
+                    "strength": "extensible",
+                    "valueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//ValueSet/valueset-sex-of-the-client"
+                },
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE16"
+                    }
+                ]
+            },
+            {
+                "id": "Patient.address.line",
+                "path": "Patient.address.line",
+                "short": "Address",
+                "definition": "Client's home address or address that the client is consenting to disclose",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE20"
                     }
                 ]
             },
@@ -158,6 +324,21 @@
                 ]
             },
             {
+                "id": "Patient.identifier.value",
+                "path": "Patient.identifier.value",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "type",
+                            "path": "resolve()"
+                        }
+                    ],
+                    "rules": "closed"
+                },
+                "min": 0,
+                "max": "*"
+            },
+            {
                 "id": "Patient.extension",
                 "path": "Patient.extension",
                 "slicing": {
@@ -171,6 +352,21 @@
                 },
                 "min": 0,
                 "max": "1"
+            },
+            {
+                "id": "Patient.name.given",
+                "path": "Patient.name.given",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "type",
+                            "path": "resolve()"
+                        }
+                    ],
+                    "rules": "closed"
+                },
+                "min": 0,
+                "max": "*"
             }
         ]
     }

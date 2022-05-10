@@ -25,15 +25,19 @@
         },
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-patient-emcarea.registration.p"
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-patient-emcarea.registration.p"
         },
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-relatedperson-caregiver-emcarea.registration.p"
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-relatedperson-caregiver-emcarea.registration.p"
         },
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-communicationrequest-emcarea.registration.p"
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-communcationrequest-emcarea.registration.p"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-communicationrequest-emcarea.registration.p"
         }
     ],
     "status": "active",
@@ -50,6 +54,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.value = true"
+                    }
+                }
+            ],
             "linkId": "EmCare.A.DE02",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Auto-generated unique identification if used by the implementation",
@@ -100,6 +113,22 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "now()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE07",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "The date and time of the client's visit",
+            "type": "date",
+            "designNote": "status::draft"
+        },
+        {
             "linkId": "EmCare.A.DE08",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "The client's date of birth (DOB), if known, OR the estimated date of birth IF not known (see EmCare.A.DE10)",
@@ -107,6 +136,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 1"
+                    }
+                }
+            ],
             "linkId": "EmCare.A.DE09",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "The client's time of birth (if <1 day old)",
@@ -114,6 +152,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.A.DE07').answer.value - %resource.repeat(item).where(linkId='EmCare.A.DE08').answer.value) / 365"
+                    }
+                }
+            ],
             "linkId": "EmCare.A.DE10",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Age auto-calculated (presented as number of years, months, days) of the client based on date of birth OR estimated age OR based on auto-calculation from estimaged date of birth",
@@ -139,14 +186,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE09').answer.value.answer.value is empty"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE09').answer.value.answer.value is empty"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE09').answer.value is empty"
                     }
                 }
             ],
@@ -175,14 +215,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.value.answer.value = true"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.value.answer.value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.value = true"
                     }
                 }
             ],
@@ -199,14 +232,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value.answer.value.code = \"EmCare.A.DE13\""
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value.answer.value.code = \"EmCare.A.DE13\""
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value = \"EmCare.A.DE14\""
                     }
                 }
             ],
@@ -221,14 +247,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value.answer.value.code = \"EmCare.A.DE14\""
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value = \"EmCare.A.DE13\""
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value.answer.value.code = \"EmCare.A.DE14\""
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.value not empty, now()-%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.value, {})"
                     }
                 }
             ],
@@ -243,14 +269,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value.answer.value.code = \"EmCare.A.DE15\""
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value = \"EmCare.A.DE15\""
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.value.answer.value.code = \"EmCare.A.DE15\""
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE13.1').answer.value.answer.value not empty, now()-%resource.repeat(item).where(linkId='EmCare.A.DE13.1').answer.value.answer.value, {})"
                     }
                 }
             ],
@@ -301,14 +327,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%\"EmCare.A.DE47.answer.value is empty"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%\"EmCare.A.DE47.answer.value is empty"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value is empty"
                     }
                 }
             ],
@@ -322,14 +341,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value is empty"
                     }
                 }
             ],
@@ -345,14 +357,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value is empty"
                     }
                 }
             ],
@@ -368,14 +373,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value is empty"
                     }
                 }
             ],
@@ -426,14 +424,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value.answer.value is empty"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.value is empty"
                     }
                 }
             ],
@@ -463,14 +454,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.value.answer.value is not \"EmCare.A.DE25\""
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.value.answer.value is not \"EmCare.A.DE25\""
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.value is not 'EmCare.A.DE25'"
                     }
                 }
             ],
@@ -500,14 +484,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.value.answer.value is not \"EmCare.A.DE26\""
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.value.answer.value is not \"EmCare.A.DE26\""
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.value is not 'EmCare.A.DE26'"
                     }
                 }
             ],

@@ -74,6 +74,13 @@
                         "language": "text/fhirpath",
                         "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true"
                     }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.A.DE07').answer.value - %resource.repeat(item).where(linkId='EmCare.A.DE08').answer.value) / 365"
+                    }
                 }
             ],
             "linkId": "EmCare.B6.DE03",
@@ -101,7 +108,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value.empty().not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value.empty() or %resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value.empty()"
                     }
                 }
             ],

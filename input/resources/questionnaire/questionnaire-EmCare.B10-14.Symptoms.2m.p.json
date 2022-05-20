@@ -36,6 +36,38 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE01",
+            "text": "The client's axillary temperature in degrees Celsius (temperature taken under the armpit)",
+            "type": "decimal",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE05",
+            "text": "The client is hot to touch",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
                         "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value"
                     }
                 }
@@ -86,7 +118,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B10S1.DE05').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -120,7 +152,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B10S1.DE01').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -154,7 +186,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B11S1.DE02').answer.value = \u2018EmCare.B11S1.DE03\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.value = \u2018yes\u2019"
                     }
                 }
             ],
@@ -168,10 +200,27 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value is not empty or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value=true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B12S1.DE01",
+            "text": "The client's temperature has been measured and the client has a fever",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B11S1.DE05').answer.value = \u2018no\u2019and %resource.repeat(item).where(linkId='EmCare.B7.DE08').answer.value = false and %resource.repeat(item).where(linkId='EmCare.B7.DE09').answer.value = false and %resource.repeat(item).where(linkId='EmCare.B7.DE10').answer.value = false And %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false"
                     }
                 }
             ],
@@ -189,6 +238,13 @@
                     "valueExpression": {
                         "language": "text/fhirpath",
                         "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 And (%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = true or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value = \u2018yes\u2019)"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iff(%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value  or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value=true, {EmCare.B12S1.DE03}='EmCare.B12S1.DE05', {})"
                     }
                 }
             ],
@@ -222,7 +278,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE06').answer.value = \u2018no\u2019  or %resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.value = \u2018EmCare.B12S1.DE04\u2019 or %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false)"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE06').answer.value = \u2018no\u2019 or %resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.value = \u2018EmCare.B12S1.DE04\u2019 or (%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false and (%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value >= 37.5 or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value = true)))"
                     }
                 }
             ],
@@ -239,7 +295,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE07').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -256,7 +312,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE08').answer.value = \u2018no_pain\u2019 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value = \u2018no\u2019 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value = \u2018yes\u2019 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = true"
                     }
                 }
             ],
@@ -290,14 +346,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE17').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B13S1.DE01",
             "text": "The client is reported to have had or has an ear problem",
             "type": "choice",
-            "required": false,
+            "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
@@ -307,7 +363,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE01').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -324,7 +380,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE02').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -358,7 +414,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE03').answer.value = \u2018no\u2019 or %resource.repeat(item).where(linkId='EmCare.B13S1.DE04').answer.value = \u2018EmCare.B13S1.DE05\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -375,7 +431,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B14S1.DE03').answer.value = \u2018no\u2019"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
                     }
                 }
             ],
@@ -400,6 +456,7 @@
             "text": "The client is reported to have itchy skin",
             "type": "choice",
             "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         }
     ]

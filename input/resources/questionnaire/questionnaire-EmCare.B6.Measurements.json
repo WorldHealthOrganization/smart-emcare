@@ -111,7 +111,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value.empty() or %resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value.empty() or (%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true)"
                     }
                 }
             ],
@@ -322,6 +322,13 @@
                         "language": "text/fhirpath",
                         "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value.empty()"
                     }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value = true, %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value-0.7 'cm', '')"
+                    }
                 }
             ],
             "linkId": "EmCare.B6.DE12",
@@ -362,6 +369,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = false and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value=false"
+                    }
+                }
+            ],
             "linkId": "EmCare.B6.DE14",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "The client's weight for height Z Score",
@@ -370,6 +386,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = false"
+                    }
+                }
+            ],
             "linkId": "EmCare.B6.DE15",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "The client's weight for length Z Score",
@@ -421,7 +446,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=6"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=6"
                     }
                 }
             ],

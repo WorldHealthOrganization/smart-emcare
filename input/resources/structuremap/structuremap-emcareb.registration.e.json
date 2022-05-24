@@ -1,48 +1,58 @@
 {
     "resourceType": "StructureMap",
-    "id": "1412",
+    "id": "emcareb.registration.e",
     "meta": {
-        "versionId": "9",
-        "lastUpdated": "2022-03-16T15:35:08.068000+00:00"
+        "versionId": "5",
+        "lastUpdated": "2022-05-24T14:30:32.773000+00:00"
     },
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-relatedperson-caregiver-emcarea.registration.p&quot; = &quot;emcare-relatedperson-caregiver-EmCareA.Registration.P&quot;\r\n\r\n\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/questionnaire-emcarea.registration.p&quot; alias 'emcarea.registration.p' as source\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Profile/profile-emcare-relatedperson-caregiver&quot; alias 'emcare-relatedperson-caregiver' as target\r\n\r\ngroup main(source qr : 'emcarea.registration.p', target tgt : 'emcare-relatedperson-caregiver') {\r\n  qr.item as item then {\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE21' then {\r\n      tgt.name as name then {\r\n        a -&gt; name.given = create(a) &quot;set-given-0&quot;;\r\n      } &quot;DE21-1&quot;;\r\n    } &quot;DE21&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE22' then {\r\n      tgt.name as name then {\r\n        a -&gt; name.given = create(a) &quot;set-given-1&quot;;\r\n      } &quot;DE22-1&quot;;\r\n    } &quot;DE22&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE23' then {\r\n      tgt.name as name then {\r\n        a -&gt; name.family = a &quot;set-family&quot;;\r\n      } &quot;DE23-1&quot;;\r\n    } &quot;DE23&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE35' then {\r\n      tgt.telecom as tel then {\r\n        a -&gt;  tel.system = 'http://hl7.org/fhir/contact-point-system#phone',  tel.use = translate('{{cs_concept}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'),  tel.value = a &quot;mphone-1&quot;;\r\n      } &quot;DE35-1&quot;;\r\n    } &quot;DE35&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE36' then {\r\n      tgt.telecom as tel then {\r\n        a -&gt;  tel.system = 'http://hl7.org/fhir/contact-point-system#phone',  tel.use = translate('{{cs_concept}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'),  tel.value = a &quot;hphone-1&quot;;\r\n      } &quot;DE36-1&quot;;\r\n    } &quot;DE36&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE37' then {\r\n      tgt.telecom as tel then {\r\n        a -&gt;  tel.system = 'http://hl7.org/fhir/contact-point-system#phone',  tel.use = translate('{{cs_concept}}', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'),  tel.value = a &quot;wphone-1&quot;;\r\n      } &quot;DE37-1&quot;;\r\n    } &quot;DE37&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE24' then {\r\n      a where a = 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') &quot;caregiver-parent&quot;;\r\n      a where a != 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') &quot;DE24-1&quot;;\r\n    } &quot;DE24&quot;;\r\n  } &quot;p-emcare-relatedperson-caregiver&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e&quot; = &quot;emcareb.registration.e&quot;\r\n\r\n\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcareb.registration.e&quot; alias 'emcarebregistratione' as source\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-encounter&quot; alias 'emcareencounter' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson&quot; alias 'emcarerelatedperson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-observation&quot; alias 'emcareobservation' as target\r\n\r\ngroup emcareencounter(source qr : 'emcarebregistratione', target tgt : 'emcareencounter') {\r\n  qr.item as item then {\r\n    item.answer first as a where item.linkId = 'EmCare.B2.DE01' then {\r\n      a -&gt; tgt.type = a &quot;DE01-1&quot;;\r\n    } &quot;DE01&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE01' then {\r\n      a -&gt; tgt.reasonCode = a &quot;DE01-1&quot;;\r\n    } &quot;DE01&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE06' then {\r\n      a -&gt; tgt.type = a &quot;DE06-1&quot;;\r\n    } &quot;DE06&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE09' then {\r\n      tgt.extension as ext where ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/refered' then {\r\n        a -&gt; ext.valueBoolean = a &quot;set-bool&quot;;\r\n      } &quot;DE09-1&quot;;\r\n    } &quot;DE09&quot;;\r\n  } &quot;itemsemcarebregistratione-emcareencounter&quot;;\r\n}\r\n\r\ngroup emcarerelatedperson(source qr : 'emcarebregistratione', target tgt : 'emcarerelatedperson') {\r\n  qr.item as item then {\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE40' then {\r\n      tgt.name as name then {\r\n        a -&gt; name.given = create(a) &quot;set-given-1&quot;;\r\n      } &quot;DE40-1&quot;;\r\n    } &quot;DE40&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE41' then {\r\n      tgt.name as name then {\r\n        a -&gt; name.family = a &quot;set-family&quot;;\r\n      } &quot;DE41-1&quot;;\r\n    } &quot;DE41&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE42' then {\r\n      tgt.telecom as tel then {\r\n        a -&gt;  tel.system = 'http://hl7.org/fhir/contact-point-system#phone',  tel.use = translate('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'),  tel.value = a &quot;phone-1&quot;;\r\n      } &quot;DE42-1&quot;;\r\n    } &quot;DE42&quot;;\r\n    item.answer first as a where item.linkId = 'EmCare.A.DE43' then {\r\n      a where a = 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') &quot;person-accomp&quot;;\r\n      a where a != 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') &quot;DE43-1&quot;;\r\n    } &quot;DE43&quot;;\r\n  } &quot;itemsemcarebregistratione-emcarerelatedperson&quot;;\r\n}\r\n\r\ngroup emcareobservation(source qr : 'emcarebregistratione', target tgt : 'emcareobservation') {\r\n  qr.item as item then {\r\n    item.answer first as a where item.linkId = 'EmCare.B3.DE05' then {\r\n      a -&gt; tgt.code = a &quot;DE05-1&quot;;\r\n    } &quot;DE05&quot;;\r\n  } &quot;itemsemcarebregistratione-emcareobservation&quot;;\r\n}\r\n\r\n</pre></div>"
     },
-    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/structuremap-emcare-relatedperson-caregiver-emcarea.registration.p",
-    "name": "emcare-relatedperson-caregiver-EmCareA.Registration.P",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e",
+    "name": "emcareb.registration.e",
     "status": "draft",
     "structure": [
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/questionnaire-emcarea.registration.p",
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcareb.registration.e",
             "mode": "source",
-            "alias": "'emcarea.registration.p'"
+            "alias": "'emcarebregistratione'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Profile/profile-emcare-relatedperson-caregiver",
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-encounter",
             "mode": "target",
-            "alias": "'emcare-relatedperson-caregiver'"
+            "alias": "'emcareencounter'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson",
+            "mode": "target",
+            "alias": "'emcarerelatedperson'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-observation",
+            "mode": "target",
+            "alias": "'emcareobservation'"
         }
     ],
     "group": [
         {
-            "name": "main",
+            "name": "emcareencounter",
             "typeMode": "none",
             "input": [
                 {
                     "name": "qr",
-                    "type": "'emcarea.registration.p'",
+                    "type": "'emcarebregistratione'",
                     "mode": "source"
                 },
                 {
                     "name": "tgt",
-                    "type": "'emcare-relatedperson-caregiver'",
+                    "type": "'emcareencounter'",
                     "mode": "target"
                 }
             ],
             "rule": [
                 {
-                    "name": "itemsemcarea.registration.p-emcare-relatedperson-caregiver",
+                    "name": "itemsemcarebregistratione-emcareencounter",
                     "source": [
                         {
                             "context": "qr",
@@ -52,29 +62,135 @@
                     ],
                     "rule": [
                         {
-                            "name": "EmCare.A.DE21",
+                            "name": "EmCare.B2.DE01",
                             "source": [
                                 {
                                     "context": "item",
                                     "element": "answer",
                                     "listMode": "first",
                                     "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE21'"
+                                    "condition": "item.linkId = 'EmCare.B2.DE01'"
                                 }
                             ],
                             "rule": [
                                 {
-                                    "name": "EmCare.A.DE21-1",
+                                    "name": "EmCare.B2.DE01-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "type",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "EmCare.B3.DE01",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE01'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE01-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "reasonCode",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "EmCare.B3.DE06",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE06'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE06-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "type",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "EmCare.B3.DE09",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE09'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE09-1",
                                     "source": [
                                         {
                                             "context": "tgt",
-                                            "element": "name",
-                                            "variable": "name"
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "condition": "ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/refered'"
                                         }
                                     ],
                                     "rule": [
                                         {
-                                            "name": "set-given-0",
+                                            "name": "set-bool",
                                             "source": [
                                                 {
                                                     "context": "a"
@@ -82,10 +198,10 @@
                                             ],
                                             "target": [
                                                 {
-                                                    "context": "name",
+                                                    "context": "ext",
                                                     "contextType": "variable",
-                                                    "element": "given",
-                                                    "transform": "create",
+                                                    "element": "valueBoolean",
+                                                    "transform": "copy",
                                                     "parameter": [
                                                         {
                                                             "valueId": "a"
@@ -97,21 +213,51 @@
                                     ]
                                 }
                             ]
-                        },
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "emcarerelatedperson",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "qr",
+                    "type": "'emcarebregistratione'",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "'emcarerelatedperson'",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "itemsemcarebregistratione-emcarerelatedperson",
+                    "source": [
                         {
-                            "name": "EmCare.A.DE22",
+                            "context": "qr",
+                            "element": "item",
+                            "variable": "item"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "EmCare.A.DE40",
                             "source": [
                                 {
                                     "context": "item",
                                     "element": "answer",
                                     "listMode": "first",
                                     "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE22'"
+                                    "condition": "item.linkId = 'EmCare.A.DE40'"
                                 }
                             ],
                             "rule": [
                                 {
-                                    "name": "EmCare.A.DE22-1",
+                                    "name": "EmCare.A.DE40-1",
                                     "source": [
                                         {
                                             "context": "tgt",
@@ -146,19 +292,19 @@
                             ]
                         },
                         {
-                            "name": "EmCare.A.DE23",
+                            "name": "EmCare.A.DE41",
                             "source": [
                                 {
                                     "context": "item",
                                     "element": "answer",
                                     "listMode": "first",
                                     "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE23'"
+                                    "condition": "item.linkId = 'EmCare.A.DE41'"
                                 }
                             ],
                             "rule": [
                                 {
-                                    "name": "EmCare.A.DE23-1",
+                                    "name": "EmCare.A.DE41-1",
                                     "source": [
                                         {
                                             "context": "tgt",
@@ -193,19 +339,19 @@
                             ]
                         },
                         {
-                            "name": "EmCare.A.DE35",
+                            "name": "EmCare.A.DE42",
                             "source": [
                                 {
                                     "context": "item",
                                     "element": "answer",
                                     "listMode": "first",
                                     "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE35'"
+                                    "condition": "item.linkId = 'EmCare.A.DE42'"
                                 }
                             ],
                             "rule": [
                                 {
-                                    "name": "EmCare.A.DE35-1",
+                                    "name": "EmCare.A.DE42-1",
                                     "source": [
                                         {
                                             "context": "tgt",
@@ -215,7 +361,7 @@
                                     ],
                                     "rule": [
                                         {
-                                            "name": "mphone-1",
+                                            "name": "phone-1",
                                             "source": [
                                                 {
                                                     "context": "a"
@@ -240,7 +386,7 @@
                                                     "transform": "translate",
                                                     "parameter": [
                                                         {
-                                                            "valueString": "{{cs_concept}}"
+                                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes"
                                                         },
                                                         {
                                                             "valueString": "telecom-use"
@@ -268,169 +414,19 @@
                             ]
                         },
                         {
-                            "name": "EmCare.A.DE36",
+                            "name": "EmCare.A.DE43",
                             "source": [
                                 {
                                     "context": "item",
                                     "element": "answer",
                                     "listMode": "first",
                                     "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE36'"
+                                    "condition": "item.linkId = 'EmCare.A.DE43'"
                                 }
                             ],
                             "rule": [
                                 {
-                                    "name": "EmCare.A.DE36-1",
-                                    "source": [
-                                        {
-                                            "context": "tgt",
-                                            "element": "telecom",
-                                            "variable": "tel"
-                                        }
-                                    ],
-                                    "rule": [
-                                        {
-                                            "name": "hphone-1",
-                                            "source": [
-                                                {
-                                                    "context": "a"
-                                                }
-                                            ],
-                                            "target": [
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "system",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "http://hl7.org/fhir/contact-point-system#phone"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "use",
-                                                    "transform": "translate",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "{{cs_concept}}"
-                                                        },
-                                                        {
-                                                            "valueString": "telecom-use"
-                                                        },
-                                                        {
-                                                            "valueString": "http://hl7.org/fhir/contact-point-use"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "value",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueId": "a"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "EmCare.A.DE37",
-                            "source": [
-                                {
-                                    "context": "item",
-                                    "element": "answer",
-                                    "listMode": "first",
-                                    "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE37'"
-                                }
-                            ],
-                            "rule": [
-                                {
-                                    "name": "EmCare.A.DE37-1",
-                                    "source": [
-                                        {
-                                            "context": "tgt",
-                                            "element": "telecom",
-                                            "variable": "tel"
-                                        }
-                                    ],
-                                    "rule": [
-                                        {
-                                            "name": "wphone-1",
-                                            "source": [
-                                                {
-                                                    "context": "a"
-                                                }
-                                            ],
-                                            "target": [
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "system",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "http://hl7.org/fhir/contact-point-system#phone"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "use",
-                                                    "transform": "translate",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "{{cs_concept}}"
-                                                        },
-                                                        {
-                                                            "valueString": "telecom-use"
-                                                        },
-                                                        {
-                                                            "valueString": "http://hl7.org/fhir/contact-point-use"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "value",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueId": "a"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "name": "EmCare.A.DE24",
-                            "source": [
-                                {
-                                    "context": "item",
-                                    "element": "answer",
-                                    "listMode": "first",
-                                    "variable": "a",
-                                    "condition": "item.linkId = 'EmCare.A.DE24'"
-                                }
-                            ],
-                            "rule": [
-                                {
-                                    "name": "caregiver-parent",
+                                    "name": "person-accomp",
                                     "source": [
                                         {
                                             "context": "a",
@@ -458,7 +454,7 @@
                                     ]
                                 },
                                 {
-                                    "name": "EmCare.A.DE24-1",
+                                    "name": "EmCare.A.DE43-1",
                                     "source": [
                                         {
                                             "context": "a",
@@ -480,6 +476,71 @@
                                                 },
                                                 {
                                                     "valueString": "http://terminology.hl7.org/CodeSystem/v3-RoleCode"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "emcareobservation",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "qr",
+                    "type": "'emcarebregistratione'",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "'emcareobservation'",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "itemsemcarebregistratione-emcareobservation",
+                    "source": [
+                        {
+                            "context": "qr",
+                            "element": "item",
+                            "variable": "item"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "EmCare.B3.DE05",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a",
+                                    "condition": "item.linkId = 'EmCare.B3.DE05'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "EmCare.B3.DE05-1",
+                                    "source": [
+                                        {
+                                            "context": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "code",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
                                                 }
                                             ]
                                         }

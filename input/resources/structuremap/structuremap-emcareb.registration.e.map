@@ -1,0 +1,39 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e' = 'emcareb.registration.e'
+
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcareb.registration.e' alias 'emcarebregistratione' as source
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-encounter' alias 'emcareencounter' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson' alias 'emcarerelatedperson' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-observation' alias 'emcareobservation' as target
+group  emcareencounter(
+	source qr : 'emcarebregistratione',
+	target tgt : 'emcareencounter'
+) {
+	qr.item as item then {
+		item.answer first as a where item.linkId = 'EmCare.B2.DE01'  then { a -> tgt.type = a 'EmCare.B2.DE01-1'; } 'EmCare.B2.DE01';
+		item.answer first as a where item.linkId = 'EmCare.B3.DE01'  then { a -> tgt.reasonCode = a 'EmCare.B3.DE01-1'; } 'EmCare.B3.DE01';
+		item.answer first as a where item.linkId = 'EmCare.B3.DE06'  then { a -> tgt.type = a 'EmCare.B3.DE06-1'; } 'EmCare.B3.DE06';
+		item.answer first as a where item.linkId = 'EmCare.B3.DE09'  then { tgt.extension as ext where ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/refered'  then {a -> ext.valueBoolean = a 'set-bool';} 'EmCare.B3.DE09-1'; } 'EmCare.B3.DE09';
+	} 'itemsemcarebregistratione-emcareencounter';
+} 
+
+group  emcarerelatedperson(
+	source qr : 'emcarebregistratione',
+	target tgt : 'emcarerelatedperson'
+) {
+	qr.item as item then {
+		item.answer first as a where item.linkId = 'EmCare.A.DE40'  then { tgt.name as name then {  a -> name.given= create(a) 'set-given-1';} 'EmCare.A.DE40-1'; } 'EmCare.A.DE40';
+		item.answer first as a where item.linkId = 'EmCare.A.DE41'  then { tgt.name as name then {  a -> name.family = a 'set-family';} 'EmCare.A.DE41-1'; } 'EmCare.A.DE41';
+		item.answer first as a where item.linkId = 'EmCare.A.DE42'  then { tgt.telecom as tel then {  a -> tel.system = 'http://hl7.org/fhir/contact-point-system#phone', tel.use = translate('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'), tel.value = a 'phone-1';} 'EmCare.A.DE42-1'; } 'EmCare.A.DE42';
+		item.answer first as a where item.linkId = 'EmCare.A.DE43'  then { a where a= 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') 'person-accomp' ;a where a != 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') 'EmCare.A.DE43-1'; } 'EmCare.A.DE43';
+	} 'itemsemcarebregistratione-emcarerelatedperson';
+} 
+
+group  emcareobservation(
+	source qr : 'emcarebregistratione',
+	target tgt : 'emcareobservation'
+) {
+	qr.item as item then {
+		item.answer first as a where item.linkId = 'EmCare.B3.DE05'  then { a -> tgt.code = a 'EmCare.B3.DE05-1'; } 'EmCare.B3.DE05';
+	} 'itemsemcarebregistratione-emcareobservation';
+} 
+

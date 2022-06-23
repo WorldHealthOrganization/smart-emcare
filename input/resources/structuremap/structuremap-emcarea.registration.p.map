@@ -1,12 +1,12 @@
 map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p' = 'emcarea.registration.p'
 
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcarea.registration.p' alias 'emcarearegistrationp' as source
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-patient' alias 'emcarepatient' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson-caregiver' alias 'emcarerelatedpersoncaregiver' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-communicationrequest' alias 'emcarecommunicationrequest' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcarea.registration.p' alias emcarearegistrationp as source
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-patient' alias emcarepatient as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson-caregiver' alias emcarerelatedpersoncaregiver as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-communicationrequest' alias emcarecommunicationrequest as target
 group  emcarepatient(
-	source qr : 'emcarearegistrationp',
-	target tgt : 'emcarepatient'
+	source qr : emcarearegistrationp,
+	target tgt : emcarepatient
 ) {
 	qr.item as item then {
 		item.answer first as a where item.linkId = 'EmCare.A.DE01'  then { tgt.identifier as id then {  a -> id.type = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes', id.value = a 'uid-1';} 'EmCare.A.DE01-1'; } 'EmCare.A.DE01';
@@ -27,8 +27,8 @@ group  emcarepatient(
 } 
 
 group  emcarerelatedpersoncaregiver(
-	source qr : 'emcarearegistrationp',
-	target tgt : 'emcarerelatedpersoncaregiver'
+	source qr : emcarearegistrationp,
+	target tgt : emcarerelatedpersoncaregiver
 ) {
 	qr.item as item then {
 		item.answer first as a where item.linkId = 'EmCare.A.DE21'  then { tgt.name as name then {  a -> name.given = create(a) 'set-given-0';} 'EmCare.A.DE21-1'; } 'EmCare.A.DE21';
@@ -42,8 +42,8 @@ group  emcarerelatedpersoncaregiver(
 } 
 
 group  emcarecommunicationrequest(
-	source qr : 'emcarearegistrationp',
-	target tgt : 'emcarecommunicationrequest'
+	source qr : emcarearegistrationp,
+	target tgt : emcarecommunicationrequest
 ) {
 	qr.item as item then {
 		item.answer first as a where item.linkId = 'EmCare.A.DE38'  then { a -> tgt.medium = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'EmCare.A.DE38-1'; } 'EmCare.A.DE38';

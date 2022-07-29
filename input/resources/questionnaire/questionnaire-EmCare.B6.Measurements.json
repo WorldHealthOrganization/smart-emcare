@@ -22,6 +22,10 @@
         {
             "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
             "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-encounter-emcare.b6.measurements"
         }
     ],
     "status": "active",
@@ -32,8 +36,7 @@
     "item": [
         {
             "linkId": "EmCare.B6.DE01",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's axillary temperature in degrees Celsius (temperature taken under the armpit)",
+            "text": "Auxiliary Temperature",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -57,13 +60,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value= {}"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE02",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The health care worker prefers to take the client's rectal temperature",
+            "text": "Prefer to take Rectal Temperature",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -86,8 +88,7 @@
                 }
             ],
             "linkId": "EmCare.B6.DE03",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's rectal temperature in degrees Celsius (temperature taken in the rectum)",
+            "text": "Rectal Temperature",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -111,13 +112,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value.empty() or (%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true)"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value= {} or (%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value= {} and %resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true)"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE04",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "A thermometer is not available to accurately measure the client's temperature",
+            "text": "Thermometer not available",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -146,16 +146,14 @@
                 }
             ],
             "linkId": "EmCare.B6.DE05",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client is hot to touch",
+            "text": "Hot to Touch",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B6.DE06",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's weight in Kilograms",
+            "text": "Weight",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -179,13 +177,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value= {}"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE07",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's weight cannot be measured",
+            "text": "Weight cannot be measured",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -214,8 +211,7 @@
                 }
             ],
             "linkId": "EmCare.B6.DE08",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's weight has been estimated - to be used for treatment dosing only",
+            "text": "Estimated Weight",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -226,13 +222,44 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value"
+                        "expression": "AgeInDays()"
                     }
                 }
             ],
-            "linkId": "EmCare.A.DE10",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Age auto-calculated (presented as number of years, months, days) of the client based on date of birth OR estimated age OR based on auto-calculation from estimaged date of birth",
+            "linkId": "AgeInDays",
+            "text": "Age in Days",
+            "type": "decimal",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "AgeInMonths()"
+                    }
+                }
+            ],
+            "linkId": "AgeInMonth",
+            "text": "Age in months",
+            "type": "decimal",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "AgeInYears()"
+                    }
+                }
+            ],
+            "linkId": "AgeInYears",
+            "text": "Age in years",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -243,13 +270,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=24"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE09",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's height in Centimeters",
+            "text": "Height",
             "type": "quantity",
             "required": false,
             "designNote": "status::draft"
@@ -273,13 +299,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value = {} and %resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE10",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The health care worker would prefer to measure the client using length",
+            "text": "Prefer to measure length",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -303,13 +328,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value = {} and %resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE11",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's height cannot be measured",
+            "text": "Height cannot be measured",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -320,20 +344,19 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value= {}"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value = true, %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value-0.7 'cm', '')"
+                        "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value = true, %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value-0.7 'cm', '')"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE12",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's length in Centimeters",
+            "text": "Length",
             "type": "quantity",
             "required": false,
             "designNote": "status::draft"
@@ -362,8 +385,7 @@
                 }
             ],
             "linkId": "EmCare.B6.DE13",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's length cannot be measured",
+            "text": "Length cannot be measured",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -379,8 +401,7 @@
                 }
             ],
             "linkId": "EmCare.B6.DE14",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's weight for height Z Score",
+            "text": "Weight for Height (WFH) Z Scores",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
@@ -396,16 +417,14 @@
                 }
             ],
             "linkId": "EmCare.B6.DE15",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's weight for length Z Score",
+            "text": "Weight for Length (WFL) Z Scores",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B6.DE16",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's weight for age z score",
+            "text": "Weight for Age (WFA) Z Scores",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
@@ -416,13 +435,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=6"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=6"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE17",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The client's Mid Upper Arm Circumference in Millimeters (child \u22656 months old)",
+            "text": "MUAC (Mid Upper Arm Circumference)",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -446,21 +464,19 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.value.empty() and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=6"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value= {} and %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.value= {} and %resource.repeat(item).where(linkId='AgeInMonths').answer.value>=6"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE18",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The health care worker visually assesses for whether underweight (for drug dosing calculations)",
+            "text": "Visually assess for whether underweight (for drug dose calculation)",
             "type": "choice",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B6.DE22",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "The date when the measurement was taken",
+            "text": "Date of measurement",
             "type": "date",
             "required": false,
             "designNote": "status::draft"

@@ -1,39 +1,99 @@
 map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e' = 'emcareb.registration.e'
 
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcareb.registration.e' alias emcarebregistratione as source
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-encounter' alias emcareencounter as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson' alias emcarerelatedperson as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-observation' alias emcareobservation as target
-group  emcareencounter(
-	source qr : emcarebregistratione,
-	target tgt : emcareencounter
-) {
-	qr.item as item then {
-		item.answer first as a where item.linkId = 'EmCare.B2.DE01'  then { a -> tgt.type = a 'EmCare.B2.DE01-1'; } 'EmCare.B2.DE01';
-		item.answer first as a where item.linkId = 'EmCare.B3.DE01'  then { a -> tgt.reasonCode = a 'EmCare.B3.DE01-1'; } 'EmCare.B3.DE01';
-		item.answer first as a where item.linkId = 'EmCare.B3.DE06'  then { a -> tgt.type = a 'EmCare.B3.DE06-1'; } 'EmCare.B3.DE06';
-		item.answer first as a where item.linkId = 'EmCare.B3.DE09'  then { tgt.extension as ext where ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/refered'  then {a -> ext.valueBoolean = a 'set-bool';} 'EmCare.B3.DE09-1'; } 'EmCare.B3.DE09';
-	} 'itemsemcarebregistratione-emcareencounter';
+// emcarebregistratione:https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcareb.registration.e
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+// Bundle are require where there is multiple ressource to be mapped
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'bundle' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/Encounter' alias 'Encounter' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/RelatedPerson' alias 'RelatedPerson' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/Observation' alias 'Observation' as target
+
+group bundleMapping(source src : questionnaireResponse, target bundle : Bundle) {
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+     src -> uuid() as emcareencounteremcarebregistrationeid,uuid() as emcarerelatedpersonemcarebregistrationeid,uuid() as emcareb3de05id then {
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcareencounteremcarebregistrationeid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("Encounter/", emcareencounteremcarebregistrationeid),
+            entry.resource = create('Encounter') as tgt then emcareencounteremcarebregistrationegroup(src, tgt, emcareencounteremcarebregistrationeid) 'emcareencounteremcarebregistrationegrouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcarerelatedpersonemcarebregistrationeid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("RelatedPerson/", emcarerelatedpersonemcarebregistrationeid),
+            entry.resource = create('RelatedPerson') as tgt then emcarerelatedpersonemcarebregistrationegroup(src, tgt, emcarerelatedpersonemcarebregistrationeid) 'emcarerelatedpersonemcarebregistrationegrouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcareb3de05id), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("None/", emcareb3de05id),
+            entry.resource = create('Observation') as tgt then {src.item first as item  where linkId =  'emcareb3de05' -> item.answer as a then SetObservationemcareb3de05(src, a, tgt , emcareb3de05id) 'obs-rule';}  'emcareb3de05grouprule';
+            	}'gen-ids';
+}
+
+group  emcareencounteremcarebregistrationegroup(
+	source src : questionnaireResponse,
+	target tgt : Encounter
+,  source resid ) {
+src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter' 'set-uuid';
+		src.item as item where linkId  = 'EmCare.A.DE07' -> tgt then { item.answer as a -> tgt.period as period,  period.start = a 'EmCare.A.DE07-1';   } 'EmCare.A.DE07-main';
+		src.item as item where linkId  = 'EmCare.B2.DE01' -> tgt then { item.answer as a -> tgt.type = a 'EmCare.B2.DE01-1';   } 'EmCare.B2.DE01-main';
+		src.item as item where linkId  = 'EmCare.B3.DE01' -> tgt then { item.answer as a -> tgt.reasonCode = a 'EmCare.B3.DE01-1';   } 'EmCare.B3.DE01-main';
+		src.item as item where linkId  = 'EmCare.B3.DE06' -> tgt then { item.answer as a -> tgt.type = a 'EmCare.B3.DE06-1';   } 'EmCare.B3.DE06-main';
+		src.item as item where linkId  = 'EmCare.B3.DE09' -> tgt then { item.answer as a -> tgt.extension as ext , ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/refered',  ext.valueBoolean = a 'EmCare.B3.DE09-1';   } 'EmCare.B3.DE09-main';
 } 
 
-group  emcarerelatedperson(
-	source qr : emcarebregistratione,
-	target tgt : emcarerelatedperson
-) {
-	qr.item as item then {
-		item.answer first as a where item.linkId = 'EmCare.A.DE40'  then { tgt.name as name then {  a -> name.given= create(a) 'set-given-1';} 'EmCare.A.DE40-1'; } 'EmCare.A.DE40';
-		item.answer first as a where item.linkId = 'EmCare.A.DE41'  then { tgt.name as name then {  a -> name.family = a 'set-family';} 'EmCare.A.DE41-1'; } 'EmCare.A.DE41';
-		item.answer first as a where item.linkId = 'EmCare.A.DE42'  then { tgt.telecom as tel then {  a -> tel.system = 'http://hl7.org/fhir/contact-point-system#phone', tel.use = translate('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes', 'telecom-use', 'http://hl7.org/fhir/contact-point-use'), tel.value = a 'phone-1';} 'EmCare.A.DE42-1'; } 'EmCare.A.DE42';
-		item.answer first as a where item.linkId = 'EmCare.A.DE43'  then { a where a= 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') 'person-accomp' ;a where a != 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') 'EmCare.A.DE43-1'; } 'EmCare.A.DE43';
-	} 'itemsemcarebregistratione-emcarerelatedperson';
+group  emcarerelatedpersonemcarebregistrationegroup(
+	source src : questionnaireResponse,
+	target tgt : RelatedPerson
+,  source resid ) {
+src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' 'set-uuid';
+		src.item first as item  where linkId =  'EmCare.A.DE40'  or linkId =  'EXXXXXXX' or linkId =  'EmCare.A.DE40' -> tgt as target,  target.name as name then SetOfficalGivenNameemcareade40(src, name) 'name-main';
+		src.item as item where linkId  = 'EmCare.A.DE42' -> tgt then { item.answer as a -> tgt.telecom as tel, tel.system = 'phone', tel.use ='mobile', tel.value = a 'EmCare.A.DE42-1';   } 'EmCare.A.DE42-main';
+		src.item as item where linkId  = 'EmCare.A.DE43' -> tgt then { item.answer as a -> tgt then {a where a.valueCode= 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') 'person-accomp';
+a where a.valueCode != 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') 'person-accomp-std';} 'EmCare.A.DE43-1';   } 'EmCare.A.DE43-main';
 } 
 
-group  emcareobservation(
-	source qr : emcarebregistratione,
-	target tgt : emcareobservation
-) {
-	qr.item as item then {
-		item.answer first as a where item.linkId = 'EmCare.B3.DE05'  then { a -> tgt.code = a 'EmCare.B3.DE05-1'; } 'EmCare.B3.DE05';
-	} 'itemsemcarebregistratione-emcareobservation';
-} 
+group SetOfficalGivenNameemcareade40(source src, target tgt){
+        src -> tgt.use = 'official'  then {
+            src.item as item where linkId  =  'EmCare.A.DE40'    then {item.answer as a -> tgt.given = a 'f';} 'first';
+            src.item as item  where linkId = 'EXXXXXXX'   then {item.answer as a -> tgt.given = a 'm';} 'middle';
+            src.item as item  where linkId = 'EmCare.A.DE40'  then {item.answer as a -> tgt.family = a 'fa';} 'family';
+        } 'details';
+    }
+
+
+group SetObservationemcareb3de05(source src, source a, target tgt, source oid ){
+    oid ->  tgt.id = oid,
+            tgt.identifier = create('Identifier') as CodeID, 
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = oid
+            'set-id';
+
+    src -> tgt.basedOn = src.basedOn,
+        tgt.encounter = src.encounter,
+        tgt. subject = src. subject,
+        tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb3de05',
+        tgt.code = create('CodeableConcept') as concept, 
+            concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+            concept.code = 'EmCare.B3.DE05' 'set-code';  
+    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'EmCare.A.DE08-main';       
+
+    a  where a.value = 'yes' -> tgt.status = 'final' 'set-final';
+    a  where a.value = 'no' -> tgt.status = 'cancelled' 'set-nofound'; 
+    
+}
+    
 

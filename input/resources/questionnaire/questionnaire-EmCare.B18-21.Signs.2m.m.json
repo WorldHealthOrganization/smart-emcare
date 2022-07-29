@@ -22,6 +22,10 @@
         {
             "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
             "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-observation-emcare.b18-21.signs.2m.m"
         }
     ],
     "status": "active",
@@ -36,12 +40,28 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.value"
+                        "expression": "AgeInMonths()"
+                    }
+                }
+            ],
+            "linkId": "AgeInMonths",
+            "text": "Age in Month",
+            "type": "decimal",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B20S1.DE01', '{{cs_url}}')"
                     }
                 }
             ],
             "linkId": "EmCare.B20S1.DE01",
-            "text": "The client is reported to have diarrhoea",
+            "text": "Diarrhoea",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -53,12 +73,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE31').answer.value"
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.A.DE31', '{{cs_url}}')"
                     }
                 }
             ],
             "linkId": "EmCare.A.DE31",
-            "text": "The client's mother and father's vital status",
+            "text": "Biological Mother Vital Status",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
@@ -70,12 +90,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.value"
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B21S1.DE01', '{{cs_url}}')"
                     }
                 }
             ],
             "linkId": "EmCare.B21S1.DE01",
-            "text": "The client is breastfed",
+            "text": "Breastfed",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -87,12 +107,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B18S1.DE02').answer.value"
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B18S1.DE02', '{{cs_url}}')"
                     }
                 }
             ],
             "linkId": "EmCare.B18S1.DE02",
-            "text": "The client is reported to have difficulty with Feeding",
+            "text": "Difficulty with Feeding",
             "type": "choice",
             "required": false,
             "designNote": "status::draft"
@@ -103,12 +123,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE01",
-            "text": "The client's Temperature has been measured",
+            "text": "Measured Temperature",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/measured-temperature",
@@ -120,12 +140,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE04",
-            "text": "The client's respiratory rate for the first Count",
+            "text": "Respiratory Rate First Count",
             "type": "integer",
             "required": true,
             "designNote": "status::draft"
@@ -136,12 +156,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2 and %resource.repeat(item).where(linkId='EmCare.B18S2.DE04').answer.value =< 60"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2 and %resource.repeat(item).where(linkId='EmCare.B18S2.DE04').answer.value =< 60"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE05",
-            "text": "The client's respiratory rate for the second Count",
+            "text": "Respiratory Rate Second Count",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
@@ -152,12 +172,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE06",
-            "text": "The client has fast breathing - auto-calculated based on the respiratory rate and the age of the client - 60 breaths per minute or more (<2 months) after 2 respiratory rate measurements",
+            "text": "Fast Breathing",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -169,12 +189,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE07",
-            "text": "The client has severe chest indrawing",
+            "text": "Severe Chest Indrawing",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -186,12 +206,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE08",
-            "text": "The health care worker's assessments of the client's movements",
+            "text": "Movements",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/movements",
@@ -203,12 +223,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE12",
-            "text": "The client's umbilicus is red or is draining pus",
+            "text": "Umbilicus Red or Pus Draining",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -220,12 +240,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B18S2.DE13",
-            "text": "The client has skin pustules",
+            "text": "Skin Pustules",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -237,12 +257,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B19S2.DE01",
-            "text": "The client has yellow skin",
+            "text": "Yellow Skin",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -254,12 +274,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B19S2.DE02",
-            "text": "The client has yellow palms or yellow soles",
+            "text": "Yellow Palms or Yellow Soles",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -271,12 +291,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B19S2.DE03",
-            "text": "The client is reported to have Jaundice (Yellow skin or palms or soles)",
+            "text": "Jaundice (Yellow skin or palms or soles)",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -288,12 +308,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value> %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value * 730.0008 or (%resource.repeat(item).where(linkId='EmCare.B19S2.DE01').answer.value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.value.code = 'no') or %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value > %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value * 30.4167"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value> %resource.repeat(item).where(linkId='AgeInMonths').answer.value * 730.0008 or (%resource.repeat(item).where(linkId='EmCare.B19S2.DE01').answer.value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.value.code = 'no') or %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.value.code = 'yes' or %resource.repeat(item).where(linkId='AgeInMonths').answer.value > %resource.repeat(item).where(linkId='AgeInMonths').answer.value * 30.4167"
                     }
                 }
             ],
             "linkId": "EmCare.B19S2.DE04",
-            "text": "The age at which the Jaundice first appeared",
+            "text": "When did the Jaundice first appear?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/jaundice-duration",
@@ -305,12 +325,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B20S2.DE01",
-            "text": "The client has sunken eyes",
+            "text": "Sunken Eyes",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -322,12 +342,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
             "linkId": "EmCare.B20S2.DE02",
-            "text": "The healthcare worker pinches the skin of the client's abdomen for 1 second and then observes how long the skin takes to return to normal once released",
+            "text": "Skin pinch of Abdomen",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/skin-pinch-abdomen",
@@ -339,12 +359,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2 and (%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.value.code = 'no' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.value.code = 'EmCare.B18S2.DE09' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.value.code = 'EmCare.B18S2.DE10' )"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2 and (%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.value.code = 'no' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.value.code = 'EmCare.B18S2.DE09' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.value.code = 'EmCare.B18S2.DE10' )"
                     }
                 }
             ],
             "linkId": "EmCare.B20S2.DE06",
-            "text": "The client is restless and irritable",
+            "text": "Restless and Irritable",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -356,7 +376,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
                     }
                 }
             ],
@@ -373,26 +393,26 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.value.code = 'no') and %resource.repeat(item).where(linkId='EmCare.A.DE31').answer.value.code = 'EmCare.A.DE34'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.value.code = 'no') and %resource.repeat(item).where(linkId='EmCare.A.DE31').answer.value.code = 'EmCare.A.DE34'"
                     }
                 }
             ],
             "linkId": "EmCare.B21S2.DE05",
-            "text": "Number of times the client is breastfed in 24 hours",
+            "text": "Breastfed how many times in 24 hours?",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B21S2.DE06",
-            "text": "Based on the number of feeds during a 24 hour period the result is auto-calculated to determine sufficient feeds",
+            "text": "Sufficient feeds",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B21S2.DE07",
-            "text": "Based on the number of feeds during 24 hour period the result is auto-calculated to determine insufficient feeds",
+            "text": "Insufficient feeds",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
@@ -408,7 +428,7 @@
                 }
             ],
             "linkId": "EmCare.B21S2.DE08",
-            "text": "The client is receiving other food or drinks besides breastmilk",
+            "text": "Young Infant receives other food or fluids",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -425,7 +445,7 @@
                 }
             ],
             "linkId": "EmCare.B21S2.DE09",
-            "text": "The health care worker discusses the milk being given to the client as a replacement feed and determines if it is appropriate replacement milk",
+            "text": "What milk is being given as a replacement feed?",
             "type": "choice",
             "required": false,
             "designNote": "status::draft"
@@ -441,21 +461,21 @@
                 }
             ],
             "linkId": "EmCare.B21S2.DE12",
-            "text": "How often the client is receiving replacement feeds during the day and night (24 hours)",
+            "text": "How many replacement feeds during the day and night (24 hours)?",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B21S2.DE13",
-            "text": "Based on the number of feeds during the day and night (24 hours) the result is auto-calculated to determine sufficient replacement feeds",
+            "text": "Sufficient replacement feeds (in 24 hours)",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
         },
         {
             "linkId": "EmCare.B21S2.DE14",
-            "text": "Based on the number of feeds during the day and night (24 hours) the result is auto-calculated to determine insufficient replacement feeds",
+            "text": "Insufficient replacement feeds (in 24 hours)",
             "type": "integer",
             "required": false,
             "designNote": "status::draft"
@@ -471,7 +491,7 @@
                 }
             ],
             "linkId": "EmCare.B21S2.DE27",
-            "text": "Does the care giver give the client any breastmilk at all?",
+            "text": "Do you give any breastmilk at all?",
             "type": "choice",
             "required": false,
             "designNote": "status::draft"
@@ -487,7 +507,7 @@
                 }
             ],
             "linkId": "EmCare.B21S2.DE30",
-            "text": "The client has ulcers or white patches in the mouth",
+            "text": "Ulcers or White Patches in Mouth",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -495,7 +515,7 @@
         },
         {
             "linkId": "EmCare.B21S2.DE31",
-            "text": "The healthcare worker is unable to check if the client has ulcers or white patches in the mouth",
+            "text": "Unable to check if Ulcers or White Patches in Mouth",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",

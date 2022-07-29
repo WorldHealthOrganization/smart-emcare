@@ -22,6 +22,10 @@
         {
             "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
             "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-observation-emcare.b7.lti-dangersigns"
         }
     ],
     "status": "active",
@@ -36,12 +40,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value"
+                        "expression": "AgeInMonths()"
                     }
                 }
             ],
-            "linkId": "EmCare.A.DE10",
-            "text": "Age auto-calculated (presented as number of years, months, days) of the client based on date of birth OR estimated age OR based on auto-calculation from estimaged date of birth",
+            "linkId": "AgeInMonths",
+            "text": "Age in month",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -52,12 +56,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE01",
-            "text": "The client has obstructed or absent breathing",
+            "text": "Obstructed or Absent Breathing",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -68,12 +72,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE02",
-            "text": "The client is convulsing now",
+            "text": "Convulsing Now",
             "type": "boolean",
             "required": true,
             "designNote": "status::draft"
@@ -84,12 +88,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60 and %resource.repeat(item).where(linkId='EmCare.B7.DE02').answer.value = false"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60 and %resource.repeat(item).where(linkId='EmCare.B7.DE02').answer.value = false"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE03",
-            "text": "The client is reported to have had one or more convulsions",
+            "text": "Convulsion(s) in this Illness",
             "type": "boolean",
             "required": true,
             "designNote": "status::draft"
@@ -100,12 +104,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60 and %resource.repeat(item).where(linkId='EmCare.B7.DE03').answer.value = true"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60 and %resource.repeat(item).where(linkId='EmCare.B7.DE03').answer.value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE04",
-            "text": "The number of convulsion(s) the client is reported to have had in this illness",
+            "text": "Number of convulsions in this illness",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/number-of-convulsions",
@@ -117,12 +121,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE08",
-            "text": "The client is unconscious or lethargic",
+            "text": "Unconscious or Lethargic",
             "type": "boolean",
             "required": true,
             "designNote": "status::draft"
@@ -133,12 +137,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE09",
-            "text": "The client has reported not to have been able to drink or breastfeed or currently is not able to drink or breastfeed.",
+            "text": "Not able to drink or breastfeed",
             "type": "boolean",
             "required": true,
             "designNote": "status::draft"
@@ -149,12 +153,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value >=2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.value < 60"
                     }
                 }
             ],
             "linkId": "EmCare.B7.DE10",
-            "text": "The client is reported to be vomiting everything or vomiting but not everything or no vomiting",
+            "text": "Vomiting",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vomiting",
@@ -166,12 +170,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value < 2"
                     }
                 }
             ],
             "linkId": "EmCare.B8/B9.DE01",
-            "text": "The client has obstructed or absent breathing",
+            "text": "Obstructed or Absent Breathing",
             "type": "boolean",
             "required": true,
             "designNote": "status::draft"
@@ -182,12 +186,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 1"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value < 1"
                     }
                 }
             ],
             "linkId": "EmCare.B8/B9.DE02",
-            "text": "The client is convulsing now",
+            "text": "Convulsing Now",
             "type": "boolean",
             "required": true,
             "designNote": "status::draft"
@@ -203,7 +207,7 @@
                 }
             ],
             "linkId": "EmCare.B8/B9.DE03",
-            "text": "Variable to check whether patient has been assessed with danger signs or not",
+            "text": "Has danger signs",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -219,27 +223,10 @@
                 }
             ],
             "linkId": "EmCare.B7/B8/B9.DE01",
-            "text": "The healthcare worker chooses if they will continue to assess the sick child with a life threatening illness",
+            "text": "Continue to Assess Sick Child",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/consultation-status",
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value >=2 and %resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value < 60 and %resource.repeat(item).where(linkId='EmCare.B7.DE09').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B7.DE10').answer.value = 'EmCare.B7.DE15'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B7.DE14",
-            "text": "The healthcare worker or care giver  offers the client fluid to check if the client can drink and to check reactions (oral fluid test)",
-            "type": "choice",
-            "required": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/fluid-test",
             "designNote": "status::draft"
         }
     ]

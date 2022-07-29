@@ -37,12 +37,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value"
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B6.DE01'},'{{cs_url}}')"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE01",
-            "text": "The client's axillary temperature in degrees Celsius (temperature taken under the armpit)",
+            "text": "Auxiliary Temperature",
             "type": "decimal",
             "required": false,
             "designNote": "status::draft"
@@ -53,12 +53,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value"
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B6.DE05'},'{{cs_url}}')"
                     }
                 }
             ],
             "linkId": "EmCare.B6.DE05",
-            "text": "The client is hot to touch",
+            "text": "Hot to Touch",
             "type": "boolean",
             "required": false,
             "designNote": "status::draft"
@@ -69,14 +69,64 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value"
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B8/B9.DE03'},'{{cs_url}}')"
                     }
                 }
             ],
-            "linkId": "EmCare.A.DE10",
-            "text": "Age auto-calculated (presented as number of years, months, days) of the client based on date of birth OR estimated age OR based on auto-calculation from estimaged date of birth",
+            "linkId": "EmCare.B8/B9.DE03",
+            "text": "Has danger signs",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "AgeInMonths()"
+                    }
+                }
+            ],
+            "linkId": "AgeInMonths",
+            "text": "Age",
             "type": "decimal",
             "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B14S2.DE05'},'{{cs_url}}')"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B14S2.DE05",
+            "text": "Generalised or Localised Skin Problem",
+            "type": "choice",
+            "required": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/skin-pb-location",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "PatientHasObservationDuringEncounter({'EmCare.B12S2.DE09'},'{{cs_url}}')"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B12S2.DE09",
+            "text": "Measles Rash",
+            "type": "choice",
+            "required": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
@@ -85,12 +135,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B10S1.DE05",
-            "text": "The client is reported to have or has had a cough",
+            "text": "Cough",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -102,12 +152,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B10S1.DE05').answer.value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B10S1.DE05').answer.value.code = 'yes'"
                     }
                 }
             ],
             "linkId": "EmCare.B10S1.DE06",
-            "text": "Length of time the client is reported to have or has had the cough",
+            "text": "Cough for how long?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/cough-duration",
@@ -119,12 +169,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B10S1.DE01",
-            "text": "The client is reported to have or has had difficulty breathing",
+            "text": "Difficulty Breathing",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -136,12 +186,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B10S1.DE01').answer.value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B10S1.DE01').answer.value.code = 'yes'"
                     }
                 }
             ],
             "linkId": "EmCare.B10S1.DE02",
-            "text": "The length of time the client has or has had difficulty breathing",
+            "text": "Difficulty breathing for how long?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/difficulty-breathing-duration",
@@ -153,12 +203,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B11S1.DE01",
-            "text": "The client is reported to have or has had diarrhoea",
+            "text": "Diarrhoea",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -170,12 +220,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.value.code = 'yes'"
                     }
                 }
             ],
             "linkId": "EmCare.B11S1.DE02",
-            "text": "The length of time the client is reported to have or has had diarrhoea",
+            "text": "Diarrhoea for how long?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/diarrhoea-duration",
@@ -192,7 +242,7 @@
                 }
             ],
             "linkId": "EmCare.B11S1.DE05",
-            "text": "The client is reported to have or has had blood in the stool in this Illness",
+            "text": "Blood in the stool in this Illness",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -204,12 +254,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value is not empty or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value.code=true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value != {} or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value.code=true"
                     }
                 }
             ],
             "linkId": "EmCare.B12S1.DE01",
-            "text": "The client's temperature has been measured and the client has a fever",
+            "text": "Measured Fever",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -221,12 +271,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false"
                     }
                 }
             ],
             "linkId": "EmCare.B12S1.DE02",
-            "text": "The client is reported to have or has had fever",
+            "text": "Fever",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -238,19 +288,19 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = true or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value.code = 'yes')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = true or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value.code = 'yes')"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iff(%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value=true, {EmCare.B12S1.DE03}='EmCare.B12S1.DE05', {})"
+                        "expression": "iff(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value >= 37.5 or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value=true, {EmCare.B12S1.DE03}='EmCare.B12S1.DE05', {})"
                     }
                 }
             ],
             "linkId": "EmCare.B12S1.DE03",
-            "text": "The length of time the client has or has had fever",
+            "text": "Fever for how long?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/fever-duration",
@@ -262,12 +312,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.value = 'EmCare.B12S1.DE05'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.value = 'EmCare.B12S1.DE05' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value=true)"
                     }
                 }
             ],
             "linkId": "EmCare.B12S1.DE06",
-            "text": "The client has had fever present every day since the fever started",
+            "text": "Has Fever been present every day since the Fever started?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -279,12 +329,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE06').answer.value.code = 'no' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.value = 'EmCare.B12S1.DE04' or (%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false and (%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value >= 37.5 or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value = true)))"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE06').answer.value.code = 'no' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.value = 'EmCare.B12S1.DE04' or (%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = false and (%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value >= 37.5 or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.value = true)))"
                     }
                 }
             ],
             "linkId": "EmCare.B12S1.DE07",
-            "text": "The client is reported to be refusing to use a limb",
+            "text": "Refusal to Use a Limb",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -296,12 +346,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B12S1.DE08",
-            "text": "The client is reported to have,\u00a0 has had, or appears to be in pain",
+            "text": "Pain",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/pain",
@@ -313,12 +363,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = true"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.value = true"
                     }
                 }
             ],
-            "linkId": "EmCare.B12S1.DE13",
-            "text": "The client is in a high / low / no malaria risk area",
+            "linkId": "EmCare.B12S1.DE15",
+            "text": "Malaria Risk",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/malaria-risk-region",
@@ -330,12 +380,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE13').answer.value = 'EmCare.B12S1.DE15' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE13').answer.value = 'EmCare.B12S1.DE16')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and (%resource.repeat(item).where(linkId='EmCare.B12S1.DE15').answer.value = 'EmCare.B12S1.DE17' and %resource.repeat(item).where(linkId='EmCare.B8/B9.DE03').answer.value = false or %resource.repeat(item).where(linkId='EmCare.B12S1.DE15').answer.value = 'EmCare.B12S1.DE18')"
                     }
                 }
             ],
-            "linkId": "EmCare.B12S1.DE17",
-            "text": "The client has recently travelled to a high Malaria risk area",
+            "linkId": "EmCare.B12S1.DE19",
+            "text": "Recent Travel to a High Malaria Risk area",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -347,12 +397,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B13S1.DE01",
-            "text": "The client is reported to have had or has an ear problem",
+            "text": "Ear problem",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -364,12 +414,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE01').answer.value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B13S1.DE02",
-            "text": "The client is reported to have had or has ear pain",
+            "text": "Ear pain",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -381,12 +431,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE01').answer.value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B13S1.DE03",
-            "text": "The client is reported to have or has had ear discharge",
+            "text": "Ear discharge",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -398,12 +448,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE03').answer.value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B13S1.DE03').answer.value.code = 'yes'"
                     }
                 }
             ],
             "linkId": "EmCare.B13S1.DE04",
-            "text": "The length of time client has or has had ear discharge",
+            "text": "Ear discharge for how long?",
             "type": "choice",
             "required": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/ear-discharge-duration",
@@ -415,12 +465,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2"
                     }
                 }
             ],
             "linkId": "EmCare.B14S1.DE03",
-            "text": "The client is reported to have an eye problem",
+            "text": "Eye Problem",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -432,12 +482,19 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B8/B9.DE03').answer.value = false or %resource.repeat(item).where(linkId='EmCare.B12S1.DE08').answer.value != 'EmCare.B12S1.DE12'"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B12S1.DE08').answer.value.code = 'EmCare.B12S1.DE12' or (%resource.repeat(item).where(linkId='EmCare.B14S2.DE05').answer.value.code = 'EmCare.B14S2.DE06' or %resource.repeat(item).where(linkId='EmCare.B14S2.DE05').answer.value.code = 'EmCare.B14S2.DE07' and %resource.repeat(item).where(linkId='EmCare.B12S2.DE09').answer.value.code = false )"
                     }
                 }
             ],
             "linkId": "EmCare.B14S1.DE01",
-            "text": "The client is reported to have or has had a skin problem",
+            "text": "Skin Problem",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
@@ -449,12 +506,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE10').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B14S1.DE01').answer.value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=2 and %resource.repeat(item).where(linkId='EmCare.B8/B9.DE03').answer.value = false or %resource.repeat(item).where(linkId='EmCare.B12S1.DE08').answer.value != 'EmCare.B12S1.DE12'"
                     }
                 }
             ],
             "linkId": "EmCare.B14S1.DE02",
-            "text": "The client is reported to have itchy skin",
+            "text": "Itchy Skin",
             "type": "choice",
             "required": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",

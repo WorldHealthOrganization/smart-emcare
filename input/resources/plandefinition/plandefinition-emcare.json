@@ -20,7 +20,7 @@
     },
     "status": "active",
     "experimental": false,
-    "date": "2022-06-10T12:47:52+00:00",
+    "date": "2022-07-29T08:37:36+00:00",
     "library": [
         "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcare.dt.01"
     ],
@@ -33,18 +33,12 @@
         {
             "id": "emcaredt02",
             "description": "Register the child in the encounter",
-            "trigger": [
-                {
-                    "type": "named-event",
-                    "name": "q.EmCareB.Registration.P"
-                }
-            ],
             "condition": [
                 {
                     "kind": "applicability",
                     "expression": {
                         "language": "text/cql-expression",
-                        "expression": "now() -  5 years > %subject.BirthDate"
+                        "expression": "difference in years between today() and  %subject.BirthDate < 5"
                     }
                 }
             ],
@@ -53,10 +47,13 @@
         {
             "id": "emcaredt03",
             "description": "Determine Basic Anthropometric and others measurement",
-            "trigger": [
+            "condition": [
                 {
-                    "type": "named-event",
-                    "name": "q.EmCareB.Registration.E"
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "%encounter.basedOn.name = \"pd.EmCare.DT.01\""
+                    }
                 }
             ],
             "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/q.emcare.b6.measurements"
@@ -64,23 +61,72 @@
         {
             "id": "emcaredt04",
             "description": "Evaluate DangerSigns",
-            "trigger": [
+            "condition": [
                 {
-                    "type": "named-event",
-                    "name": "q.EmCare.B6.Measurements"
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "%encounter.basedOn.name = \"pd.EmCare.DT.01\""
+                    }
                 }
             ],
             "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b7.lti-dangersigns"
         },
         {
             "id": "emcaredt05",
-            "description": "Assess sick child for Symptoms",
-            "trigger": [
+            "description": "Assess sick child for Symptoms 2 m",
+            "condition": [
                 {
-                    "type": "named-event",
-                    "name": "EmCare.B7.LTI-DangerSigns"
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "difference in months between today() and  %subject.BirthDate < 2 and %encounter.basedOn.name = \"pd.EmCare.DT.01\""
+                    }
                 }
-            ]
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/q.emcare.b18-21.symptoms.2m.m"
+        },
+        {
+            "id": "emcaredt06",
+            "description": "Assess sick child for Symptoms 2p",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "difference in months between today() and  %subject.BirthDate >= 2 and %encounter.basedOn.name = \"pd.EmCare.DT.01\""
+                    }
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/q.emcare.b18-21.symptoms.2m.p"
+        },
+        {
+            "id": "emcaredt07",
+            "description": "Assess sick child for Signs 2 m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "difference in months between today() and  %subject.BirthDate < 2 and %encounter.basedOn.name = \"pd.EmCare.DT.01\""
+                    }
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/q.emcare.b18-21.signs.2m.m"
+        },
+        {
+            "id": "emcaredt08",
+            "description": "Assess sick child for Signs 2p",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "language": "text/cql-expression",
+                        "expression": "difference in months between today() and  %subject.BirthDate >= 2 and %encounter.basedOn.name = \"pd.EmCare.DT.01\""
+                    }
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/q.emcare.b18-21.signs.2m.p"
         }
     ]
 }

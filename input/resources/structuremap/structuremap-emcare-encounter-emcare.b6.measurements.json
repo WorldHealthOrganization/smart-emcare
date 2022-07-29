@@ -1,0 +1,938 @@
+{
+    "resourceType": "StructureMap",
+    "id": "emcare-encounter-emcare.b6.measurements",
+    "meta": {
+        "versionId": "14",
+        "lastUpdated": "2022-07-22T13:22:45.027000+00:00"
+    },
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-encounter-emcare.b6.measurements&quot; = &quot;emcare-encounter-emcare.b6.measurements&quot;\r\n\r\n// emcareb6measurements:https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b6.measurements\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source // Bundle are require where there is multiple ressource to be mapped\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'bundle' as target // target that will be inserted in the bundle\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Encounter&quot; alias 'Encounter' as target\r\n\r\ngroup bundleMapping(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt;  uuid() as emcareencounteremcareb6measurementsid,  uuid() as emcareb6de01id,  uuid() as emcareb6de03id then {\r\n    src -&gt;  bundle.entry as entry,  entry.fullUrl = append('urn:uuid:', emcareencounteremcareb6measurementsid),  entry.request as request,  request.method = 'PUT',  request.url = append('Encounter/', emcareencounteremcareb6measurementsid),  entry.resource = create('Encounter') as tgt then emcareencounteremcareb6measurementsgroup(src, tgt, emcareencounteremcareb6measurementsid) &quot;emcareencounteremcareb6measurementsgrouprule&quot;;\r\n    src -&gt;  bundle.entry as entry,  entry.fullUrl = append('urn:uuid:', emcareb6de01id),  entry.request as request,  request.method = 'PUT',  request.url = append('None/', emcareb6de01id),  entry.resource = create('Observation') as tgt then {\r\n      src.item first as item where linkId = 'emcareb6de01' -&gt; item.answer as a then SetObservationemcareb6de01(src, a, tgt, emcareb6de01id) &quot;obs-rule&quot;;\r\n    } &quot;emcareb6de01grouprule&quot;;\r\n    src -&gt;  bundle.entry as entry,  entry.fullUrl = append('urn:uuid:', emcareb6de03id),  entry.request as request,  request.method = 'PUT',  request.url = append('None/', emcareb6de03id),  entry.resource = create('Observation') as tgt then {\r\n      src.item first as item where linkId = 'emcareb6de03' -&gt; item.answer as a then SetObservationemcareb6de03(src, a, tgt, emcareb6de03id) &quot;obs-rule&quot;;\r\n    } &quot;emcareb6de03grouprule&quot;;\r\n  } &quot;gen-ids&quot;;\r\n}\r\n\r\ngroup SetObservationemcareb6de01(source src, source a, target tgt, source oid) {\r\n  oid -&gt;  tgt.id = oid,  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = oid &quot;set-id&quot;;\r\n  src -&gt;  tgt.basedOn = src.basedOn,  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb6de01',  tgt.status = 'final',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'EmCare.B6.DE01' &quot;set-code&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;DE08-main&quot;;\r\n  a -&gt; tgt.value = a &quot;set-value&quot;;\r\n}\r\n\r\ngroup SetObservationemcareb6de03(source src, source a, target tgt, source oid) {\r\n  oid -&gt;  tgt.id = oid,  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = oid &quot;set-id&quot;;\r\n  src -&gt;  tgt.basedOn = src.basedOn,  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb6de03',  tgt.status = 'final',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'EmCare.B6.DE03' &quot;set-code&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;DE08-main&quot;;\r\n  a -&gt; tgt.value = a &quot;set-value&quot;;\r\n}\r\n\r\n</pre></div>"
+    },
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-encounter-emcare.b6.measurements",
+    "name": "emcare-encounter-emcare.b6.measurements",
+    "status": "draft",
+    "description": "emcareb6measurements:https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b6.measurements",
+    "structure": [
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse",
+            "mode": "source",
+            "alias": "'questionnaireResponse'",
+            "documentation": "Bundle are require where there is multiple ressource to be mapped"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+            "mode": "target",
+            "alias": "'bundle'",
+            "documentation": "target that will be inserted in the bundle"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/Encounter",
+            "mode": "target",
+            "alias": "'Encounter'"
+        }
+    ],
+    "group": [
+        {
+            "name": "bundleMapping",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
+                },
+                {
+                    "name": "bundle",
+                    "type": "Bundle",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "id",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "uuid"
+                        }
+                    ]
+                },
+                {
+                    "name": "type",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "type",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "batch"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "gen-ids",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "variable": "emcareencounteremcareb6measurementsid",
+                            "transform": "uuid"
+                        },
+                        {
+                            "contextType": "variable",
+                            "variable": "emcareb6de01id",
+                            "transform": "uuid"
+                        },
+                        {
+                            "contextType": "variable",
+                            "variable": "emcareb6de03id",
+                            "transform": "uuid"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "emcareencounteremcareb6measurementsgrouprule",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "bundle",
+                                    "contextType": "variable",
+                                    "element": "entry",
+                                    "variable": "entry"
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "fullUrl",
+                                    "transform": "append",
+                                    "parameter": [
+                                        {
+                                            "valueString": "urn:uuid:"
+                                        },
+                                        {
+                                            "valueId": "emcareencounteremcareb6measurementsid"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "request",
+                                    "variable": "request"
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "method",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "PUT"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "url",
+                                    "transform": "append",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Encounter/"
+                                        },
+                                        {
+                                            "valueId": "emcareencounteremcareb6measurementsid"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Encounter"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "dependent": [
+                                {
+                                    "name": "emcareencounteremcareb6measurementsgroup",
+                                    "variable": [
+                                        "src",
+                                        "tgt",
+                                        "emcareencounteremcareb6measurementsid"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "emcareb6de01grouprule",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "bundle",
+                                    "contextType": "variable",
+                                    "element": "entry",
+                                    "variable": "entry"
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "fullUrl",
+                                    "transform": "append",
+                                    "parameter": [
+                                        {
+                                            "valueString": "urn:uuid:"
+                                        },
+                                        {
+                                            "valueId": "emcareb6de01id"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "request",
+                                    "variable": "request"
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "method",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "PUT"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "url",
+                                    "transform": "append",
+                                    "parameter": [
+                                        {
+                                            "valueString": "None/"
+                                        },
+                                        {
+                                            "valueId": "emcareb6de01id"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Observation"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "obs-rule",
+                                    "source": [
+                                        {
+                                            "context": "src",
+                                            "element": "item",
+                                            "listMode": "first",
+                                            "variable": "item",
+                                            "condition": "linkId = 'emcareb6de01'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "item",
+                                            "contextType": "variable",
+                                            "element": "answer",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "SetObservationemcareb6de01",
+                                            "variable": [
+                                                "src",
+                                                "a",
+                                                "tgt",
+                                                "emcareb6de01id"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "emcareb6de03grouprule",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "bundle",
+                                    "contextType": "variable",
+                                    "element": "entry",
+                                    "variable": "entry"
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "fullUrl",
+                                    "transform": "append",
+                                    "parameter": [
+                                        {
+                                            "valueString": "urn:uuid:"
+                                        },
+                                        {
+                                            "valueId": "emcareb6de03id"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "request",
+                                    "variable": "request"
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "method",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "PUT"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "url",
+                                    "transform": "append",
+                                    "parameter": [
+                                        {
+                                            "valueString": "None/"
+                                        },
+                                        {
+                                            "valueId": "emcareb6de03id"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Observation"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "obs-rule",
+                                    "source": [
+                                        {
+                                            "context": "src",
+                                            "element": "item",
+                                            "listMode": "first",
+                                            "variable": "item",
+                                            "condition": "linkId = 'emcareb6de03'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "item",
+                                            "contextType": "variable",
+                                            "element": "answer",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "SetObservationemcareb6de03",
+                                            "variable": [
+                                                "src",
+                                                "a",
+                                                "tgt",
+                                                "emcareb6de03id"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SetObservationemcareb6de01",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "a",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                },
+                {
+                    "name": "oid",
+                    "mode": "source"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "set-id",
+                    "source": [
+                        {
+                            "context": "oid"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "oid"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "identifier",
+                            "variable": "CodeID",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Identifier"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "system",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "http://hl7.org/fhir/namingsystem-identifier-type"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "use",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "official"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "value",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "uuid"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "oid"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "set-code",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "basedOn",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.basedOn"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "encounter",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.encounter"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "subject",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.subject"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "meta",
+                            "variable": "newMeta",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Meta"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "newMeta",
+                            "contextType": "variable",
+                            "element": "profile",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb6de01"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "status",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "final"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "code",
+                            "variable": "concept",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "CodeableConcept"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "concept",
+                            "contextType": "variable",
+                            "element": "system",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "concept",
+                            "contextType": "variable",
+                            "element": "code",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "EmCare.B6.DE01"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "EmCare.A.DE08-main",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'timestamp'"
+                        },
+                        {
+                            "context": "item",
+                            "element": "answer",
+                            "variable": "a"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "issued",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "a"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "set-value",
+                    "source": [
+                        {
+                            "context": "a"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "value",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "a"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SetObservationemcareb6de03",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "a",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                },
+                {
+                    "name": "oid",
+                    "mode": "source"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "set-id",
+                    "source": [
+                        {
+                            "context": "oid"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "oid"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "identifier",
+                            "variable": "CodeID",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Identifier"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "system",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "http://hl7.org/fhir/namingsystem-identifier-type"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "use",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "official"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "value",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "uuid"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "oid"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "set-code",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "basedOn",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.basedOn"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "encounter",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.encounter"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "subject",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.subject"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "meta",
+                            "variable": "newMeta",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Meta"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "newMeta",
+                            "contextType": "variable",
+                            "element": "profile",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb6de03"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "status",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "final"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "code",
+                            "variable": "concept",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "CodeableConcept"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "concept",
+                            "contextType": "variable",
+                            "element": "system",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "concept",
+                            "contextType": "variable",
+                            "element": "code",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "EmCare.B6.DE03"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "EmCare.A.DE08-main",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'timestamp'"
+                        },
+                        {
+                            "context": "item",
+                            "element": "answer",
+                            "variable": "a"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "issued",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "a"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "set-value",
+                    "source": [
+                        {
+                            "context": "a"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "value",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "a"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

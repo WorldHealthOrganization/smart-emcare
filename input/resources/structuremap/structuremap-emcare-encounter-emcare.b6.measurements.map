@@ -1,0 +1,89 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-encounter-emcare.b6.measurements' = 'emcare-encounter-emcare.b6.measurements'
+
+// emcareb6measurements:https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b6.measurements
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+// Bundle are require where there is multiple ressource to be mapped
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'bundle' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/Encounter' alias 'Encounter' as target
+
+group bundleMapping(source src : questionnaireResponse, target bundle : Bundle) {
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+     src -> uuid() as emcareencounteremcareb6measurementsid,uuid() as emcareb6de01id,uuid() as emcareb6de03id then {
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcareencounteremcareb6measurementsid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("Encounter/", emcareencounteremcareb6measurementsid),
+            entry.resource = create('Encounter') as tgt then emcareencounteremcareb6measurementsgroup(src, tgt, emcareencounteremcareb6measurementsid) 'emcareencounteremcareb6measurementsgrouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcareb6de01id), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("None/", emcareb6de01id),
+            entry.resource = create('Observation') as tgt then {src.item first as item  where linkId =  'emcareb6de01' -> item.answer as a then SetObservationemcareb6de01(src, a, tgt , emcareb6de01id) 'obs-rule';}  'emcareb6de01grouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcareb6de03id), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("None/", emcareb6de03id),
+            entry.resource = create('Observation') as tgt then {src.item first as item  where linkId =  'emcareb6de03' -> item.answer as a then SetObservationemcareb6de03(src, a, tgt , emcareb6de03id) 'obs-rule';}  'emcareb6de03grouprule';
+            	}'gen-ids';
+}
+
+
+group SetObservationemcareb6de01(source src, source a, target tgt, source oid ){
+
+    oid ->  tgt.id = oid,
+            tgt.identifier = create('Identifier') as CodeID, 
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = oid
+            'set-id';
+    src -> 
+        tgt.basedOn = src.basedOn,
+        tgt.encounter = src.encounter,
+        tgt. subject = src. subject,
+        tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb6de01',
+        tgt.status = 'final',
+        tgt.code = create('CodeableConcept') as concept, 
+            concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+            concept.code = 'EmCare.B6.DE01' 'set-code';  
+    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'EmCare.A.DE08-main';       
+
+    a -> tgt.value = a 'set-value'; 
+}
+    
+
+
+group SetObservationemcareb6de03(source src, source a, target tgt, source oid ){
+
+    oid ->  tgt.id = oid,
+            tgt.identifier = create('Identifier') as CodeID, 
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = oid
+            'set-id';
+    src -> 
+        tgt.basedOn = src.basedOn,
+        tgt.encounter = src.encounter,
+        tgt. subject = src. subject,
+        tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb6de03',
+        tgt.status = 'final',
+        tgt.code = create('CodeableConcept') as concept, 
+            concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+            concept.code = 'EmCare.B6.DE03' 'set-code';  
+    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'EmCare.A.DE08-main';       
+
+    a -> tgt.value = a 'set-value'; 
+}
+    
+

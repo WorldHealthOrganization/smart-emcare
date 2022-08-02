@@ -66,6 +66,7 @@ src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 
         a -> identifier.value = 'noid', identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir//CodeSystem/em-custom'  "noid";
     } 'set-id';   } 'EmCare.A.DE03-main';
 		src.item first as item  where linkId =  'EmCare.A.DE04'  or linkId =  'EmCare.A.DE05' or linkId =  'EmCare.A.DE06' -> tgt as target,  target.name as name then SetOfficalGivenNameemcareade04(src, name) 'name-main';
+		src.item as item where linkId  = 'EmCare.A.DE08' -> tgt then { item.answer as a -> a -> tgt.birthDate = a 'EmCare.A.DE08-1';   } 'EmCare.A.DE08-main';
 		src.item as item where linkId  = 'EmCare.A.DE12' -> tgt then { item.answer as a -> tgt.extension as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.valueCode = a 'EmCare.A.DE12-1';   } 'EmCare.A.DE12-main';
 		src.item as item where linkId  = 'EmCare.A.DE16' -> tgt then { item.answer as a -> tgt.gender = translate(a, 'sex-of-the-client', 'http://hl7.org/fhir/administrative-gender') 'EmCare.A.DE16-1';   } 'EmCare.A.DE16-main';
 		src.item as item where linkId  = 'EmCare.A.DE20' -> tgt then { item.answer as a -> tgt.address as address, address.text = a 'EmCare.A.DE20-1';   } 'EmCare.A.DE20-main';

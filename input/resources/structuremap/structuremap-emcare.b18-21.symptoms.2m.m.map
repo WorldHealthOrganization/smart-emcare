@@ -1,0 +1,45 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m' = 'emcare.b18-21.symptoms.2m.m'
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
+group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+        src -> bundle.entry as entry,
+            entry.request as request,
+            request.method = "POST",
+            entry.resource = create('Observation') as tgt
+         then {
+        src.item first as item  where linkId =  'EmCare.B18S1.DE01' -> item.answer as a then SetObservationemcareb18s1de01(src, a, tgt)  'obs-EmCare.B18S1.DE01';
+    } 'post-EmCare.B18S1.DE01';
+        src -> bundle.entry as entry,
+            entry.request as request,
+            request.method = "POST",
+            entry.resource = create('Observation') as tgt
+         then {
+        src.item first as item  where linkId =  'EmCare.B18S1.DE02' -> item.answer as a then SetObservationemcareb18s1de02(src, a, tgt)  'obs-EmCare.B18S1.DE02';
+    } 'post-EmCare.B18S1.DE02';
+        src -> bundle.entry as entry,
+            entry.request as request,
+            request.method = "POST",
+            entry.resource = create('Observation') as tgt
+         then {
+        src.item first as item  where linkId =  'EmCare.B20S1.DE01' -> item.answer as a then SetObservationemcareb20s1de01(src, a, tgt)  'obs-EmCare.B20S1.DE01';
+    } 'post-EmCare.B20S1.DE01';
+        src -> bundle.entry as entry,
+            entry.request as request,
+            request.method = "POST",
+            entry.resource = create('Observation') as tgt
+         then {
+        src.item first as item  where linkId =  'EmCare.B21S1.DE01' -> item.answer as a then SetObservationemcareb21s1de01(src, a, tgt)  'obs-EmCare.B21S1.DE01';
+    } 'post-EmCare.B21S1.DE01';
+        src -> bundle.entry as entry,
+            entry.request as request,
+            request.method = "POST",
+            entry.resource = create('Observation') as tgt
+         then {
+        src.item first as item  where linkId =  'EmCare.B21S1.DE06' -> item.answer as a then SetObservationemcareb21s1de06(src, a, tgt)  'obs-EmCare.B21S1.DE06';
+    } 'post-EmCare.B21S1.DE06';
+}
+

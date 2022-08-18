@@ -1,0 +1,479 @@
+{
+  "resourceType": "StructureMap",
+  "id": "emcare.b18-21.symptoms.2m.m",
+  "meta": {
+    "versionId": "4",
+    "lastUpdated": "2022-08-18T15:45:06.914000+00:00"
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m&quot; = &quot;emcare.b18-21.symptoms.2m.m&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then {\r\n    src.item first as item where linkId = 'EmCare.B18S1.DE01' -&gt; item.answer as a then SetObservationemcareb18s1de01(src, a, tgt) &quot;DE01&quot;;\r\n  } &quot;DE01&quot;;\r\n  src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then {\r\n    src.item first as item where linkId = 'EmCare.B18S1.DE02' -&gt; item.answer as a then SetObservationemcareb18s1de02(src, a, tgt) &quot;DE02&quot;;\r\n  } &quot;DE02&quot;;\r\n  src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then {\r\n    src.item first as item where linkId = 'EmCare.B20S1.DE01' -&gt; item.answer as a then SetObservationemcareb20s1de01(src, a, tgt) &quot;DE01&quot;;\r\n  } &quot;DE01&quot;;\r\n  src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then {\r\n    src.item first as item where linkId = 'EmCare.B21S1.DE01' -&gt; item.answer as a then SetObservationemcareb21s1de01(src, a, tgt) &quot;DE01&quot;;\r\n  } &quot;DE01&quot;;\r\n  src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then {\r\n    src.item first as item where linkId = 'EmCare.B21S1.DE06' -&gt; item.answer as a then SetObservationemcareb21s1de06(src, a, tgt) &quot;DE06&quot;;\r\n  } &quot;DE06&quot;;\r\n}\r\n\r\n</pre></div>"
+  },
+  "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m",
+  "name": "emcare.b18-21.symptoms.2m.m",
+  "status": "active",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse",
+      "mode": "source",
+      "alias": "'questionnaireResponse'"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+      "mode": "target",
+      "alias": "'Bundle'"
+    },
+    {
+      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation",
+      "mode": "target",
+      "alias": "'Observation'"
+    },
+    {
+      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation",
+      "mode": "produced",
+      "alias": "'EmCare Observation'"
+    }
+  ],
+  "group": [
+    {
+      "name": "bundletrans",
+      "typeMode": "none",
+      "input": [
+        {
+          "name": "src",
+          "type": "questionnaireResponse",
+          "mode": "source"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "id",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "id",
+              "transform": "uuid"
+            }
+          ]
+        },
+        {
+          "name": "type",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "type",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "batch"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "post-EmCare.B18S1.DE01",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "entry",
+              "variable": "entry"
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "request",
+              "variable": "request"
+            },
+            {
+              "context": "request",
+              "contextType": "variable",
+              "element": "method",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "POST"
+                }
+              ]
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "resource",
+              "variable": "tgt",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Observation"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "obs-EmCare.B18S1.DE01",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "listMode": "first",
+                  "variable": "item",
+                  "condition": "linkId = 'EmCare.B18S1.DE01'"
+                }
+              ],
+              "target": [
+                {
+                  "context": "item",
+                  "contextType": "variable",
+                  "element": "answer",
+                  "variable": "a"
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "SetObservationemcareb18s1de01",
+                  "variable": [
+                    "src",
+                    "a",
+                    "tgt"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "post-EmCare.B18S1.DE02",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "entry",
+              "variable": "entry"
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "request",
+              "variable": "request"
+            },
+            {
+              "context": "request",
+              "contextType": "variable",
+              "element": "method",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "POST"
+                }
+              ]
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "resource",
+              "variable": "tgt",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Observation"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "obs-EmCare.B18S1.DE02",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "listMode": "first",
+                  "variable": "item",
+                  "condition": "linkId = 'EmCare.B18S1.DE02'"
+                }
+              ],
+              "target": [
+                {
+                  "context": "item",
+                  "contextType": "variable",
+                  "element": "answer",
+                  "variable": "a"
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "SetObservationemcareb18s1de02",
+                  "variable": [
+                    "src",
+                    "a",
+                    "tgt"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "post-EmCare.B20S1.DE01",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "entry",
+              "variable": "entry"
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "request",
+              "variable": "request"
+            },
+            {
+              "context": "request",
+              "contextType": "variable",
+              "element": "method",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "POST"
+                }
+              ]
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "resource",
+              "variable": "tgt",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Observation"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "obs-EmCare.B20S1.DE01",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "listMode": "first",
+                  "variable": "item",
+                  "condition": "linkId = 'EmCare.B20S1.DE01'"
+                }
+              ],
+              "target": [
+                {
+                  "context": "item",
+                  "contextType": "variable",
+                  "element": "answer",
+                  "variable": "a"
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "SetObservationemcareb20s1de01",
+                  "variable": [
+                    "src",
+                    "a",
+                    "tgt"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "post-EmCare.B21S1.DE01",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "entry",
+              "variable": "entry"
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "request",
+              "variable": "request"
+            },
+            {
+              "context": "request",
+              "contextType": "variable",
+              "element": "method",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "POST"
+                }
+              ]
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "resource",
+              "variable": "tgt",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Observation"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "obs-EmCare.B21S1.DE01",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "listMode": "first",
+                  "variable": "item",
+                  "condition": "linkId = 'EmCare.B21S1.DE01'"
+                }
+              ],
+              "target": [
+                {
+                  "context": "item",
+                  "contextType": "variable",
+                  "element": "answer",
+                  "variable": "a"
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "SetObservationemcareb21s1de01",
+                  "variable": [
+                    "src",
+                    "a",
+                    "tgt"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "post-EmCare.B21S1.DE06",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "contextType": "variable",
+              "element": "entry",
+              "variable": "entry"
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "request",
+              "variable": "request"
+            },
+            {
+              "context": "request",
+              "contextType": "variable",
+              "element": "method",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "POST"
+                }
+              ]
+            },
+            {
+              "context": "entry",
+              "contextType": "variable",
+              "element": "resource",
+              "variable": "tgt",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Observation"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "obs-EmCare.B21S1.DE06",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "listMode": "first",
+                  "variable": "item",
+                  "condition": "linkId = 'EmCare.B21S1.DE06'"
+                }
+              ],
+              "target": [
+                {
+                  "context": "item",
+                  "contextType": "variable",
+                  "element": "answer",
+                  "variable": "a"
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "SetObservationemcareb21s1de06",
+                  "variable": [
+                    "src",
+                    "a",
+                    "tgt"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

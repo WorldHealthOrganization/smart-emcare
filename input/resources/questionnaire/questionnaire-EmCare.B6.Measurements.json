@@ -1,485 +1,505 @@
 {
-    "resourceType": "Questionnaire",
-    "id": "EmCare.B6.Measurements",
-    "meta": {
-        "profile": [
-            "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
-        ]
-    },
-    "extension": [
-        {
-            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-            "valueCode": "shareable"
-        },
-        {
-            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-            "valueCode": "computable"
-        },
-        {
-            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-            "valueCode": "publishable"
-        },
-        {
-            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
-            "valueCode": "structured"
-        },
-        {
-            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare-encounter-emcare.b6.measurements"
-        }
-    ],
-    "status": "active",
-    "experimental": false,
-    "subjectType": [
-        "Patient"
-    ],
-    "item": [
-        {
-            "linkId": "EmCare.B6.DE01",
-            "text": "Auxiliary Temperature",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value= {}"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE02",
-            "text": "Prefer to take Rectal Temperature",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.A.DE07').answer.value - %resource.repeat(item).where(linkId='EmCare.A.DE08').answer.value) / 365"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE03",
-            "text": "Rectal Temperature",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value= {} or (%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value= {} and %resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true)"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE04",
-            "text": "Thermometer not available",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.value = true"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE05",
-            "text": "Hot to Touch",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "linkId": "EmCare.B6.DE06",
-            "text": "Weight",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value= {}"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE07",
-            "text": "Weight cannot be measured",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.value = true"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE08",
-            "text": "Estimated Weight",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "AgeInDays()"
-                    }
-                }
-            ],
-            "linkId": "AgeInDays",
-            "text": "Age in Days",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "AgeInMonths()"
-                    }
-                }
-            ],
-            "linkId": "AgeInMonth",
-            "text": "Age in months",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "AgeInYears()"
-                    }
-                }
-            ],
-            "linkId": "AgeInYears",
-            "text": "Age in years",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE09",
-            "text": "Height",
-            "type": "quantity",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value = {} and %resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE10",
-            "text": "Prefer to measure length",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value = {} and %resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE11",
-            "text": "Height cannot be measured",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value= {}"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value = true, %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value-0.7 'cm', '')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE12",
-            "text": "Length",
-            "type": "quantity",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
-                            }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE12').answer.value != {}"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE13",
-            "text": "Length cannot be measured",
-            "type": "boolean",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = false and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value=false"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE14",
-            "text": "Weight for Height (WFH) Z Scores",
-            "type": "integer",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = false"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE15",
-            "text": "Weight for Length (WFL) Z Scores",
-            "type": "integer",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "linkId": "EmCare.B6.DE16",
-            "text": "Weight for Age (WFA) Z Scores",
-            "type": "integer",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=6"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE17",
-            "text": "MUAC (Mid Upper Arm Circumference)",
-            "type": "decimal",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "drop-down",
-                                "display": "Drop down"
-                            }
-                        ],
-                        "text": "Drop down"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value= {} and %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.value= {} and %resource.repeat(item).where(linkId='AgeInMonths').answer.value>=6"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B6.DE18",
-            "text": "Visually assess for whether underweight (for drug dose calculation)",
-            "type": "choice",
-            "required": false,
-            "designNote": "status::draft"
-        },
-        {
-            "linkId": "EmCare.B6.DE22",
-            "text": "Date of measurement",
-            "type": "date",
-            "required": false,
-            "designNote": "status::draft"
-        }
+  "resourceType": "Questionnaire",
+  "id": "emcare.b6.measurements",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
     ]
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+      "valueCode": "shareable"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+      "valueCode": "computable"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+      "valueCode": "publishable"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+      "valueCode": "structured"
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+      "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b6.measurements"
+    }
+  ],
+  "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b6.measurements",
+  "title": "EmCare.B6.Measurements",
+  "status": "active",
+  "experimental": false,
+  "subjectType": [
+    "Patient"
+  ],
+  "item": [
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "now()"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+          "valueBoolean": true
+        }
+      ],
+      "linkId": "timestamp",
+      "type": "dateTime",
+      "required": false
+    },
+    {
+      "linkId": "EmCare.B6.DE01",
+      "text": "Auxiliary Temperature",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value= {}"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE02",
+      "text": "Prefer to take Rectal Temperature",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "(%resource.repeat(item).where(linkId='EmCare.A.DE07').answer.value - %resource.repeat(item).where(linkId='EmCare.A.DE08').answer.value) / 365"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE03",
+      "text": "Rectal Temperature",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.value= {} or (%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.value= {} and %resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.value = true)"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE04",
+      "text": "Thermometer not available",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.value = true"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE05",
+      "text": "Hot to Touch",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "linkId": "EmCare.B6.DE06",
+      "text": "Weight",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value= {}"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE07",
+      "text": "Weight cannot be measured",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.value = true"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE08",
+      "text": "Estimated Weight",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "AgeInDays()"
+          }
+        }
+      ],
+      "linkId": "AgeInDays",
+      "text": "Age in Days",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "AgeInMonths()"
+          }
+        }
+      ],
+      "linkId": "AgeInMonth",
+      "text": "Age in months",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "AgeInYears()"
+          }
+        }
+      ],
+      "linkId": "AgeInYears",
+      "text": "Age in years",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE09",
+      "text": "Height",
+      "type": "quantity",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value = {} and %resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE10",
+      "text": "Prefer to measure length",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value = {} and %resource.repeat(item).where(linkId='AgeInMonth').answer.value>=24"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE11",
+      "text": "Height cannot be measured",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value= {}"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value = true, %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.value-0.7 'cm', '')"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE12",
+      "text": "Length",
+      "type": "quantity",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "check-box",
+                "display": "Check-box"
+              }
+            ],
+            "text": "Check-box"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE12').answer.value != {}"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE13",
+      "text": "Length cannot be measured",
+      "type": "boolean",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = false and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.value=false"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE14",
+      "text": "Weight for Height (WFH) Z Scores",
+      "type": "integer",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = false"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE15",
+      "text": "Weight for Length (WFL) Z Scores",
+      "type": "integer",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "linkId": "EmCare.B6.DE16",
+      "text": "Weight for Age (WFA) Z Scores",
+      "type": "integer",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value>=6"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE17",
+      "text": "MUAC (Mid Upper Arm Circumference)",
+      "type": "decimal",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ],
+            "text": "Drop down"
+          }
+        },
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.value= {} and %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.value = true and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.value= {} and %resource.repeat(item).where(linkId='AgeInMonths').answer.value>=6"
+          }
+        }
+      ],
+      "linkId": "EmCare.B6.DE18",
+      "text": "Visually assess for whether underweight (for drug dose calculation)",
+      "type": "choice",
+      "required": false,
+      "designNote": "status::draft"
+    },
+    {
+      "linkId": "EmCare.B6.DE22",
+      "text": "Date of measurement",
+      "type": "date",
+      "required": false,
+      "designNote": "status::draft"
+    }
+  ]
 }

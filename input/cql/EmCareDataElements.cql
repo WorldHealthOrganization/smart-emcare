@@ -12,6 +12,22 @@ include EmCareConcepts called Cx
 context Patient
 
 /*
+  @dataElement: EmCare.A.DE46 CommunicationRequest recipient
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: This is needed to link the CommunicationRequest to the Caregiver
+*/
+define "CommunicationRequest recipient":
+  [CommunicationRequest]
+
+/*
+  @dataElement: EmCare.A.DE38 Caregiver wants to receive SMS or other messages regarding the child's visits and health status
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: The caregiver wants to receive SMS or other messages regarding the client's contacts/visits and health status
+*/
+define "Caregiver wants to receive SMS or other messages regarding the child's visits and health status":
+  [CommunicationRequest]
+
+/*
   @dataElement: EmCare.A.DE07 Visit date
   @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
   @description: The date and time of the client's visit
@@ -19,6 +35,22 @@ context Patient
 define "Visit date":
   [Encounter] E
     return E.period.start
+
+/*
+  @dataElement: EmCare.A.DE44 Person accompanying child today
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: null
+*/
+define "Person accompanying child today":
+  [Encounter]
+
+/*
+  @dataElement: EmCare.A.DE45 Participant type Person accompanying child
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: null
+*/
+define "Participant type Person accompanying child":
+  [Encounter: Cx."ESC"]
 
 /*
   @dataElement: EmCare.A.DE40 Person accompanying child today's First Name
@@ -91,6 +123,15 @@ define "Unique identification":
 define "First name":
   [Patient] P
     return First(WC.Official(P.name).given)
+
+/* TODO
+  @dataElement: EmCare.A.DE05 Middle Name
+  @activity: EmCare.A4. Gather Client Details?OR ?EmCare.A8.Create Client Record?AND/OR EmCare.A9.Validate Client Details
+  @description: Client's middle name
+*/
+define "Middle Name":
+  [Patient]
+    return WC.Official(P.name).given[1]
 
 /*
   @dataElement: EmCare.A.DE06 Last name
@@ -213,7 +254,7 @@ define "Relationship Father":
   @description: The client's mother and father's vital status
 */
 define "Biological Father Vital Status":
-  [RelatedPerson] 
+  [RelatedPerson]
     return AC.Extension(RelatedPerson.vitalStatus.value[x]).value as string
 
 /*
@@ -231,7 +272,7 @@ define "Relationship Mother":
   @description: The client's mother and father's vital status
 */
 define "Biological Mother Vital Status":
-  [RelatedPerson] 
+  [RelatedPerson]
     return AC.Extension(RelatedPerson.vitalStatus.value[x]).value as string
 
 /*
@@ -241,6 +282,50 @@ define "Biological Mother Vital Status":
 */
 define "Is the child sick today":
   [Observation: Cx."Is the child sick today"] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+
+
+/* TODO
+  @dataElement: EmCare.B6.DE01 Axillary Temperature
+  @activity: EmCare.B3. Determine Reason for Consultation
+  @description: The client's axillary temperature in degrees Celsius (temperature taken under the armpit)
+*/
+define "Axillary Temperature":
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+
+
+/* TODO
+  @dataElement: EmCare.B6.DE18 Visually assess for whether underweight (for drug dose calculation)
+  @activity: EmCare.B3. Determine Reason for Consultation
+  @description: The health care worker visually assesses for whether underweight (for drug dosing calculations)
+*/
+define "Visually assess for whether underweight (for drug dose calculation)":
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+
+
+/* TODO
+  @dataElement: EmCare.B6.DE22 Date of measurement
+  @activity: EmCare.B3. Determine Reason for Consultation
+  @description: The date when the measurement was taken
+*/
+define "Date of measurement":
+  [Observation] O
+    where O.status in { 'final', 'amended', 'corrected' }
+      and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
+
+
+/* TODO
+  @dataElement: EmCare.B6.DE04 Thermometer not available
+  @activity: EmCare.B6. Measurements
+  @description: A thermometer is not available to accurately measure the client's temperature
+*/
+define "Thermometer not available":
+  [Observation] O
     where O.status in { 'final', 'amended', 'corrected' }
       and Coalesce(WC.ModifierExtension(O, 'who-notDone').value, false) is false
 

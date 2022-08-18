@@ -1,0 +1,373 @@
+{
+    "resourceType": "StructureDefinition",
+    "id": "emcare-patient",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-patient",
+    "name": "EmCare Patient",
+    "title": "EmCare Patient",
+    "status": "draft",
+    "experimental": false,
+    "description": "EmCare Patient",
+    "fhirVersion": "4.0.1",
+    "kind": "complex-type",
+    "abstract": false,
+    "type": "Patient",
+    "baseDefinition": "http://fhir.org/guides/who/core/StructureDefinition/who-patient",
+    "derivation": "constraint",
+    "differential": {
+        "element": [
+            {
+                "id": "patient",
+                "path": "Patient"
+            },
+            {
+                "id": "patient.identifier.value:universalid",
+                "path": "Patient.identifier.value",
+                "sliceName": "universalID",
+                "short": "Unique identification",
+                "definition": "Unique identifier provided or a universal ID, if used in the country",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE01"
+                    }
+                ]
+            },
+            {
+                "id": "patient.identifier.value:generatedid",
+                "path": "Patient.identifier.value",
+                "sliceName": "generatedID",
+                "short": "Unique identification",
+                "definition": "Auto-generated unique identification if used by the implementation",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE02"
+                    }
+                ]
+            },
+            {
+                "id": "patient.extension.anonymous",
+                "path": "Patient.extension",
+                "sliceName": "anonymous ",
+                "short": "Child's Identity unknown/prefer to remain anonymous",
+                "definition": "The client's identity is unknown or the client's prefers to remain anonymous",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE03"
+                    }
+                ]
+            },
+            {
+                "id": "patient.name.given:firstname",
+                "path": "Patient.name.given",
+                "sliceName": "firstName",
+                "short": "First name",
+                "definition": "Client's first name",
+                "min": 1,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE04"
+                    }
+                ]
+            },
+            {
+                "id": "patient.name.given:middlename",
+                "path": "Patient.name.given",
+                "sliceName": "middleName",
+                "short": "Middle Name",
+                "definition": "Client's middle name",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE05"
+                    }
+                ]
+            },
+            {
+                "id": "patient.name.family",
+                "path": "Patient.name.family",
+                "short": "Last name",
+                "definition": "Client's family name or last name",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE06"
+                    }
+                ]
+            },
+            {
+                "id": "patient.birthdate",
+                "path": "Patient.birthDate",
+                "short": "Date of birth",
+                "definition": "The client's date of birth (DOB), if known, OR the estimated date of birth IF not known (see EmCare.A.DE10)",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "date"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE08"
+                    }
+                ]
+            },
+            {
+                "id": "patient.extension.birthtime",
+                "path": "Patient.extension",
+                "sliceName": "birthTime ",
+                "short": "Time of Birth",
+                "definition": "The client's time of birth (if <1 day old)",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthtime-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE09"
+                    }
+                ]
+            },
+            {
+                "id": "patient.extension.birthdateestimator",
+                "path": "Patient.extension",
+                "sliceName": "birthDateEstimator ",
+                "short": "Provide an estimated age or estimated date of birth",
+                "definition": "The client/caregiver will provide an estimated age or estimated date of birth",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthdateestimator-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE12"
+                    }
+                ]
+            },
+            {
+                "id": "patient.gender",
+                "path": "Patient.gender",
+                "short": "Sex",
+                "definition": "The Sex of the client",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "CodeableConcept"
+                    }
+                ],
+                "binding": {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+                            "valueString": "sex-of-the-client"
+                        }
+                    ],
+                    "strength": "extensible",
+                    "valueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/sex-of-the-client"
+                },
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE16"
+                    }
+                ]
+            },
+            {
+                "id": "patient.address.line",
+                "path": "Patient.address.line",
+                "short": "Address",
+                "definition": "Client's home address or address that the client is consenting to disclose",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "string"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE20"
+                    }
+                ]
+            },
+            {
+                "id": "patient.extension.caregiver",
+                "path": "Patient.extension",
+                "sliceName": "caregiver ",
+                "short": "Caregiver",
+                "definition": "the child could have been created from the mother therefore a relatedpersom may already exist",
+                "min": 1,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/caregiver-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE47"
+                    }
+                ]
+            },
+            {
+                "id": "patient.extension.mothervitalstatus",
+                "path": "Patient.extension",
+                "sliceName": "motherVitalStatus ",
+                "short": "Biological Mother Vital Status",
+                "definition": "The client's mother and father's vital status",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/mothervitalstatus-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE31"
+                    }
+                ]
+            },
+            {
+                "id": "patient.extension.fathervitalstatus",
+                "path": "Patient.extension",
+                "sliceName": "fatherVitalStatus ",
+                "short": "Biological Father Vital Status",
+                "definition": "The client's mother and father's vital status",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/fathervitalstatus-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE32"
+                    }
+                ]
+            },
+            {
+                "id": "patient.identifier",
+                "path": "patient.identifier",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "type",
+                            "path": "resolve()"
+                        }
+                    ],
+                    "rules": "closed"
+                },
+                "min": 0,
+                "max": "*"
+            },
+            {
+                "id": "patient.extension",
+                "path": "patient.extension",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "type",
+                            "path": "resolve()"
+                        }
+                    ],
+                    "rules": "closed"
+                },
+                "min": 0,
+                "max": "1"
+            },
+            {
+                "id": "patient.name",
+                "path": "patient.name",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "type",
+                            "path": "resolve()"
+                        }
+                    ],
+                    "rules": "closed"
+                },
+                "min": 0,
+                "max": "*"
+            }
+        ]
+    }
+}

@@ -1,0 +1,121 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p' = 'emcarea.registration.p'
+
+// emcarearegistrationp:https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcarea.registration.p
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+// Bundle are require where there is multiple ressource to be mapped
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'bundle' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/Patient' alias 'Patient' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/Encounter' alias 'Encounter' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/RelatedPerson' alias 'RelatedPerson' as target
+// target that will be inserted in the bundle
+uses 'http://hl7.org/fhir/StructureDefinition/CommunicationRequest' alias 'CommunicationRequest' as target
+
+group bundleMapping(source src : questionnaireResponse, target bundle : Bundle) {
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+     src -> uuid() as emcarepatientemcarearegistrationpid,uuid() as emcareencounteremcarearegistrationpid,uuid() as emcarerelatedpersoncaregiveremcarearegistrationpid,uuid() as emcarecommunicationrequestemcarearegistrationpid then {
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcarepatientemcarearegistrationpid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("Patient/", emcarepatientemcarearegistrationpid),
+            entry.resource = create('Patient') as tgt then emcarepatientemcarearegistrationpgroup(src, tgt, emcarepatientemcarearegistrationpid) 'emcarepatientemcarearegistrationpgrouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcareencounteremcarearegistrationpid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("Encounter/", emcareencounteremcarearegistrationpid),
+            entry.resource = create('Encounter') as tgt then emcareencounteremcarearegistrationpgroup(src, tgt, emcareencounteremcarearegistrationpid) 'emcareencounteremcarearegistrationpgrouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcarerelatedpersoncaregiveremcarearegistrationpid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("RelatedPerson/", emcarerelatedpersoncaregiveremcarearegistrationpid),
+            entry.resource = create('RelatedPerson') as tgt then emcarerelatedpersoncaregiveremcarearegistrationpgroup(src, tgt, emcarerelatedpersoncaregiveremcarearegistrationpid) 'emcarerelatedpersoncaregiveremcarearegistrationpgrouprule';
+            
+        src -> 
+            bundle.entry as entry,
+            entry.fullUrl = append("urn:uuid:",emcarecommunicationrequestemcarearegistrationpid), 
+            entry.request as request, 
+            request.method = "PUT", 
+            request.url = append("CommunicationRequest/", emcarecommunicationrequestemcarearegistrationpid),
+            entry.resource = create('CommunicationRequest') as tgt then emcarecommunicationrequestemcarearegistrationpgroup(src, tgt, emcarecommunicationrequestemcarearegistrationpid) 'emcarecommunicationrequestemcarearegistrationpgrouprule';
+            	}'gen-ids';
+}
+
+group  emcarepatientemcarearegistrationpgroup(
+	source src : questionnaireResponse,
+	target tgt : Patient
+,  source resid ) {
+src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient' 'set-uuid';
+		src.item as item where linkId  = 'EmCare.A.DE01' -> tgt then { item.answer as a -> tgt.identifier = create('Identifier' ) as identifier then {
+        a -> identifier.value = a, identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir//CodeSystem/em-custom'  "id";
+    } 'set-id';   } 'EmCare.A.DE01-main';
+		src.item as item where linkId  = 'EmCare.A.DE02' -> tgt then { item.answer as a -> tgt.identifier = create('Identifier' ) as identifier then {
+        a -> identifier.value = a, identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir//CodeSystem/em-custom'  "idu";
+    } 'set-id';   } 'EmCare.A.DE02-main';
+		src.item as item where linkId  = 'EmCare.A.DE03' -> tgt then { item.answer as a -> tgt.identifier = create('Identifier' ) as identifier then {
+        a -> identifier.value = 'noid', identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir//CodeSystem/em-custom'  "noid";
+    } 'set-id';   } 'EmCare.A.DE03-main';
+		src.item first as item  where linkId =  'EmCare.A.DE04'  or linkId =  'EmCare.A.DE05' or linkId =  'EmCare.A.DE06' -> tgt as target,  target.name as name then SetOfficalGivenNameemcareade04(src, name) 'name-main';
+		src.item as item where linkId  = 'EmCare.A.DE08' -> tgt then { item.answer as a -> tgt.birthDate = a 'EmCare.A.DE08-1';   } 'EmCare.A.DE08-main';
+		src.item as item where linkId  = 'EmCare.A.DE12' -> tgt then { item.answer as a -> tgt.extension as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.valueCode = a 'EmCare.A.DE12-1';   } 'EmCare.A.DE12-main';
+		src.item as item where linkId  = 'EmCare.A.DE16' -> tgt then { item.answer as a -> tgt.gender = translate(a, 'sex-of-the-client', 'http://hl7.org/fhir/administrative-gender') 'EmCare.A.DE16-1';   } 'EmCare.A.DE16-main';
+		src.item as item where linkId  = 'EmCare.A.DE20' -> tgt then { item.answer as a -> tgt.address as address, address.text = a 'EmCare.A.DE20-1';   } 'EmCare.A.DE20-main';
+		src.item as item where linkId  = 'EmCare.A.DE47' -> tgt then { item.answer as a -> tgt.extension as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/caregiver', ext.valueReference= a 'EmCare.A.DE47-1';   } 'EmCare.A.DE47-main';
+		src.item as item where linkId  = 'EmCare.A.DE31' -> tgt then { item.answer as a -> tgt.extension as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus', ext.valueCode= a 'EmCare.A.DE31-1';   } 'EmCare.A.DE31-main';
+		src.item as item where linkId  = 'EmCare.A.DE32' -> tgt then { item.answer as a -> tgt.extension as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus', ext.valueCode= a 'EmCare.A.DE32-1';   } 'EmCare.A.DE32-main';
+} 
+
+group SetOfficalGivenNameemcareade04(source src, target tgt){
+        src -> tgt.use = 'official'  then {
+            src.item as item where linkId  =  'EmCare.A.DE04'    then {item.answer as a -> tgt.given = a 'f';} 'first';
+            src.item as item  where linkId = 'EmCare.A.DE05'   then {item.answer as a -> tgt.given = a 'm';} 'middle';
+            src.item as item  where linkId = 'EmCare.A.DE06'  then {item.answer as a -> tgt.family = a 'fa';} 'family';
+        } 'details';
+    }
+
+group  emcareencounteremcarearegistrationpgroup(
+	source src : questionnaireResponse,
+	target tgt : Encounter
+,  source resid ) {
+src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter' 'set-uuid';
+		src.item as item where linkId  = 'EmCare.A.DE07' -> tgt then { item.answer as a -> tgt.period as period , period.start = a 'EmCare.A.DE07-1';   } 'EmCare.A.DE07-main';
+} 
+
+group  emcarerelatedpersoncaregiveremcarearegistrationpgroup(
+	source src : questionnaireResponse,
+	target tgt : RelatedPerson
+,  source resid ) {
+src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' 'set-uuid';
+		src.item first as item  where linkId =  'EmCare.A.DE21'  or linkId =  'EmCare.A.DE22' or linkId =  'EmCare.A.DE23' -> tgt as target,  target.name as name then SetOfficalGivenNameemcareade21(src, name) 'name-main';
+		src.item as item where linkId  = 'EmCare.A.DE35' -> tgt then { item.answer as a -> tgt.telecom as tel, tel.system = 'phone', tel.use ='mobile', tel.value = a 'EmCare.A.DE35-1';   } 'EmCare.A.DE35-main';
+		src.item as item where linkId  = 'EmCare.A.DE36' -> tgt then { item.answer as a -> tgt.telecom as tel, tel.system = 'phone', tel.use ='home', tel.value = a 'EmCare.A.DE36-1';   } 'EmCare.A.DE36-main';
+		src.item as item where linkId  = 'EmCare.A.DE37' -> tgt then { item.answer as a -> tgt.telecom as tel, tel.system = 'phone', tel.use ='work', tel.value = a 'EmCare.A.DE37-1';   } 'EmCare.A.DE37-main';
+} 
+
+group SetOfficalGivenNameemcareade21(source src, target tgt){
+        src -> tgt.use = 'official'  then {
+            src.item as item where linkId  =  'EmCare.A.DE21'    then {item.answer as a -> tgt.given = a 'f';} 'first';
+            src.item as item  where linkId = 'EmCare.A.DE22'   then {item.answer as a -> tgt.given = a 'm';} 'middle';
+            src.item as item  where linkId = 'EmCare.A.DE23'  then {item.answer as a -> tgt.family = a 'fa';} 'family';
+        } 'details';
+    }
+
+group  emcarecommunicationrequestemcarearegistrationpgroup(
+	source src : questionnaireResponse,
+	target tgt : CommunicationRequest
+,  source resid ) {
+src -> tgt.id = resid , tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest' 'set-uuid';
+		src.item as item where linkId  = 'EmCare.A.DE38' -> tgt then { item.answer as a -> tgt.medium = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'EmCare.A.DE38-1';   } 'EmCare.A.DE38-main';
+		src.item as item where linkId  = 'EmCare.A.DE46' -> tgt then { item.answer as a -> tgt.recipient = a 'EmCare.A.DE46-1';   } 'EmCare.A.DE46-main';
+} 
+

@@ -1,0 +1,81 @@
+{
+    "resourceType": "StructureDefinition",
+    "id": "emcare-communicationrequest",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-communicationrequest",
+    "name": "EmCare CommunicationRequest",
+    "title": "EmCare CommunicationRequest",
+    "status": "draft",
+    "experimental": false,
+    "description": "EmCare CommunicationRequest",
+    "fhirVersion": "4.0.1",
+    "kind": "complex-type",
+    "abstract": false,
+    "type": "CommunicationRequest",
+    "baseDefinition": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-communicationrequest",
+    "derivation": "constraint",
+    "differential": {
+        "element": [
+            {
+                "id": "communicationrequest",
+                "path": "CommunicationRequest"
+            },
+            {
+                "id": "communicationrequest.extension.smsnotifications",
+                "path": "CommunicationRequest.extension",
+                "sliceName": "smsNotifications ",
+                "short": "Caregiver wants to receive SMS or other messages regarding the child's visits and health status",
+                "definition": "The caregiver wants to receive SMS or other messages regarding the client's contacts/visits and health status",
+                "min": 1,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Extension",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/smsnotifications-"
+                        ]
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE38"
+                    }
+                ]
+            },
+            {
+                "id": "communicationrequest.recipient",
+                "path": "CommunicationRequest.recipient",
+                "short": "CommunicationRequest recipient",
+                "definition": "This is needed to link the CommunicationRequest to the Caregiver",
+                "min": 0,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "Reference"
+                    }
+                ],
+                "mapping": [
+                    {
+                        "identity": "EmCare",
+                        "map": "EmCare.A.DE46"
+                    }
+                ]
+            },
+            {
+                "id": "communicationrequest.extension",
+                "path": "communicationrequest.extension",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "type",
+                            "path": "resolve()"
+                        }
+                    ],
+                    "rules": "closed"
+                },
+                "min": 1,
+                "max": "1"
+            }
+        ]
+    }
+}

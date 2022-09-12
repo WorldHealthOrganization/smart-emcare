@@ -1,0 +1,745 @@
+{
+    "resourceType": "Questionnaire",
+    "id": "emcarea.registration.p",
+    "meta": {
+        "profile": [
+            "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
+        ]
+    },
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "shareable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "computable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "publishable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+            "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p"
+        }
+    ],
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcarea.registration.p",
+    "name": "EmCareA.Registration.P",
+    "title": "EmCareA.Registration.P",
+    "status": "active",
+    "experimental": false,
+    "subjectType": [
+        "Patient"
+    ],
+    "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "now()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "timestamp",
+            "type": "dateTime",
+            "required": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.exists() or %resource.repeat(item).where(linkId='EmCare.A.DE03').answer.first().value = false"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE01",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Unique identification",
+            "type": "text",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE03",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Child's Identity unknown/prefer to remain anonymous",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE04",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "First name",
+            "type": "text",
+            "required": true,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE05",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Middle Name",
+            "type": "text",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE06",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Last name",
+            "type": "text",
+            "required": true,
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "dob",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Date of birth",
+            "type": "date",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "d"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value = 0"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),between(%resource.repeat(item).where(linkId='dob').answer.first().value, now(), 'days'),{})"
+                    }
+                }
+            ],
+            "linkId": "AgeInDays",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "mo"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 0"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),between(%resource.repeat(item).where(linkId='dob').answer.first().value, now(), 'months') - 12* between(%resource.repeat(item).where(linkId='dob').answer.first().value, now(), 'years'),{})"
+                    }
+                }
+            ],
+            "linkId": "AgeInMonths",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "a"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInYears').answer.first().value > 0"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),between(%resource.repeat(item).where(linkId='dob').answer.first().value, now(), 'years'),{})"
+                    }
+                }
+            ],
+            "linkId": "AgeInYears",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE09').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE11",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Date of Birth not known",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ],
+                        "text": "Drop down"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE12",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Provide an estimated age or estimated date of birth",
+            "type": "choice",
+            "required": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/dob-estimator",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code =  'EmCare.A.DE14'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE14.1",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Only know age in weeks/days/hours",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "mo"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code =  'EmCare.A.DE13'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE13.1",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Estimated Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE15'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE15.1",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Estimated Date of Birth",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "d"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE13.1.mo').answer.first().value = 0"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.exists(),between(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value, now(), 'days'),{})"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE13.1.d",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "mo"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE13.1.mo').answer.first().value > 0"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.exists(),between(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value, now(), 'months') - 12* between(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value, now(), 'years'),{})"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE13.1.mo",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "a"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE13.1.a').answer.first().value > 0"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.exists(),between(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value, now(), 'years'),{})"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE13.1.a",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value = true"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),%resource.repeat(item).where(linkId='dob').answer.first().value,iif(%resource.repeat(item).where(linkId='EmCare.A.DE15.1').answer.exists(),%resource.repeat(item).where(linkId='EmCare.A.DE15.1').answer.first().value, today() - 31.5*%resource.repeat(item).where(linkId='EmCare.A.DE13.1').answer.first().value ))"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE08",
+            "text": "Estimated Date of Birth",
+            "type": "date",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.A.DE16",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Sex",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/sex-of-the-client",
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.A.DE20",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Address",
+            "type": "text",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "EmCare.A.DE47",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Caregiver",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "newCaregiver",
+            "text": "Register a new caregiver",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE21",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Primary Caregiver First Name",
+            "type": "text",
+            "required": true,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE22",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Primary Caregiver Middle Name",
+            "type": "text",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE23",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Primary Caregiver Last Name",
+            "type": "text",
+            "required": true,
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.A.DE35",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Caregiver's Mobile telephone number",
+            "type": "string",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.A.DE36",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Caregiver's Home telephone number",
+            "type": "string",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.A.DE37",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Caregiver's Work telephone number",
+            "type": "string",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.A.DE38",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Caregiver wants to receive SMS or other messages regarding the child's visits and health status",
+            "type": "boolean",
+            "required": true,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "emcarerelatedpersoncaregiveruuid",
+            "type": "text",
+            "required": false,
+            "initial": [
+                {
+                    "valueString": "uuid()"
+                }
+            ],
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.exists() ,%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.first().value, %resource.repeat(item).where(linkId='emcarerelatedpersoncaregiveruuid').answer.first().value)"
+                    }
+                }
+            ],
+            "linkId": "emcarerelatedpersoncaregiverid",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "CommunicationRequest recipient",
+            "type": "text",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE47').answer.empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE24",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Primary Caregiver's Relationship to Client",
+            "type": "choice",
+            "required": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/relationship-to-client",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ],
+                        "text": "Drop down"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.first().value.code != 'EmCare.A.DE25'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE31",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Biological Mother Vital Status",
+            "type": "choice",
+            "required": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                            }
+                        ],
+                        "text": "Drop down"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.first().value.code != 'EmCare.A.DE26'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.A.DE32",
+            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+            "text": "Biological Father Vital Status",
+            "type": "choice",
+            "required": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
+            "designNote": "status::draft"
+        }
+    ]
+}

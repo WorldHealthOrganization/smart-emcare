@@ -3,8 +3,8 @@ library EmCareBase
 using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.1'
-
-valueset  emcareobs : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+//include FHIRCommon called FC
+//include WHOCommon called WC
 
 context Encounter
 
@@ -13,7 +13,6 @@ context Encounter
 // obs and no value: return true
 // obs cancelled (not found) : return false
 // obs not found : return null
-// https://github.com/dongravlinnordic/chronic-care.github.io/blob/4488e3a78270a925b342836311c66544353e156f/covid-ed-ig/Library-CDSConnectCommons.cql#L105
 
 
 define function assesObservation(O Observation):
@@ -25,45 +24,57 @@ define function assesObservation(O Observation):
   end
       
 define function GetObservationDuringEncounter(idlist List<code>, codesystem url):
-  singleton  from  (First(
-    ([Observation] O
+    (First(
+    ([Observation ] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
         and O.status in { 'final', 'amended', 'corrected'}
-        and exists(First(O.code.coding C where C.code in idlist 
-        and C.system = codesystem)))
+        and exists(O.code.coding C where C.code in idlist 
+        and C.system = codesystem))
       union
       ([Observation] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
           and O.status in {'cancelled'}
-          and exists(First(O.code.coding C where C.code in idlist 
-          and C.system = codesystem)))))
+          and exists(O.code.coding C where C.code in idlist 
+          and C.system = codesystem))))
 
+define function GetNumberObservationDuringEncounter(idlist List<code>, codesystem url):
+  Count(
+    [Observation] O
+        where Last(Split(O.encounter.reference, '/')) = Encounter.id
+        and O.status in { 'final', 'amended', 'corrected'}
+        and exists((O.code.coding C where C.code in idlist 
+        and C.system = codesystem)))
 
-define function HasObs(idlist List<code>, codesystem url):
+define function PatientHasObservationDuringEncounter(idlist List<code>, codesystem url):
     assesObservation(GetObservationDuringEncounter(idlist, codesystem))
 
 
-
-
 define function GetHistoricObservation(idlist List<code>, codesystem url, nbdays Integer):
-  singleton  from  (First(
+  First(
     ([Observation] O
         where  O.status in { 'final', 'amended', 'corrected'}
         and difference in days between O.issued and Today() < nbdays
-        and exists(First(O.code.coding C where C.code in idlist 
+        and exists((O.code.coding C where C.code in idlist 
         and C.system = codesystem)))
       union
       ([Observation] O
         where  O.status in {'cancelled'}
           and difference in days between O.issued and Today() < nbdays
-          and exists(First(O.code.coding C where C.code in idlist 
-          and C.system = codesystem)))))
+          and exists((O.code.coding C where C.code in idlist 
+          and C.system = codesystem))))
   
 // ************************   PatientHasHistoryOfObservation ************************/
 
 
-define function HasHistoryOfObs(idlist List<code>, codesystem url, nbdays Integer):
+define function PatientHasHistoryOfObservation(idlist List<code>, codesystem url, nbdays Integer):
   assesObservation(GetHistoricObservation(idlist, codesystem, nbdays))
+
+
+
+
+
+
+
 
 
 //define function PatientHasConditionDuringEncounter(id String, codesystem url, duration Integer)):

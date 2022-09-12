@@ -4,6 +4,8 @@ using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.1'
 
+valueset  emcareobs : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+
 context Encounter
 
 // *********************   PatientHasObservationDuringEncounter *********************/
@@ -11,6 +13,7 @@ context Encounter
 // obs and no value: return true
 // obs cancelled (not found) : return false
 // obs not found : return null
+// https://github.com/dongravlinnordic/chronic-care.github.io/blob/4488e3a78270a925b342836311c66544353e156f/covid-ed-ig/Library-CDSConnectCommons.cql#L105
 
 
 define function assesObservation(O Observation):
@@ -36,8 +39,10 @@ define function GetObservationDuringEncounter(idlist List<code>, codesystem url)
           and C.system = codesystem)))))
 
 
-define function PatientHasObservationDuringEncounter(idlist List<code>, codesystem url):
+define function HasObs(idlist List<code>, codesystem url):
     assesObservation(GetObservationDuringEncounter(idlist, codesystem))
+
+
 
 
 define function GetHistoricObservation(idlist List<code>, codesystem url, nbdays Integer):
@@ -57,15 +62,8 @@ define function GetHistoricObservation(idlist List<code>, codesystem url, nbdays
 // ************************   PatientHasHistoryOfObservation ************************/
 
 
-define function PatientHasHistoryOfObservation(idlist List<code>, codesystem url, nbdays Integer):
+define function HasHistoryOfObs(idlist List<code>, codesystem url, nbdays Integer):
   assesObservation(GetHistoricObservation(idlist, codesystem, nbdays))
-
-
-
-
-
-
-
 
 
 //define function PatientHasConditionDuringEncounter(id String, codesystem url, duration Integer)):

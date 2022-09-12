@@ -1,176 +1,181 @@
 {
-  "resourceType": "Questionnaire",
-  "id": "emcare.b18-21.symptoms.2m.m",
-  "meta": {
-    "profile": [
-      "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
+    "resourceType": "Questionnaire",
+    "id": "emcare.b18-21.symptoms.2m.m",
+    "meta": {
+        "profile": [
+            "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
+        ]
+    },
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "shareable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "computable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "publishable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+            "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcare.b18-21.symptoms.2m.m"
+        }
+    ],
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b18-21.symptoms.2m.m",
+    "name": "EmCare.B18-21.Symptoms.2m.m",
+    "title": "EmCare.B18-21.Symptoms.2m.m",
+    "status": "active",
+    "experimental": false,
+    "subjectType": [
+        "Patient"
+    ],
+    "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "now()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "timestamp",
+            "type": "dateTime",
+            "required": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "AgeInMonths",
+            "text": "Age",
+            "type": "decimal",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b7.de02"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE02",
+            "text": "Convulsing Now",
+            "type": "boolean",
+            "required": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B7.DE02').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B18S1.DE01",
+            "text": "Convulsions in this Illness",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B18S1.DE02",
+            "text": "Difficulty with Feeding",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/difficulty-feeding",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B20S1.DE01",
+            "text": "Diarrhoea",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B21S1.DE01",
+            "text": "Mother's HIV Status",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/hiv-status",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B21S1.DE06",
+            "text": "Breastfed",
+            "type": "choice",
+            "required": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        }
     ]
-  },
-  "extension": [
-    {
-      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-      "valueCode": "shareable"
-    },
-    {
-      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-      "valueCode": "computable"
-    },
-    {
-      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
-      "valueCode": "publishable"
-    },
-    {
-      "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
-      "valueCode": "structured"
-    },
-    {
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
-      "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m"
-    }
-  ],
-  "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b18-21.symptoms.2m.m",
-  "title": "EmCare.B18-21.Symptoms.2m.m",
-  "status": "active",
-  "experimental": false,
-  "subjectType": [
-    "Patient"
-  ],
-  "item": [
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "now()"
-          }
-        },
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-          "valueBoolean": true
-        }
-      ],
-      "linkId": "timestamp",
-      "type": "dateTime",
-      "required": false
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-          "valueBoolean": true
-        }
-      ],
-      "linkId": "AgeInMonths",
-      "text": "Age",
-      "type": "decimal",
-      "required": false,
-      "designNote": "status::draft"
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "PatientHasObservationDuringEncounter({'EmCare.B7.DE02'},'{{cs_url}}')"
-          }
-        },
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-          "valueBoolean": true
-        }
-      ],
-      "linkId": "EmCare.B7.DE02",
-      "text": "Convulsing Now",
-      "type": "boolean",
-      "required": false,
-      "designNote": "status::draft"
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2 and %resource.repeat(item).where(linkId='EmCare.B7.DE02').answer.value = true"
-          }
-        }
-      ],
-      "linkId": "EmCare.B18S1.DE01",
-      "text": "Convulsions in this Illness",
-      "type": "choice",
-      "required": true,
-      "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-      "designNote": "status::draft"
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
-          }
-        }
-      ],
-      "linkId": "EmCare.B18S1.DE02",
-      "text": "Difficulty with Feeding",
-      "type": "choice",
-      "required": true,
-      "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/difficulty-feeding",
-      "designNote": "status::draft"
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
-          }
-        }
-      ],
-      "linkId": "EmCare.B20S1.DE01",
-      "text": "Diarrhoea",
-      "type": "choice",
-      "required": true,
-      "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-      "designNote": "status::draft"
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
-          }
-        }
-      ],
-      "linkId": "EmCare.B21S1.DE01",
-      "text": "Mother's HIV Status",
-      "type": "choice",
-      "required": true,
-      "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/hiv-status",
-      "designNote": "status::draft"
-    },
-    {
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-          "valueExpression": {
-            "language": "text/fhirpath",
-            "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.value<2"
-          }
-        }
-      ],
-      "linkId": "EmCare.B21S1.DE06",
-      "text": "Breastfed",
-      "type": "choice",
-      "required": true,
-      "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-      "designNote": "status::draft"
-    }
-  ]
 }

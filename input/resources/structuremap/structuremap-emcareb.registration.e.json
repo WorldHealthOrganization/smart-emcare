@@ -1,1659 +1,2034 @@
 {
-  "resourceType": "StructureMap",
-  "id": "emcareb.registration.e",
-  "meta": {
-    "versionId": "103",
-    "lastUpdated": "2022-08-18T15:45:05.130000+00:00"
-  },
-  "text": {
-    "status": "generated",
-    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e&quot; = &quot;emcareb.registration.e&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter&quot; alias 'Encounter' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter&quot; alias 'EmCare Encounter' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedperson&quot; alias 'EmCare RelatedPerson' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src -&gt; entry.fullUrl as fullurl then getFullUrlemcareencounter(src, fullurl) &quot;fuemcareencounter&quot;;\r\n    src -&gt;  entry.request as request,  request.method = 'PUT',  request.url as url then getUrlemcareencounter(src, url) &quot;uemcareencounter&quot;;\r\n    src -&gt; entry.resource = create('Encounter') as tgt then emcareencounter(src, tgt) &quot;cemcareencounter&quot;;\r\n  } &quot;put-emcareencounter&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src -&gt; entry.fullUrl as fullurl then getFullUrlemcarerelatedperson(src, fullurl) &quot;fuemcarerelatedperson&quot;;\r\n    src -&gt;  entry.request as request,  request.method = 'PUT',  request.url as url then getUrlemcarerelatedperson(src, url) &quot;uemcarerelatedperson&quot;;\r\n    src -&gt; entry.resource = create('RelatedPerson') as tgt then emcarerelatedperson(src, tgt) &quot;cemcarerelatedperson&quot;;\r\n  } &quot;put-emcarerelatedperson&quot;;\r\n  src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then {\r\n    src.item first as item where linkId = 'EmCare.B3.DE05' -&gt; item.answer as a then SetObservationemcareb3de05(src, a, tgt) &quot;DE05&quot;;\r\n  } &quot;DE05&quot;;\r\n}\r\n\r\ngroup emcareencounter(source src : questionnaireResponse, target tgt : Encounter) {\r\n  src.item as item where linkId = 'EmCare.A.DE07' -&gt; tgt then {\r\n    item.answer as a -&gt;  tgt.period as period,  period.start = a &quot;DE07-1&quot;;\r\n  } &quot;emcareade07&quot;;\r\n  src.item as item where linkId = 'EmCare.B2.DE01' -&gt; tgt then {\r\n    item.answer as a -&gt; tgt.type = a &quot;DE01-1&quot;;\r\n  } &quot;emcareb2de01&quot;;\r\n  src.item as item where linkId = 'EmCare.B3.DE01' -&gt; tgt then {\r\n    item.answer as a -&gt; tgt.reasonCode = a &quot;DE01-1&quot;;\r\n  } &quot;emcareb3de01&quot;;\r\n  src.item as item where linkId = 'EmCare.B3.DE06' -&gt; tgt then {\r\n    item.answer as a -&gt; tgt.type = a &quot;DE06-1&quot;;\r\n  } &quot;emcareb3de06&quot;;\r\n  src.item as item where linkId = 'EmCare.B3.DE09' -&gt; tgt then {\r\n    item.answer first as a, a.value as val -&gt;  tgt.extension as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/refered',  ext.value = val &quot;DE09-1&quot;;\r\n  } &quot;emcareb3de09&quot;;\r\n}\r\n\r\ngroup getIdemcareencounter(source src, target tgt) {\r\n  src.item first as item where linkId = 'EmCare Encounterid' then {\r\n    item.answer first as a, a.value as val -&gt; ressource = val &quot;idemcareencounter&quot;;\r\n  } &quot;iemcareencounter&quot;;\r\n}\r\n\r\ngroup getFullUrlemcareencounter(source src, target tgt) {\r\n  src.item first as item where linkId = 'EmCare Encounterid' then {\r\n    item.answer first as a, a.value as val -&gt; ressource = append('urn:uuid:', val) &quot;fuemcareencounter&quot;;\r\n  } &quot;fuemcareencounter&quot;;\r\n}\r\n\r\ngroup getUrlemcareencounter(source src, target tgt) {\r\n  src.item first as item where linkId = 'EmCare Encounterid' then {\r\n    item.answer first as a, a.value as val -&gt; ressource = append('Encounter/', val) &quot;uemcareencounter&quot;;\r\n  } &quot;uemcareencounter&quot;;\r\n}\r\n\r\ngroup emcarerelatedperson(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'EmCare.A.DE40') or (linkId = 'EXXXXXXX') or (linkId = 'EmCare.A.DE40') -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcareade40(src, name) &quot;emcareade40&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE43' -&gt; tgt then {\r\n    item.answer as a -&gt; tgt then {\r\n      a where a.valueCode = 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') &quot;person-accomp&quot;;\r\n      a where a.valueCode != 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') &quot;person-accomp-std&quot;;\r\n    } &quot;DE43-1&quot;;\r\n  } &quot;emcareade43&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcareade40(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item as item where linkId = 'EmCare.A.DE40' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;femcareade40&quot;;\r\n    src.item as item where linkId = 'EXXXXXXX' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;memcareade40&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE40' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.family = a &quot;f&quot;;\r\n    } &quot;lemcareade40&quot;;\r\n  } &quot;sgnemcareade40&quot;;\r\n}\r\n\r\ngroup getIdemcarerelatedperson(source src, target tgt) {\r\n  src.item first as item where linkId = 'EmCare RelatedPersonid' then {\r\n    item.answer first as a, a.value as val -&gt; ressource = val &quot;idemcarerelatedperson&quot;;\r\n  } &quot;iemcarerelatedperson&quot;;\r\n}\r\n\r\ngroup getFullUrlemcarerelatedperson(source src, target tgt) {\r\n  src.item first as item where linkId = 'EmCare RelatedPersonid' then {\r\n    item.answer first as a, a.value as val -&gt; ressource = append('urn:uuid:', val) &quot;fuemcarerelatedperson&quot;;\r\n  } &quot;fuemcarerelatedperson&quot;;\r\n}\r\n\r\ngroup getUrlemcarerelatedperson(source src, target tgt) {\r\n  src.item first as item where linkId = 'EmCare RelatedPersonid' then {\r\n    item.answer first as a, a.value as val -&gt; ressource = append('RelatedPerson/', val) &quot;uemcarerelatedperson&quot;;\r\n  } &quot;uemcarerelatedperson&quot;;\r\n}\r\n\r\ngroup SetObservationemcareb3de05(source src, source a, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb3de05&quot;;\r\n  src -&gt;  tgt.basedOn = src.basedOn,  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb3de05',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'EmCare.B3.DE05' &quot;code-emcareb3de05&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb3de05&quot;;\r\n  a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-emcareb3de05&quot;;\r\n  a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-emcareb3de05&quot;;\r\n}\r\n\r\n</pre></div>"
-  },
-  "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e",
-  "name": "emcareb.registration.e",
-  "status": "active",
-  "structure": [
-    {
-      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse",
-      "mode": "source",
-      "alias": "'questionnaireResponse'"
+    "resourceType": "StructureMap",
+    "id": "emcareb.registration.e",
+    "meta": {
+        "versionId": "253",
+        "lastUpdated": "2022-09-12T13:36:52.690000+00:00"
     },
-    {
-      "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
-      "mode": "target",
-      "alias": "'Bundle'"
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e&quot; = &quot;emcareb.registration.e&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter&quot; alias 'Encounter' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter&quot; alias 'EmCare Encounter' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedperson&quot; alias 'EmCare RelatedPerson' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.encounter as encounter then {\r\n      encounter.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Encounter/', idval) &quot;fjhys&quot;;\r\n    } &quot;ofpex&quot;;\r\n    src -&gt; entry.resource = create('Encounter') as tgt then {\r\n      src -&gt; tgt then emcareencounter(src, tgt) &quot;soilc&quot;;\r\n      src.encounter as encounter then {\r\n        encounter.id as idval -&gt; tgt.id = idval &quot;wkdjo&quot;;\r\n      } &quot;kncrj&quot;;\r\n      src.subject as sub -&gt; tgt.subject = sub &quot;jlwhy&quot;;\r\n    } &quot;pzpza&quot;;\r\n  } &quot;put-emcareencounter&quot;;\r\n  src where src.item.where(linkId = 'emcarerelatedpersonid').answer.exists() -&gt; bundle.entry as entry then {\r\n    src.item first as item where linkId = 'emcarerelatedpersonid' -&gt;  entry.request as request,  request.method = 'PUT' then {\r\n      item.answer first as a -&gt; request then {\r\n        a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;mlcra&quot;;\r\n      } &quot;lopyd&quot;;\r\n    } &quot;rjwrq&quot;;\r\n    src -&gt; entry.resource = create('RelatedPerson') as tgt then {\r\n      src -&gt; tgt then emcarerelatedperson(src, tgt) &quot;pgpui&quot;;\r\n      src -&gt; entry then getIdemcarerelatedperson(src, tgt) &quot;ksany&quot;;\r\n    } &quot;grwev&quot;;\r\n  } &quot;put-emcarerelatedperson&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B3.DE05').exists() and src.item.where(linkId = 'emcareobservationid').first().answer.exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb3de05(src, tgt) &quot;DE05&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n}\r\n\r\ngroup emcareencounter(source src : questionnaireResponse, target tgt : Encounter) {\r\n  src.item as item where linkId = 'EmCare.A.DE07' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.period as period,  period.start = val &quot;aemcareade07&quot;;\r\n    } &quot;aemcareade07&quot;;\r\n  } &quot;emcareade07&quot;;\r\n  src.item as item where linkId = 'EmCare.B2.DE01' then {\r\n    item.answer first as a -&gt; tgt.type = a &quot;aemcareb2de01&quot;;\r\n  } &quot;emcareb2de01&quot;;\r\n  src.item as item where linkId = 'EmCare.B3.DE01' then {\r\n    item.answer first as a -&gt; tgt.reasonCode = a &quot;aemcareb3de01&quot;;\r\n  } &quot;emcareb3de01&quot;;\r\n  src.item as item where linkId = 'EmCare.B3.DE06' then {\r\n    item.answer first as a -&gt; tgt.type = a &quot;aemcareb3de06&quot;;\r\n  } &quot;emcareb3de06&quot;;\r\n  src.item as item where linkId = 'EmCare.B3.DE09' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/refered',  ext.value = val &quot;aemcareb3de09&quot;;\r\n    } &quot;aemcareb3de09&quot;;\r\n  } &quot;emcareb3de09&quot;;\r\n}\r\n\r\ngroup getIdemcareencounter(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcareencounterid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.id = val &quot;wayyu&quot;;\r\n    } &quot;uvhgk&quot;;\r\n  } &quot;vdkma&quot;;\r\n}\r\n\r\ngroup getFullUrlemcareencounter(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcareencounterid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.fullUrl = append('urn:uuid:', val) &quot;pggmw&quot;;\r\n    } &quot;fyrta&quot;;\r\n  } &quot;qfibw&quot;;\r\n}\r\n\r\ngroup getUrlemcareencounter(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcareencounterid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; ref.reference = append('/Encounter/', val) &quot;kueth&quot;;\r\n    } &quot;jzzgv&quot;;\r\n  } &quot;mufev&quot;;\r\n}\r\n\r\ngroup emcarerelatedperson(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'EmCare.A.DE40') or (linkId = 'EXXXXXXX') or (linkId = 'EmCare.A.DE40') -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedperson(src, name) &quot;emcareade40&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE43' then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a where value = 'EmCare.A.DE17' -&gt; tgt.gender = 'female' &quot;sexf&quot;;\r\n      a where value = 'EmCare.A.DE18' -&gt; tgt.gender = 'male' &quot;sexm&quot;;\r\n      a where value = 'EmCare.A.DE19' -&gt; tgt.gender = 'unknown' &quot;sexx&quot;;\r\n      a where a.valueCode = 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') &quot;person-accomp&quot;;\r\n      a where a.valueCode != 'EmCare.A.DE30' -&gt; tgt.relationship = translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') &quot;person-accomp-std&quot;;\r\n    } &quot;aemcareade43&quot;;\r\n  } &quot;emcareade43&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarerelatedperson(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item as item where linkId = 'EmCare.A.DE40' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;hbavr&quot;;\r\n    src.item as item where linkId = 'EXXXXXXX' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;ncvtl&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE40' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.family = a &quot;f&quot;;\r\n    } &quot;qdfbr&quot;;\r\n  } &quot;wpbwg&quot;;\r\n}\r\n\r\ngroup getIdemcarerelatedperson(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersonid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.id = val &quot;thcbb&quot;;\r\n    } &quot;avedw&quot;;\r\n  } &quot;rgeui&quot;;\r\n}\r\n\r\ngroup getFullUrlemcarerelatedperson(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersonid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.fullUrl = append('urn:uuid:', val) &quot;jwgde&quot;;\r\n    } &quot;iibgl&quot;;\r\n  } &quot;ljpuh&quot;;\r\n}\r\n\r\ngroup getUrlemcarerelatedperson(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersonid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;tnsyg&quot;;\r\n    } &quot;npnqz&quot;;\r\n  } &quot;dgxvd&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb3de05(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb3de05&quot;;\r\n  src -&gt;  tgt.basedOn = src.basedOn,  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'EmCare.B3.DE05' &quot;code-emcareb3de05&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb3de05&quot;;\r\n  src -&gt; tgt.subject = src.subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B3.DE05' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-emcareb3de05&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-emcareb3de05&quot;;\r\n    } &quot;an-emcareb3de05&quot;;\r\n  } &quot;it-emcareb3de05&quot;;\r\n}\r\n\r\n</pre></div>"
     },
-    {
-      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter",
-      "mode": "target",
-      "alias": "'Encounter'"
-    },
-    {
-      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson",
-      "mode": "target",
-      "alias": "'RelatedPerson'"
-    },
-    {
-      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation",
-      "mode": "target",
-      "alias": "'Observation'"
-    },
-    {
-      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter",
-      "mode": "produced",
-      "alias": "'EmCare Encounter'"
-    },
-    {
-      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedperson",
-      "mode": "produced",
-      "alias": "'EmCare RelatedPerson'"
-    },
-    {
-      "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation",
-      "mode": "produced",
-      "alias": "'EmCare Observation'"
-    }
-  ],
-  "group": [
-    {
-      "name": "bundletrans",
-      "typeMode": "none",
-      "input": [
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e",
+    "name": "emcareb.registration.e",
+    "status": "active",
+    "structure": [
         {
-          "name": "src",
-          "type": "questionnaireResponse",
-          "mode": "source"
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse",
+            "mode": "source",
+            "alias": "'questionnaireResponse'"
         },
         {
-          "name": "bundle",
-          "type": "Bundle",
-          "mode": "target"
+            "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+            "mode": "target",
+            "alias": "'Bundle'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter",
+            "mode": "target",
+            "alias": "'Encounter'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson",
+            "mode": "target",
+            "alias": "'RelatedPerson'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation",
+            "mode": "target",
+            "alias": "'Observation'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter",
+            "mode": "produced",
+            "alias": "'EmCare Encounter'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedperson",
+            "mode": "produced",
+            "alias": "'EmCare RelatedPerson'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation",
+            "mode": "produced",
+            "alias": "'EmCare Observation'"
         }
-      ],
-      "rule": [
+    ],
+    "group": [
         {
-          "name": "id",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "bundle",
-              "contextType": "variable",
-              "element": "id",
-              "transform": "uuid"
-            }
-          ]
-        },
-        {
-          "name": "type",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "bundle",
-              "contextType": "variable",
-              "element": "type",
-              "transform": "copy",
-              "parameter": [
+            "name": "bundletrans",
+            "typeMode": "none",
+            "input": [
                 {
-                  "valueString": "batch"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "put-emcareencounter",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "bundle",
-              "contextType": "variable",
-              "element": "entry",
-              "variable": "entry"
-            }
-          ],
-          "rule": [
-            {
-              "name": "fuemcareencounter",
-              "source": [
-                {
-                  "context": "src"
-                }
-              ],
-              "target": [
-                {
-                  "context": "entry",
-                  "contextType": "variable",
-                  "element": "fullUrl",
-                  "variable": "fullurl"
-                }
-              ],
-              "dependent": [
-                {
-                  "name": "getFullUrlemcareencounter",
-                  "variable": [
-                    "src",
-                    "fullurl"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "uemcareencounter",
-              "source": [
-                {
-                  "context": "src"
-                }
-              ],
-              "target": [
-                {
-                  "context": "entry",
-                  "contextType": "variable",
-                  "element": "request",
-                  "variable": "request"
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
                 },
                 {
-                  "context": "request",
-                  "contextType": "variable",
-                  "element": "method",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueString": "PUT"
-                    }
-                  ]
-                },
-                {
-                  "context": "request",
-                  "contextType": "variable",
-                  "element": "url",
-                  "variable": "url"
+                    "name": "bundle",
+                    "type": "Bundle",
+                    "mode": "target"
                 }
-              ],
-              "dependent": [
+            ],
+            "rule": [
                 {
-                  "name": "getUrlemcareencounter",
-                  "variable": [
-                    "src",
-                    "url"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "cemcareencounter",
-              "source": [
-                {
-                  "context": "src"
-                }
-              ],
-              "target": [
-                {
-                  "context": "entry",
-                  "contextType": "variable",
-                  "element": "resource",
-                  "variable": "tgt",
-                  "transform": "create",
-                  "parameter": [
-                    {
-                      "valueString": "Encounter"
-                    }
-                  ]
-                }
-              ],
-              "dependent": [
-                {
-                  "name": "emcareencounter",
-                  "variable": [
-                    "src",
-                    "tgt"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "put-emcarerelatedperson",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "bundle",
-              "contextType": "variable",
-              "element": "entry",
-              "variable": "entry"
-            }
-          ],
-          "rule": [
-            {
-              "name": "fuemcarerelatedperson",
-              "source": [
-                {
-                  "context": "src"
-                }
-              ],
-              "target": [
-                {
-                  "context": "entry",
-                  "contextType": "variable",
-                  "element": "fullUrl",
-                  "variable": "fullurl"
-                }
-              ],
-              "dependent": [
-                {
-                  "name": "getFullUrlemcarerelatedperson",
-                  "variable": [
-                    "src",
-                    "fullurl"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "uemcarerelatedperson",
-              "source": [
-                {
-                  "context": "src"
-                }
-              ],
-              "target": [
-                {
-                  "context": "entry",
-                  "contextType": "variable",
-                  "element": "request",
-                  "variable": "request"
-                },
-                {
-                  "context": "request",
-                  "contextType": "variable",
-                  "element": "method",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueString": "PUT"
-                    }
-                  ]
-                },
-                {
-                  "context": "request",
-                  "contextType": "variable",
-                  "element": "url",
-                  "variable": "url"
-                }
-              ],
-              "dependent": [
-                {
-                  "name": "getUrlemcarerelatedperson",
-                  "variable": [
-                    "src",
-                    "url"
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "cemcarerelatedperson",
-              "source": [
-                {
-                  "context": "src"
-                }
-              ],
-              "target": [
-                {
-                  "context": "entry",
-                  "contextType": "variable",
-                  "element": "resource",
-                  "variable": "tgt",
-                  "transform": "create",
-                  "parameter": [
-                    {
-                      "valueString": "RelatedPerson"
-                    }
-                  ]
-                }
-              ],
-              "dependent": [
-                {
-                  "name": "emcarerelatedperson",
-                  "variable": [
-                    "src",
-                    "tgt"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "post-EmCare.B3.DE05",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "bundle",
-              "contextType": "variable",
-              "element": "entry",
-              "variable": "entry"
-            },
-            {
-              "context": "entry",
-              "contextType": "variable",
-              "element": "request",
-              "variable": "request"
-            },
-            {
-              "context": "request",
-              "contextType": "variable",
-              "element": "method",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "POST"
-                }
-              ]
-            },
-            {
-              "context": "entry",
-              "contextType": "variable",
-              "element": "resource",
-              "variable": "tgt",
-              "transform": "create",
-              "parameter": [
-                {
-                  "valueString": "Observation"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "obs-EmCare.B3.DE05",
-              "source": [
-                {
-                  "context": "src",
-                  "element": "item",
-                  "listMode": "first",
-                  "variable": "item",
-                  "condition": "linkId = 'EmCare.B3.DE05'"
-                }
-              ],
-              "target": [
-                {
-                  "context": "item",
-                  "contextType": "variable",
-                  "element": "answer",
-                  "variable": "a"
-                }
-              ],
-              "dependent": [
-                {
-                  "name": "SetObservationemcareb3de05",
-                  "variable": [
-                    "src",
-                    "a",
-                    "tgt"
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "emcareencounter",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "type": "questionnaireResponse",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "type": "Encounter",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "emcareade07",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'EmCare.A.DE07'"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "EmCare.A.DE07-1",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "variable": "a"
-                }
-              ],
-              "target": [
-                {
-                  "context": "tgt",
-                  "contextType": "variable",
-                  "element": "period",
-                  "variable": "period"
-                },
-                {
-                  "context": "period",
-                  "contextType": "variable",
-                  "element": "start",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "a"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "emcareb2de01",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'EmCare.B2.DE01'"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "EmCare.B2.DE01-1",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "variable": "a"
-                }
-              ],
-              "target": [
-                {
-                  "context": "tgt",
-                  "contextType": "variable",
-                  "element": "type",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "a"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "emcareb3de01",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'EmCare.B3.DE01'"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "EmCare.B3.DE01-1",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "variable": "a"
-                }
-              ],
-              "target": [
-                {
-                  "context": "tgt",
-                  "contextType": "variable",
-                  "element": "reasonCode",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "a"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "emcareb3de06",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'EmCare.B3.DE06'"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "EmCare.B3.DE06-1",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "variable": "a"
-                }
-              ],
-              "target": [
-                {
-                  "context": "tgt",
-                  "contextType": "variable",
-                  "element": "type",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "a"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "emcareb3de09",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'EmCare.B3.DE09'"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "EmCare.B3.DE09-1",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
-                },
-                {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
-                }
-              ],
-              "target": [
-                {
-                  "context": "tgt",
-                  "contextType": "variable",
-                  "element": "extension",
-                  "variable": "ext"
-                },
-                {
-                  "context": "ext",
-                  "contextType": "variable",
-                  "element": "url",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/refered"
-                    }
-                  ]
-                },
-                {
-                  "context": "ext",
-                  "contextType": "variable",
-                  "element": "value",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "val"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getIdemcareencounter",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "iemcareencounter",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "linkId = 'EmCare Encounterid'"
-            }
-          ],
-          "rule": [
-            {
-              "name": "idemcareencounter",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
-                },
-                {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
-                }
-              ],
-              "target": [
-                {
-                  "context": "ressource",
-                  "contextType": "variable",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "val"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getFullUrlemcareencounter",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "fuemcareencounter",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "linkId = 'EmCare Encounterid'"
-            }
-          ],
-          "rule": [
-            {
-              "name": "fuemcareencounter",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
-                },
-                {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
-                }
-              ],
-              "target": [
-                {
-                  "context": "ressource",
-                  "contextType": "variable",
-                  "transform": "append",
-                  "parameter": [
-                    {
-                      "valueString": "urn:uuid:"
-                    },
-                    {
-                      "valueId": "val"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getUrlemcareencounter",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "uemcareencounter",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "linkId = 'EmCare Encounterid'"
-            }
-          ],
-          "rule": [
-            {
-              "name": "uemcareencounter",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
-                },
-                {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
-                }
-              ],
-              "target": [
-                {
-                  "context": "ressource",
-                  "contextType": "variable",
-                  "transform": "append",
-                  "parameter": [
-                    {
-                      "valueString": "Encounter/"
-                    },
-                    {
-                      "valueId": "val"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "emcarerelatedperson",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "type": "questionnaireResponse",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "type": "RelatedPerson",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "emcareade40",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "(linkId = 'EmCare.A.DE40') or (linkId = 'EXXXXXXX') or (linkId = 'EmCare.A.DE40')"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "variable": "target",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            },
-            {
-              "context": "target",
-              "contextType": "variable",
-              "element": "name",
-              "variable": "name"
-            }
-          ],
-          "dependent": [
-            {
-              "name": "SetOfficalGivenNameemcareade40",
-              "variable": [
-                "src",
-                "name"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "emcareade43",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'EmCare.A.DE43'"
-            }
-          ],
-          "target": [
-            {
-              "contextType": "variable",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "tgt"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "EmCare.A.DE43-1",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "variable": "a"
-                }
-              ],
-              "target": [
-                {
-                  "contextType": "variable",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "tgt"
-                    }
-                  ]
-                }
-              ],
-              "rule": [
-                {
-                  "name": "person-accomp",
-                  "source": [
-                    {
-                      "context": "a",
-                      "condition": "a.valueCode = 'EmCare.A.DE30'"
-                    }
-                  ],
-                  "target": [
-                    {
-                      "context": "tgt",
-                      "contextType": "variable",
-                      "element": "relationship",
-                      "transform": "translate",
-                      "parameter": [
+                    "name": "id",
+                    "source": [
                         {
-                          "valueId": "a"
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "uuid"
+                        }
+                    ]
+                },
+                {
+                    "name": "type",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "type",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "batch"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "put-emcareencounter",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "entry",
+                            "variable": "entry"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "ofpex",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "encounter",
+                                    "variable": "encounter"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "fjhys",
+                                    "source": [
+                                        {
+                                            "context": "encounter",
+                                            "element": "id",
+                                            "variable": "idval"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "entry",
+                                            "contextType": "variable",
+                                            "element": "request",
+                                            "variable": "request"
+                                        },
+                                        {
+                                            "context": "request",
+                                            "contextType": "variable",
+                                            "element": "method",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "PUT"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "request",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "/Encounter/"
+                                                },
+                                                {
+                                                    "valueId": "idval"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
-                          "valueString": "relationship-to-client"
+                            "name": "pzpza",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Encounter"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "soilc",
+                                    "source": [
+                                        {
+                                            "context": "src"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "tgt"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "emcareencounter",
+                                            "variable": [
+                                                "src",
+                                                "tgt"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "kncrj",
+                                    "source": [
+                                        {
+                                            "context": "src",
+                                            "element": "encounter",
+                                            "variable": "encounter"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "wkdjo",
+                                            "source": [
+                                                {
+                                                    "context": "encounter",
+                                                    "element": "id",
+                                                    "variable": "idval"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "id",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "idval"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "jlwhy",
+                                    "source": [
+                                        {
+                                            "context": "src",
+                                            "element": "subject",
+                                            "variable": "sub"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "subject",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "sub"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "put-emcarerelatedperson",
+                    "source": [
+                        {
+                            "context": "src",
+                            "condition": "src.item.where(linkId = 'emcarerelatedpersonid').answer.exists()"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "entry",
+                            "variable": "entry"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "rjwrq",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "linkId = 'emcarerelatedpersonid'"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "request",
+                                    "variable": "request"
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "method",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "PUT"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "lopyd",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "request"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "mlcra",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "request",
+                                                    "contextType": "variable",
+                                                    "element": "url",
+                                                    "transform": "append",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "/RelatedPerson/"
+                                                        },
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
-                          "valueString": "http://terminology.hl7.org/CodeSystem/v2-0131"
+                            "name": "grwev",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "RelatedPerson"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "pgpui",
+                                    "source": [
+                                        {
+                                            "context": "src"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "tgt"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "emcarerelatedperson",
+                                            "variable": [
+                                                "src",
+                                                "tgt"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "ksany",
+                                    "source": [
+                                        {
+                                            "context": "src"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "entry"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "getIdemcarerelatedperson",
+                                            "variable": [
+                                                "src",
+                                                "tgt"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
                         }
-                      ]
-                    }
-                  ]
+                    ]
                 },
                 {
-                  "name": "person-accomp-std",
-                  "source": [
-                    {
-                      "context": "a",
-                      "condition": "a.valueCode != 'EmCare.A.DE30'"
-                    }
-                  ],
-                  "target": [
-                    {
-                      "context": "tgt",
-                      "contextType": "variable",
-                      "element": "relationship",
-                      "transform": "translate",
-                      "parameter": [
+                    "name": "emcareobservation",
+                    "source": [
                         {
-                          "valueId": "a"
+                            "context": "src",
+                            "condition": "src.item.where(linkId = 'EmCare.B3.DE05').exists() and src.item.where(linkId = 'emcareobservationid').first().answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "act-EmCare.B3.DE05",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "bundle",
+                                    "contextType": "variable",
+                                    "element": "entry",
+                                    "variable": "entry"
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "request",
+                                    "variable": "request"
+                                },
+                                {
+                                    "context": "request",
+                                    "contextType": "variable",
+                                    "element": "method",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "POST"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Observation"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "dependent": [
+                                {
+                                    "name": "emcareobservationemcareb3de05",
+                                    "variable": [
+                                        "src",
+                                        "tgt"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "emcareencounter",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "Encounter",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "emcareade07",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.A.DE07'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "aemcareade07",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "aemcareade07",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "period",
+                                            "variable": "period"
+                                        },
+                                        {
+                                            "context": "period",
+                                            "contextType": "variable",
+                                            "element": "start",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "emcareb2de01",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.B2.DE01'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "aemcareb2de01",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "tgt",
+                                    "contextType": "variable",
+                                    "element": "type",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "a"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "emcareb3de01",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.B3.DE01'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "aemcareb3de01",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "tgt",
+                                    "contextType": "variable",
+                                    "element": "reasonCode",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "a"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "emcareb3de06",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.B3.DE06'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "aemcareb3de06",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "tgt",
+                                    "contextType": "variable",
+                                    "element": "type",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "a"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "emcareb3de09",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.B3.DE09'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "aemcareb3de09",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "aemcareb3de09",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Extension"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/refered"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "getIdemcareencounter",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "vdkma",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'emcareencounterid'"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "uvhgk",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "wayyu",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "id",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "getFullUrlemcareencounter",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "qfibw",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'emcareencounterid'"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "fyrta",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "pggmw",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "fullUrl",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "urn:uuid:"
+                                                },
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "getUrlemcareencounter",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "mufev",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'emcareencounterid'"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "jzzgv",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "kueth",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "ref",
+                                            "contextType": "variable",
+                                            "element": "reference",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "/Encounter/"
+                                                },
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "emcarerelatedperson",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "RelatedPerson",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "emcareade40",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'EmCare.A.DE40') or (linkId = 'EXXXXXXX') or (linkId = 'EmCare.A.DE40')"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "variable": "target",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
                         },
                         {
-                          "valueString": "relationship-to-client"
+                            "context": "target",
+                            "contextType": "variable",
+                            "element": "name",
+                            "variable": "name"
+                        }
+                    ],
+                    "dependent": [
+                        {
+                            "name": "SetOfficalGivenNameemcarerelatedperson",
+                            "variable": [
+                                "src",
+                                "name"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "emcareade43",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.A.DE43'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "aemcareade43",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "sexf",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "value = 'EmCare.A.DE17'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "gender",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "female"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "sexm",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "value = 'EmCare.A.DE18'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "gender",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "male"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "sexx",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "value = 'EmCare.A.DE19'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "gender",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "unknown"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "person-accomp",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "a.valueCode = 'EmCare.A.DE30'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "relationship",
+                                            "transform": "translate",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                },
+                                                {
+                                                    "valueString": "relationship-to-client"
+                                                },
+                                                {
+                                                    "valueString": "http://terminology.hl7.org/CodeSystem/v2-0131"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "person-accomp-std",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "a.valueCode != 'EmCare.A.DE30'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "relationship",
+                                            "transform": "translate",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                },
+                                                {
+                                                    "valueString": "relationship-to-client"
+                                                },
+                                                {
+                                                    "valueString": "http://terminology.hl7.org/CodeSystem/v3-RoleCode"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SetOfficalGivenNameemcarerelatedperson",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "wpbwg",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "use",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "official"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "hbavr",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "variable": "item",
+                                    "condition": "linkId = 'EmCare.A.DE40'"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "f",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "given",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
-                          "valueString": "http://terminology.hl7.org/CodeSystem/v3-RoleCode"
+                            "name": "ncvtl",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "variable": "item",
+                                    "condition": "linkId = 'EXXXXXXX'"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "f",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "given",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "qdfbr",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "variable": "item",
+                                    "condition": "linkId = 'EmCare.A.DE40'"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "f",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "family",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
                         }
-                      ]
-                    }
-                  ]
+                    ]
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "SetOfficalGivenNameemcareade40",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
+            ]
         },
         {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "sgnemcareade40",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "use",
-              "transform": "copy",
-              "parameter": [
+            "name": "getIdemcarerelatedperson",
+            "typeMode": "none",
+            "input": [
                 {
-                  "valueString": "official"
-                }
-              ]
-            }
-          ],
-          "rule": [
-            {
-              "name": "femcareade40",
-              "source": [
-                {
-                  "context": "src",
-                  "element": "item",
-                  "variable": "item",
-                  "condition": "linkId = 'EmCare.A.DE40'"
-                }
-              ],
-              "target": [
-                {
-                  "contextType": "variable",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "tgt"
-                    }
-                  ]
-                }
-              ],
-              "rule": [
-                {
-                  "name": "f",
-                  "source": [
-                    {
-                      "context": "item",
-                      "element": "answer",
-                      "variable": "a"
-                    }
-                  ],
-                  "target": [
-                    {
-                      "context": "tgt",
-                      "contextType": "variable",
-                      "element": "given",
-                      "transform": "copy",
-                      "parameter": [
-                        {
-                          "valueId": "a"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "memcareade40",
-              "source": [
-                {
-                  "context": "src",
-                  "element": "item",
-                  "variable": "item",
-                  "condition": "linkId = 'EXXXXXXX'"
-                }
-              ],
-              "target": [
-                {
-                  "contextType": "variable",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "tgt"
-                    }
-                  ]
-                }
-              ],
-              "rule": [
-                {
-                  "name": "f",
-                  "source": [
-                    {
-                      "context": "item",
-                      "element": "answer",
-                      "variable": "a"
-                    }
-                  ],
-                  "target": [
-                    {
-                      "context": "tgt",
-                      "contextType": "variable",
-                      "element": "given",
-                      "transform": "copy",
-                      "parameter": [
-                        {
-                          "valueId": "a"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "lemcareade40",
-              "source": [
-                {
-                  "context": "src",
-                  "element": "item",
-                  "variable": "item",
-                  "condition": "linkId = 'EmCare.A.DE40'"
-                }
-              ],
-              "target": [
-                {
-                  "contextType": "variable",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "tgt"
-                    }
-                  ]
-                }
-              ],
-              "rule": [
-                {
-                  "name": "f",
-                  "source": [
-                    {
-                      "context": "item",
-                      "element": "answer",
-                      "variable": "a"
-                    }
-                  ],
-                  "target": [
-                    {
-                      "context": "tgt",
-                      "contextType": "variable",
-                      "element": "family",
-                      "transform": "copy",
-                      "parameter": [
-                        {
-                          "valueId": "a"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getIdemcarerelatedperson",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "iemcarerelatedperson",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "linkId = 'EmCare RelatedPersonid'"
-            }
-          ],
-          "rule": [
-            {
-              "name": "idemcarerelatedperson",
-              "source": [
-                {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
+                    "name": "src",
+                    "mode": "source"
                 },
                 {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
+                    "name": "tgt",
+                    "mode": "target"
                 }
-              ],
-              "target": [
+            ],
+            "rule": [
                 {
-                  "context": "ressource",
-                  "contextType": "variable",
-                  "transform": "copy",
-                  "parameter": [
-                    {
-                      "valueId": "val"
-                    }
-                  ]
+                    "name": "rgeui",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'emcarerelatedpersonid'"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "avedw",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "thcbb",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "id",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getFullUrlemcarerelatedperson",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
+            ]
         },
         {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "fuemcarerelatedperson",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "linkId = 'EmCare RelatedPersonid'"
-            }
-          ],
-          "rule": [
-            {
-              "name": "fuemcarerelatedperson",
-              "source": [
+            "name": "getFullUrlemcarerelatedperson",
+            "typeMode": "none",
+            "input": [
                 {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
+                    "name": "src",
+                    "mode": "source"
                 },
                 {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
+                    "name": "tgt",
+                    "mode": "target"
                 }
-              ],
-              "target": [
+            ],
+            "rule": [
                 {
-                  "context": "ressource",
-                  "contextType": "variable",
-                  "transform": "append",
-                  "parameter": [
-                    {
-                      "valueString": "urn:uuid:"
-                    },
-                    {
-                      "valueId": "val"
-                    }
-                  ]
+                    "name": "ljpuh",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'emcarerelatedpersonid'"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "iibgl",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "jwgde",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "fullUrl",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "urn:uuid:"
+                                                },
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "getUrlemcarerelatedperson",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
+            ]
         },
         {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "uemcarerelatedperson",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "listMode": "first",
-              "variable": "item",
-              "condition": "linkId = 'EmCare RelatedPersonid'"
-            }
-          ],
-          "rule": [
-            {
-              "name": "uemcarerelatedperson",
-              "source": [
+            "name": "getUrlemcarerelatedperson",
+            "typeMode": "none",
+            "input": [
                 {
-                  "context": "item",
-                  "element": "answer",
-                  "listMode": "first",
-                  "variable": "a"
+                    "name": "src",
+                    "mode": "source"
                 },
                 {
-                  "context": "a",
-                  "element": "value",
-                  "variable": "val"
+                    "name": "tgt",
+                    "mode": "target"
                 }
-              ],
-              "target": [
+            ],
+            "rule": [
                 {
-                  "context": "ressource",
-                  "contextType": "variable",
-                  "transform": "append",
-                  "parameter": [
-                    {
-                      "valueString": "RelatedPerson/"
-                    },
-                    {
-                      "valueId": "val"
-                    }
-                  ]
+                    "name": "dgxvd",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'emcarerelatedpersonid'"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "npnqz",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "tnsyg",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "ref",
+                                            "contextType": "variable",
+                                            "element": "reference",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "/RelatedPerson/"
+                                                },
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
+            ]
+        },
+        {
+            "name": "emcareobservationemcareb3de05",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "id-emcareb3de05",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "identifier",
+                            "variable": "CodeID",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Identifier"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "system",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "http://hl7.org/fhir/namingsystem-identifier-type"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "use",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "official"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "value",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "uuid"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "CodeID",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "uuid"
+                        }
+                    ]
+                },
+                {
+                    "name": "code-emcareb3de05",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "basedOn",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.basedOn"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "encounter",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.encounter"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "subject",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.subject"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "meta",
+                            "variable": "newMeta",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Meta"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "newMeta",
+                            "contextType": "variable",
+                            "element": "profile",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "code",
+                            "variable": "concept",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "CodeableConcept"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "concept",
+                            "contextType": "variable",
+                            "element": "system",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "concept",
+                            "contextType": "variable",
+                            "element": "code",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "EmCare.B3.DE05"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "timestamp-emcareb3de05",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "variable": "item",
+                            "condition": "linkId = 'timestamp'"
+                        },
+                        {
+                            "context": "item",
+                            "element": "answer",
+                            "variable": "a"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "issued",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "a"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "patient",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "subject",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "src.subject"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "it-emcareb3de05",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "linkId = 'EmCare.B3.DE05'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "an-emcareb3de05",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "final-emcareb3de05",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "a.value = 'yes'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "status",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "final"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "notfound-emcareb3de05",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "a.value = 'no'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "status",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "cancelled"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
-      ]
-    },
-    {
-      "name": "SetObservationemcareb3de05",
-      "typeMode": "none",
-      "input": [
-        {
-          "name": "src",
-          "mode": "source"
-        },
-        {
-          "name": "a",
-          "mode": "source"
-        },
-        {
-          "name": "tgt",
-          "mode": "target"
-        }
-      ],
-      "rule": [
-        {
-          "name": "id-emcareb3de05",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "identifier",
-              "variable": "CodeID",
-              "transform": "create",
-              "parameter": [
-                {
-                  "valueString": "Identifier"
-                }
-              ]
-            },
-            {
-              "context": "CodeID",
-              "contextType": "variable",
-              "element": "system",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "http://hl7.org/fhir/namingsystem-identifier-type"
-                }
-              ]
-            },
-            {
-              "context": "CodeID",
-              "contextType": "variable",
-              "element": "use",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "official"
-                }
-              ]
-            },
-            {
-              "context": "CodeID",
-              "contextType": "variable",
-              "element": "value",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "uuid"
-                }
-              ]
-            },
-            {
-              "context": "CodeID",
-              "contextType": "variable",
-              "element": "id",
-              "transform": "uuid"
-            }
-          ]
-        },
-        {
-          "name": "code-emcareb3de05",
-          "source": [
-            {
-              "context": "src"
-            }
-          ],
-          "target": [
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "basedOn",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "src.basedOn"
-                }
-              ]
-            },
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "encounter",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "src.encounter"
-                }
-              ]
-            },
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "subject",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "src.subject"
-                }
-              ]
-            },
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "meta",
-              "variable": "newMeta",
-              "transform": "create",
-              "parameter": [
-                {
-                  "valueString": "Meta"
-                }
-              ]
-            },
-            {
-              "context": "newMeta",
-              "contextType": "variable",
-              "element": "profile",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareb3de05"
-                }
-              ]
-            },
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "code",
-              "variable": "concept",
-              "transform": "create",
-              "parameter": [
-                {
-                  "valueString": "CodeableConcept"
-                }
-              ]
-            },
-            {
-              "context": "concept",
-              "contextType": "variable",
-              "element": "system",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes"
-                }
-              ]
-            },
-            {
-              "context": "concept",
-              "contextType": "variable",
-              "element": "code",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "EmCare.B3.DE05"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "timestamp-emcareb3de05",
-          "source": [
-            {
-              "context": "src",
-              "element": "item",
-              "variable": "item",
-              "condition": "linkId = 'timestamp'"
-            },
-            {
-              "context": "item",
-              "element": "answer",
-              "variable": "a"
-            }
-          ],
-          "target": [
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "issued",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueId": "a"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "final-emcareb3de05",
-          "source": [
-            {
-              "context": "a",
-              "condition": "a.value = 'yes'"
-            }
-          ],
-          "target": [
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "status",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "final"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "notfound-emcareb3de05",
-          "source": [
-            {
-              "context": "a",
-              "condition": "a.value = 'no'"
-            }
-          ],
-          "target": [
-            {
-              "context": "tgt",
-              "contextType": "variable",
-              "element": "status",
-              "transform": "copy",
-              "parameter": [
-                {
-                  "valueString": "cancelled"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+    ]
 }

@@ -1,17 +1,28 @@
-FROM openjdk:11-jdk-buster
+FROM jekyll/jekyll
 
-RUN apt-get update && apt-get -y install python3 python3-pip gosu openssl wget graphviz
+# instalöl python https://stackoverflow.com/a/62555259
+ENV PYTHONUNBUFFERED=1
+#https://github.com/tianon/gosu/blob/master/INSTALL.md
+
+RUN echo    >> /etc/apk/repositories && cat /etc/apk/repositories
+
+RUN apk update &&\
+    apk add --update --no-cache gosu --repository="http://dl-cdn.alpinelinux.org/alpine/edge/testing"   &&\
+    apk add --update --no-cache  openssl wget graphviz python3  openjdk11 &&\
+    ln -sf python3 /usr/bin/python
+
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
+
+
+
 
 ENV PATH="/usr/local/rvm/bin:/usr/local/rvm/rubies/ruby-2.5.1/bin:${PATH}"
-RUN gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB && \
-    curl -L get.rvm.io | bash -s stable  && \
-    rvm install 2.5.1 && \
-    gem install jekyll jekyll-asciidoc
 
-RUN  cd /tmp && \
-     wget --quiet https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz && \
-     cd /usr/local && \
-     tar --strip-components 1 -xf /tmp/node-v12.16.1-linux-x64.tar.xz
+#RUN  cd /tmp && \
+#     wget --quiet https://nodejs.org/dist/v12.22.12/node-v12.22.12-linux-x64.tar.xz && \
+#     cd /usr/local && \
+#     tar --strip-components 1 -xf /tmp/node-v12.22.12-linux-x64.tar.xz
 
 RUN useradd -d /home/publisher -m publisher
 

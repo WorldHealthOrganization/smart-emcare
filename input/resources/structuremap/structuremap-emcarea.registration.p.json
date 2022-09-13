@@ -2,12 +2,12 @@
     "resourceType": "StructureMap",
     "id": "emcarea.registration.p",
     "meta": {
-        "versionId": "300",
-        "lastUpdated": "2022-09-12T13:36:52.287000+00:00"
+        "versionId": "312",
+        "lastUpdated": "2022-09-13T09:13:00.498000+00:00"
     },
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p&quot; = &quot;emcarea.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarepatient&quot; alias 'EmCare Patient' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedpersoncaregiver&quot; alias 'EmCare RelatedPerson Caregiver' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarecommunicationrequest&quot; alias 'EmCare CommunicationRequest' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;zprzi&quot;;\r\n    } &quot;qwrao&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then emcarepatient(src, tgt) &quot;pinzs&quot;;\r\n      src.subject as subject then {\r\n        subject.id as idval -&gt; tgt.id = idval &quot;vtxzv&quot;;\r\n      } &quot;xtyrr&quot;;\r\n    } &quot;hreco&quot;;\r\n  } &quot;put-emcarepatient&quot;;\r\n  src where src.item.where(linkId = 'emcarerelatedpersoncaregiverid').answer.exists() -&gt; bundle.entry as entry then {\r\n    src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt;  entry.request as request,  request.method = 'PUT' then {\r\n      item.answer first as a -&gt; request then {\r\n        a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;jycuw&quot;;\r\n      } &quot;fnobu&quot;;\r\n    } &quot;ulxde&quot;;\r\n    src -&gt; entry.resource = create('RelatedPerson') as tgt then {\r\n      src -&gt; tgt then emcarerelatedpersoncaregiver(src, tgt) &quot;ayyvc&quot;;\r\n      src -&gt; entry then getIdemcarerelatedpersoncaregiver(src, tgt) &quot;twwqb&quot;;\r\n    } &quot;lweqj&quot;;\r\n  } &quot;put-emcarerelatedpersoncaregiver&quot;;\r\n  src where src.item.where(linkId = 'EmCare.A.DE38').exists() and src.item.where(linkId = 'emcarecommunicationrequestid').first().answer.exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('CommunicationRequest') as tgt then emcarecommunicationrequestemcareade38(src, tgt) &quot;DE38&quot;;\r\n  } &quot;emcarecommunicationrequest&quot;;\r\n}\r\n\r\ngroup emcarepatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item as item where linkId = 'EmCare.A.DE01' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;aemcareade01&quot;;\r\n    } &quot;aemcareade01&quot;;\r\n  } &quot;emcareade01&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE03' then {\r\n    item.answer first as a -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n      a -&gt;  identifier.value = 'EmCare.A.DE03',  identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' &quot;noid&quot;;\r\n    } &quot;aemcareade03&quot;;\r\n  } &quot;emcareade03&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE04') or (linkId = 'EmCare.A.DE05') or (linkId = 'EmCare.A.DE06') -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarepatient(src, name) &quot;emcareade04&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE12' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aemcareade12&quot;;\r\n    } &quot;aemcareade12&quot;;\r\n  } &quot;emcareade12&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE08' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;aemcareade08&quot;;\r\n    } &quot;aemcareade08&quot;;\r\n  } &quot;emcareade08&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE16' then {\r\n    item.answer first as a then MapValueSetExtCodeemcareade16(a, tgt) &quot;emcareade16d&quot;;\r\n  } &quot;emcareade16&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE20' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.address as address,  address.text = val &quot;aemcareade20&quot;;\r\n    } &quot;aemcareade20&quot;;\r\n  } &quot;emcareade20&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE47' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/caregiver',  ext.value = val &quot;aemcareade47&quot;;\r\n    } &quot;aemcareade47&quot;;\r\n  } &quot;emcareade47&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE31' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus',  ext.value = val &quot;aemcareade31&quot;;\r\n    } &quot;aemcareade31&quot;;\r\n  } &quot;emcareade31&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE32' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus',  ext.value = val &quot;aemcareade32&quot;;\r\n    } &quot;aemcareade32&quot;;\r\n  } &quot;emcareade32&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarepatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item as item where linkId = 'EmCare.A.DE04' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;blssa&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE05' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;uyvtw&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE06' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.family = a &quot;f&quot;;\r\n    } &quot;zqirk&quot;;\r\n  } &quot;elkfx&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeemcareade16(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt; tgt then {\r\n      src where value.code = 'EmCare.A.DE17' -&gt; tgt.gender = 'female' &quot;wsdol&quot;;\r\n      src where value.code = 'EmCare.A.DE18' -&gt; tgt.gender = 'male' &quot;fdfne&quot;;\r\n      src where value.code = 'EmCare.A.DE19' -&gt; tgt.gender = 'unknown' &quot;hgrjj&quot;;\r\n    } &quot;mapbase&quot;;\r\n  } &quot;irjhb&quot;;\r\n}\r\n\r\ngroup getIdemcarepatient(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarepatientid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.id = val &quot;jssel&quot;;\r\n    } &quot;pbyyu&quot;;\r\n  } &quot;dauop&quot;;\r\n}\r\n\r\ngroup getFullUrlemcarepatient(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarepatientid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.fullUrl = append('urn:uuid:', val) &quot;lyzfz&quot;;\r\n    } &quot;vcllo&quot;;\r\n  } &quot;qfysl&quot;;\r\n}\r\n\r\ngroup getUrlemcarepatient(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarepatientid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; ref.reference = append('/Patient/', val) &quot;hhbmu&quot;;\r\n    } &quot;psyek&quot;;\r\n  } &quot;amcpb&quot;;\r\n}\r\n\r\ngroup emcarerelatedpersoncaregiver(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'EmCare.A.DE21') or (linkId = 'EmCare.A.DE22') or (linkId = 'EmCare.A.DE23') -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedpersoncaregiver(src, name) &quot;emcareade21&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE35' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aemcareade35&quot;;\r\n    } &quot;aemcareade35&quot;;\r\n  } &quot;emcareade35&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE36' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'home',  tel.value = val &quot;aemcareade36&quot;;\r\n    } &quot;aemcareade36&quot;;\r\n  } &quot;emcareade36&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE37' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'work',  tel.value = val &quot;aemcareade37&quot;;\r\n    } &quot;aemcareade37&quot;;\r\n  } &quot;emcareade37&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item as item where linkId = 'EmCare.A.DE21' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;qrddq&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE22' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;usfwy&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE23' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.family = a &quot;f&quot;;\r\n    } &quot;txsbl&quot;;\r\n  } &quot;qsjmd&quot;;\r\n}\r\n\r\ngroup getIdemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.id = val &quot;figqx&quot;;\r\n    } &quot;lnmxy&quot;;\r\n  } &quot;ercpy&quot;;\r\n}\r\n\r\ngroup getFullUrlemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.fullUrl = append('urn:uuid:', val) &quot;kabcx&quot;;\r\n    } &quot;pyjlw&quot;;\r\n  } &quot;njzfh&quot;;\r\n}\r\n\r\ngroup getUrlemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;vevsm&quot;;\r\n    } &quot;fsvrf&quot;;\r\n  } &quot;wqygm&quot;;\r\n}\r\n\r\ngroup emcarecommunicationrequestemcareade38(source src, target tgt) {\r\n  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;hjtsc&quot;;\r\n  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;dwvdw&quot;;\r\n  src -&gt; tgt.recipient = create('Reference') as ref then {\r\n    src -&gt; ref.type = 'RelatedPerson' &quot;wttmy&quot;;\r\n    src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n      item.answer first as a -&gt; tgt then {\r\n        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;caknt&quot;;\r\n      } &quot;sxwjk&quot;;\r\n    } &quot;baflz&quot;;\r\n  } &quot;frcfw&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p&quot; = &quot;emcarea.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarepatient&quot; alias 'EmCare Patient' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedpersoncaregiver&quot; alias 'EmCare RelatedPerson Caregiver' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarecommunicationrequest&quot; alias 'EmCare CommunicationRequest' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;kuwwh&quot;;\r\n    } &quot;fmxog&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then emcarepatient(src, tgt) &quot;dprxm&quot;;\r\n      src.subject as subject then {\r\n        subject.id as idval -&gt; tgt.id = idval &quot;mnbux&quot;;\r\n      } &quot;uaktq&quot;;\r\n    } &quot;vrtdu&quot;;\r\n  } &quot;put-emcarepatient&quot;;\r\n  src where src.item.where(linkId = 'emcarerelatedpersoncaregiverid').answer.exists() -&gt; bundle.entry as entry then {\r\n    src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt;  entry.request as request,  request.method = 'PUT' then {\r\n      item.answer first as a -&gt; request then {\r\n        a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;bycgp&quot;;\r\n      } &quot;sgetz&quot;;\r\n    } &quot;shoyc&quot;;\r\n    src -&gt; entry.resource = create('RelatedPerson') as tgt then {\r\n      src -&gt; tgt then emcarerelatedpersoncaregiver(src, tgt) &quot;lrwmm&quot;;\r\n      src -&gt; entry then getIdemcarerelatedpersoncaregiver(src, tgt) &quot;uafdx&quot;;\r\n    } &quot;zuhsz&quot;;\r\n  } &quot;put-emcarerelatedpersoncaregiver&quot;;\r\n  src where src.item.where(linkId = 'EmCare.A.DE38').exists() and src.item.where(linkId = 'emcarecommunicationrequestid').first().answer.exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('CommunicationRequest') as tgt then emcarecommunicationrequestemcareade38(src, tgt) &quot;DE38&quot;;\r\n  } &quot;emcarecommunicationrequest&quot;;\r\n}\r\n\r\ngroup emcarepatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item as item where linkId = 'EmCare.A.DE01' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;aemcareade01&quot;;\r\n    } &quot;aemcareade01&quot;;\r\n  } &quot;emcareade01&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE03' then {\r\n    item.answer first as a -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n      a -&gt;  identifier.value = 'EmCare.A.DE03',  identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' &quot;noid&quot;;\r\n    } &quot;aemcareade03&quot;;\r\n  } &quot;emcareade03&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE04') or (linkId = 'EmCare.A.DE05') or (linkId = 'EmCare.A.DE06') -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarepatient(src, name) &quot;emcareade04&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE12' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aemcareade12&quot;;\r\n    } &quot;aemcareade12&quot;;\r\n  } &quot;emcareade12&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE08' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;aemcareade08&quot;;\r\n    } &quot;aemcareade08&quot;;\r\n  } &quot;emcareade08&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE16' then {\r\n    item.answer first as a then MapValueSetExtCodeemcareade16(a, tgt) &quot;emcareade16d&quot;;\r\n  } &quot;emcareade16&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE20' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.address as address,  address.text = val &quot;aemcareade20&quot;;\r\n    } &quot;aemcareade20&quot;;\r\n  } &quot;emcareade20&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE47' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/caregiver',  ext.value = val &quot;aemcareade47&quot;;\r\n    } &quot;aemcareade47&quot;;\r\n  } &quot;emcareade47&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE31' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus',  ext.value = val &quot;aemcareade31&quot;;\r\n    } &quot;aemcareade31&quot;;\r\n  } &quot;emcareade31&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE32' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus',  ext.value = val &quot;aemcareade32&quot;;\r\n    } &quot;aemcareade32&quot;;\r\n  } &quot;emcareade32&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarepatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item as item where linkId = 'EmCare.A.DE04' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;ugaqc&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE05' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;jasqq&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE06' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.family = a &quot;f&quot;;\r\n    } &quot;awfpx&quot;;\r\n  } &quot;uxgid&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeemcareade16(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt; tgt then {\r\n      src where value.code = 'EmCare.A.DE17' -&gt; tgt.gender = 'female' &quot;ngigi&quot;;\r\n      src where value.code = 'EmCare.A.DE18' -&gt; tgt.gender = 'male' &quot;ltogs&quot;;\r\n      src where value.code = 'EmCare.A.DE19' -&gt; tgt.gender = 'unknown' &quot;qjlgw&quot;;\r\n    } &quot;mapbase&quot;;\r\n  } &quot;njupl&quot;;\r\n}\r\n\r\ngroup getIdemcarepatient(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarepatientid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.id = val &quot;rzbmr&quot;;\r\n    } &quot;cbqcj&quot;;\r\n  } &quot;ftjcj&quot;;\r\n}\r\n\r\ngroup getFullUrlemcarepatient(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarepatientid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.fullUrl = append('urn:uuid:', val) &quot;lghyd&quot;;\r\n    } &quot;acxap&quot;;\r\n  } &quot;dtbzk&quot;;\r\n}\r\n\r\ngroup getUrlemcarepatient(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarepatientid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; ref.reference = append('/Patient/', val) &quot;tujvi&quot;;\r\n    } &quot;ajmew&quot;;\r\n  } &quot;fmheg&quot;;\r\n}\r\n\r\ngroup emcarerelatedpersoncaregiver(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'EmCare.A.DE21') or (linkId = 'EmCare.A.DE22') or (linkId = 'EmCare.A.DE23') -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedpersoncaregiver(src, name) &quot;emcareade21&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE35' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aemcareade35&quot;;\r\n    } &quot;aemcareade35&quot;;\r\n  } &quot;emcareade35&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE36' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'home',  tel.value = val &quot;aemcareade36&quot;;\r\n    } &quot;aemcareade36&quot;;\r\n  } &quot;emcareade36&quot;;\r\n  src.item as item where linkId = 'EmCare.A.DE37' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'work',  tel.value = val &quot;aemcareade37&quot;;\r\n    } &quot;aemcareade37&quot;;\r\n  } &quot;emcareade37&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item as item where linkId = 'EmCare.A.DE21' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;bnznk&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE22' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.given = a &quot;f&quot;;\r\n    } &quot;wjnzu&quot;;\r\n    src.item as item where linkId = 'EmCare.A.DE23' -&gt; tgt then {\r\n      item.answer as a -&gt; tgt.family = a &quot;f&quot;;\r\n    } &quot;bkskm&quot;;\r\n  } &quot;wglfi&quot;;\r\n}\r\n\r\ngroup getIdemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.id = val &quot;tngnb&quot;;\r\n    } &quot;xizvd&quot;;\r\n  } &quot;eyasl&quot;;\r\n}\r\n\r\ngroup getFullUrlemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; tgt.fullUrl = append('urn:uuid:', val) &quot;cuwnz&quot;;\r\n    } &quot;iggbx&quot;;\r\n  } &quot;mosdk&quot;;\r\n}\r\n\r\ngroup getUrlemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n    item.answer first as a -&gt; tgt then {\r\n      a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;aojir&quot;;\r\n    } &quot;zgdca&quot;;\r\n  } &quot;nwgrv&quot;;\r\n}\r\n\r\ngroup emcarecommunicationrequestemcareade38(source src, target tgt) {\r\n  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;qypbh&quot;;\r\n  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;ziugh&quot;;\r\n  src -&gt; tgt.recipient = create('Reference') as ref then {\r\n    src -&gt; ref.type = 'RelatedPerson' &quot;iemvu&quot;;\r\n    src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' -&gt; tgt then {\r\n      item.answer first as a -&gt; tgt then {\r\n        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;ndjsd&quot;;\r\n      } &quot;tjwsm&quot;;\r\n    } &quot;ojtfv&quot;;\r\n  } &quot;weelh&quot;;\r\n}\r\n\r\n</pre></div>"
     },
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p",
     "name": "emcarea.registration.p",
@@ -125,7 +125,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "qwrao",
+                            "name": "fmxog",
                             "source": [
                                 {
                                     "context": "src",
@@ -135,7 +135,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "zprzi",
+                                    "name": "kuwwh",
                                     "source": [
                                         {
                                             "context": "subject",
@@ -180,7 +180,7 @@
                             ]
                         },
                         {
-                            "name": "hreco",
+                            "name": "vrtdu",
                             "source": [
                                 {
                                     "context": "src"
@@ -202,7 +202,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "pinzs",
+                                    "name": "dprxm",
                                     "source": [
                                         {
                                             "context": "src"
@@ -230,7 +230,7 @@
                                     ]
                                 },
                                 {
-                                    "name": "xtyrr",
+                                    "name": "uaktq",
                                     "source": [
                                         {
                                             "context": "src",
@@ -240,7 +240,7 @@
                                     ],
                                     "rule": [
                                         {
-                                            "name": "vtxzv",
+                                            "name": "mnbux",
                                             "source": [
                                                 {
                                                     "context": "subject",
@@ -286,7 +286,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "ulxde",
+                            "name": "shoyc",
                             "source": [
                                 {
                                     "context": "src",
@@ -317,7 +317,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "fnobu",
+                                    "name": "sgetz",
                                     "source": [
                                         {
                                             "context": "item",
@@ -339,7 +339,7 @@
                                     ],
                                     "rule": [
                                         {
-                                            "name": "jycuw",
+                                            "name": "bycgp",
                                             "source": [
                                                 {
                                                     "context": "a",
@@ -369,7 +369,7 @@
                             ]
                         },
                         {
-                            "name": "lweqj",
+                            "name": "zuhsz",
                             "source": [
                                 {
                                     "context": "src"
@@ -391,7 +391,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "ayyvc",
+                                    "name": "lrwmm",
                                     "source": [
                                         {
                                             "context": "src"
@@ -419,7 +419,7 @@
                                     ]
                                 },
                                 {
-                                    "name": "twwqb",
+                                    "name": "uafdx",
                                     "source": [
                                         {
                                             "context": "src"
@@ -1170,7 +1170,7 @@
             ],
             "rule": [
                 {
-                    "name": "elkfx",
+                    "name": "uxgid",
                     "source": [
                         {
                             "context": "src"
@@ -1191,7 +1191,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "blssa",
+                            "name": "ugaqc",
                             "source": [
                                 {
                                     "context": "src",
@@ -1238,7 +1238,7 @@
                             ]
                         },
                         {
-                            "name": "uyvtw",
+                            "name": "jasqq",
                             "source": [
                                 {
                                     "context": "src",
@@ -1285,7 +1285,7 @@
                             ]
                         },
                         {
-                            "name": "zqirk",
+                            "name": "awfpx",
                             "source": [
                                 {
                                     "context": "src",
@@ -1350,7 +1350,7 @@
             ],
             "rule": [
                 {
-                    "name": "irjhb",
+                    "name": "njupl",
                     "source": [
                         {
                             "context": "src"
@@ -1388,7 +1388,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "wsdol",
+                                    "name": "ngigi",
                                     "source": [
                                         {
                                             "context": "src",
@@ -1410,7 +1410,7 @@
                                     ]
                                 },
                                 {
-                                    "name": "fdfne",
+                                    "name": "ltogs",
                                     "source": [
                                         {
                                             "context": "src",
@@ -1432,7 +1432,7 @@
                                     ]
                                 },
                                 {
-                                    "name": "hgrjj",
+                                    "name": "qjlgw",
                                     "source": [
                                         {
                                             "context": "src",
@@ -1474,7 +1474,7 @@
             ],
             "rule": [
                 {
-                    "name": "dauop",
+                    "name": "ftjcj",
                     "source": [
                         {
                             "context": "src",
@@ -1497,7 +1497,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "pbyyu",
+                            "name": "cbqcj",
                             "source": [
                                 {
                                     "context": "item",
@@ -1519,7 +1519,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "jssel",
+                                    "name": "rzbmr",
                                     "source": [
                                         {
                                             "context": "a",
@@ -1562,7 +1562,7 @@
             ],
             "rule": [
                 {
-                    "name": "qfysl",
+                    "name": "dtbzk",
                     "source": [
                         {
                             "context": "src",
@@ -1585,7 +1585,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "vcllo",
+                            "name": "acxap",
                             "source": [
                                 {
                                     "context": "item",
@@ -1607,7 +1607,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "lyzfz",
+                                    "name": "lghyd",
                                     "source": [
                                         {
                                             "context": "a",
@@ -1653,7 +1653,7 @@
             ],
             "rule": [
                 {
-                    "name": "amcpb",
+                    "name": "fmheg",
                     "source": [
                         {
                             "context": "src",
@@ -1676,7 +1676,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "psyek",
+                            "name": "ajmew",
                             "source": [
                                 {
                                     "context": "item",
@@ -1698,7 +1698,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "hhbmu",
+                                    "name": "tujvi",
                                     "source": [
                                         {
                                             "context": "a",
@@ -2032,7 +2032,7 @@
             ],
             "rule": [
                 {
-                    "name": "qsjmd",
+                    "name": "wglfi",
                     "source": [
                         {
                             "context": "src"
@@ -2053,7 +2053,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "qrddq",
+                            "name": "bnznk",
                             "source": [
                                 {
                                     "context": "src",
@@ -2100,7 +2100,7 @@
                             ]
                         },
                         {
-                            "name": "usfwy",
+                            "name": "wjnzu",
                             "source": [
                                 {
                                     "context": "src",
@@ -2147,7 +2147,7 @@
                             ]
                         },
                         {
-                            "name": "txsbl",
+                            "name": "bkskm",
                             "source": [
                                 {
                                     "context": "src",
@@ -2212,7 +2212,7 @@
             ],
             "rule": [
                 {
-                    "name": "ercpy",
+                    "name": "eyasl",
                     "source": [
                         {
                             "context": "src",
@@ -2235,7 +2235,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "lnmxy",
+                            "name": "xizvd",
                             "source": [
                                 {
                                     "context": "item",
@@ -2257,7 +2257,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "figqx",
+                                    "name": "tngnb",
                                     "source": [
                                         {
                                             "context": "a",
@@ -2300,7 +2300,7 @@
             ],
             "rule": [
                 {
-                    "name": "njzfh",
+                    "name": "mosdk",
                     "source": [
                         {
                             "context": "src",
@@ -2323,7 +2323,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "pyjlw",
+                            "name": "iggbx",
                             "source": [
                                 {
                                     "context": "item",
@@ -2345,7 +2345,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "kabcx",
+                                    "name": "cuwnz",
                                     "source": [
                                         {
                                             "context": "a",
@@ -2391,7 +2391,7 @@
             ],
             "rule": [
                 {
-                    "name": "wqygm",
+                    "name": "nwgrv",
                     "source": [
                         {
                             "context": "src",
@@ -2414,7 +2414,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "fsvrf",
+                            "name": "zgdca",
                             "source": [
                                 {
                                     "context": "item",
@@ -2436,7 +2436,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "vevsm",
+                                    "name": "aojir",
                                     "source": [
                                         {
                                             "context": "a",
@@ -2482,7 +2482,7 @@
             ],
             "rule": [
                 {
-                    "name": "hjtsc",
+                    "name": "qypbh",
                     "source": [
                         {
                             "context": "src"
@@ -2584,7 +2584,7 @@
                     ]
                 },
                 {
-                    "name": "dwvdw",
+                    "name": "ziugh",
                     "source": [
                         {
                             "context": "src",
@@ -2607,7 +2607,7 @@
                     ]
                 },
                 {
-                    "name": "frcfw",
+                    "name": "weelh",
                     "source": [
                         {
                             "context": "src"
@@ -2629,7 +2629,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "wttmy",
+                            "name": "iemvu",
                             "source": [
                                 {
                                     "context": "src"
@@ -2650,7 +2650,7 @@
                             ]
                         },
                         {
-                            "name": "baflz",
+                            "name": "ojtfv",
                             "source": [
                                 {
                                     "context": "src",
@@ -2673,7 +2673,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "sxwjk",
+                                    "name": "tjwsm",
                                     "source": [
                                         {
                                             "context": "item",
@@ -2695,7 +2695,7 @@
                                     ],
                                     "rule": [
                                         {
-                                            "name": "caknt",
+                                            "name": "ndjsd",
                                             "source": [
                                                 {
                                                     "context": "a",

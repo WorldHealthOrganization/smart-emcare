@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apk update &&\
     apk add --update --no-cache gosu --repository="http://dl-cdn.alpinelinux.org/alpine/edge/testing"   &&\
-    apk add --update --no-cache  openssl wget graphviz python3  openjdk11 &&\
+    apk add --update --no-cache  openssl wget graphviz python3  openjdk11 curl &&\
     ln -sf python3 /usr/bin/python
 
 RUN python3 -m ensurepip

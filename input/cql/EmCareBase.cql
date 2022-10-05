@@ -1,10 +1,14 @@
-library EmCareBase
+/*
+@author: Patrick Delcroix
+@description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
+*/
+
+library EmCareBase version '0.99.99'
 
 using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.1'
-//include FHIRCommon called FC
-//include WHOCommon called WC
+
 
 context Encounter
 
@@ -14,28 +18,35 @@ context Encounter
 // obs cancelled (not found) : return false
 // obs not found : return null
 
+define "Yes":
+  coding('yes', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/')
+
+define "No":
+  coding('no', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/')
 
 define function assesObservation(O Observation):
   case  
       when  O = null then null
-      when  O.status in  {'cancelled'} then false
-      when O.value is null then  true
+      when  O.status in  {'cancelled'} then "No"
+      when O.value is null then  "Yes"
+      when O.value is FHIR.boolean and O.value = true then "Yes"
+      when O.value is FHIR.boolean and O.value = false then "No"
       else O.value
   end
       
 define function GetObservationDuringEncounter(idlist List<code>, codesystem url):
     (First(
-    ([Observation ] O
+    (Last([Observation ] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
         and O.status in { 'final', 'amended', 'corrected'}
         and exists(O.code.coding C where C.code in idlist 
-        and C.system = codesystem))
+        and C.system = codesystem)))
       union
-      ([Observation] O
+      (Last([Observation] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
           and O.status in {'cancelled'}
           and exists(O.code.coding C where C.code in idlist 
-          and C.system = codesystem))))
+          and C.system = codesystem)))))
 
 define function GetNumberObservationDuringEncounter(idlist List<code>, codesystem url):
   Count(
@@ -45,8 +56,18 @@ define function GetNumberObservationDuringEncounter(idlist List<code>, codesyste
         and exists((O.code.coding C where C.code in idlist 
         and C.system = codesystem)))
 
-define function PatientHasObservationDuringEncounter(idlist List<code>, codesystem url):
-    assesObservation(GetObservationDuringEncounter(idlist, codesystem))
+define function HasObs(idlist List<FHIR.code>, codesystem System.String):
+    assesObservation(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
+
+define function HasObs(id FHIR.code, codesystem System.String):
+    assesObservation(GetObservationDuringEncounter({id}, ToUrl(codesystem)))
+
+define function HasObs(id System.String, codesystem System.String):
+    assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl(codesystem)))
+
+define function HasObs(id System.String):
+    assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/')))
+
 
 
 define function GetHistoricObservation(idlist List<code>, codesystem url, nbdays Integer):
@@ -66,16 +87,32 @@ define function GetHistoricObservation(idlist List<code>, codesystem url, nbdays
 // ************************   PatientHasHistoryOfObservation ************************/
 
 
-define function PatientHasHistoryOfObservation(idlist List<code>, codesystem url, nbdays Integer):
-  assesObservation(GetHistoricObservation(idlist, codesystem, nbdays))
+define function HasHistoryObs(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
+  assesObservation(GetHistoricObservation(idlist, ToUrl(codesystem), nbdays))
 
 
+define function HasHistoryObs(id FHIR.code, codesystem System.String, nbdays Integer):
+  assesObservation(GetHistoricObservation({id}, ToUrl(codesystem), nbdays))
+
+define function HasHistoryObs(id System.String, codesystem System.String, nbdays Integer):
+  assesObservation(GetHistoricObservation({c(id)}, ToUrl(codesystem), nbdays))
 
 
+define function HasHistoryObs(id System.String, nbdays Integer):
+  assesObservation(GetHistoricObservation({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/'), nbdays))
 
+define function c(s System.String):
+  FHIR.code { value: s }
 
+define function coding(s System.String, url System.String):
+  FHIR.Coding {
+                code: FHIR.code { value: s },
+                system: FHIR.uri { value: url },
+                "display": FHIR.string { value: s }
+            }
 
-
+define function ToUrl(s System.String):
+  url {value:s}
 
 //define function PatientHasConditionDuringEncounter(id String, codesystem url, duration Integer)):
 

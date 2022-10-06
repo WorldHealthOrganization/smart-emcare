@@ -1,45 +1,110 @@
-library emcareb23classification version '4.0.1'
+/*
+@author: Patrick Delcroix
+@description: This library is part of the project EmCare
+*/
+library emcareb23classification version '0.99.99'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
+include EmCareBase version '0.99.99' called Base
+include EmCareObservation version '0.99.99' called obs
+include EmCareValueSet version '0.99.99' called val
 
 
 context Patient
+      
 
+/* child : Age >= 2 months to <60 months*/
+define "child":
+    AgeInMonths()>= 2 and AgeInMonths()<60
 
-/* HistoryObstructedOrAbsentBreathing : nan*/
-define "HistoryObstructedOrAbsentBreathing":
-    ("Age" = "≥2 months to <60 months" and "Danger Signs" = "No" and "Obstructed or Absent Breathing" = "Yes" and "Continue to Assess Sick Child" = "Stabilised, continue consultation")
-     AND
-     (    B.HasNamedObs({'Danger Signs'}) = false and B.HasNamedObs({'Obstructed or Absent Breathing'}) = true and B.HasNamedObs({'Continue to Assess Sick Child'}).display = 'Stabilised, continue consultation')
+/* Age >= 2 months to <60 months : Age >= 2 months to <60 months*/
+define "Age >= 2 months to <60 months":
+    AgeInMonths()>= 2 and AgeInMonths()<60
 
-/* VerySevereDisease : nan*/
-define "VerySevereDisease":
-    (${AgeInMonths} >= 2 and ${AgeInMonths} < 60)
-     AND
-     (    B.HasNamedObs('Convulsiong Now') = true and B.HasNamedObs({'Continue to Assess Sick Child'}).display = 'Stabilised, continue consultation' OR
-        B.HasNamedObs('Convulsion(s) in this illness') = true and B.HasNamedObs('Number of Convulsions in this illness').display = '1 convulsion' and B.HasNamedObs('Convulsion(s) last 15 minutes or more') = true OR
-        B.HasNamedObs('Convulsion(s) in this illness') = true and B.HasNamedObs({'Number of Convulsions in this illness'}).display = 'Two or more convulsions' OR
-        B.HasNamedObs('Unconscious or Lethargic') = true OR
-        (B.HasNamedObs('Not able to drink or breastfeed') = true or B.HasNamedObs({'Vomiting'}).display = 'Vomiting Everything') and (B.HasNamedObs({'Oral Fluid Test Results'}).display = 'Completely Unable to Drink' or B.HasNamedObs({'Oral Fluid Test Results'}).display = 'Vomits Immediately / Everything' or B.HasNamedObs({'Oral Fluid Test Results'}).display = 'Unable to Perform Oral Fluid Test'))
+/* yi : Age >=28 days to 2 Months*/
+define "yi":
+    AgeInDays()>= 28 and AgeInMonths()<2
 
-/* VerySevereDiseaseOrSeverePneumonia : nan*/
-define "VerySevereDiseaseOrSeverePneumonia":
-    (${AgeInMonths} >= 2 and ${AgeInMonths} < 60)
-     AND
-     (    B.HasNamedObs({'Danger Signs'}) = true and B.HasNamedObs('Cough') = true OR
-        (B.HasNamedObs('Cough') = true or B.HasNamedObs('Difficulty Breathing') = true) and B.HasNamedObs('Stridor in a Calm Child') = true OR
-        (B.HasNamedObs('Cough') = true or B.HasNamedObs('Difficulty Breathing') = true) and B.HasNamedObs({'Oxygen Saturation'}).display = '<90%')
+/* Age >=28 days to 2 Months : Age >=28 days to 2 Months*/
+define "Age >=28 days to 2 Months":
+    AgeInDays()>= 28 and AgeInMonths()<2
 
-/* LowOxygenSaturation : nan*/
-define "LowOxygenSaturation":
-    ${AgeInMonths} >= 2 and ${AgeInMonths} < 60 and (((B.HasNamedObs('Cough') = true or B.HasNamedObs('Difficulty Breathing') = true) and B.HasNamedObs({'Oxygen Saturation'}).display = '<90%') or ((B.HasNamedObs('Cough') = true or B.HasNamedObs('Difficulty Breathing') = true) and B.HasNamedObs({'Danger Signs'}) = true and B.HasNamedObs('Wheezing') = true and B.HasNamedObs({'Oxygen Saturation'}).display = '<90%'))
+/* nb : Age < 28 days to 2 Months*/
+define "nb":
+    AgeInDays()< 28
 
-/* withWheezing : nan*/
-define "withWheezing":
-    ${AgeInMonths} >= 2 and ${AgeInMonths} < 60 and ((B.HasNamedObs('Cough') = true or
-    B.HasNamedObs('Difficulty Breathing') = true) and (B.HasNamedObs({'Danger Signs'}) = true or B.HasNamedObs('Stridor in a Calm Child') = true or
-    B.HasNamedObs({'Oxygen'}).display = '<90%') and B.HasNamedObs('Wheezing') = true) or
-    ((B.HasNamedObs('Cough') = true or
-    B.HasNamedObs('Difficulty Breathing') = true) and B.HasNamedObs({'Danger Signs'}) = true and B.HasNamedObs('Wheezing') = true and B.HasNamedObs({'Oxygen'}).display = '<90%') or
-    ((B.HasNamedObs('Cough') = true or B.HasNamedObs('Difficulty Breathing') = true) and (PatientB.HasNamedClassification('Confirmed HIV Infection') = true or PatientB.HasNamedClassification('HIV Exposed') = true) and B.HasNamedObs('Chest Indrawing') = true and B.HasNamedObs('Wheezing') = true and (B.HasNamedObs('Inhaled Bronchodilator Trial Results').display = 'Inhaled Bronchodilator Trial Not Feasible or Available' or B.HasNamedObs({'Inhaled Bronchodilator Trial Results').display = 'Chest Indrawing (post inhaled bronchodilator trial)') or ((B.HasNamedObs('Cough') = true or B.HasNamedObs('Difficulty Breathing') = true) and (PatientB.HasNamedClassification('Confirmed HIV Infection') = true or PatientB.HasNamedClassification('HIV Exposed') = true) and B.HasNamedObs('Chest Indrawing') = true and B.HasNamedObs('Wheezing') = true and ((B.HasNamedObs({'Inhaled Bronchodilator Trial Results').display = 'Inhaled Bronchodilator Trial Not Feasible or Available' or B.HasNamedObs({'Inhaled Bronchodilator Trial Results').display = 'Chest Indrawing (post inhaled bronchodilator trial)') and (B.HasNamedObs('Cough for how long?').display = 'More than 14 days') or B.HasNamedObs('Recurrent Wheeze')= true)) or ((B.HasNamedObs('Cough') = true or
-    B.HasNamedObs('Difficulty Breathing') = true) and (B.HasNamedCondition('Fast breathing') = true or B.HasNamedCondition)) )
+/* Age < 28 days to 2 Months : Age < 28 days to 2 Months*/
+define "Age < 28 days to 2 Months":
+    AgeInDays()< 28
+
+/* EmCare.B23.DE01 : Very Severe Disease*/
+define "EmCare.B23.DE01":
+    ("Age >= 2 months to <60 months")
+     and (    obs."Convulsing Now" = Base."Yes" and  obs."Continue to Assess Sick Child" = val."Stabilised, continue consultation"
+     or     obs."Convulsion(s) in this Illness" = Base."Yes"
+     or     obs."Unconscious" = Base."Yes"
+     or     obs."Lethargic" = Base."Yes"
+     or     obs."Oral Fluid Test Results" = val."Completely Unable to Drink"
+     or     obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything")
+
+/* Very Severe Disease : Very Severe Disease*/
+define "Very Severe Disease":
+    ("Age >= 2 months to <60 months")
+     and (    obs."Convulsing Now" = Base."Yes" and  obs."Continue to Assess Sick Child" = val."Stabilised, continue consultation"
+     or     obs."Convulsion(s) in this Illness" = Base."Yes"
+     or     obs."Unconscious" = Base."Yes"
+     or     obs."Lethargic" = Base."Yes"
+     or     obs."Oral Fluid Test Results" = val."Completely Unable to Drink"
+     or     obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything")
+
+/* EmCare.B.G.DE01 : Danger Signs*/
+define "EmCare.B.G.DE01":
+        obs."Convulsing Now"= Base."Yes"
+     or     "Convulsions in this illness" =  Base."Yes"
+     or     obs."Unconscious" = Base."Yes"
+     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."No"
+     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes" and "Severe Dehydration" = Base."No" and "Some Dehydration" = Base."No"
+     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes" and (obs."Cough" = Base."Yes" or obs."Difficulty Breathing" = Base."Yes" or  "Fever" = Base."Yes" or "Tender Swelling Behing the Ear" = Base."Yes" or "Severe palmar pallor"= Base."Yes" or "Severe mucous membrane pallor" = Base."Yes" or "Hemoglobin (Hb) g/dL”  < 7 'g/dL')
+     or     (("Not able to drink or breastfeed" = Base."Yes" or "Vomiting Everything" = Base."Yes") and ("Oral Fluid Test Results" = "Completely Unable to Drink" or "Oral Fluid Test Results" = "Vomits Immediately / Everything" or "Oral Fluid Test Results" = "Unable to Perform Test"))
+
+/* Danger Signs : Danger Signs*/
+define "Danger Signs":
+        obs."Convulsing Now"= Base."Yes"
+     or     "Convulsions in this illness" =  Base."Yes"
+     or     obs."Unconscious" = Base."Yes"
+     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."No"
+     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes" and "Severe Dehydration" = Base."No" and "Some Dehydration" = Base."No"
+     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes" and (obs."Cough" = Base."Yes" or obs."Difficulty Breathing" = Base."Yes" or  "Fever" = Base."Yes" or "Tender Swelling Behing the Ear" = Base."Yes" or "Severe palmar pallor"= Base."Yes" or "Severe mucous membrane pallor" = Base."Yes" or "Hemoglobin (Hb) g/dL”  < 7 'g/dL')
+     or     (("Not able to drink or breastfeed" = Base."Yes" or "Vomiting Everything" = Base."Yes") and ("Oral Fluid Test Results" = "Completely Unable to Drink" or "Oral Fluid Test Results" = "Vomits Immediately / Everything" or "Oral Fluid Test Results" = "Unable to Perform Test"))
+
+/* EmCare.B.G.DE05 : Severe Classification up to assessments and tests excluding Severe Dehydration*/
+define "EmCare.B.G.DE05":
+        "Danger Signs" = Base."Yes"
+     or     "Stridor in a Calm Child" = Base."Yes"
+     or     "Oxygen Saturation" = < 90 '%'
+     or     "Stiff Neck" = Base."Yes"
+     or     "Fever" = Base."Yes" and "Throat Problem" = Base."Yes" and ("Ability to swallow" = val."Unable to swallow" or "Specify Throat problem" = val."Membrane on throat")
+     or     "Tender Swelling behind the ear" = Base."Yes"
+     or     ("Severe palmar pallor" = Base."Yes" or "Severe mucous membrane pallor" = Base."Yes" or "Hemoglobin (Hb) g/dL”  < 7 'g/dL')
+
+/* Severe Classification up to assessments and tests excluding Severe Dehydration : Severe Classification up to assessments and tests excluding Severe Dehydration*/
+define "Severe Classification up to assessments and tests excluding Severe Dehydration":
+        "Danger Signs" = Base."Yes"
+     or     "Stridor in a Calm Child" = Base."Yes"
+     or     "Oxygen Saturation" = < 90 '%'
+     or     "Stiff Neck" = Base."Yes"
+     or     "Fever" = Base."Yes" and "Throat Problem" = Base."Yes" and ("Ability to swallow" = val."Unable to swallow" or "Specify Throat problem" = val."Membrane on throat")
+     or     "Tender Swelling behind the ear" = Base."Yes"
+     or     ("Severe palmar pallor" = Base."Yes" or "Severe mucous membrane pallor" = Base."Yes" or "Hemoglobin (Hb) g/dL”  < 7 'g/dL')
+
+/* EmCare.B.G.DE06 : Fever*/
+define "EmCare.B.G.DE06":
+        "Axillary Temperature" >= "37.5"
+     or     obs."Hot to Touch" = Base."Yes"
+     or     obs."Fever Reported" = Base."Yes"
+
+/* Fever : Fever*/
+define "Fever":
+        "Axillary Temperature" >= "37.5"
+     or     obs."Hot to Touch" = Base."Yes"
+     or     obs."Fever Reported" = Base."Yes"

@@ -104,17 +104,7 @@
             "required": false
         },
         {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.exists()"
-                    }
-                }
-            ],
             "linkId": "EmCare.A.DE01",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Unique Identification",
             "type": "string",
             "required": false,
@@ -138,7 +128,6 @@
                 }
             ],
             "linkId": "EmCare.A.DE03",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "type": "choice",
             "required": false,
             "repeats": true,
@@ -163,10 +152,9 @@
                 }
             ],
             "linkId": "EmCare.A.DE04",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "First Name",
             "type": "string",
-            "required": false,
+            "required": true,
             "repeats": false,
             "designNote": "status::draft"
         },
@@ -181,7 +169,6 @@
                 }
             ],
             "linkId": "EmCare.A.DE05",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Middle Name",
             "type": "string",
             "required": false,
@@ -199,25 +186,14 @@
                 }
             ],
             "linkId": "EmCare.A.DE06",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Last Name",
             "type": "string",
-            "required": false,
+            "required": true,
             "repeats": false,
             "designNote": "status::draft"
         },
         {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.empty()"
-                    }
-                }
-            ],
             "linkId": "dob",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Date of Birth",
             "type": "date",
             "required": false,
@@ -248,7 +224,6 @@
                 }
             ],
             "linkId": "EmCare.A.DE11",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "type": "choice",
             "required": false,
             "repeats": true,
@@ -286,7 +261,6 @@
                 }
             ],
             "linkId": "EmCare.A.DE12",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Provide an estimated age or estimated date of birth",
             "type": "choice",
             "required": false,
@@ -305,7 +279,6 @@
                 }
             ],
             "linkId": "EmCare.A.DE14.1",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Only know age in weeks/days/hours",
             "type": "integer",
             "required": false,
@@ -323,7 +296,6 @@
                 }
             ],
             "linkId": "EmCare.A.DE15.1",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Estimated Date of Birth",
             "type": "date",
             "required": false,
@@ -483,7 +455,6 @@
         },
         {
             "linkId": "EmCare.A.DE16",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Sex",
             "type": "choice",
             "required": true,
@@ -492,8 +463,16 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.empty()"
+                    }
+                }
+            ],
             "linkId": "EmCare.A.DE20",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Address",
             "type": "string",
             "required": false,
@@ -508,8 +487,7 @@
                 }
             ],
             "linkId": "EmCare.A.DE48",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Caregiver",
+            "text": "Primary Caregiver",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -534,19 +512,19 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE48').answer.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE48').answer.empty() and  %resource.repeat(item).where(linkId='EmCare.A.DE03').answer.empty()"
                     }
                 }
             ],
-            "linkId": "newCaregiver",
+            "linkId": "newPrimaryCaregiver",
             "type": "choice",
             "required": false,
             "repeats": true,
             "answerOption": [
                 {
                     "valueCoding": {
-                        "code": "newCaregiver",
-                        "display": "Register a new caregiver"
+                        "code": "newPrimaryCaregiver",
+                        "display": "Register a new Primary Caregiver"
                     }
                 }
             ],
@@ -558,7 +536,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='newCaregiver').answer.first().value.code = 'newCaregiver'"
+                        "expression": "%resource.repeat(item).where(linkId='newPrimaryCaregiver').answer.first().value.code = 'newPrimary Caregiver'"
                     }
                 }
             ],
@@ -587,7 +565,6 @@
                 },
                 {
                     "linkId": "EmCare.A.DE21",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Primary Caregiver First Name",
                     "type": "string",
                     "required": true,
@@ -596,7 +573,6 @@
                 },
                 {
                     "linkId": "EmCare.A.DE22",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Primary Caregiver Middle Name",
                     "type": "string",
                     "required": false,
@@ -605,7 +581,6 @@
                 },
                 {
                     "linkId": "EmCare.A.DE23",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Primary Caregiver Last Name",
                     "type": "string",
                     "required": true,
@@ -614,8 +589,7 @@
                 },
                 {
                     "linkId": "EmCare.A.DE35",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                    "text": "Caregiver's Mobile telephone number",
+                    "text": "Primary Caregiver's Mobile telephone number",
                     "type": "integer",
                     "required": false,
                     "repeats": false,
@@ -623,8 +597,7 @@
                 },
                 {
                     "linkId": "EmCare.A.DE36",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                    "text": "Caregiver's Home telephone number",
+                    "text": "Primary Caregiver's Home telephone number",
                     "type": "integer",
                     "required": false,
                     "repeats": false,
@@ -632,8 +605,7 @@
                 },
                 {
                     "linkId": "EmCare.A.DE37",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                    "text": "Caregiver's Work telephone number",
+                    "text": "Primary Caregiver's Work telephone number",
                     "type": "integer",
                     "required": false,
                     "repeats": false,
@@ -650,69 +622,73 @@
                         }
                     ],
                     "linkId": "EmCare.A.DE24",
-                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Primary Caregiver's Relationship to Client",
                     "type": "choice",
                     "required": false,
                     "repeats": false,
                     "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/relationship-to-client",
                     "designNote": "status::draft"
-                }
-            ],
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                },
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "drop-down",
-                                "display": "Drop down"
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "drop-down",
+                                        "display": "Drop down"
+                                    }
+                                ],
+                                "text": "Drop down"
                             }
-                        ],
-                        "text": "Drop down"
-                    }
-                }
-            ],
-            "linkId": "EmCare.A.DE31",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Biological Parental Vital Status",
-            "type": "choice",
-            "required": false,
-            "repeats": true,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/bioparent-status",
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE31",
+                    "text": "Biological Parental Vital Status",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": true,
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/bioparent-status",
+                    "designNote": "status::draft"
+                },
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "check-box",
+                                        "display": "Check-box"
+                                    }
+                                ],
+                                "text": "Check-box"
                             }
-                        ],
-                        "text": "Check-box"
-                    }
-                }
-            ],
-            "linkId": "EmCare.A.DE38",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "type": "choice",
-            "required": true,
-            "repeats": true,
-            "answerOption": [
-                {
-                    "valueCoding": {
-                        "code": "EmCare.A.DE38",
-                        "display": "Caregiver wants to receive SMS or other messages regarding the child's visits and health status"
-                    }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='newPrimary Caregiver').answer.first().value.code = 'newPrimary Caregiver' or %resource.repeat(item).where(linkId='EmCare.A.DE48').answer.exists()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE38",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": true,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "code": "EmCare.A.DE38",
+                                "display": "Primary Caregiver wants to receive SMS or other messages regarding the child's visits and health status"
+                            }
+                        }
+                    ],
+                    "designNote": "status::draft"
                 }
             ],
             "designNote": "status::draft"

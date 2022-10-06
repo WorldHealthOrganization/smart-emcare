@@ -177,11 +177,11 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "EmCare.B8/B9.DE03"
+                        "expression": "EmCare.B8-B9.DE03"
                     }
                 }
             ],
-            "linkId": "EmCare.B8/B9.DE03",
+            "linkId": "EmCare.B8-B9.DE03",
             "text": "Has danger signs",
             "type": "boolean",
             "required": false,
@@ -600,7 +600,6 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/malaria-risk-region",
             "designNote": "status::draft"
         },
         {
@@ -660,7 +659,7 @@
             "linkId": "EmCare.B22.DE01",
             "text": "Respiratory Rate",
             "type": "integer",
-            "required": false,
+            "required": true,
             "repeats": false,
             "designNote": "status::draft"
         },
@@ -695,7 +694,7 @@
             "linkId": "EmCare.B22.DE03",
             "text": "Respiratory Rate First Count",
             "type": "integer",
-            "required": false,
+            "required": true,
             "repeats": false,
             "designNote": "status::draft"
         },
@@ -739,31 +738,6 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 2"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 , 'yes', %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 12, 'yes', {})"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B22.DE06",
-            "text": "Fast Breathing",
-            "type": "choice",
-            "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
                         "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2"
                     }
                 },
@@ -794,9 +768,9 @@
                 }
             ],
             "linkId": "EmCare.B22.DE08",
-            "text": "Oral Fluid Test",
+            "text": "Oral Fluid Test Results",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/oral-fluid-test",
             "designNote": "status::draft"
@@ -807,14 +781,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >  2"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "EmCare.B22.DE14a"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.first().value.code = 'EmCare.B22.DE14' and %resource.repeat(item).where(linkId='EmCare.B8-B9.DE03').answer.first().value = true"
                     }
                 }
             ],
@@ -1004,7 +971,7 @@
             "linkId": "EmCare.B22.DE30",
             "text": "Mother reports difficulty breastfeeding",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
@@ -1022,7 +989,7 @@
             "linkId": "EmCare.B22.DE31",
             "text": "Chin Touching Breast",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
@@ -1040,7 +1007,7 @@
             "linkId": "EmCare.B22.DE32",
             "text": "Mouth Wide Open",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
@@ -1058,7 +1025,7 @@
             "linkId": "EmCare.B22.DE33",
             "text": "Lower Lip Turned Outwards",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
@@ -1076,7 +1043,7 @@
             "linkId": "EmCare.B22.DE34",
             "text": "More Areola Visible above than below the Mouth",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
@@ -1094,7 +1061,7 @@
             "linkId": "EmCare.B22.DE35",
             "text": "Slow Deep Sucks, Sometimes Pausing",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
@@ -1119,7 +1086,7 @@
             "linkId": "EmCare.B22.DE36",
             "text": "Breastfeeding Assessment Results",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": true,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/breastfeed-assessment",
             "designNote": "status::draft"
@@ -1325,7 +1292,7 @@
                 }
             ],
             "linkId": "EmCare.B22.DE52",
-            "text": "No Measured Fever OR\nNo Low Body Temperature",
+            "text": "No Measured Fever or\nNo Low Body Temperature",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -1337,14 +1304,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>2 and (%resource.repeat(item).where(linkId='EmCare.B8/B9.DE03').answer.first().value = false or %resource.repeat(item).where(linkId='EmCare.B12S2.DE01').answer.first().value.code = 'no' or (%resource.repeat(item).where(linkId='EmCare.B12S2.DE01').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE15').answer.first().value.code != 'EmCare.B12S1.DE18' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE19').answer.first().value.code = 'yes') or (%resource.repeat(item).where(linkId='EmCare.B12S1.DE15').answer.first().value = 'EmCare.B12S1.DE17' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE19').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B12S2.DE04').answer.first().value))"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>2 and (%resource.repeat(item).where(linkId='EmCare.B8-B9.DE03').answer.first().value = false or %resource.repeat(item).where(linkId='EmCare.B12S2.DE01').answer.first().value.code = 'no' or (%resource.repeat(item).where(linkId='EmCare.B12S2.DE01').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE15').answer.first().value.code != 'EmCare.B12S1.DE18' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE19').answer.first().value.code = 'yes') or (%resource.repeat(item).where(linkId='EmCare.B12S1.DE15').answer.first().value = 'EmCare.B12S1.DE17' and %resource.repeat(item).where(linkId='EmCare.B12S1.DE19').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B12S2.DE04').answer.first().value))"
                     }
                 }
             ],
             "linkId": "EmCare.B22.DE53",
             "text": "Malaria Test Results",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/malaria-test",
             "designNote": "status::draft"
@@ -1362,7 +1329,7 @@
             "linkId": "EmCare.B22.DE57",
             "text": "Type of Malaria Test",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/malaria-test-type",
             "designNote": "status::draft"

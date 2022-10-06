@@ -10,11 +10,11 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.type = 'batch' 'type';
     src -> bundle.entry as entry then {
         src.subject as subject then {
-            subject.id as idval -> entry.request as request, request.method = 'PUT', request.url = append('/Patient/',idval) 'htggd';
-        } 'rhxse';
+            subject.id as idval -> entry.request as request, request.method = 'PUT', request.url = append('/Patient/',idval) '1153aa45';
+        } 'cf5b2513';
         src -> entry.resource = create("Patient") as tgt then {
-            src -> tgt then emcarepatient(src, tgt) 'nlgva';
-        } 'tspqb';
+            src -> tgt then emcarepatient(src, tgt) '77f3ac03';
+        } '79bfd623';
     } 'put-emcarepatient';
     src where src.item.where(linkId='EmCare.A.DE38').exists() and src.item.where(linkId='emcarecommunicationrequestid').first().answer.exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('CommunicationRequest') as tgt then emcarecommunicationrequestemcareade38(src,tgt) 'act-EmCare.A.DE38';
@@ -53,7 +53,7 @@ group emcarepatient(source src : questionnaireResponse,target tgt : Patient){
     } 'emcareade20';
     src.item as item where linkId  = 'EmCare.A.DE48' then {
         item.answer first as a then {
-            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/caregiver', ext.value= val 'aemcareade48';
+            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Primary Caregiver', ext.value= val 'aemcareade48';
         } 'aemcareade48';
     } 'emcareade48';
 }
@@ -62,67 +62,67 @@ group SetOfficalGivenNameemcarepatient(source src,target tgt){
     src -> tgt.use = 'official' then {
         src.item as item where linkId  =  'EmCare.A.DE04' then {
             item.answer first as a then {
-                a.value as val -> tgt.given = val  'gemnw';
-            } 'rnbss';
-        } 'ipsnp';
+                a.value as val -> tgt.given = val  '577eab5d';
+            } 'dcd99d74';
+        } 'a9cce225';
         src.item as item where linkId  =  'EmCare.A.DE05' then {
             item.answer first as a then {
-                a.value as val -> tgt.given = val  'hdosn';
-            } 'ytmya';
-        } 'cjywm';
+                a.value as val -> tgt.given = val  '577eab5d';
+            } 'dcd99d74';
+        } '0d54d3f5';
         src.item as item where linkId  =  'EmCare.A.DE06' then {
             item.answer first as a then {
-                a.value as val -> tgt.family = val  'lzcwb';
-            } 'rhevl';
-        } 'ovlzt';
-    } 'imqij';
+                a.value as val -> tgt.family = val  '2374a9a1';
+            } '09801739';
+        } 'd9b84a53';
+    } '3ace9ae4';
 }
 
 group MapValueSetExtCodeemcareade16(source src,target tgt){
     src -> tgt then {
         src -> tgt then {
-            src where value.code = 'EmCare.A.DE17' -> tgt.gender = 'female' 'rjczh';
-            src where value.code = 'EmCare.A.DE18' -> tgt.gender = 'male' 'opsdd';
-            src where value.code = 'EmCare.A.DE19' -> tgt.gender = 'unknown' 'oxdtm';
+            src where value.code = 'EmCare.A.DE17' -> tgt.gender = 'female' '368f2e2a';
+            src where value.code = 'EmCare.A.DE18' -> tgt.gender = 'male' '2ae3beca';
+            src where value.code = 'EmCare.A.DE19' -> tgt.gender = 'unknown' 'de22e8b7';
         } 'mapbase';
-    } 'czwxr';
+    } '57676688';
 }
 
 group getIdemcarepatient(source src,target tgt){
     src.item first as item where linkId  =  'emcarepatientid' -> tgt then {
         item.answer first as a ->  tgt  then {
-            a.value as val ->  tgt.id = val 'dmasx';
-        } 'xdzno';
-    } 'erdug';
+            a.value as val ->  tgt.id = val '8e3eaf71';
+        } 'f3550c0d';
+    } '3f5d36d5';
 }
 
 group getFullUrlemcarepatient(source src,target tgt){
     src.item first as item where linkId  =  'emcarepatientid' -> tgt then {
         item.answer first as a -> tgt then {
-            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'rfqta';
-        } 'qnypf';
-    } 'kycja';
+            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'a6735326';
+        } '8a0f6df2';
+    } '3f2aa346';
 }
 
 group getUrlemcarepatient(source src,target tgt){
     src.item first as item where linkId  =  'emcarepatientid' -> tgt then {
         item.answer first as a ->  tgt then {
-            a.value as val ->  ref.reference = append('/Patient/', val) 'tnnla';
-        } 'dteck';
-    } 'fpjwp';
+            a.value as val ->  ref.reference = append('/Patient/', val) '35084433';
+        } '6b00c627';
+    } '93c490c2';
 }
 
 group emcarecommunicationrequestemcareade38(source src,target tgt){
-    src ->  tgt.category = create('CodeableConcept') as cc, cc.coding = create('Coding') as c, c.system ='http://hl7.org/fhir/ValueSet/communication-category', c.code = 'notification' 'tmrph';
+    src ->  tgt.category = create('CodeableConcept') as cc, cc.coding = create('Coding') as c, c.system ='http://hl7.org/fhir/ValueSet/communication-category', c.code = 'notification' '053233cd';
     src.questionnaire as q ->   tgt.about = create('Reference') as ref, ref.type ='Questionnaire', ref.reference = q 'quest';
-    src.subject as subject ->   tgt.subject = subject  'ebyku';
+    src.subject as subject ->   tgt.subject = subject  'fe3bec4d';
     src ->   tgt.recipient =create('Reference') as ref  then {
-        src -> ref.type = 'RelatedPerson' 'lrcal';
-        src.item first as item where linkId  =  'emcarerelatedpersoncaregiveruuid' -> tgt then {
+        src -> ref.type = 'RelatedPerson' 'c26ab31f';
+        src.item first as item where linkId  =  'emcarerelatedpersonPrimary Caregiveruuid' -> tgt then {
             item.answer first as a ->  tgt then {
-                a.value as val ->  ref.reference = append('/RelatedPerson/', val) 'mduxr';
-            } 'jkxki';
-        } 'unrej';
-    } 'cyscx';
+                a.value as val ->  ref.reference = append('/RelatedPerson/', val) '25b16148';
+            } '00b2016a';
+        } '3ad22f7e';
+    } 'f1bbc2f2';
 }
 

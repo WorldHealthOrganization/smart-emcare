@@ -188,19 +188,38 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE49').answer.empty()"
                     }
                 }
             ],
-            "linkId": "EmCare.A.DE40",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Person accompanying child Today's First Name",
-            "type": "string",
+            "linkId": "newPerson",
+            "type": "choice",
             "required": false,
-            "repeats": false,
+            "repeats": true,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "code": "newPerson",
+                        "display": "Register a new Person accompanying child"
+                    }
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -209,52 +228,107 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                        "expression": "%resource.repeat(item).where(linkId='newPrimaryCaregiver').answer.first().value.code = 'newPrimary Caregiver'"
                     }
                 }
             ],
-            "linkId": "EmCare.A.DE41",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Person accompanying child Today's Last Name",
-            "type": "string",
+            "linkId": "EmCare.A.DE49.1",
+            "text": "EmCare.A.DE21.1",
+            "type": "group",
             "required": false,
             "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+            "item": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
-                    }
-                }
-            ],
-            "linkId": "EmCare.A.DE42",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Person accompanying child Today's contact's phone number",
-            "type": "integer",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                },
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
-                    }
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE40",
+                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                    "text": "Person accompanying child Today's First Name",
+                    "type": "string",
+                    "required": false,
+                    "repeats": false,
+                    "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE41",
+                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                    "text": "Person accompanying child Today's Last Name",
+                    "type": "string",
+                    "required": false,
+                    "repeats": false,
+                    "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE42",
+                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                    "text": "Person accompanying child Today's contact's phone number",
+                    "type": "integer",
+                    "required": false,
+                    "repeats": false,
+                    "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE43",
+                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                    "text": "Person accompanying child Today's Relationship to Client",
+                    "type": "string",
+                    "required": false,
+                    "repeats": false,
+                    "designNote": "status::draft"
                 }
             ],
-            "linkId": "EmCare.A.DE43",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Person accompanying child Today's Relationship to Client",
-            "type": "string",
-            "required": false,
-            "repeats": false,
             "designNote": "status::draft"
         },
         {
@@ -268,6 +342,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='this').answer.first().value = 'Well Child' and %resource.repeat(item).where(linkId='EmCare.B3.DE05').answer.first().value = true, 'Sick Child', %resource.repeat(item).where(linkId='this').answer.first().value)"
+                    }
+                }
+            ],
             "linkId": "EmCare.B3.DE01",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Reason for Consultation",

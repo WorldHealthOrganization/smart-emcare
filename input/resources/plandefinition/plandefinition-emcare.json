@@ -20,11 +20,15 @@
     },
     "status": "active",
     "experimental": false,
-    "date": "2022-09-27T11:00:31+00:00",
+    "date": "2022-10-06T09:46:28+00:00",
     "library": [
         "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcaredt01"
     ],
     "action": [
+        {
+            "id": "{{library}}",
+            "description": "emcareb23classification::clas::{{LIB_VERSION}}"
+        },
         {
             "id": "emcaredt01",
             "description": "Register a child < 5 years",
@@ -72,35 +76,6 @@
             "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcareb.registration.e"
         },
         {
-            "id": "emcaredt03",
-            "description": "Determine Basic Anthropometric and others measurement",
-            "condition": [
-                {
-                    "kind": "applicability",
-                    "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
-                        "language": "text/cql-identifier",
-                        "expression": "EmCareDT03"
-                    }
-                }
-            ],
-            "relatedAction": [
-                {
-                    "actionId": "EmCareDT02",
-                    "relationship": "after"
-                }
-            ],
-            "type": {
-                "coding": [
-                    {
-                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
-                        "code": "record-and-report"
-                    }
-                ]
-            },
-            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b6.measurements"
-        },
-        {
             "id": "emcaredt04",
             "description": "Evaluate DangerSigns",
             "condition": [
@@ -115,7 +90,7 @@
             ],
             "relatedAction": [
                 {
-                    "actionId": "EmCareDT03",
+                    "actionId": "EmCareDT0",
                     "relationship": "after"
                 }
             ],
@@ -130,13 +105,42 @@
             "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b7.lti-dangersigns"
         },
         {
+            "id": "emcaredt03",
+            "description": "Determine Basic Anthropometric and others measurement",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "EmCareDT03"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT04",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "record-and-report"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b6.measurements"
+        },
+        {
             "id": "emcaredt05",
             "description": "Assess sick child for Symptoms 2 m",
             "condition": [
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in months between Today() and  Patient.birthDate < 2",
+                        "description": "clas.\"Age >=28 days to 2 Months\" or clas.\"Age < 28 days to 2 Months\"",
                         "language": "text/cql-identifier",
                         "expression": "EmCareDT05"
                     }
@@ -144,7 +148,7 @@
             ],
             "relatedAction": [
                 {
-                    "actionId": "EmCareDT04",
+                    "actionId": "EmCareDT03",
                     "relationship": "after"
                 }
             ],
@@ -165,7 +169,7 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in months between Today() and  Patient.birthDate >= 2",
+                        "description": "clas.\"Age >= 2 months to <60 months\"",
                         "language": "text/cql-identifier",
                         "expression": "EmCareDT06"
                     }
@@ -173,7 +177,7 @@
             ],
             "relatedAction": [
                 {
-                    "actionId": "EmCareDT04",
+                    "actionId": "EmCareDT03",
                     "relationship": "after"
                 }
             ],
@@ -194,7 +198,7 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in months between Today() and  Patient.birthDate < 2",
+                        "description": "clas.\"Age >=28 days to 2 Months\" or clas.\"Age < 28 days to 2 Months\"",
                         "language": "text/cql-identifier",
                         "expression": "EmCareDT07"
                     }
@@ -223,7 +227,7 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in months between Today() and  Patient.birthDate >= 2",
+                        "description": "clas.\"Age >= 2 months to <60 months\"",
                         "language": "text/cql-identifier",
                         "expression": "EmCareDT08"
                     }
@@ -252,7 +256,7 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in months between Today() and  Patient.birthDate >= 2",
+                        "description": "difference in years between Today() and  Patient.birthDate < 5",
                         "language": "text/cql-identifier",
                         "expression": "EmCareDT09"
                     }

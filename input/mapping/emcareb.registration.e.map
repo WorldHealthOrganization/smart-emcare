@@ -12,22 +12,22 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.type = 'batch' 'type';
     src -> bundle.entry as entry then {
         src.encounter as encounter then {
-            encounter.id as idval  -> entry.request as request, request.method = 'PUT', request.url = append('/Encounter/',idval) 'dquqy';
-        } 'ngwrd';
+            encounter.id as idval  -> entry.request as request, request.method = 'PUT', request.url = append('/Encounter/',idval) 'f7ed42d5';
+        } '49f4ed45';
         src -> entry.resource = create("Encounter") as tgt then {
-            src -> tgt then emcareencounter(src, tgt) 'ewhyk';
-            src.subject as sub -> tgt.subject = sub 'osmmc';
-        } 'jyfla';
+            src -> tgt then emcareencounter(src, tgt) 'fd415ba8';
+            src.subject as sub -> tgt.subject = sub '23252e10';
+        } 'aa65c498';
     } 'put-emcareencounter';
     src where src.item.where(linkId='emcarerelatedpersonid').answer.exists()-> bundle.entry as entry then {
         src.item first as item where linkId  =  'emcarerelatedpersonid' -> entry.request as request, request.method = 'PUT' then {
             item.answer first as a ->  request then {
-                a.value as val ->  request.url = append('/RelatedPerson/', val) 'ywbct';
-            } 'osbpc';
-        } 'sjrap';
+                a.value as val ->  request.url = append('/RelatedPerson/', val) '11e3b388';
+            } 'c5e7331f';
+        } '0e46d0c4';
         src -> entry.resource = create("RelatedPerson") as tgt then {
-            src -> tgt then emcarerelatedperson(src, tgt) 'mmyxj';
-        } 'roxoe';
+            src -> tgt then emcarerelatedperson(src, tgt) 'ec9147dd';
+        } '3aa4d4d9';
     } 'put-emcarerelatedperson';
     src where src.item.where(linkId='EmCare.B3.DE05').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb3de05(src,tgt) 'act-EmCare.B3.DE05';
@@ -41,13 +41,19 @@ group emcareencounter(source src : questionnaireResponse,target tgt : Encounter)
         } 'aemcareade07';
     } 'emcareade07';
     src.item as item where linkId  = 'EmCare.B2.DE01' then {
-        item.answer first as a -> tgt.type = a 'aemcareb2de01';
+        item.answer first as a then {
+            a.value as val -> tgt.type = create ('Coding') as c, c.coding = val 'aemcareb2de01';
+        } 'aemcareb2de01';
     } 'emcareb2de01';
     src.item as item where linkId  = 'EmCare.B3.DE01' then {
-        item.answer first as a -> tgt.reasonCode = a 'aemcareb3de01';
+        item.answer first as a then {
+            a.value as val -> tgt.reasonCode = val 'aemcareb3de01';
+        } 'aemcareb3de01';
     } 'emcareb3de01';
     src.item as item where linkId  = 'EmCare.B3.DE06' then {
-        item.answer first as a -> tgt.type = a 'aemcareb3de06';
+        item.answer first as a then {
+            a.value as val -> tgt.type = create ('Coding') as c, c.coding = val 'aemcareb3de06';
+        } 'aemcareb3de06';
     } 'emcareb3de06';
     src.item as item where linkId  = 'EmCare.B3.DE09' then {
         item.answer first as a then {
@@ -59,82 +65,73 @@ group emcareencounter(source src : questionnaireResponse,target tgt : Encounter)
 group getIdemcareencounter(source src,target tgt){
     src.item first as item where linkId  =  'emcareencounterid' -> tgt then {
         item.answer first as a ->  tgt  then {
-            a.value as val ->  tgt.id = val 'jvyyb';
-        } 'xgmff';
-    } 'qnhjx';
+            a.value as val ->  tgt.id = val '8e3eaf71';
+        } 'f3550c0d';
+    } '269afe68';
 }
 
 group getFullUrlemcareencounter(source src,target tgt){
     src.item first as item where linkId  =  'emcareencounterid' -> tgt then {
         item.answer first as a -> tgt then {
-            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'iaucm';
-        } 'ywsjx';
-    } 'vzqfj';
+            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'a6735326';
+        } '8a0f6df2';
+    } 'd383794d';
 }
 
 group getUrlemcareencounter(source src,target tgt){
     src.item first as item where linkId  =  'emcareencounterid' -> tgt then {
         item.answer first as a ->  tgt then {
-            a.value as val ->  ref.reference = append('/Encounter/', val) 'zsyig';
-        } 'kyrez';
-    } 'vscts';
+            a.value as val ->  ref.reference = append('/Encounter/', val) 'e8494603';
+        } '35ea1ad7';
+    } '558d60eb';
 }
 
 group emcarerelatedperson(source src : questionnaireResponse,target tgt : RelatedPerson){
     src.item first as item  where linkId =  'EmCare.A.DE40' or linkId =  'EXXXXXXX' or linkId =  'EmCare.A.DE40' -> tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedperson(src, name) 'emcareade40';
-    src.item as item where linkId  = 'EmCare.A.DE43' then {
-        item.answer first as a -> tgt then {
-        a where value = 'EmCare.A.DE17'  -> tgt.gender = 'female' 'sexf';
-        a where value = 'EmCare.A.DE18'  -> tgt.gender = 'male' 'sexm';
-        a where value = 'EmCare.A.DE19'  -> tgt.gender = 'unknown' 'sexx';
-        a where a.valueCode= 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v2-0131') 'person-accomp';
-        a where a.valueCode != 'EmCare.A.DE30' -> tgt.relationship =  translate(a, 'relationship-to-client', 'http://terminology.hl7.org/CodeSystem/v3-RoleCode') 'person-accomp-std';
-        } 'aemcareade43';
-    } 'emcareade43';
 }
 
 group SetOfficalGivenNameemcarerelatedperson(source src,target tgt){
     src -> tgt.use = 'official' then {
         src.item as item where linkId  =  'EmCare.A.DE40' then {
             item.answer first as a then {
-                a.value as val -> tgt.given = val  'khnpm';
-            } 'rlpel';
-        } 'xhzkk';
+                a.value as val -> tgt.given = val  '577eab5d';
+            } 'dcd99d74';
+        } '3674e72e';
         src.item as item where linkId  =  'EXXXXXXX' then {
             item.answer first as a then {
-                a.value as val -> tgt.given = val  'idhzn';
-            } 'wpjja';
-        } 'gabmt';
+                a.value as val -> tgt.given = val  '577eab5d';
+            } 'dcd99d74';
+        } '901b64d6';
         src.item as item where linkId  =  'EmCare.A.DE40' then {
             item.answer first as a then {
-                a.value as val -> tgt.family = val  'xpqrk';
-            } 'gzwrf';
-        } 'nbvfl';
-    } 'knwql';
+                a.value as val -> tgt.family = val  '2374a9a1';
+            } '09801739';
+        } '512ccb78';
+    } 'eb5b3f08';
 }
 
 group getIdemcarerelatedperson(source src,target tgt){
     src.item first as item where linkId  =  'emcarerelatedpersonid' -> tgt then {
         item.answer first as a ->  tgt  then {
-            a.value as val ->  tgt.id = val 'jaepj';
-        } 'ngerd';
-    } 'jcgpl';
+            a.value as val ->  tgt.id = val '8e3eaf71';
+        } 'f3550c0d';
+    } 'de9cc039';
 }
 
 group getFullUrlemcarerelatedperson(source src,target tgt){
     src.item first as item where linkId  =  'emcarerelatedpersonid' -> tgt then {
         item.answer first as a -> tgt then {
-            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'cpmix';
-        } 'ugvol';
-    } 'rwqxc';
+            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'a6735326';
+        } '8a0f6df2';
+    } '00c7b89d';
 }
 
 group getUrlemcarerelatedperson(source src,target tgt){
     src.item first as item where linkId  =  'emcarerelatedpersonid' -> tgt then {
         item.answer first as a ->  tgt then {
-            a.value as val ->  ref.reference = append('/RelatedPerson/', val) 'wdkue';
-        } 'aypza';
-    } 'iunvb';
+            a.value as val ->  ref.reference = append('/RelatedPerson/', val) '25b16148';
+        } '00b2016a';
+    } 'ce147194';
 }
 
 group emcareobservationemcareb3de05(source src,target tgt){

@@ -1,120 +1,230 @@
-library emcareb22assessmentstests version '4.0.1'
+/*
+@author: Patrick Delcroix
+@description: This library is part of the project EmCare
+*/
+library emcareb22assessmentstests version '0.99.99'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include EmCareBase called Base
+include EmCareBase version '0.99.99' called Base
+include EmCareObservation version '0.99.99' called obs
+include EmCareValueSet version '0.99.99' called val
 
 
 context Patient
+      
 
-
-/* AgeInMonths : Age auto-calculated (presented as number of years, months, days) of the client based on date of birth OR estimated age OR based on auto-calculation from estimaged date of birth*/
+/* AgeInMonths : Age*/
 define "AgeInMonths":
     AgeInMonths()
 
-/* EmCare.B10S1.DE05 : The client is reported to have or has had a cough*/
+/* Age : Age*/
+define "Age":
+    AgeInMonths()
+
+/* EmCare.B10S1.DE05 : Cough*/
 define "EmCare.B10S1.DE05":
-    B.HasObs({c('EmCare.B10S1.DE05')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B10S1.DE01 : The client is reported to have or has had difficulty breathing*/
+/* Cough : Cough*/
+define "Cough":
+    Base.HasObs('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B10S1.DE01 : Difficulty Breathing*/
 define "EmCare.B10S1.DE01":
-    B.HasObs({c('EmCare.B10S1.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B10S2.DE01 : The client's respiratory rate*/
+/* Difficulty Breathing : Difficulty Breathing*/
+define "Difficulty Breathing":
+    Base.HasObs('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B10S2.DE01 : Respiratory Rate*/
 define "EmCare.B10S2.DE01":
-    B.HasObs({c('EmCare.B10S2.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B11S1.DE01 : The client is reported to have or has had diarrhoea*/
+/* Respiratory Rate : Respiratory Rate*/
+define "Respiratory Rate":
+    Base.HasObs('EmCare.B10S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B11S1.DE01 : Diarrhoea*/
 define "EmCare.B11S1.DE01":
-    B.HasObs({c('EmCare.B11S1.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B8/B9.DE03 : Variable to check whether patient has been assessed with danger signs or not*/
-define "EmCare.B8/B9.DE03":
-    B.HasObs({c('EmCare.B8/B9.DE03')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+/* Diarrhoea : Diarrhoea*/
+define "Diarrhoea":
+    Base.HasObs('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B10S2.DE03 : The client has chest indrawing*/
+/* EmCare.B8-B9.DE03 : Has danger signs*/
+define "EmCare.B8-B9.DE03":
+    Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* Has danger signs : Has danger signs*/
+define "Has danger signs":
+    Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B10S2.DE03 : Chest Indrawing*/
 define "EmCare.B10S2.DE03":
-    B.HasObs({c('EmCare.B10S2.DE03')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S2.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B10S2.DE05 : The client is wheezing*/
+/* Chest Indrawing : Chest Indrawing*/
+define "Chest Indrawing":
+    Base.HasObs('EmCare.B10S2.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B10S2.DE05 : Wheezing*/
 define "EmCare.B10S2.DE05":
-    B.HasObs({c('EmCare.B10S2.DE05')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S2.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B10S2.DE04 : The client has stridor in a calm child while the client is at rest*/
+/* Wheezing : Wheezing*/
+define "Wheezing":
+    Base.HasObs('EmCare.B10S2.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B10S2.DE04 : Stridor in a calm child*/
 define "EmCare.B10S2.DE04":
-    B.HasObs({c('EmCare.B10S2.DE04')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B10S2.DE07 : The client's oxygen saturation measurement*/
+/* Stridor in a calm child : Stridor in a calm child*/
+define "Stridor in a calm child":
+    Base.HasObs('EmCare.B10S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B10S2.DE07 : Oxygen Saturation*/
 define "EmCare.B10S2.DE07":
-    B.HasObs({c('EmCare.B10S2.DE07')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B10S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.A.DE24 : The relationship of the primary Caregiver to the client*/
+/* Oxygen Saturation : Oxygen Saturation*/
+define "Oxygen Saturation":
+    Base.HasObs('EmCare.B10S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.A.DE24 : Primary Caregiver's Relationship to Client*/
 define "EmCare.A.DE24":
-    B.HasObs({c('EmCare.A.DE24')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.A.DE24','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B21S1.DE01 : The client is breastfed*/
+/* Primary Caregiver's Relationship to Client : Primary Caregiver's Relationship to Client*/
+define "Primary Caregiver's Relationship to Client":
+    Base.HasObs('EmCare.A.DE24','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B21S1.DE01 : Breastfed*/
 define "EmCare.B21S1.DE01":
-    B.HasObs({c('EmCare.B21S1.DE01', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B21S1.DE01', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B8-B9.DE01 : The client has obstructed or absent breathing*/
+/* Breastfed : Breastfed*/
+define "Breastfed":
+    Base.HasObs('EmCare.B21S1.DE01', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B8-B9.DE01 : Obstructed or Absent Breathing*/
 define "EmCare.B8-B9.DE01":
-    B.HasObs({c('EmCare.B8-B9.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B8-B9.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B7.DE02 : The client is convulsing now*/
+/* Obstructed or Absent Breathing : Obstructed or Absent Breathing*/
+define "Obstructed or Absent Breathing":
+    Base.HasObs('EmCare.B8-B9.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B7.DE02 : Convulsing Now*/
 define "EmCare.B7.DE02":
-    B.HasObs({c('EmCare.B7.DE02')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B18S1.DE02 : The client is reported to have difficulty with Feeding*/
+/* Convulsing Now : Convulsing Now*/
+define "Convulsing Now":
+    Base.HasObs('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B18S1.DE02 : Difficulty with Feeding*/
 define "EmCare.B18S1.DE02":
-    B.HasObs({c('EmCare.B18S1.DE02')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B18S1.DE01 : The client has had convulsions in this illness*/
+/* Difficulty with Feeding : Difficulty with Feeding*/
+define "Difficulty with Feeding":
+    Base.HasObs('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B18S1.DE01 : Convulsions in this Illness*/
 define "EmCare.B18S1.DE01":
-    B.HasObs({c('EmCare.B18S1.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B18S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B18S2.DE07 : The client has severe chest indrawing*/
+/* Convulsions in this Illness : Convulsions in this Illness*/
+define "Convulsions in this Illness":
+    Base.HasObs('EmCare.B18S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B18S2.DE07 : Severe Chest Indrawing*/
 define "EmCare.B18S2.DE07":
-    B.HasObs({c('EmCare.B18S2.DE07')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B18S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B18S2.DE08 : The health care worker's assessments of the client's movements*/
+/* Severe Chest Indrawing : Severe Chest Indrawing*/
+define "Severe Chest Indrawing":
+    Base.HasObs('EmCare.B18S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B18S2.DE08 : Movements*/
 define "EmCare.B18S2.DE08":
-    B.HasObs({c('EmCare.B18S2.DE08')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B18S2.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B18S2.DE01 : The client's Temperature has been measured*/
+/* Movements : Movements*/
+define "Movements":
+    Base.HasObs('EmCare.B18S2.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B18S2.DE01 : Measured Temperature*/
 define "EmCare.B18S2.DE01":
-    B.HasObs({c('EmCare.B18S2.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B18S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B19S2.DE01 : The client has yellow skin*/
+/* Measured Temperature : Measured Temperature*/
+define "Measured Temperature":
+    Base.HasObs('EmCare.B18S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B19S2.DE01 : Yellow Skin*/
 define "EmCare.B19S2.DE01":
-    B.HasObs({c('EmCare.B19S2.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B19S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B19S2.DE04 : The age at which the Jaundice first appeared*/
+/* Yellow Skin : Yellow Skin*/
+define "Yellow Skin":
+    Base.HasObs('EmCare.B19S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B19S2.DE04 : When did the Jaundice first appear?*/
 define "EmCare.B19S2.DE04":
-    B.HasObs({c('EmCare.B19S2.DE04')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B19S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B19S2.DE02 : The client has yellow palms or yellow soles*/
+/* When did the Jaundice first appear? : When did the Jaundice first appear?*/
+define "When did the Jaundice first appear?":
+    Base.HasObs('EmCare.B19S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B19S2.DE02 : Yellow Palms or Yellow Soles*/
 define "EmCare.B19S2.DE02":
-    B.HasObs({c('EmCare.B19S2.DE02')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B19S2.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B21S2.DE01 : The client's weight status*/
+/* Yellow Palms or Yellow Soles : Yellow Palms or Yellow Soles*/
+define "Yellow Palms or Yellow Soles":
+    Base.HasObs('EmCare.B19S2.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B21S2.DE01 : Weight Status*/
 define "EmCare.B21S2.DE01":
-    B.HasObs({c('EmCare.B21S2.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B21S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B12S2.DE01 : The client has a stiff neck*/
+/* Weight Status : Weight Status*/
+define "Weight Status":
+    Base.HasObs('EmCare.B21S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B12S2.DE01 : Stiff neck*/
 define "EmCare.B12S2.DE01":
-    B.HasObs({c('EmCare.B12S2.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B12S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B12S1.DE15 : The client is in a high / low / no malaria risk area*/
+/* Stiff neck : Stiff neck*/
+define "Stiff neck":
+    Base.HasObs('EmCare.B12S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B12S1.DE15 : Malaria Risk*/
 define "EmCare.B12S1.DE15":
-    B.HasObs({c('EmCare.B12S1.DE15')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B12S1.DE15','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B12S1.DE19 : The client has recently travelled to a high Malaria risk area*/
+/* Malaria Risk : Malaria Risk*/
+define "Malaria Risk":
+    Base.HasObs('EmCare.B12S1.DE15','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B12S1.DE19 : Recent Travel to a High Malaria Risk area*/
 define "EmCare.B12S1.DE19":
-    B.HasObs({c('EmCare.B12S1.DE19')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B12S1.DE19','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B12S2.DE04 : The health care worker determines if there is an obvious cause of fever (to determine if Malaria test is required)  If no obvious cause of fever a malaria test will be prompted*/
+/* Recent Travel to a High Malaria Risk area : Recent Travel to a High Malaria Risk area*/
+define "Recent Travel to a High Malaria Risk area":
+    Base.HasObs('EmCare.B12S1.DE19','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B12S2.DE04 : Obvious Cause of Fever (to determine if Malaria test required)*/
 define "EmCare.B12S2.DE04":
-    B.HasObs({c('EmCare.B12S2.DE04')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B12S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B22.DE14a : When Danger Signs are present when the healthcare worker is Unable to Perform Oral Fluid Test it is assumed that the client is completely unable to drink or vomits immediately / everything*/
-define "EmCare.B22.DE14a":
-    ${EmCare.B22.DE08}.code = 'EmCare.B22.DE14' and ${EmCare.B8/B9.DE03} = true
+/* Obvious Cause of Fever (to determine if Malaria test required) : Obvious Cause of Fever (to determine if Malaria test required)*/
+define "Obvious Cause of Fever (to determine if Malaria test required)":
+    Base.HasObs('EmCare.B12S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

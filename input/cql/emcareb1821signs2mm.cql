@@ -1,32 +1,62 @@
-library emcareb1821signs2mm version '4.0.1'
+/*
+@author: Patrick Delcroix
+@description: This library is part of the project EmCare
+*/
+library emcareb1821signs2mm version '0.99.99'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include EmCareBase called Base
+include EmCareBase version '0.99.99' called Base
+include EmCareObservation version '0.99.99' called obs
+include EmCareValueSet version '0.99.99' called val
 
 
 context Patient
+      
 
-
-/* AgeInMonths : nan*/
+/* AgeInMonths : Age in Month*/
 define "AgeInMonths":
     AgeInMonths()
 
-/* EmCare.B20S1.DE01 : The client is reported to have diarrhoea*/
+/* Age in Month : Age in Month*/
+define "Age in Month":
+    AgeInMonths()
+
+/* EmCare.B20S1.DE01 : Diarrhoea*/
 define "EmCare.B20S1.DE01":
-    B.HasObs({c('EmCare.B20S1.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B20S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.A.DE31 : The client's mother and father's vital status*/
+/* Diarrhoea : Diarrhoea*/
+define "Diarrhoea":
+    Base.HasObs('EmCare.B20S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.A.DE31 : Biological Mother Vital Status*/
 define "EmCare.A.DE31":
-    B.HasObs({c('EmCare.A.DE31')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.A.DE31','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B21S1.DE01 : The client is breastfed*/
+/* Biological Mother Vital Status : Biological Mother Vital Status*/
+define "Biological Mother Vital Status":
+    Base.HasObs('EmCare.A.DE31','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B21S1.DE01 : Breastfed*/
 define "EmCare.B21S1.DE01":
-    B.HasObs({c('EmCare.B21S1.DE01')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B21S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B18S1.DE02 : The client is reported to have difficulty with Feeding*/
+/* Breastfed : Breastfed*/
+define "Breastfed":
+    Base.HasObs('EmCare.B21S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B18S1.DE02 : Difficulty with Feeding*/
 define "EmCare.B18S1.DE02":
-    B.HasObs({c('EmCare.B18S1.DE02')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B6.DE06 : The client's weight in Kilograms*/
+/* Difficulty with Feeding : Difficulty with Feeding*/
+define "Difficulty with Feeding":
+    Base.HasObs('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* EmCare.B6.DE06 : Weight*/
 define "EmCare.B6.DE06":
-    B.HasObs({c('EmCare.B6.DE06')},'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.HasObs('EmCare.B6.DE06','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* Weight : Weight*/
+define "Weight":
+    Base.HasObs('EmCare.B6.DE06','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

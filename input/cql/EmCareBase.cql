@@ -34,21 +34,29 @@ define function assesObservation(O Observation):
       else O.value
   end
       
-define function GetObservationDuringEncounter(idlist List<code>, codesystem url):
-    (First(
-    (Last([Observation ] O
+define function GetObservationDuringEncounter(idlist List<code>, codesystem FHIR.url):
+  if Exists(GetObservationDuringEncounterDone(idlist , codesystem  )) then 
+      GetObservationDuringEncounterDone(idlist , codesystem  )
+  else
+    GetObservationDuringEncounterNotFound(idlist , codesystem  )
+
+
+define function GetObservationDuringEncounterDone(idlist List<code>, codesystem FHIR.url):
+      Last([Observation ] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
         and O.status in { 'final', 'amended', 'corrected'}
         and exists(O.code.coding C where C.code in idlist 
-        and C.system = codesystem)))
-      union
-      (Last([Observation] O
+        and C.system = codesystem))
+
+
+define function GetObservationDuringEncounterNotFound(idlist List<code>, codesystem FHIR.url):
+      Last([Observation] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
           and O.status in {'cancelled'}
           and exists(O.code.coding C where C.code in idlist 
-          and C.system = codesystem)))))
+          and C.system = codesystem))
 
-define function GetNumberObservationDuringEncounter(idlist List<code>, codesystem url):
+define function GetNumberObservationDuringEncounter(idlist List<code>, codesystem FHIR.url):
   Count(
     [Observation] O
         where Last(Split(O.encounter.reference, '/')) = Encounter.id
@@ -70,35 +78,41 @@ define function HasObs(id System.String):
 
 
 
-define function GetHistoricObservation(idlist List<code>, codesystem url, nbdays Integer):
-  First(
-    ([Observation] O
+define function GetHistoricObservation(idlist List<code>, codesystem FHIR.url, nbdays Integer):
+  if Exists(GetHistoricObservationNotfound(idlist , codesystem , nbdays )) then 
+      GetHistoricObservationNotfound(idlist , codesystem , nbdays )
+  else
+    GetHistoricObservationNotfound(idlist , codesystem , nbdays )
+
+define function GetHistoricObservationDone(idlist List<code>, codesystem FHIR.url, nbdays Integer):
+      Last([Observation] O
         where  O.status in { 'final', 'amended', 'corrected'}
         and difference in days between O.issued and Today() < nbdays
-        and exists((O.code.coding C where C.code in idlist 
-        and C.system = codesystem)))
-      union
-      ([Observation] O
+        and exists(O.code.coding C where C.code in idlist 
+        and C.system = codesystem))
+
+define function GetHistoricObservationNotfound(idlist List<code>, codesystem FHIR.url, nbdays Integer):
+      Last([Observation] O
         where  O.status in {'cancelled'}
           and difference in days between O.issued and Today() < nbdays
-          and exists((O.code.coding C where C.code in idlist 
-          and C.system = codesystem))))
+          and exists(O.code.coding C where C.code in idlist 
+          and C.system = codesystem))
   
 // ************************   PatientHasHistoryOfObservation ************************/
 
 
-define function HasHistoryObs(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
+define function HasObsHistory(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
   assesObservation(GetHistoricObservation(idlist, ToUrl(codesystem), nbdays))
 
 
-define function HasHistoryObs(id FHIR.code, codesystem System.String, nbdays Integer):
+define function HasObsHistory(id FHIR.code, codesystem System.String, nbdays Integer):
   assesObservation(GetHistoricObservation({id}, ToUrl(codesystem), nbdays))
 
-define function HasHistoryObs(id System.String, codesystem System.String, nbdays Integer):
+define function HasObsHistory(id System.String, codesystem System.String, nbdays Integer):
   assesObservation(GetHistoricObservation({c(id)}, ToUrl(codesystem), nbdays))
 
 
-define function HasHistoryObs(id System.String, nbdays Integer):
+define function HasObsHistory(id System.String, nbdays Integer):
   assesObservation(GetHistoricObservation({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/'), nbdays))
 
 define function c(s System.String):

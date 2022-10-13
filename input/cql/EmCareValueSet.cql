@@ -19,10 +19,10 @@ define "Female":
  define "Not Specified":
   B.c('EmCare.A.DE19')
 
- define "Estimated Age":
+ define "Estimated age in years/months for child (2 months or older)":
   B.c('EmCare.A.DE13')
 
- define "Only know age in weeks/days/hours":
+ define "Estimated age in weeks/days for young infant (under 2 months old)":
   B.c('EmCare.A.DE14')
 
  define "Estimated Date of Birth":
@@ -142,24 +142,6 @@ define "Female":
  define "Skin Infection extends to Muscle":
   B.c('EmCare.B14S2.DE30')
 
- define "Molluscum Contagiosum - Skin coloured pearly white papules with central umbilication. Most commonly seen on face and trunk in children.":
-  B.c('EmCare.B14S2.DE31')
-
- define "Warts - Papules or nodules with a rough (Verrucous) surface":
-  B.c('EmCare.B14S2.DE32')
-
- define "Seborrhoea - Greasy scales and redness on central face and body folds":
-  B.c('EmCare.B14S2.DE33')
-
- define "Fixed Drug Reactions - Generalised red, wide spread with small bumps or blisters; or one or more dark skin areas":
-  B.c('EmCare.B14S2.DE35')
-
- define "Eczema - Wet oozing sores or excoriated, thick patches":
-  B.c('EmCare.B14S2.DE36')
-
- define "Steven Johnson Syndrome":
-  B.c('EmCare.B14S2.DE37')
-
  define "Generalised Skin Problem":
   B.c('EmCare.B14S2.DE07')
 
@@ -172,26 +154,41 @@ define "Female":
  define "Deep or extends to muscle":
   B.c('EmCare.B14S2.DE15')
 
- define "Papular Itching Rash
-(Prurigo) - Itching rash with small papules and scratch marks. Dark spots with pale centre":
+ define "Papular Urticaria or Papular Pruritic Eruptions":
   B.c('EmCare.B14S2.DE18')
 
- define "Ringworm (Tinea) - An itchy circular lesion with a raised edge and fine 
-scaly area in the centre with loss of hair.  May also be found on body or web on feet":
+ define "Ringworm (Tinea)":
   B.c('EmCare.B14S2.DE19')
 
- define "Scabies - Rash and excoriations on torso; burrows in web space and wrists, face spared":
+ define "Scabies":
   B.c('EmCare.B14S2.DE21')
 
- define "Chickenpox - Vesicles over body.  Vesicles appear progressively over days and form scabs after they rupture":
+ define "Chickenpox":
   B.c('EmCare.B14S2.DE22')
 
- define "Herpes Zoster -  Vesicles in one area on one side of body with intense pain or scars plus shooting pain.  
-Uncommon in children except where they are immuno-compromised (e.g. if infected with HIV)":
+ define "Herpes Zoster":
   B.c('EmCare.B14S2.DE23')
 
- define "Impetigo or Folliculitis - Red, Tender, Warm Crusts or Small lesions":
+ define "Impetigo":
   B.c('EmCare.B14S2.DE25')
+
+ define "Molluscum Contagiosum":
+  B.c('EmCare.B14S2.DE31')
+
+ define "Warts":
+  B.c('EmCare.B14S2.DE32')
+
+ define "Seborrhoeic Dermatitis":
+  B.c('EmCare.B14S2.DE33')
+
+ define "Fixed Drug Reaction":
+  B.c('EmCare.B14S2.DE35')
+
+ define "Eczema":
+  B.c('EmCare.B14S2.DE36')
+
+ define "Steven Johnson Syndrome (SJS)":
+  B.c('EmCare.B14S2.DE37')
 
  define "None of the above":
   B.c('non')
@@ -528,5 +525,23 @@ Uncommon in children except where they are immuno-compromised (e.g. if infected 
 
  define "Unable to swallow":
   B.c('EmCare.B17S1.DE10')
+
+ define "Does not appear to be Underweight":
+  B.c('EmCare.B6.DE19')
+
+ define "Appears to be Underweight":
+  B.c('EmCare.B6.DE20')
+
+ define "Appears to be Severely Underweight":
+  B.c('EmCare.B6.DE21')
+
+ define "Severe mucous membrane pallor":
+  B.c('EmCare.B15S2.DE10')
+
+ define "Some mucous membrane pallor":
+  B.c('EmCare.B15S2.DE11')
+
+ define "No mucous membrane pallor":
+  B.c('EmCare.B15S2.DE12')
 
  

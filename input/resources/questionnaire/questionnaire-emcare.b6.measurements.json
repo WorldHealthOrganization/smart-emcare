@@ -60,6 +60,14 @@
             "required": false
         },
         {
+            "linkId": "EmCare.B6.DE01",
+            "text": "Axaliary Temperature",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
             "extension": [
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -102,7 +110,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.exists()"
                     }
                 }
             ],
@@ -112,6 +120,14 @@
             "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "linkId": "EmCare.B6.DE06",
+            "text": "Weight",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
             "designNote": "status::draft"
         },
         {
@@ -157,7 +173,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.exists()"
                     }
                 }
             ],
@@ -359,6 +375,23 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonth.cql').answer.first().value>=24  or %resource.repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().value='Yes'"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE09",
+                    "text": "Height",
+                    "type": "quantity",
+                    "required": false,
+                    "repeats": false,
+                    "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
                                 "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.empty() and %resource.repeat(item).where(linkId='AgeInMonth.cql').answer.first().value>=24"
                             }
                         }
@@ -387,6 +420,30 @@
                     "required": false,
                     "repeats": false,
                     "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+                    "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.first().value = 'yes'"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value = true, %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.first().value-0.7 'cm', '')"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE12",
+                    "text": "Length",
+                    "type": "quantity",
+                    "required": false,
+                    "repeats": false,
                     "designNote": "status::draft"
                 },
                 {
@@ -466,6 +523,23 @@
                     "required": false,
                     "repeats": false,
                     "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value>=6"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE17",
+                    "text": "MUAC (Mid Upper Arm Circumference)",
+                    "type": "quantity",
+                    "required": false,
+                    "repeats": false,
+                    "designNote": "status::draft"
                 }
             ],
             "designNote": "status::draft"
@@ -498,6 +572,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/underweight",
             "designNote": "status::draft"
         }
     ]

@@ -15,8 +15,8 @@ context Patient
 
 /* EmCare.A.DE07 : Visit date*/
 define "EmCare.A.DE07":
-    now()
+    today()
 
 /* Visit date : Visit date*/
 define "Visit date":
-    now()
+    today()

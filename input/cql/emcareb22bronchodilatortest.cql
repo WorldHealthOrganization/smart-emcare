@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22assessmentstests version '0.99.99'
+library emcareb22bronchodilatortest version '0.99.99'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 include EmCareBase version '0.99.99' called Base
@@ -204,43 +204,3 @@ define "EmCare.B12S2.DE01":
 /* Stiff neck : Stiff neck*/
 define "Stiff neck":
     Base.HasObs('EmCare.B12S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* EmCare.B12S1.DE15 : Malaria Risk*/
-define "EmCare.B12S1.DE15":
-    Base.HasObs('EmCare.B12S1.DE15','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* Malaria Risk : Malaria Risk*/
-define "Malaria Risk":
-    Base.HasObs('EmCare.B12S1.DE15','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* EmCare.B12S1.DE19 : Recent Travel to a High Malaria Risk area*/
-define "EmCare.B12S1.DE19":
-    Base.HasObs('EmCare.B12S1.DE19','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* Recent Travel to a High Malaria Risk area : Recent Travel to a High Malaria Risk area*/
-define "Recent Travel to a High Malaria Risk area":
-    Base.HasObs('EmCare.B12S1.DE19','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* EmCare.B12S2.DE04 : Obvious Cause of Fever (to determine if Malaria test required)*/
-define "EmCare.B12S2.DE04":
-    Base.HasObs('EmCare.B12S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* Obvious Cause of Fever (to determine if Malaria test required) : Obvious Cause of Fever (to determine if Malaria test required)*/
-define "Obvious Cause of Fever (to determine if Malaria test required)":
-    Base.HasObs('EmCare.B12S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* EmCare.B15S2.DE02 : Palmar Pallor*/
-define "EmCare.B15S2.DE02":
-    Base.HasObs('EmCare.B15S2.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* Palmar Pallor : Palmar Pallor*/
-define "Palmar Pallor":
-    Base.HasObs('EmCare.B15S2.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* EmCare.B15S2.DE09 : Mucous membrane pallor*/
-define "EmCare.B15S2.DE09":
-    Base.HasObs('EmCare.B15S2.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* Mucous membrane pallor : Mucous membrane pallor*/
-define "Mucous membrane pallor":
-    Base.HasObs('EmCare.B15S2.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

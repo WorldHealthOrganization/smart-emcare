@@ -17,6 +17,6 @@ context Patient
 define "AgeInMonths":
     AgeInMonths()
 
-/* nan : nan*/
-define "nan":
-    AgeInMonths()
+/* age2mp : nan*/
+define "age2mp":
+    AgeInMonths() >= 2 and AgeInYears() <5

@@ -193,6 +193,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE11').answer.empty()"
+                    }
+                }
+            ],
             "linkId": "dob",
             "text": "Date of Birth",
             "type": "date",
@@ -274,23 +283,6 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code =  'EmCare.A.DE14' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.A.DE14.1",
-            "text": "Only know age in weeks/days/hours",
-            "type": "integer",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
                         "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE15' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
                     }
                 }
@@ -305,40 +297,40 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "slider"
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE14.d"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue().empty() or getValue()>=0 and getValue()<8"
                             }
-                        ],
-                        "text": "Age in days"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 0
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-sliderStepValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 31
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "error"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE13' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
                     }
                 }
             ],
-            "linkId": "EmCare.A.DE13.d",
+            "linkId": "EmCare.A.DE14.d",
             "text": "Age in days",
-            "type": "integer",
+            "type": "quantity",
             "required": false,
             "repeats": false,
             "designNote": "status::draft"
@@ -346,28 +338,69 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "slider"
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE14.w"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue().empty() or getValue()>=0 and getValue()<8"
                             }
-                        ],
-                        "text": "Age in months"
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "error"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
                     }
-                },
+                }
+            ],
+            "linkId": "EmCare.A.DE14.w",
+            "text": "Age in weeks",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 0
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-sliderStepValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 12
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE13.mo"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue().empty() or getValue()>=0 and getValue()<13"
+                            }
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "error"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
@@ -379,7 +412,7 @@
             ],
             "linkId": "EmCare.A.DE13.mo",
             "text": "Age in months",
-            "type": "integer",
+            "type": "quantity",
             "required": false,
             "repeats": false,
             "designNote": "status::draft"
@@ -387,28 +420,28 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "slider"
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE13.a"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue().empty() or getValue()>=0 and getValue()<4"
                             }
-                        ],
-                        "text": "Age in year"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 0
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-sliderStepValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 4
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "error"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
@@ -419,8 +452,8 @@
                 }
             ],
             "linkId": "EmCare.A.DE13.a",
-            "text": "Age in year",
-            "type": "integer",
+            "text": "Age in years",
+            "type": "quantity",
             "required": false,
             "repeats": false,
             "designNote": "status::draft"
@@ -536,7 +569,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='newPrimaryCaregiver').answer.first().value.code = 'newPrimary Caregiver'"
+                        "expression": "%resource.repeat(item).where(linkId='newPrimaryCaregiver').answer.exists()"
                     }
                 }
             ],
@@ -643,14 +676,54 @@
                                 ],
                                 "text": "Drop down"
                             }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.first().value.code != 'EmCare.A.DE25'"
+                            }
                         }
                     ],
                     "linkId": "EmCare.A.DE31",
-                    "text": "Biological Parental Vital Status",
+                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                    "text": "Biological Mother Vital Status",
                     "type": "choice",
                     "required": false,
-                    "repeats": true,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/bioparent-status",
+                    "repeats": false,
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
+                    "designNote": "status::draft"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "drop-down",
+                                        "display": "Drop down"
+                                    }
+                                ],
+                                "text": "Drop down"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE24').answer.first().value.code != 'EmCare.A.DE26'"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE32",
+                    "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                    "text": "Biological Father Vital Status",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": false,
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
                     "designNote": "status::draft"
                 },
                 {

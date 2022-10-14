@@ -112,75 +112,21 @@
         {
             "extension": [
                 {
-                    "extension": [
-                        {
-                            "url": "path",
-                            "valueString": ".last_name"
-                        },
-                        {
-                            "url": "label",
-                            "valueString": "Last name"
-                        },
-                        {
-                            "url": "width",
-                            "valueQuantity": {
-                                "value": 30,
-                                "system": "http://unitsofmeasure.org",
-                                "code": "%"
-                            }
-                        },
-                        {
-                            "url": "forDisplay",
-                            "valueBoolean": true
-                        }
-                    ],
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "path",
-                            "valueString": ".first_name"
-                        },
-                        {
-                            "url": "label",
-                            "valueString": "First name"
-                        },
-                        {
-                            "url": "width",
-                            "valueQuantity": {
-                                "value": 30,
-                                "system": "http://unitsofmeasure.org",
-                                "code": "%"
-                            }
-                        },
-                        {
-                            "url": "forDisplay",
-                            "valueBoolean": true
-                        }
-                    ],
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-candidateExpression",
-                    "valueExpression": {
-                        "description": "RelatedPerson",
-                        "language": "application/x-fhir-query",
-                        "expression": "resource/RelatedPerson?patient=%encounter.subject"
-                    }
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.first().value.code='no'"
                     }
                 }
             ],
             "linkId": "EmCare.A.DE49",
             "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
             "text": "Person accompanying child Today",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
             "repeats": false,
             "designNote": "status::draft"
@@ -201,10 +147,14 @@
                     }
                 },
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE49').answer.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE49').answer.empty() and %resource.repeat(item).where(linkId='EmCare.A.DE45').answer.first().value.code='no'"
                     }
                 }
             ],
@@ -228,7 +178,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='newPrimaryCaregiver').answer.first().value.code = 'newPrimary Caregiver'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.first().value.code='no'"
                     }
                 }
             ],

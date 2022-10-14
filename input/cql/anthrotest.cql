@@ -1,6 +1,6 @@
 library anthrotest version '0.99.99'
-include anthrobase version '0.99.99'
-include acanthro version '0.99.99'
+include anthrobase version '0.99.99' called anthrobase
+include ArmCircumferenceForAge version '0.99.99' called acanthro
 parameter y Decimal
 parameter m Decimal
 parameter l Decimal

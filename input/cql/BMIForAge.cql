@@ -1,9 +1,9 @@
 
-library bmianthro version '0.99.99'
+library BMIForAge version '0.99.99'
 using FHIR version '4.0.1'
 include anthrobase version '0.99.99' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
-// Antrho library for bmianthro Z-Score 
+// Antrho library for BMIForAge  Z-Score from the bmianthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
 //code "Female" : 'female' from "administrative-gender"  display 'Female'
 

@@ -1,9 +1,9 @@
 
-library wfhanthro version '0.99.99'
+library WeightForHeight version '0.99.99'
 using FHIR version '4.0.1'
 include anthrobase version '0.99.99' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
-// Antrho library for wfhanthro Z-Score 
+// Antrho library for WeightForHeight  Z-Score from the wfhanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
 //code "Female" : 'female' from "administrative-gender"  display 'Female'
 

@@ -35,7 +35,7 @@ define function assesObservation(O Observation):
   end
       
 define function GetObservationDuringEncounter(idlist List<code>, codesystem FHIR.url):
-  if Exists(GetObservationDuringEncounterDone(idlist , codesystem  )) then 
+  if GetObservationDuringEncounterDone(idlist , codesystem) is null then 
       GetObservationDuringEncounterDone(idlist , codesystem  )
   else
     GetObservationDuringEncounterNotFound(idlist , codesystem  )
@@ -79,7 +79,7 @@ define function HasObs(id System.String):
 
 
 define function GetHistoricObservation(idlist List<code>, codesystem FHIR.url, nbdays Integer):
-  if Exists(GetHistoricObservationNotfound(idlist , codesystem , nbdays )) then 
+  if GetHistoricObservationNotfound(idlist , codesystem , nbdays ) is null then 
       GetHistoricObservationNotfound(idlist , codesystem , nbdays )
   else
     GetHistoricObservationNotfound(idlist , codesystem , nbdays )

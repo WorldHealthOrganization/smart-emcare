@@ -1,9 +1,9 @@
 
-library tsanthro version '0.99.99'
+library tricepsSkinfoldForAge version '0.99.99'
 using FHIR version '4.0.1'
 include anthrobase version '0.99.99' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
-// Antrho library for tsanthro Z-Score 
+// Antrho library for tricepsSkinfoldForAge  Z-Score from the tsanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
 //code "Female" : 'female' from "administrative-gender"  display 'Female'
 

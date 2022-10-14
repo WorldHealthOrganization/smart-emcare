@@ -1,9 +1,9 @@
 
-library acanthro version '0.99.99'
+library ArmCircumferenceForAge version '0.99.99'
 using FHIR version '4.0.1'
 include anthrobase version '0.99.99' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
-// Antrho library for acanthro Z-Score 
+// Antrho library for ArmCircumferenceForAge  Z-Score from the acanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
 //code "Female" : 'female' from "administrative-gender"  display 'Female'
 

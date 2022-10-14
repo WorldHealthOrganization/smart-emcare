@@ -1,9 +1,9 @@
 
-library hcanthro version '0.99.99'
+library HeadCircumferenceForAge version '0.99.99'
 using FHIR version '4.0.1'
 include anthrobase version '0.99.99' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
-// Antrho library for hcanthro Z-Score 
+// Antrho library for HeadCircumferenceForAge  Z-Score from the hcanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
 //code "Female" : 'female' from "administrative-gender"  display 'Female'
 

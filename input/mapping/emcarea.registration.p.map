@@ -16,7 +16,7 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             src -> tgt then emcarepatient(src, tgt) '77f3ac03';
         } '79bfd623';
     } 'put-emcarepatient';
-    src where src.item.where(linkId='EmCare.A.DE38').exists() and src.item.where(linkId='emcarecommunicationrequestid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.A.DE38').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('CommunicationRequest') as tgt then emcarecommunicationrequestemcareade38(src,tgt) 'act-EmCare.A.DE38';
     } 'emcarecommunicationrequest';
 }

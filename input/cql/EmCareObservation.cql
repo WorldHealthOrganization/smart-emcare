@@ -28,6 +28,12 @@ define "Convulsion(s) in this Illness":
 define "EmCare.B7.DE03":
   B.HasObs(B.c('EmCare.B7.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
+/*"Unconscious or Lethargic"*/
+define "Unconscious or Lethargic":
+  B.HasObs(B.c('EmCare.B7.DE08b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "EmCare.B7.DE08b":
+  B.HasObs(B.c('EmCare.B7.DE08b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
 /*"Unconscious"*/
 define "Unconscious":
   B.HasObs(B.c('EmCare.B7.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -45,6 +51,12 @@ define "Not able to drink or breastfeed":
   B.HasObs(B.c('EmCare.B7.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "EmCare.B7.DE09":
   B.HasObs(B.c('EmCare.B7.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"Vomiting Everything"*/
+define "Vomiting Everything":
+  B.HasObs(B.c('EmCare.B7.DE10'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "EmCare.B7.DE10":
+  B.HasObs(B.c('EmCare.B7.DE10'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /*"Continue to Assess Sick Child"*/
 define "Continue to Assess Sick Child":

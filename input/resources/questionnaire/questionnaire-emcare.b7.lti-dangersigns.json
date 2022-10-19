@@ -69,12 +69,33 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "AgeInMonths"
+                        "expression": "AgeInMonth.cql"
                     }
                 }
             ],
-            "linkId": "AgeInMonths",
+            "linkId": "AgeInMonth.cql",
             "type": "decimal",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "AgeInYears.cql"
+                    }
+                }
+            ],
+            "linkId": "AgeInYears.cql",
+            "text": "Age in years",
+            "type": "integer",
             "required": false,
             "repeats": false,
             "designNote": "status::draft"
@@ -105,7 +126,133 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "rtzgz7u8"
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE02",
+            "text": "Convulsing Now",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE03",
+            "text": "Convulsion(s) in this Illness",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE08b",
+            "text": "Unconscious or Lethargic",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B7.DE08b').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE08",
+            "text": "Unconscious",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B7.DE08b').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE08a",
+            "text": "Lethargic",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE09",
+            "text": "Not able to drink or breastfeed",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE10",
+            "text": "Vomiting Everything",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='age2mp').answer.first().value = true"
                     }
                 }
             ],

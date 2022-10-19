@@ -6,22 +6,28 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src where src.item.where(linkId='EmCare.B7.DE02').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B7.DE02').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de02(src,tgt) 'act-EmCare.B7.DE02';
     } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B7.DE03').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B7.DE03').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de03(src,tgt) 'act-EmCare.B7.DE03';
     } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B7.DE08').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B7.DE08b').exists() then {
+        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de08b(src,tgt) 'act-EmCare.B7.DE08b';
+    } 'emcareobservation';
+    src where src.item.where(linkId='EmCare.B7.DE08').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de08(src,tgt) 'act-EmCare.B7.DE08';
     } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B7.DE08a').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B7.DE08a').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de08a(src,tgt) 'act-EmCare.B7.DE08a';
     } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B7.DE09').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B7.DE09').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de09(src,tgt) 'act-EmCare.B7.DE09';
     } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B7-B8-B9.DE01').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B7.DE10').exists() then {
+        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7de10(src,tgt) 'act-EmCare.B7.DE10';
+    } 'emcareobservation';
+    src where src.item.where(linkId='EmCare.B7-B8-B9.DE01').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb7b8b9de01(src,tgt) 'act-EmCare.B7-B8-B9.DE01';
     } 'emcareobservation';
 }
@@ -33,8 +39,7 @@ group emcareobservationemcareb7de02(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb7de02';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,
@@ -58,8 +63,7 @@ group emcareobservationemcareb7de03(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb7de03';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,
@@ -76,6 +80,30 @@ group emcareobservationemcareb7de03(source src,target tgt){
     } 'it-emcareb7de03';
 }
 
+group emcareobservationemcareb7de08b(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-emcareb7de08b';
+        src -> tgt.encounter = src.encounter,
+            tgt.subject = src.subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.code = create('CodeableConcept') as concept,
+                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                concept.code = 'EmCare.B7.DE08b'
+         'code-emcareb7de08b';
+    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb7de08b';
+    src ->   tgt.subject = src.subject  'patient';
+    src.item first as item  where linkId =  'EmCare.B7.DE08b' then {
+        item.answer first as a then {
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb7de08b';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb7de08b';
+        } 'an-emcareb7de08b';
+    } 'it-emcareb7de08b';
+}
+
 group emcareobservationemcareb7de08(source src,target tgt){
         src -> tgt.identifier = create('Identifier') as CodeID,
             CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
@@ -83,8 +111,7 @@ group emcareobservationemcareb7de08(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb7de08';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,
@@ -108,8 +135,7 @@ group emcareobservationemcareb7de08a(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb7de08a';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,
@@ -133,8 +159,7 @@ group emcareobservationemcareb7de09(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb7de09';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,
@@ -151,6 +176,30 @@ group emcareobservationemcareb7de09(source src,target tgt){
     } 'it-emcareb7de09';
 }
 
+group emcareobservationemcareb7de10(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-emcareb7de10';
+        src -> tgt.encounter = src.encounter,
+            tgt.subject = src.subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.code = create('CodeableConcept') as concept,
+                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                concept.code = 'EmCare.B7.DE10'
+         'code-emcareb7de10';
+    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb7de10';
+    src ->   tgt.subject = src.subject  'patient';
+    src.item first as item  where linkId =  'EmCare.B7.DE10' then {
+        item.answer first as a then {
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb7de10';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb7de10';
+        } 'an-emcareb7de10';
+    } 'it-emcareb7de10';
+}
+
 group emcareobservationemcareb7b8b9de01(source src,target tgt){
         src -> tgt.identifier = create('Identifier') as CodeID,
             CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
@@ -158,8 +207,7 @@ group emcareobservationemcareb7b8b9de01(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb7b8b9de01';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,

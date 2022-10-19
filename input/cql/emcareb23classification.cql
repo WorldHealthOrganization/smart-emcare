@@ -13,16 +13,28 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* child : nan*/
+/* child : Age >= 2 months to <60 months*/
 define "child":
     AgeInMonths()>= 2 and AgeInMonths()<60
 
-/* yi : nan*/
+/* Age >= 2 months to <60 months : Age >= 2 months to <60 months*/
+define "Age >= 2 months to <60 months":
+    AgeInMonths()>= 2 and AgeInMonths()<60
+
+/* yi : Age >=28 days to 2 Months*/
 define "yi":
     AgeInDays()>= 28 and AgeInMonths()<2
 
-/* nb : nan*/
+/* Age >=28 days to 2 Months : Age >=28 days to 2 Months*/
+define "Age >=28 days to 2 Months":
+    AgeInDays()>= 28 and AgeInMonths()<2
+
+/* nb : Age < 28 days to 2 Months*/
 define "nb":
+    AgeInDays()< 28
+
+/* Age < 28 days to 2 Months : Age < 28 days to 2 Months*/
+define "Age < 28 days to 2 Months":
     AgeInDays()< 28
 
 /* EmCare.B23.DE01 : Very Severe Disease*/

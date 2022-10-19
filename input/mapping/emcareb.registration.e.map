@@ -29,7 +29,7 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             src -> tgt then emcarerelatedperson(src, tgt) 'ec9147dd';
         } '3aa4d4d9';
     } 'put-emcarerelatedperson';
-    src where src.item.where(linkId='EmCare.B3.DE05').exists() and src.item.where(linkId='emcareobservationid').first().answer.exists() then {
+    src where src.item.where(linkId='EmCare.B3.DE05').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb3de05(src,tgt) 'act-EmCare.B3.DE05';
     } 'emcareobservation';
 }
@@ -141,8 +141,7 @@ group emcareobservationemcareb3de05(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb3de05';
-        src -> tgt.basedOn = src.basedOn,
-            tgt.encounter = src.encounter,
+        src -> tgt.encounter = src.encounter,
             tgt.subject = src.subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept,

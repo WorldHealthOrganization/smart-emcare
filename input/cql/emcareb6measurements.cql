@@ -8,7 +8,7 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
-include weianthro version '0.99.99' called weianthro
+include WeightForAge version '0.99.99' called weianthro
 
 
 context Patient

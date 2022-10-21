@@ -13,16 +13,16 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* AgeInMonth.cql : nan*/
-define "AgeInMonth.cql":
+/* ageinmonth.cql : nan*/
+define "ageinmonth.cql":
     AgeInMonths()
 
-/* AgeInYears.cql : Age in years*/
-define "AgeInYears.cql":
+/* ageinyears.cql : Age in years*/
+define "ageinyears.cql":
     AgeInYears()
 
-/* Age in years : Age in years*/
-define "Age in years":
+/* age in years : Age in years*/
+define "age in years":
     AgeInYears()
 
 /* age2mp : nan*/

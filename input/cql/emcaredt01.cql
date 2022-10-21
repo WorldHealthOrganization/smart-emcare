@@ -14,90 +14,90 @@ include emcareb23classification version '0.99.99' called clas
 context Patient
       
 
-/* EmCareDT01 : Register a child < 5 years*/
-define "EmCareDT01":
+/* emcaredt01 : Register a child < 5 years*/
+define "emcaredt01":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Register a child < 5 years : Register a child < 5 years*/
-define "Register a child < 5 years":
+/* register a child < 5 years : Register a child < 5 years*/
+define "register a child < 5 years":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* EmCareDT02 : Register the child in the encounter*/
-define "EmCareDT02":
+/* emcaredt02 : Register the child in the encounter*/
+define "emcaredt02":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Register the child in the encounter : Register the child in the encounter*/
-define "Register the child in the encounter":
+/* register the child in the encounter : Register the child in the encounter*/
+define "register the child in the encounter":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* EmCareDT04 : Evaluate DangerSigns*/
-define "EmCareDT04":
+/* emcaredt04 : Evaluate DangerSigns*/
+define "emcaredt04":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Evaluate DangerSigns : Evaluate DangerSigns*/
-define "Evaluate DangerSigns":
+/* evaluate dangersigns : Evaluate DangerSigns*/
+define "evaluate dangersigns":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* EmCareDT03 : Determine Basic Anthropometric and others measurement*/
-define "EmCareDT03":
+/* emcaredt03 : Determine Basic Anthropometric and others measurement*/
+define "emcaredt03":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Determine Basic Anthropometric and others measurement : Determine Basic Anthropometric and others measurement*/
-define "Determine Basic Anthropometric and others measurement":
+/* determine basic anthropometric and others measurement : Determine Basic Anthropometric and others measurement*/
+define "determine basic anthropometric and others measurement":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* EmCareDT05 : Assess sick child for Symptoms 2 m*/
-define "EmCareDT05":
+/* emcaredt05 : Assess sick child for Symptoms 2 m*/
+define "emcaredt05":
     clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
 
-/* Assess sick child for Symptoms 2 m : Assess sick child for Symptoms 2 m*/
-define "Assess sick child for Symptoms 2 m":
+/* assess sick child for symptoms 2 m : Assess sick child for Symptoms 2 m*/
+define "assess sick child for symptoms 2 m":
     clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
 
-/* EmCareDT06 : Assess sick child for Symptoms 2p*/
-define "EmCareDT06":
+/* emcaredt06 : Assess sick child for Symptoms 2p*/
+define "emcaredt06":
     clas."Age >= 2 months to <60 months"
 
-/* Assess sick child for Symptoms 2p : Assess sick child for Symptoms 2p*/
-define "Assess sick child for Symptoms 2p":
+/* assess sick child for symptoms 2p : Assess sick child for Symptoms 2p*/
+define "assess sick child for symptoms 2p":
     clas."Age >= 2 months to <60 months"
 
-/* EmCareDT07 : Assess sick child for Signs 2 m*/
-define "EmCareDT07":
+/* emcaredt07 : Assess sick child for Signs 2 m*/
+define "emcaredt07":
     clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
 
-/* Assess sick child for Signs 2 m : Assess sick child for Signs 2 m*/
-define "Assess sick child for Signs 2 m":
+/* assess sick child for signs 2 m : Assess sick child for Signs 2 m*/
+define "assess sick child for signs 2 m":
     clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
 
-/* EmCareDT08 : Assess sick child for Signs 2p*/
-define "EmCareDT08":
+/* emcaredt08 : Assess sick child for Signs 2p*/
+define "emcaredt08":
     clas."Age >= 2 months to <60 months"
 
-/* Assess sick child for Signs 2p : Assess sick child for Signs 2p*/
-define "Assess sick child for Signs 2p":
+/* assess sick child for signs 2p : Assess sick child for Signs 2p*/
+define "assess sick child for signs 2p":
     clas."Age >= 2 months to <60 months"
 
-/* EmCareDT09 : Propose classification*/
-define "EmCareDT09":
+/* emcaredt09 : Propose classification*/
+define "emcaredt09":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Propose classification : Propose classification*/
-define "Propose classification":
+/* propose classification : Propose classification*/
+define "propose classification":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* EmCareDT10 : Do Test*/
-define "EmCareDT10":
+/* emcaredt10 : Do Test*/
+define "emcaredt10":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Do Test : Do Test*/
-define "Do Test":
+/* do test : Do Test*/
+define "do test":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* EmCareDT11 : Provide Health prevention*/
-define "EmCareDT11":
+/* emcaredt11 : Provide Health prevention*/
+define "emcaredt11":
     difference in years between Today() and  Patient.birthDate < 5
 
-/* Provide Health prevention : Provide Health prevention*/
-define "Provide Health prevention":
+/* provide health prevention : Provide Health prevention*/
+define "provide health prevention":
     difference in years between Today() and  Patient.birthDate < 5

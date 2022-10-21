@@ -6,8 +6,8 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src where src.item.where(linkId='EmCare.B22.DE17').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de17(src,tgt) 'act-EmCare.B22.DE17';
+    src where src.item.where(linkId='EmCare.B22.DE22').exists() then {
+        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de22(src,tgt) 'act-EmCare.B22.DE22';
     } 'emcareobservation';
     src where src.item.where(linkId='EmCare.B22.DE18').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de18(src,tgt) 'act-EmCare.B22.DE18';
@@ -23,27 +23,32 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     } 'emcareobservation';
 }
 
-group emcareobservationemcareb22de17(source src,target tgt){
+group emcareobservationemcareb22de22(source src,target tgt){
         src -> tgt.identifier = create('Identifier') as CodeID,
             CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
             CodeID.use =  'official',
             CodeID.value = 'uuid',
             CodeID.id = uuid()
-         'id-emcareb22de17';
-        src -> tgt.encounter = src.encounter,
-            tgt.subject = src.subject,
+         'id-emcareb22de22';
+        src.encounter as encounter -> tgt.encounter = encounter,
+        src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept,
-                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                concept.code = 'EmCare.B22.DE17'
-         'code-emcareb22de17';
-    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb22de17';
-    src ->   tgt.subject = src.subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B22.DE17' then {
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B22.DE22'
+         'code-emcareb22de22';
+    src.item as item where linkId  =  'timestamp' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de17';
-        } 'an-emcareb22de17';
-    } 'it-emcareb22de17';
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
+    src ->   tgt.subject = src.subject  'patient';
+    src.item first as item  where linkId =  'EmCare.B22.DE22' then {
+        item.answer first as a then {
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb22de22';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb22de22';
+        } 'an-emcareb22de22';
+    } 'it-emcareb22de22';
 }
 
 group emcareobservationemcareb22de18(source src,target tgt){
@@ -53,18 +58,23 @@ group emcareobservationemcareb22de18(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb22de18';
-        src -> tgt.encounter = src.encounter,
-            tgt.subject = src.subject,
+        src.encounter as encounter -> tgt.encounter = encounter,
+        src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept,
-                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                concept.code = 'EmCare.B22.DE18'
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B22.DE18'
          'code-emcareb22de18';
-    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb22de18';
+    src.item as item where linkId  =  'timestamp' then {
+        item.answer first as a then {
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
     src ->   tgt.subject = src.subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE18' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de18';
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb22de18';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb22de18';
         } 'an-emcareb22de18';
     } 'it-emcareb22de18';
 }
@@ -76,18 +86,23 @@ group emcareobservationemcareb22de19(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb22de19';
-        src -> tgt.encounter = src.encounter,
-            tgt.subject = src.subject,
+        src.encounter as encounter -> tgt.encounter = encounter,
+        src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept,
-                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                concept.code = 'EmCare.B22.DE19'
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B22.DE19'
          'code-emcareb22de19';
-    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb22de19';
+    src.item as item where linkId  =  'timestamp' then {
+        item.answer first as a then {
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
     src ->   tgt.subject = src.subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE19' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de19';
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb22de19';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb22de19';
         } 'an-emcareb22de19';
     } 'it-emcareb22de19';
 }
@@ -99,18 +114,23 @@ group emcareobservationemcareb22de20(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb22de20';
-        src -> tgt.encounter = src.encounter,
-            tgt.subject = src.subject,
+        src.encounter as encounter -> tgt.encounter = encounter,
+        src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept,
-                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                concept.code = 'EmCare.B22.DE20'
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B22.DE20'
          'code-emcareb22de20';
-    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb22de20';
+    src.item as item where linkId  =  'timestamp' then {
+        item.answer first as a then {
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
     src ->   tgt.subject = src.subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE20' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de20';
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb22de20';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb22de20';
         } 'an-emcareb22de20';
     } 'it-emcareb22de20';
 }
@@ -122,18 +142,23 @@ group emcareobservationemcareb22de21(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb22de21';
-        src -> tgt.encounter = src.encounter,
-            tgt.subject = src.subject,
+        src.encounter as encounter -> tgt.encounter = encounter,
+        src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept,
-                concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                concept.code = 'EmCare.B22.DE21'
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B22.DE21'
          'code-emcareb22de21';
-    src.item as item where linkId  = 'timestamp', item.answer as a -> tgt.issued = a 'timestamp-emcareb22de21';
+    src.item as item where linkId  =  'timestamp' then {
+        item.answer first as a then {
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
     src ->   tgt.subject = src.subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE21' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de21';
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb22de21';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb22de21';
         } 'an-emcareb22de21';
     } 'it-emcareb22de21';
 }

@@ -13,70 +13,70 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* AgeInMonths : Age*/
-define "AgeInMonths":
+/* ageinmonths : Age*/
+define "ageinmonths":
     AgeInMonths()
 
-/* Age : Age*/
-define "Age":
+/* age : Age*/
+define "age":
     AgeInMonths()
 
-/* Cough : nan*/
-define "Cough":
+/* cough : nan*/
+define "cough":
     Base.HasObs('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Difficulty Breathing : nan*/
-define "Difficulty Breathing":
+/* difficulty breathing : nan*/
+define "difficulty breathing":
     Base.HasObs('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Oral Fluid Test Results : nan*/
-define "Oral Fluid Test Results":
-    Base.HasObs('EmCare.B22.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') = val."Completely unable to drink" or  Base.HasObs('EmCare.B22.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') =  val."Unable to perform test - assumes vomits everything/unable to drink"
+/* oral fluid test results : nan*/
+define "oral fluid test results":
+    obs."completely unable to drink or vomits immediately / everything"=Base."Yes" or  obs."unable to perform oral fluid test"=Base."Yes"
 
-/* Diarrhoea : nan*/
-define "Diarrhoea":
+/* diarrhoea : nan*/
+define "diarrhoea":
     Base.HasObs('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Not able to drink or breastfeed : nan*/
-define "Not able to drink or breastfeed":
+/* not able to drink or breastfeed : nan*/
+define "not able to drink or breastfeed":
     Base.HasObs('EmCare.B7.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Unconscious or Lethargic : nan*/
-define "Unconscious or Lethargic":
+/* unconscious or lethargic : nan*/
+define "unconscious or lethargic":
     Base.HasObs('EmCare.B7.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') is not null and Base.HasObs('EmCare.B7.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') != Base."No" or Base.HasObs('EmCare.B7.DE08a','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') is not null and Base.HasObs('EmCare.B7.DE08a','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') != Base."No"
 
-/* Fever : nan*/
-define "Fever":
+/* fever : nan*/
+define "fever":
     Base.HasObs('EmCare.B12S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Refusal to Use a Limb : nan*/
-define "Refusal to Use a Limb":
+/* refusal to use a limb : nan*/
+define "refusal to use a limb":
     Base.HasObs('EmCare.B12S1.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Has danger signs : nan*/
-define "Has danger signs":
+/* has danger signs : nan*/
+define "has danger signs":
     Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Ear problem : nan*/
-define "Ear problem":
+/* ear problem : nan*/
+define "ear problem":
     Base.HasObs('EmCare.B13S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Eye Problem : nan*/
-define "Eye Problem":
+/* eye problem : nan*/
+define "eye problem":
     Base.HasObs('EmCare.B14S1.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Skin Problem : nan*/
-define "Skin Problem":
+/* skin problem : nan*/
+define "skin problem":
     Base.HasObs('EmCare.B14S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Ear discharge : nan*/
-define "Ear discharge":
+/* ear discharge : nan*/
+define "ear discharge":
     Base.HasObs('EmCare.B13S1.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Ear discharge for how long? : nan*/
-define "Ear discharge for how long?":
+/* ear discharge for how long? : nan*/
+define "ear discharge for how long?":
     Base.HasObs('EmCare.B13S1.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Itchy Skin : nan*/
-define "Itchy Skin":
+/* itchy skin : nan*/
+define "itchy skin":
     Base.HasObs('EmCare.B14S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

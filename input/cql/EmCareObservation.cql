@@ -10,839 +10,839 @@ include EmCareBase version '0.99.99' called B
 
 context Patient
       
-/*"Is the child sick Today?"*/
-define "Is the child sick Today?":
+/*"is the child sick today?"*/
+define "is the child sick today?":
   B.HasObs(B.c('EmCare.B3.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B3.DE05":
+define "emcare.b3.de05":
   B.HasObs(B.c('EmCare.B3.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Convulsing Now"*/
-define "Convulsing Now":
+/*"convulsing now"*/
+define "convulsing now":
   B.HasObs(B.c('EmCare.B7.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE02":
+define "emcare.b7.de02":
   B.HasObs(B.c('EmCare.B7.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Convulsion(s) in this Illness"*/
-define "Convulsion(s) in this Illness":
+/*"convulsion(s) in this illness"*/
+define "convulsion(s) in this illness":
   B.HasObs(B.c('EmCare.B7.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE03":
+define "emcare.b7.de03":
   B.HasObs(B.c('EmCare.B7.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Unconscious or Lethargic"*/
-define "Unconscious or Lethargic":
+/*"unconscious or lethargic"*/
+define "unconscious or lethargic":
   B.HasObs(B.c('EmCare.B7.DE08b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE08b":
+define "emcare.b7.de08b":
   B.HasObs(B.c('EmCare.B7.DE08b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Unconscious"*/
-define "Unconscious":
+/*"unconscious"*/
+define "unconscious":
   B.HasObs(B.c('EmCare.B7.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE08":
+define "emcare.b7.de08":
   B.HasObs(B.c('EmCare.B7.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Lethargic"*/
-define "Lethargic":
+/*"lethargic"*/
+define "lethargic":
   B.HasObs(B.c('EmCare.B7.DE08a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE08a":
+define "emcare.b7.de08a":
   B.HasObs(B.c('EmCare.B7.DE08a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Not able to drink or breastfeed"*/
-define "Not able to drink or breastfeed":
+/*"not able to drink or breastfeed"*/
+define "not able to drink or breastfeed":
   B.HasObs(B.c('EmCare.B7.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE09":
+define "emcare.b7.de09":
   B.HasObs(B.c('EmCare.B7.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Vomiting Everything"*/
-define "Vomiting Everything":
+/*"vomiting everything"*/
+define "vomiting everything":
   B.HasObs(B.c('EmCare.B7.DE10'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7.DE10":
+define "emcare.b7.de10":
   B.HasObs(B.c('EmCare.B7.DE10'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Continue to Assess Sick Child"*/
-define "Continue to Assess Sick Child":
+/*"continue to assess sick child"*/
+define "continue to assess sick child":
   B.HasObs(B.c('EmCare.B7-B8-B9.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B7-B8-B9.DE01":
+define "emcare.b7-b8-b9.de01":
   B.HasObs(B.c('EmCare.B7-B8-B9.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Axaliary Temperature"*/
-define "Axaliary Temperature":
+/*"axaliary temperature"*/
+define "axaliary temperature":
   B.HasObs(B.c('EmCare.B6.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE01":
+define "emcare.b6.de01":
   B.HasObs(B.c('EmCare.B6.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Hot to Touch"*/
-define "Hot to Touch":
+/*"hot to touch"*/
+define "hot to touch":
   B.HasObs(B.c('EmCare.B6.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE05":
+define "emcare.b6.de05":
   B.HasObs(B.c('EmCare.B6.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Weight cannot be measured"*/
-define "Weight cannot be measured":
+/*"weight cannot be measured"*/
+define "weight cannot be measured":
   B.HasObs(B.c('EmCare.B6.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE07":
+define "emcare.b6.de07":
   B.HasObs(B.c('EmCare.B6.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Estimated Weight"*/
-define "Estimated Weight":
+/*"estimated weight"*/
+define "estimated weight":
   B.HasObs(B.c('EmCare.B6.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE08":
+define "emcare.b6.de08":
   B.HasObs(B.c('EmCare.B6.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Height"*/
-define "Height":
+/*"height"*/
+define "height":
   B.HasObs(B.c('EmCare.B6.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE09":
+define "emcare.b6.de09":
   B.HasObs(B.c('EmCare.B6.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Height cannot be measured"*/
-define "Height cannot be measured":
+/*"height cannot be measured"*/
+define "height cannot be measured":
   B.HasObs(B.c('EmCare.B6.DE11'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE11":
+define "emcare.b6.de11":
   B.HasObs(B.c('EmCare.B6.DE11'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Length"*/
-define "Length":
+/*"length"*/
+define "length":
   B.HasObs(B.c('EmCare.B6.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE12":
+define "emcare.b6.de12":
   B.HasObs(B.c('EmCare.B6.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Weight for Height (WFH) Z Scores"*/
-define "Weight for Height (WFH) Z Scores":
+/*"weight for height (wfh) z scores"*/
+define "weight for height (wfh) z scores":
   B.HasObs(B.c('EmCare.B6.DE14'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE14":
+define "emcare.b6.de14":
   B.HasObs(B.c('EmCare.B6.DE14'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Weight for Length (WFL) Z Scores"*/
-define "Weight for Length (WFL) Z Scores":
+/*"weight for length (wfl) z scores"*/
+define "weight for length (wfl) z scores":
   B.HasObs(B.c('EmCare.B6.DE15'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE15":
+define "emcare.b6.de15":
   B.HasObs(B.c('EmCare.B6.DE15'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Weight for Age (WFA) Z Scores"*/
-define "Weight for Age (WFA) Z Scores":
+/*"weight for age (wfa) z scores"*/
+define "weight for age (wfa) z scores":
   B.HasObs(B.c('EmCare.B6.DE16'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE16":
+define "emcare.b6.de16":
   B.HasObs(B.c('EmCare.B6.DE16'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"MUAC (Mid Upper Arm Circumference)"*/
-define "MUAC (Mid Upper Arm Circumference)":
+/*"muac (mid upper arm circumference)"*/
+define "muac (mid upper arm circumference)":
   B.HasObs(B.c('EmCare.B6.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE17":
+define "emcare.b6.de17":
   B.HasObs(B.c('EmCare.B6.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Visually assess for whether underweight (for drug dose calculation)"*/
-define "Visually assess for whether underweight (for drug dose calculation)":
+/*"visually assess for whether underweight (for drug dose calculation)"*/
+define "visually assess for whether underweight (for drug dose calculation)":
   B.HasObs(B.c('EmCare.B6.DE18'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B6.DE18":
+define "emcare.b6.de18":
   B.HasObs(B.c('EmCare.B6.DE18'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Convulsions in this Illness"*/
-define "Convulsions in this Illness":
+/*"convulsions in this illness"*/
+define "convulsions in this illness":
   B.HasObs(B.c('EmCare.B18S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S1.DE01":
+define "emcare.b18s1.de01":
   B.HasObs(B.c('EmCare.B18S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Difficulty with Feeding"*/
-define "Difficulty with Feeding":
+/*"difficulty with feeding"*/
+define "difficulty with feeding":
   B.HasObs(B.c('EmCare.B18S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S1.DE02":
+define "emcare.b18s1.de02":
   B.HasObs(B.c('EmCare.B18S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Diarrhoea"*/
-define "Diarrhoea":
+/*"diarrhoea"*/
+define "diarrhoea":
   B.HasObs(B.c('EmCare.B20S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B20S1.DE01":
+define "emcare.b20s1.de01":
   B.HasObs(B.c('EmCare.B20S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Mother's HIV Status"*/
-define "Mother's HIV Status":
+/*"mother's hiv status"*/
+define "mother's hiv status":
   B.HasObs(B.c('EmCare.B21S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S1.DE01":
+define "emcare.b21s1.de01":
   B.HasObs(B.c('EmCare.B21S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Breastfed"*/
-define "Breastfed":
+/*"breastfed"*/
+define "breastfed":
   B.HasObs(B.c('EmCare.B21S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S1.DE06":
+define "emcare.b21s1.de06":
   B.HasObs(B.c('EmCare.B21S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Measured Temperature"*/
-define "Measured Temperature":
+/*"measured temperature"*/
+define "measured temperature":
   B.HasObs(B.c('EmCare.B18S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE01":
+define "emcare.b18s2.de01":
   B.HasObs(B.c('EmCare.B18S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Respiratory Rate First Count"*/
-define "Respiratory Rate First Count":
+/*"respiratory rate first count"*/
+define "respiratory rate first count":
   B.HasObs(B.c('EmCare.B18S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE04":
+define "emcare.b18s2.de04":
   B.HasObs(B.c('EmCare.B18S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Respiratory Rate Second Count"*/
-define "Respiratory Rate Second Count":
+/*"respiratory rate second count"*/
+define "respiratory rate second count":
   B.HasObs(B.c('EmCare.B18S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE05":
+define "emcare.b18s2.de05":
   B.HasObs(B.c('EmCare.B18S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Fast Breathing"*/
-define "Fast Breathing":
+/*"fast breathing"*/
+define "fast breathing":
   B.HasObs(B.c('EmCare.B18S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE06":
+define "emcare.b18s2.de06":
   B.HasObs(B.c('EmCare.B18S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Severe Chest Indrawing"*/
-define "Severe Chest Indrawing":
+/*"severe chest indrawing"*/
+define "severe chest indrawing":
   B.HasObs(B.c('EmCare.B18S2.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE07":
+define "emcare.b18s2.de07":
   B.HasObs(B.c('EmCare.B18S2.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Movements"*/
-define "Movements":
+/*"movements"*/
+define "movements":
   B.HasObs(B.c('EmCare.B18S2.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE08":
+define "emcare.b18s2.de08":
   B.HasObs(B.c('EmCare.B18S2.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Umbilicus Red or Pus Draining"*/
-define "Umbilicus Red or Pus Draining":
+/*"umbilicus red or pus draining"*/
+define "umbilicus red or pus draining":
   B.HasObs(B.c('EmCare.B18S2.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE12":
+define "emcare.b18s2.de12":
   B.HasObs(B.c('EmCare.B18S2.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Skin Pustules"*/
-define "Skin Pustules":
+/*"skin pustules"*/
+define "skin pustules":
   B.HasObs(B.c('EmCare.B18S2.DE13'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B18S2.DE13":
+define "emcare.b18s2.de13":
   B.HasObs(B.c('EmCare.B18S2.DE13'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Yellow Skin"*/
-define "Yellow Skin":
+/*"yellow skin"*/
+define "yellow skin":
   B.HasObs(B.c('EmCare.B19S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B19S2.DE01":
+define "emcare.b19s2.de01":
   B.HasObs(B.c('EmCare.B19S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Yellow Palms or Yellow Soles"*/
-define "Yellow Palms or Yellow Soles":
+/*"yellow palms or yellow soles"*/
+define "yellow palms or yellow soles":
   B.HasObs(B.c('EmCare.B19S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B19S2.DE02":
+define "emcare.b19s2.de02":
   B.HasObs(B.c('EmCare.B19S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Jaundice (Yellow skin or palms or soles)"*/
-define "Jaundice (Yellow skin or palms or soles)":
+/*"jaundice (yellow skin or palms or soles)"*/
+define "jaundice (yellow skin or palms or soles)":
   B.HasObs(B.c('EmCare.B19S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B19S2.DE03":
+define "emcare.b19s2.de03":
   B.HasObs(B.c('EmCare.B19S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Sunken Eyes"*/
-define "Sunken Eyes":
+/*"sunken eyes"*/
+define "sunken eyes":
   B.HasObs(B.c('EmCare.B20S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B20S2.DE01":
+define "emcare.b20s2.de01":
   B.HasObs(B.c('EmCare.B20S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Skin pinch of Abdomen"*/
-define "Skin pinch of Abdomen":
+/*"skin pinch of abdomen"*/
+define "skin pinch of abdomen":
   B.HasObs(B.c('EmCare.B20S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B20S2.DE02":
+define "emcare.b20s2.de02":
   B.HasObs(B.c('EmCare.B20S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Restless and Irritable"*/
-define "Restless and Irritable":
+/*"restless and irritable"*/
+define "restless and irritable":
   B.HasObs(B.c('EmCare.B20S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B20S2.DE06":
+define "emcare.b20s2.de06":
   B.HasObs(B.c('EmCare.B20S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Weight Status"*/
-define "Weight Status":
+/*"weight status"*/
+define "weight status":
   B.HasObs(B.c('EmCare.B21S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE01":
+define "emcare.b21s2.de01":
   B.HasObs(B.c('EmCare.B21S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Breastfed how many times in 24 hours?"*/
-define "Breastfed how many times in 24 hours?":
+/*"breastfed how many times in 24 hours?"*/
+define "breastfed how many times in 24 hours?":
   B.HasObs(B.c('EmCare.B21S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE05":
+define "emcare.b21s2.de05":
   B.HasObs(B.c('EmCare.B21S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Young Infant receives other food or fluids"*/
-define "Young Infant receives other food or fluids":
+/*"young infant receives other food or fluids"*/
+define "young infant receives other food or fluids":
   B.HasObs(B.c('EmCare.B21S2.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE08":
+define "emcare.b21s2.de08":
   B.HasObs(B.c('EmCare.B21S2.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"What milk is being given as a replacement feed?"*/
-define "What milk is being given as a replacement feed?":
+/*"what milk is being given as a replacement feed?"*/
+define "what milk is being given as a replacement feed?":
   B.HasObs(B.c('EmCare.B21S2.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE09":
+define "emcare.b21s2.de09":
   B.HasObs(B.c('EmCare.B21S2.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"How many replacement feeds during the day and night (24 hours)?"*/
-define "How many replacement feeds during the day and night (24 hours)?":
+/*"how many replacement feeds during the day and night (24 hours)?"*/
+define "how many replacement feeds during the day and night (24 hours)?":
   B.HasObs(B.c('EmCare.B21S2.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE12":
+define "emcare.b21s2.de12":
   B.HasObs(B.c('EmCare.B21S2.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Do you give any breastmilk at all?"*/
-define "Do you give any breastmilk at all?":
+/*"do you give any breastmilk at all?"*/
+define "do you give any breastmilk at all?":
   B.HasObs(B.c('EmCare.B21S2.DE27'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE27":
+define "emcare.b21s2.de27":
   B.HasObs(B.c('EmCare.B21S2.DE27'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Ulcers or White Patches in Mouth"*/
-define "Ulcers or White Patches in Mouth":
+/*"ulcers or white patches in mouth"*/
+define "ulcers or white patches in mouth":
   B.HasObs(B.c('EmCare.B21S2.DE30'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE30":
+define "emcare.b21s2.de30":
   B.HasObs(B.c('EmCare.B21S2.DE30'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Unable to check if Ulcers or White Patches in Mouth"*/
-define "Unable to check if Ulcers or White Patches in Mouth":
+/*"unable to check if ulcers or white patches in mouth"*/
+define "unable to check if ulcers or white patches in mouth":
   B.HasObs(B.c('EmCare.B21S2.DE31'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B21S2.DE31":
+define "emcare.b21s2.de31":
   B.HasObs(B.c('EmCare.B21S2.DE31'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Cough"*/
-define "Cough":
+/*"cough"*/
+define "cough":
   B.HasObs(B.c('EmCare.B10S1.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S1.DE05":
+define "emcare.b10s1.de05":
   B.HasObs(B.c('EmCare.B10S1.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Cough for how long?"*/
-define "Cough for how long?":
+/*"cough for how long?"*/
+define "cough for how long?":
   B.HasObs(B.c('EmCare.B10S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S1.DE06":
+define "emcare.b10s1.de06":
   B.HasObs(B.c('EmCare.B10S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Difficulty Breathing"*/
-define "Difficulty Breathing":
+/*"difficulty breathing"*/
+define "difficulty breathing":
   B.HasObs(B.c('EmCare.B10S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S1.DE01":
+define "emcare.b10s1.de01":
   B.HasObs(B.c('EmCare.B10S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Difficulty breathing for how long?"*/
-define "Difficulty breathing for how long?":
+/*"difficulty breathing for how long?"*/
+define "difficulty breathing for how long?":
   B.HasObs(B.c('EmCare.B10S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S1.DE02":
+define "emcare.b10s1.de02":
   B.HasObs(B.c('EmCare.B10S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Diarrhoea for how long?"*/
-define "Diarrhoea for how long?":
+/*"diarrhoea for how long?"*/
+define "diarrhoea for how long?":
   B.HasObs(B.c('EmCare.B11S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B11S1.DE02":
+define "emcare.b11s1.de02":
   B.HasObs(B.c('EmCare.B11S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Fever Reported"*/
-define "Fever Reported":
+/*"fever reported"*/
+define "fever reported":
   B.HasObs(B.c('EmCare.B12S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B12S1.DE02":
+define "emcare.b12s1.de02":
   B.HasObs(B.c('EmCare.B12S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Fever for how long?"*/
-define "Fever for how long?":
+/*"fever for how long?"*/
+define "fever for how long?":
   B.HasObs(B.c('EmCare.B12S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B12S1.DE03":
+define "emcare.b12s1.de03":
   B.HasObs(B.c('EmCare.B12S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Ear discharge"*/
-define "Ear discharge":
+/*"ear discharge"*/
+define "ear discharge":
   B.HasObs(B.c('EmCare.B13S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B13S1.DE03":
+define "emcare.b13s1.de03":
   B.HasObs(B.c('EmCare.B13S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Ear discharge for how long?"*/
-define "Ear discharge for how long?":
+/*"ear discharge for how long?"*/
+define "ear discharge for how long?":
   B.HasObs(B.c('EmCare.B13S1.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B13S1.DE04":
+define "emcare.b13s1.de04":
   B.HasObs(B.c('EmCare.B13S1.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Respiratory Rate"*/
-define "Respiratory Rate":
+/*"respiratory rate"*/
+define "respiratory rate":
   B.HasObs(B.c('EmCare.B22.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE01":
+define "emcare.b22.de01":
   B.HasObs(B.c('EmCare.B22.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Fast breathing"*/
-define "Fast breathing":
-  B.HasObs(B.c('EmCare.B10S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE02":
-  B.HasObs(B.c('EmCare.B10S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/*"Chest Indrawing"*/
-define "Chest Indrawing":
+/*"chest indrawing"*/
+define "chest indrawing":
   B.HasObs(B.c('EmCare.B10S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE03":
+define "emcare.b10s2.de03":
   B.HasObs(B.c('EmCare.B10S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Stridor in a calm child"*/
-define "Stridor in a calm child":
+/*"stridor in a calm child"*/
+define "stridor in a calm child":
   B.HasObs(B.c('EmCare.B10S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE04":
+define "emcare.b10s2.de04":
   B.HasObs(B.c('EmCare.B10S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Wheezing"*/
-define "Wheezing":
+/*"wheezing"*/
+define "wheezing":
   B.HasObs(B.c('EmCare.B10S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE05":
+define "emcare.b10s2.de05":
   B.HasObs(B.c('EmCare.B10S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Recurrent Wheeze"*/
-define "Recurrent Wheeze":
+/*"recurrent wheeze"*/
+define "recurrent wheeze":
   B.HasObs(B.c('EmCare.B10S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE06":
+define "emcare.b10s2.de06":
   B.HasObs(B.c('EmCare.B10S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Oxygen Saturation"*/
-define "Oxygen Saturation":
+/*"oxygen saturation"*/
+define "oxygen saturation":
   B.HasObs(B.c('EmCare.B10S2.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE07":
+define "emcare.b10s2.de07":
   B.HasObs(B.c('EmCare.B10S2.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Oxygen Saturation < 90 %"*/
-define "Oxygen Saturation < 90 %":
+/*"oxygen saturation < 90 %"*/
+define "oxygen saturation < 90 %":
   B.HasObs(B.c('EmCare.B10S2.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B10S2.DE08":
+define "emcare.b10s2.de08":
   B.HasObs(B.c('EmCare.B10S2.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Sunken eyes"*/
-define "Sunken eyes":
-  B.HasObs(B.c('EmCare.B11S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B11S2.DE01":
-  B.HasObs(B.c('EmCare.B11S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/*"Throat problem"*/
-define "Throat problem":
+/*"throat problem"*/
+define "throat problem":
   B.HasObs(B.c('EmCare.B17S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B17S1.DE01":
+define "emcare.b17s1.de01":
   B.HasObs(B.c('EmCare.B17S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Specify Throat problem"*/
-define "Specify Throat problem":
+/*"specify throat problem"*/
+define "specify throat problem":
   B.HasObs(B.c('EmCare.B17S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B17S1.DE02":
+define "emcare.b17s1.de02":
   B.HasObs(B.c('EmCare.B17S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Enlarged lymph nodes on front of neck"*/
-define "Enlarged lymph nodes on front of neck":
+/*"enlarged lymph nodes on front of neck"*/
+define "enlarged lymph nodes on front of neck":
   B.HasObs(B.c('EmCare.B17S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B17S1.DE06":
+define "emcare.b17s1.de06":
   B.HasObs(B.c('EmCare.B17S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Ability to swallow"*/
-define "Ability to swallow":
+/*"ability to swallow"*/
+define "ability to swallow":
   B.HasObs(B.c('EmCare.B17S1.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B17S1.DE07":
+define "emcare.b17s1.de07":
   B.HasObs(B.c('EmCare.B17S1.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Tender swelling behind the ear"*/
-define "Tender swelling behind the ear":
+/*"tender swelling behind the ear"*/
+define "tender swelling behind the ear":
   B.HasObs(B.c('EmCare.B13S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B13S2.DE01":
+define "emcare.b13s2.de01":
   B.HasObs(B.c('EmCare.B13S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Pus Seen Draining from the Ear"*/
-define "Pus Seen Draining from the Ear":
+/*"pus seen draining from the ear"*/
+define "pus seen draining from the ear":
   B.HasObs(B.c('EmCare.B13S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B13S2.DE02":
+define "emcare.b13s2.de02":
   B.HasObs(B.c('EmCare.B13S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Pus Seen Draining from the Ear for how long"*/
-define "Pus Seen Draining from the Ear for how long":
+/*"pus seen draining from the ear for how long"*/
+define "pus seen draining from the ear for how long":
   B.HasObs(B.c('EmCare.B13S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B13S2.DE03":
+define "emcare.b13s2.de03":
   B.HasObs(B.c('EmCare.B13S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Stiff neck"*/
-define "Stiff neck":
+/*"stiff neck"*/
+define "stiff neck":
   B.HasObs(B.c('EmCare.B12S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B12S2.DE01":
+define "emcare.b12s2.de01":
   B.HasObs(B.c('EmCare.B12S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Runny nose"*/
-define "Runny nose":
+/*"runny nose"*/
+define "runny nose":
   B.HasObs(B.c('EmCare.B12S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B12S2.DE05":
+define "emcare.b12s2.de05":
   B.HasObs(B.c('EmCare.B12S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Red eyes"*/
-define "Red eyes":
+/*"red eyes"*/
+define "red eyes":
   B.HasObs(B.c('EmCare.B14S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE01":
+define "emcare.b14s2.de01":
   B.HasObs(B.c('EmCare.B14S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Pus Draining from Eye"*/
-define "Pus Draining from Eye":
+/*"pus draining from eye"*/
+define "pus draining from eye":
   B.HasObs(B.c('EmCare.B14S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE02":
+define "emcare.b14s2.de02":
   B.HasObs(B.c('EmCare.B14S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Clouding of the Cornea"*/
-define "Clouding of the Cornea":
+/*"clouding of the cornea"*/
+define "clouding of the cornea":
   B.HasObs(B.c('EmCare.B14S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE03":
+define "emcare.b14s2.de03":
   B.HasObs(B.c('EmCare.B14S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Is Clouding of Cornea a new problem"*/
-define "Is Clouding of Cornea a new problem":
+/*"is clouding of cornea a new problem"*/
+define "is clouding of cornea a new problem":
   B.HasObs(B.c('EmCare.B14S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE04":
+define "emcare.b14s2.de04":
   B.HasObs(B.c('EmCare.B14S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Has Clouding of Cornea previously been treated"*/
-define "Has Clouding of Cornea previously been treated":
+/*"has clouding of cornea previously been treated"*/
+define "has clouding of cornea previously been treated":
   B.HasObs(B.c('EmCare.B14S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE05":
+define "emcare.b14s2.de05":
   B.HasObs(B.c('EmCare.B14S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Generalised or Localised Skin Problem"*/
-define "Generalised or Localised Skin Problem":
+/*"generalised or localised skin problem"*/
+define "generalised or localised skin problem":
   B.HasObs(B.c('EmCare.B14S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE06":
+define "emcare.b14s2.de06":
   B.HasObs(B.c('EmCare.B14S2.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Measles Rash"*/
-define "Measles Rash":
+/*"measles rash"*/
+define "measles rash":
   B.HasObs(B.c('EmCare.B14S2.DE10'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE10":
+define "emcare.b14s2.de10":
   B.HasObs(B.c('EmCare.B14S2.DE10'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Measles within the last 3 months"*/
-define "Measles within the last 3 months":
+/*"measles within the last 3 months"*/
+define "measles within the last 3 months":
   B.HasObs(B.c('EmCare.B14S2.DE11'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE11":
+define "emcare.b14s2.de11":
   B.HasObs(B.c('EmCare.B14S2.DE11'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Blisters, Sores or Pustules"*/
-define "Blisters, Sores or Pustules":
+/*"blisters, sores or pustules"*/
+define "blisters, sores or pustules":
   B.HasObs(B.c('EmCare.B14S2.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE12":
+define "emcare.b14s2.de12":
   B.HasObs(B.c('EmCare.B14S2.DE12'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Type of Skin Problem"*/
-define "Type of Skin Problem":
+/*"type of skin problem"*/
+define "type of skin problem":
   B.HasObs(B.c('EmCare.B14S2.DE13'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE13":
+define "emcare.b14s2.de13":
   B.HasObs(B.c('EmCare.B14S2.DE13'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Scalp Infection (tinea capitis)"*/
-define "Scalp Infection (tinea capitis)":
+/*"scalp infection (tinea capitis)"*/
+define "scalp infection (tinea capitis)":
   B.HasObs(B.c('EmCare.B14S2.DE19a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE19a":
+define "emcare.b14s2.de19a":
   B.HasObs(B.c('EmCare.B14S2.DE19a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Severe rash"*/
-define "Severe rash":
+/*"severe rash"*/
+define "severe rash":
   B.HasObs(B.c('EmCare.B14S2.DE22A'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE22A":
+define "emcare.b14s2.de22a":
   B.HasObs(B.c('EmCare.B14S2.DE22A'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Disseminated Herpes Zoster"*/
-define "Disseminated Herpes Zoster":
+/*"disseminated herpes zoster"*/
+define "disseminated herpes zoster":
   B.HasObs(B.c('EmCare.B14S2.DE23a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE23a":
+define "emcare.b14s2.de23a":
   B.HasObs(B.c('EmCare.B14S2.DE23a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Eye Involvement"*/
-define "Eye Involvement":
+/*"eye involvement"*/
+define "eye involvement":
   B.HasObs(B.c('EmCare.B14S2.DE24'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE24":
+define "emcare.b14s2.de24":
   B.HasObs(B.c('EmCare.B14S2.DE24'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Skin Infection extends to Muscle"*/
-define "Skin Infection extends to Muscle":
+/*"skin infection extends to muscle"*/
+define "skin infection extends to muscle":
   B.HasObs(B.c('EmCare.B14S2.DE30'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE30":
+define "emcare.b14s2.de30":
   B.HasObs(B.c('EmCare.B14S2.DE30'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Extensive impetigo lesions"*/
-define "Extensive impetigo lesions":
+/*"extensive impetigo lesions"*/
+define "extensive impetigo lesions":
   B.HasObs(B.c('EmCare.B14S2.DE30b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE30b":
+define "emcare.b14s2.de30b":
   B.HasObs(B.c('EmCare.B14S2.DE30b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Extensive molluscum lesions"*/
-define "Extensive molluscum lesions":
+/*"extensive molluscum lesions"*/
+define "extensive molluscum lesions":
   B.HasObs(B.c('EmCare.B14S2.DE31a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE31a":
+define "emcare.b14s2.de31a":
   B.HasObs(B.c('EmCare.B14S2.DE31a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Molluscum lesions close to the eye"*/
-define "Molluscum lesions close to the eye":
+/*"molluscum lesions close to the eye"*/
+define "molluscum lesions close to the eye":
   B.HasObs(B.c('EmCare.B14S2.DE31b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE31b":
+define "emcare.b14s2.de31b":
   B.HasObs(B.c('EmCare.B14S2.DE31b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Extensive warts"*/
-define "Extensive warts":
+/*"extensive warts"*/
+define "extensive warts":
   B.HasObs(B.c('EmCare.B14S2.DE32a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE32a":
+define "emcare.b14s2.de32a":
   B.HasObs(B.c('EmCare.B14S2.DE32a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Severe Seborrhea"*/
-define "Severe Seborrhea":
+/*"severe seborrhea"*/
+define "severe seborrhea":
   B.HasObs(B.c('EmCare.B14S2.DE34'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE34":
+define "emcare.b14s2.de34":
   B.HasObs(B.c('EmCare.B14S2.DE34'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Secondary bacterial infection of eczema"*/
-define "Secondary bacterial infection of eczema":
+/*"secondary bacterial infection of eczema"*/
+define "secondary bacterial infection of eczema":
   B.HasObs(B.c('EmCare.B14S2.DE36a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE36a":
+define "emcare.b14s2.de36a":
   B.HasObs(B.c('EmCare.B14S2.DE36a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Severe acute moist or weeping eczema"*/
-define "Severe acute moist or weeping eczema":
+/*"severe acute moist or weeping eczema"*/
+define "severe acute moist or weeping eczema":
   B.HasObs(B.c('EmCare.B14S2.DE36b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE36b":
+define "emcare.b14s2.de36b":
   B.HasObs(B.c('EmCare.B14S2.DE36b'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Secondary herpes infection of eczema (eczema herpeticum)"*/
-define "Secondary herpes infection of eczema (eczema herpeticum)":
+/*"secondary herpes infection of eczema (eczema herpeticum)"*/
+define "secondary herpes infection of eczema (eczema herpeticum)":
   B.HasObs(B.c('EmCare.B14S2.DE36c'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE36c":
+define "emcare.b14s2.de36c":
   B.HasObs(B.c('EmCare.B14S2.DE36c'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Oral sores or Mouth Ulcers"*/
-define "Oral sores or Mouth Ulcers":
+/*"oral sores or mouth ulcers"*/
+define "oral sores or mouth ulcers":
   B.HasObs(B.c('EmCare.B14S2.DE38'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE38":
+define "emcare.b14s2.de38":
   B.HasObs(B.c('EmCare.B14S2.DE38'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Add a Skin or Mouth or Eye Problem"*/
-define "Add a Skin or Mouth or Eye Problem":
+/*"add a skin or mouth or eye problem"*/
+define "add a skin or mouth or eye problem":
   B.HasObs(B.c('EmCare.B14S2.DE43'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B14S2.DE43":
+define "emcare.b14s2.de43":
   B.HasObs(B.c('EmCare.B14S2.DE43'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Palmar Pallor"*/
-define "Palmar Pallor":
+/*"palmar pallor"*/
+define "palmar pallor":
   B.HasObs(B.c('EmCare.B15S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B15S2.DE01":
+define "emcare.b15s2.de01":
   B.HasObs(B.c('EmCare.B15S2.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Mucous membrane pallor"*/
-define "Mucous membrane pallor":
+/*"mucous membrane pallor"*/
+define "mucous membrane pallor":
   B.HasObs(B.c('EmCare.B15S2.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B15S2.DE09":
+define "emcare.b15s2.de09":
   B.HasObs(B.c('EmCare.B15S2.DE09'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Unable to perform Respiratory Rate at this time"*/
-define "Unable to perform Respiratory Rate at this time":
+/*"unable to perform respiratory rate at this time"*/
+define "unable to perform respiratory rate at this time":
   B.HasObs(B.c('EmCare.B22.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE02":
+define "emcare.b22.de02":
   B.HasObs(B.c('EmCare.B22.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Respiratory Rate Second Count Not Possible"*/
-define "Respiratory Rate Second Count Not Possible":
+/*"respiratory rate second count not possible"*/
+define "respiratory rate second count not possible":
   B.HasObs(B.c('EmCare.B22.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE05":
+define "emcare.b22.de05":
   B.HasObs(B.c('EmCare.B22.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Inhaled Bronchodilator Trial Results"*/
-define "Inhaled Bronchodilator Trial Results":
-  B.HasObs(B.c('EmCare.B22.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE17":
-  B.HasObs(B.c('EmCare.B22.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+/*"inhaled bronchodilator trial not feasible or available"*/
+define "inhaled bronchodilator trial not feasible or available":
+  B.HasObs(B.c('EmCare.B22.DE22'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b22.de22":
+  B.HasObs(B.c('EmCare.B22.DE22'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Chest Indrawing (post inhaled bronchodilator trial)"*/
-define "Chest Indrawing (post inhaled bronchodilator trial)":
+/*"chest indrawing (post inhaled bronchodilator trial)"*/
+define "chest indrawing (post inhaled bronchodilator trial)":
   B.HasObs(B.c('EmCare.B22.DE18'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE18":
+define "emcare.b22.de18":
   B.HasObs(B.c('EmCare.B22.DE18'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Respiratory Rate (post inhaled bronchodilator trial)"*/
-define "Respiratory Rate (post inhaled bronchodilator trial)":
+/*"respiratory rate (post inhaled bronchodilator trial)"*/
+define "respiratory rate (post inhaled bronchodilator trial)":
   B.HasObs(B.c('EmCare.B22.DE19'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE19":
+define "emcare.b22.de19":
   B.HasObs(B.c('EmCare.B22.DE19'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Fast Breathing (post inhaled bronchodilator trial)"*/
-define "Fast Breathing (post inhaled bronchodilator trial)":
+/*"fast breathing (post inhaled bronchodilator trial)"*/
+define "fast breathing (post inhaled bronchodilator trial)":
   B.HasObs(B.c('EmCare.B22.DE20'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE20":
+define "emcare.b22.de20":
   B.HasObs(B.c('EmCare.B22.DE20'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"No Fast Breathing and No Chest Indrawing (post Inhaled Bronchodilator Trial)"*/
-define "No Fast Breathing and No Chest Indrawing (post Inhaled Bronchodilator Trial)":
+/*"no fast breathing and no chest indrawing (post inhaled bronchodilator trial)"*/
+define "no fast breathing and no chest indrawing (post inhaled bronchodilator trial)":
   B.HasObs(B.c('EmCare.B22.DE21'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE21":
+define "emcare.b22.de21":
   B.HasObs(B.c('EmCare.B22.DE21'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Breastfeeding Assessment"*/
-define "Breastfeeding Assessment":
+/*"inhaled bronchodilator trial results"*/
+define "inhaled bronchodilator trial results":
+  B.HasObs(B.c('EmCare.B22.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b22.de17":
+  B.HasObs(B.c('EmCare.B22.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"breastfeeding assessment"*/
+define "breastfeeding assessment":
   B.HasObs(B.c('EmCare.B22.DE27'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE27":
+define "emcare.b22.de27":
   B.HasObs(B.c('EmCare.B22.DE27'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Breastfed in the previous hour"*/
-define "Breastfed in the previous hour":
+/*"breastfed in the previous hour"*/
+define "breastfed in the previous hour":
   B.HasObs(B.c('EmCare.B22.DE28'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE28":
+define "emcare.b22.de28":
   B.HasObs(B.c('EmCare.B22.DE28'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Mother able to wait until young infant is willing to breastfeed again"*/
-define "Mother able to wait until young infant is willing to breastfeed again":
+/*"mother able to wait until young infant is willing to breastfeed again"*/
+define "mother able to wait until young infant is willing to breastfeed again":
   B.HasObs(B.c('EmCare.B22.DE29'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE29":
+define "emcare.b22.de29":
   B.HasObs(B.c('EmCare.B22.DE29'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Mother reports difficulty breastfeeding"*/
-define "Mother reports difficulty breastfeeding":
+/*"mother reports difficulty breastfeeding"*/
+define "mother reports difficulty breastfeeding":
   B.HasObs(B.c('EmCare.B22.DE30'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE30":
+define "emcare.b22.de30":
   B.HasObs(B.c('EmCare.B22.DE30'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Chin Touching Breast"*/
-define "Chin Touching Breast":
+/*"chin touching breast"*/
+define "chin touching breast":
   B.HasObs(B.c('EmCare.B22.DE31'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE31":
+define "emcare.b22.de31":
   B.HasObs(B.c('EmCare.B22.DE31'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Mouth Wide Open"*/
-define "Mouth Wide Open":
+/*"mouth wide open"*/
+define "mouth wide open":
   B.HasObs(B.c('EmCare.B22.DE32'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE32":
+define "emcare.b22.de32":
   B.HasObs(B.c('EmCare.B22.DE32'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Lower Lip Turned Outwards"*/
-define "Lower Lip Turned Outwards":
+/*"lower lip turned outwards"*/
+define "lower lip turned outwards":
   B.HasObs(B.c('EmCare.B22.DE33'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE33":
+define "emcare.b22.de33":
   B.HasObs(B.c('EmCare.B22.DE33'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"More Areola Visible above than below the Mouth"*/
-define "More Areola Visible above than below the Mouth":
+/*"more areola visible above than below the mouth"*/
+define "more areola visible above than below the mouth":
   B.HasObs(B.c('EmCare.B22.DE34'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE34":
+define "emcare.b22.de34":
   B.HasObs(B.c('EmCare.B22.DE34'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Slow Deep Sucks, Sometimes Pausing"*/
-define "Slow Deep Sucks, Sometimes Pausing":
+/*"slow deep sucks, sometimes pausing"*/
+define "slow deep sucks, sometimes pausing":
   B.HasObs(B.c('EmCare.B22.DE35'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE35":
+define "emcare.b22.de35":
   B.HasObs(B.c('EmCare.B22.DE35'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Breastfeeding Assessment Results"*/
-define "Breastfeeding Assessment Results":
+/*"breastfeeding assessment results"*/
+define "breastfeeding assessment results":
   B.HasObs(B.c('EmCare.B22.DE36'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE36":
+define "emcare.b22.de36":
   B.HasObs(B.c('EmCare.B22.DE36'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Breastfeeding Assessment Not Possible"*/
-define "Breastfeeding Assessment Not Possible":
+/*"breastfeeding assessment not possible"*/
+define "breastfeeding assessment not possible":
   B.HasObs(B.c('EmCare.B22.DE41'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE41":
+define "emcare.b22.de41":
   B.HasObs(B.c('EmCare.B22.DE41'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Difficulty Breastfeeding Reported"*/
-define "Difficulty Breastfeeding Reported":
+/*"difficulty breastfeeding reported"*/
+define "difficulty breastfeeding reported":
   B.HasObs(B.c('EmCare.B22.DE42'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE42":
+define "emcare.b22.de42":
   B.HasObs(B.c('EmCare.B22.DE42'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"No Difficulty Breastfeeding Reported"*/
-define "No Difficulty Breastfeeding Reported":
+/*"no difficulty breastfeeding reported"*/
+define "no difficulty breastfeeding reported":
   B.HasObs(B.c('EmCare.B22.DE43'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE43":
+define "emcare.b22.de43":
   B.HasObs(B.c('EmCare.B22.DE43'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Difficulty Breastfeeding Observed"*/
-define "Difficulty Breastfeeding Observed":
+/*"difficulty breastfeeding observed"*/
+define "difficulty breastfeeding observed":
   B.HasObs(B.c('EmCare.B22.DE44'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE44":
+define "emcare.b22.de44":
   B.HasObs(B.c('EmCare.B22.DE44'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"No Difficulty Breastfeeding Observed"*/
-define "No Difficulty Breastfeeding Observed":
+/*"no difficulty breastfeeding observed"*/
+define "no difficulty breastfeeding observed":
   B.HasObs(B.c('EmCare.B22.DE45'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE45":
+define "emcare.b22.de45":
   B.HasObs(B.c('EmCare.B22.DE45'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Second Temperature Measurement Feasible"*/
-define "Second Temperature Measurement Feasible":
+/*"second temperature measurement feasible"*/
+define "second temperature measurement feasible":
   B.HasObs(B.c('EmCare.B22.DE46'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE46":
+define "emcare.b22.de46":
   B.HasObs(B.c('EmCare.B22.DE46'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Axillary Temperature (second measurement)"*/
-define "Axillary Temperature (second measurement)":
+/*"axillary temperature (second measurement)"*/
+define "axillary temperature (second measurement)":
   B.HasObs(B.c('EmCare.B22.DE47'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE47":
+define "emcare.b22.de47":
   B.HasObs(B.c('EmCare.B22.DE47'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Prefer to take Rectal Temperature"*/
-define "Prefer to take Rectal Temperature":
+/*"prefer to take rectal temperature"*/
+define "prefer to take rectal temperature":
   B.HasObs(B.c('EmCare.B22.DE48'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE48":
+define "emcare.b22.de48":
   B.HasObs(B.c('EmCare.B22.DE48'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Rectal Temperature (second measurement)"*/
-define "Rectal Temperature (second measurement)":
+/*"rectal temperature (second measurement)"*/
+define "rectal temperature (second measurement)":
   B.HasObs(B.c('EmCare.B22.DE49'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE49":
+define "emcare.b22.de49":
   B.HasObs(B.c('EmCare.B22.DE49'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Measured Fever (second measurement)"*/
-define "Measured Fever (second measurement)":
+/*"measured fever (second measurement)"*/
+define "measured fever (second measurement)":
   B.HasObs(B.c('EmCare.B22.DE50'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE50":
+define "emcare.b22.de50":
   B.HasObs(B.c('EmCare.B22.DE50'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Measured Low Body Temperature (second measurement)"*/
-define "Measured Low Body Temperature (second measurement)":
+/*"measured low body temperature (second measurement)"*/
+define "measured low body temperature (second measurement)":
   B.HasObs(B.c('EmCare.B22.DE51'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE51":
+define "emcare.b22.de51":
   B.HasObs(B.c('EmCare.B22.DE51'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"No Measured Fever or
-No Low Body Temperature"*/
-define "No Measured Fever or
-No Low Body Temperature":
+/*"no measured fever or
+no low body temperature"*/
+define "no measured fever or
+no low body temperature":
   B.HasObs(B.c('EmCare.B22.DE52'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE52":
+define "emcare.b22.de52":
   B.HasObs(B.c('EmCare.B22.DE52'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Hemoglobin (Hb) g/dL"*/
-define "Hemoglobin (Hb) g/dL":
+/*"hemoglobin (hb) g/dl"*/
+define "hemoglobin (hb) g/dl":
   B.HasObs(B.c('EmCare.B22.DE81'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE81":
+define "emcare.b22.de81":
   B.HasObs(B.c('EmCare.B22.DE81'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Hemoglobin Test Not Available"*/
-define "Hemoglobin Test Not Available":
+/*"hemoglobin test not available"*/
+define "hemoglobin test not available":
   B.HasObs(B.c('EmCare.B22.DE82'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE82":
+define "emcare.b22.de82":
   B.HasObs(B.c('EmCare.B22.DE82'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Oral Fluid Test Results"*/
-define "Oral Fluid Test Results":
+/*"oral fluid test results"*/
+define "oral fluid test results":
   B.HasObs(B.c('EmCare.B22.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE08":
+define "emcare.b22.de08":
   B.HasObs(B.c('EmCare.B22.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Completely Unable to Drink or Vomits Immediately / Everything"*/
-define "Completely Unable to Drink or Vomits Immediately / Everything":
+/*"unable to perform oral fluid test"*/
+define "unable to perform oral fluid test":
+  B.HasObs(B.c('EmCare.B22.DE14'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b22.de14":
+  B.HasObs(B.c('EmCare.B22.DE14'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"completely unable to drink or vomits immediately / everything"*/
+define "completely unable to drink or vomits immediately / everything":
   B.HasObs(B.c('EmCare.B22.DE14a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE14a":
+define "emcare.b22.de14a":
   B.HasObs(B.c('EmCare.B22.DE14a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Has the Child had anything to drink today?"*/
-define "Has the Child had anything to drink today?":
+/*"has the child had anything to drink today?"*/
+define "has the child had anything to drink today?":
   B.HasObs(B.c('EmCare.B22.DE15'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE15":
+define "emcare.b22.de15":
   B.HasObs(B.c('EmCare.B22.DE15'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"How did the child last drink"*/
-define "How did the child last drink":
+/*"how did the child last drink"*/
+define "how did the child last drink":
   B.HasObs(B.c('EmCare.B22.DE16'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B22.DE16":
+define "emcare.b22.de16":
   B.HasObs(B.c('EmCare.B22.DE16'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Danger Signs"*/
-define "Danger Signs":
+/*"danger signs"*/
+define "danger signs":
   B.HasObs(B.c('EmCare.B.G.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B.G.DE01":
+define "emcare.b.g.de01":
   B.HasObs(B.c('EmCare.B.G.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"Fever"*/
-define "Fever":
+/*"fever"*/
+define "fever":
   B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "EmCare.B.G.DE06":
+define "emcare.b.g.de06":
   B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 

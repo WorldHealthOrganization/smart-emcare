@@ -17,98 +17,133 @@ context Patient
 define "child":
     AgeInMonths()>= 2 and AgeInMonths()<60
 
-/* Age >= 2 months to <60 months : Age >= 2 months to <60 months*/
-define "Age >= 2 months to <60 months":
+/* age >= 2 months to <60 months : Age >= 2 months to <60 months*/
+define "age >= 2 months to <60 months":
     AgeInMonths()>= 2 and AgeInMonths()<60
 
 /* yi : Age >=28 days to 2 Months*/
 define "yi":
     AgeInDays()>= 28 and AgeInMonths()<2
 
-/* Age >=28 days to 2 Months : Age >=28 days to 2 Months*/
-define "Age >=28 days to 2 Months":
+/* age >=28 days to 2 months : Age >=28 days to 2 Months*/
+define "age >=28 days to 2 months":
     AgeInDays()>= 28 and AgeInMonths()<2
 
 /* nb : Age < 28 days to 2 Months*/
 define "nb":
     AgeInDays()< 28
 
-/* Age < 28 days to 2 Months : Age < 28 days to 2 Months*/
-define "Age < 28 days to 2 Months":
+/* age < 28 days to 2 months : Age < 28 days to 2 Months*/
+define "age < 28 days to 2 months":
     AgeInDays()< 28
 
-/* EmCare.B23.DE01 : Very Severe Disease*/
-define "EmCare.B23.DE01":
+/* emcare.b23.de01 : Very Severe Disease*/
+define "emcare.b23.de01":
     ("child")
-     and (    obs."Convulsing Now" = Base."Yes" and  obs."Continue to Assess Sick Child" = val."Stabilised, continue consultation"
-     or     obs."Convulsion(s) in this Illness" = Base."Yes"
-     or     obs."Unconscious" = Base."Yes"
-     or     obs."Lethargic" = Base."Yes"
-     or     obs."Oral Fluid Test Results" = val."Completely Unable to Drink"
-     or     obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything")
+     and (    obs."convulsing now" = Base."Yes" and  obs."continue to assess sick child" = val."stabilised, continue consultation"
+     or     obs."convulsion(s) in this illness" = Base."Yes"
+     or     obs."unconscious" = Base."Yes"
+     or     obs."lethargic" = Base."Yes"
+     or     obs."oral fluid test results" = val."completely unable to drink"
+     or     obs."oral fluid test results" = val."vomits immediately / everything")
 
-/* Very Severe Disease : Very Severe Disease*/
-define "Very Severe Disease":
+/* very severe disease : Very Severe Disease*/
+define "very severe disease":
     ("child")
-     and (    obs."Convulsing Now" = Base."Yes" and  obs."Continue to Assess Sick Child" = val."Stabilised, continue consultation"
-     or     obs."Convulsion(s) in this Illness" = Base."Yes"
-     or     obs."Unconscious" = Base."Yes"
-     or     obs."Lethargic" = Base."Yes"
-     or     obs."Oral Fluid Test Results" = val."Completely Unable to Drink"
-     or     obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything")
+     and (    obs."convulsing now" = Base."Yes" and  obs."continue to assess sick child" = val."stabilised, continue consultation"
+     or     obs."convulsion(s) in this illness" = Base."Yes"
+     or     obs."unconscious" = Base."Yes"
+     or     obs."lethargic" = Base."Yes"
+     or     obs."oral fluid test results" = val."completely unable to drink"
+     or     obs."oral fluid test results" = val."vomits immediately / everything")
 
-/* EmCare.B.G.DE01 : Danger Signs*/
-define "EmCare.B.G.DE01":
+/* emcare.b.g.de01 : Danger Signs*/
+define "emcare.b.g.de01":
     ("child")
-     and (    obs."Convulsing Now"= Base."Yes"
-     or     obs."Convulsion(s) in this Illness" = Base."Yes"
-     or     obs."Unconscious" = Base."Yes"
-     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."No"
-     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes"
-     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes" and (obs."Cough" = Base."Yes" or obs."Difficulty Breathing" = Base."Yes" or  obs."Fever" = Base."Yes" or obs."Tender swelling behind the ear" = Base."Yes" or obs."Palmar Pallor"=val."Severe Palmar Pallor" or obs."Mucous membrane pallor"=val."Severe mucous membrane pallor" or obs."Hemoglobin (Hb) g/dL"  < 7 'g/dL')
-     or     obs."Not able to drink or breastfeed" = Base."Yes" or  obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything"
-     or     obs."Oral Fluid Test Results" = val."Completely Unable to Drink" or obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything" or obs."Oral Fluid Test Results" = val."Unable to Perform Oral Fluid Test")
+     and (    obs."convulsing now"= Base."Yes"
+     or     obs."convulsion(s) in this illness" = Base."Yes"
+     or     obs."unconscious" = Base."Yes"
+     or     obs."lethargic" = Base."Yes" and obs."diarrhoea" = Base."No"
+     or     obs."lethargic" = Base."Yes" and obs."diarrhoea" = Base."Yes"
+     or     obs."lethargic" = Base."Yes" and obs."diarrhoea" = Base."Yes" and (obs."cough" = Base."Yes" or obs."difficulty breathing" = Base."Yes" or  obs."fever" = Base."Yes" or obs."tender swelling behind the ear" = Base."Yes" or obs."palmar pallor"=val."severe palmar pallor" or obs."mucous membrane pallor"=val."severe mucous membrane pallor" or obs."hemoglobin (hb) g/dl"  < 7 'g/dL')
+     or     obs."not able to drink or breastfeed" = Base."Yes" or  obs."oral fluid test results" = val."vomits immediately / everything"
+     or     obs."completely unable to drink or vomits immediately / everything"=Base."Yes" or obs."oral fluid test results" = val."vomits immediately / everything" or  obs."unable to perform oral fluid test"=Base."Yes")
 
-/* Danger Signs : Danger Signs*/
-define "Danger Signs":
+/* danger signs : Danger Signs*/
+define "danger signs":
     ("child")
-     and (    obs."Convulsing Now"= Base."Yes"
-     or     obs."Convulsion(s) in this Illness" = Base."Yes"
-     or     obs."Unconscious" = Base."Yes"
-     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."No"
-     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes"
-     or     obs."Lethargic" = Base."Yes" and obs."Diarrhoea" = Base."Yes" and (obs."Cough" = Base."Yes" or obs."Difficulty Breathing" = Base."Yes" or  obs."Fever" = Base."Yes" or obs."Tender swelling behind the ear" = Base."Yes" or obs."Palmar Pallor"=val."Severe Palmar Pallor" or obs."Mucous membrane pallor"=val."Severe mucous membrane pallor" or obs."Hemoglobin (Hb) g/dL"  < 7 'g/dL')
-     or     obs."Not able to drink or breastfeed" = Base."Yes" or  obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything"
-     or     obs."Oral Fluid Test Results" = val."Completely Unable to Drink" or obs."Oral Fluid Test Results" = val."Vomits Immediately / Everything" or obs."Oral Fluid Test Results" = val."Unable to Perform Oral Fluid Test")
+     and (    obs."convulsing now"= Base."Yes"
+     or     obs."convulsion(s) in this illness" = Base."Yes"
+     or     obs."unconscious" = Base."Yes"
+     or     obs."lethargic" = Base."Yes" and obs."diarrhoea" = Base."No"
+     or     obs."lethargic" = Base."Yes" and obs."diarrhoea" = Base."Yes"
+     or     obs."lethargic" = Base."Yes" and obs."diarrhoea" = Base."Yes" and (obs."cough" = Base."Yes" or obs."difficulty breathing" = Base."Yes" or  obs."fever" = Base."Yes" or obs."tender swelling behind the ear" = Base."Yes" or obs."palmar pallor"=val."severe palmar pallor" or obs."mucous membrane pallor"=val."severe mucous membrane pallor" or obs."hemoglobin (hb) g/dl"  < 7 'g/dL')
+     or     obs."not able to drink or breastfeed" = Base."Yes" or  obs."oral fluid test results" = val."vomits immediately / everything"
+     or     obs."completely unable to drink or vomits immediately / everything"=Base."Yes" or obs."oral fluid test results" = val."vomits immediately / everything" or  obs."unable to perform oral fluid test"=Base."Yes")
 
-/* EmCare.B.G.DE05 : Severe Classification up to assessments and tests excluding Severe Dehydration*/
-define "EmCare.B.G.DE05":
-        obs."Danger Signs" = Base."Yes"
-     or     obs."Stridor in a calm child" = Base."Yes"
-     or     obs."Oxygen Saturation" <=  90 '%'
-     or     obs."Stiff neck" = Base."Yes"
-     or     obs."Fever" = Base."Yes" and obs."Throat problem" = Base."Yes" and (obs."Ability to swallow" = val."Unable to swallow" or obs."Specify Throat problem" = val."Membrane on throat")
-     or     obs."Tender swelling behind the ear" = Base."Yes"
-     or     (obs."Palmar Pallor" = val."Severe Palmar Pallor" or obs."Mucous membrane pallor"=val."Severe mucous membrane pallor" or obs."Hemoglobin (Hb) g/dL"  < 7 'g/dL')
+/* emcare.b.g.de05 : Severe Classification up to assessments and tests excluding Severe Dehydration*/
+define "emcare.b.g.de05":
+        obs."danger signs" = Base."Yes"
+     or     obs."stridor in a calm child" = Base."Yes"
+     or     obs."oxygen saturation" <=  90 '%'
+     or     obs."stiff neck" = Base."Yes"
+     or     obs."fever" = Base."Yes" and obs."throat problem" = Base."Yes" and (obs."ability to swallow" = val."unable to swallow" or obs."specify throat problem" = val."membrane on throat")
+     or     obs."tender swelling behind the ear" = Base."Yes"
+     or     (obs."palmar pallor" = val."severe palmar pallor" or obs."mucous membrane pallor"=val."severe mucous membrane pallor" or obs."hemoglobin (hb) g/dl"  < 7 'g/dL')
 
-/* Severe Classification up to assessments and tests excluding Severe Dehydration : Severe Classification up to assessments and tests excluding Severe Dehydration*/
-define "Severe Classification up to assessments and tests excluding Severe Dehydration":
-        obs."Danger Signs" = Base."Yes"
-     or     obs."Stridor in a calm child" = Base."Yes"
-     or     obs."Oxygen Saturation" <=  90 '%'
-     or     obs."Stiff neck" = Base."Yes"
-     or     obs."Fever" = Base."Yes" and obs."Throat problem" = Base."Yes" and (obs."Ability to swallow" = val."Unable to swallow" or obs."Specify Throat problem" = val."Membrane on throat")
-     or     obs."Tender swelling behind the ear" = Base."Yes"
-     or     (obs."Palmar Pallor" = val."Severe Palmar Pallor" or obs."Mucous membrane pallor"=val."Severe mucous membrane pallor" or obs."Hemoglobin (Hb) g/dL"  < 7 'g/dL')
+/* severe classification up to assessments and tests excluding severe dehydration : Severe Classification up to assessments and tests excluding Severe Dehydration*/
+define "severe classification up to assessments and tests excluding severe dehydration":
+        obs."danger signs" = Base."Yes"
+     or     obs."stridor in a calm child" = Base."Yes"
+     or     obs."oxygen saturation" <=  90 '%'
+     or     obs."stiff neck" = Base."Yes"
+     or     obs."fever" = Base."Yes" and obs."throat problem" = Base."Yes" and (obs."ability to swallow" = val."unable to swallow" or obs."specify throat problem" = val."membrane on throat")
+     or     obs."tender swelling behind the ear" = Base."Yes"
+     or     (obs."palmar pallor" = val."severe palmar pallor" or obs."mucous membrane pallor"=val."severe mucous membrane pallor" or obs."hemoglobin (hb) g/dl"  < 7 'g/dL')
 
-/* EmCare.B.G.DE06 : Fever*/
-define "EmCare.B.G.DE06":
-        obs."Axaliary Temperature" >= 37.5
-     or     obs."Hot to Touch" = Base."Yes"
-     or     obs."Fever Reported" = Base."Yes"
+/* emcare.b.g.de06 : Fever*/
+define "emcare.b.g.de06":
+        obs."axaliary temperature" >= 37.5
+     or     obs."hot to touch" = Base."Yes"
+     or     obs."fever reported" = Base."Yes"
 
-/* Fever : Fever*/
-define "Fever":
-        obs."Axaliary Temperature" >= 37.5
-     or     obs."Hot to Touch" = Base."Yes"
-     or     obs."Fever Reported" = Base."Yes"
+/* fever : Fever*/
+define "fever":
+        obs."axaliary temperature" >= 37.5
+     or     obs."hot to touch" = Base."Yes"
+     or     obs."fever reported" = Base."Yes"
+
+/* severe pneumonia or very severe disease : nan*/
+define "severe pneumonia or very severe disease":
+    "age >= 2 months to <60 months" and (obs."cough" = Base."Yes"  or  obs."difficulty breathing" = Base."Yes") and (obs."danger signs" = Base."Yes" or  obs."stridor in a calm child" = Base."Yes")
+
+/* with low oxygen saturation (spo2 < 90%) : nan*/
+define "with low oxygen saturation (spo2 < 90%)":
+    obs."oxygen saturation" < 90  '%{Oxygen}'
+
+/* with wheezing : nan*/
+define "with wheezing":
+    obs."wheezing" = Base."Yes"
+
+/* with recurrent wheeze : nan*/
+define "with recurrent wheeze":
+    obs."recurrent wheeze" = Base."Yes"
+
+/* with cough or difficulty breathing for 14 days or more : nan*/
+define "with cough or difficulty breathing for 14 days or more":
+    obs."cough for how long?" = val."14 days or more" or obs."difficulty breathing for how long?" = val."14 days or more"
+
+/* pneumonia : nan*/
+define "pneumonia":
+    "age >= 2 months to <60 months" and (obs."cough"= Base."Yes"  or  obs."difficulty breathing" = Base."Yes") and (obs."fast breathing" = Base."Yes" or  obs."chest indrawing" = Base."Yes") and ( obs."wheezing" = Base."No") and ("severe pneumonia or very severe disease" = false) and (obs."inhaled bronchodilator trial not feasible or available"=Base."Yes" or obs."chest indrawing (post inhaled bronchodilator trial)"=Base."Yes" or   obs."fast breathing (post inhaled bronchodilator trial)"=Base."Yes")
+
+/* cough or cold : nan*/
+define "cough or cold":
+    "age >= 2 months to <60 months"  and (obs."cough"= Base."Yes"  or  obs."difficulty breathing" = Base."Yes") and ("severe pneumonia or very severe disease" = false) and ("pneumonia" = false)
+
+/* severe dehydration : nan*/
+define "severe dehydration":
+    ("age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes")
+     and (    obs."unconscious" = Base."Yes" and obs."skin pinch of abdomen" = val."goes back slowly (2 seconds or fewer, but not immediately)"
+     or     (obs."restless and irritable" = Base."Yes" or obs."skin pinch of abdomen" = val."goes back slowly (2 seconds or fewer, but not immediately)" ) and (obs."oral fluid test results" = val."completely unable to drink" or obs."oral fluid test results" = val."vomits immediately / everything" or  obs."completely unable to drink or vomits immediately / everything"=Base."Yes")
+     or     (ToInteger(obs."unconscious or lethargic" = Base."Yes") + ToInteger(obs."sunken eyes" = Base."Yes") +ToInteger(obs."skin pinch of abdomen" = val."goes back very slowly (more than 2 seconds)" )+ToInteger( obs."oral fluid test results" = val."completely unable to drink"  or obs."oral fluid test results" = val."vomits immediately / everything"  or obs."completely unable to drink or vomits immediately / everything"=Base."Yes" or obs."oral fluid test results" = val."drinks poorly") )>1)

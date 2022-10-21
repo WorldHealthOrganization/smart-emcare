@@ -13,10 +13,10 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* EmCare.A.DE07 : Visit date*/
-define "EmCare.A.DE07":
+/* emcare.a.de07 : Visit date*/
+define "emcare.a.de07":
     now()
 
-/* Visit date : Visit date*/
-define "Visit date":
+/* visit date : Visit date*/
+define "visit date":
     now()

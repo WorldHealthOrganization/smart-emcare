@@ -13,10 +13,10 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* EmCare.B7.DE02 : Convulsing Now*/
-define "EmCare.B7.DE02":
+/* emcare.b7.de02 : Convulsing Now*/
+define "emcare.b7.de02":
     Base.HasObs('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Convulsing Now : Convulsing Now*/
-define "Convulsing Now":
+/* convulsing now : Convulsing Now*/
+define "convulsing now":
     Base.HasObs('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

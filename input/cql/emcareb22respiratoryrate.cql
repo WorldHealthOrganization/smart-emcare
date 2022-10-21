@@ -13,10 +13,10 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* AgeInMonths : Age*/
-define "AgeInMonths":
+/* ageinmonths : Age*/
+define "ageinmonths":
     AgeInMonths()
 
-/* Age : Age*/
-define "Age":
+/* age : Age*/
+define "age":
     AgeInMonths()

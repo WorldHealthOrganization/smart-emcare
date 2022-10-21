@@ -62,15 +62,98 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Danger Signs' = 'No' and 'Obstructed or Absent Breathing' = 'Yes' and 'Continue to Assess Sick Child' = 'Stabilised, continue consultation'"
+                        "language": "text/cql-identifier",
+                        "expression": "severe pneumonia or very severe disease"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE02",
-            "text": "History of Obstructed or Absent Breathing",
+            "linkId": "Severe Pneumonia or Very Severe Disease",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "with low oxygen saturation (spo2 < 90%)"
+                    }
+                }
+            ],
+            "linkId": "with low oxygen saturation (SPO2 < 90%)",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "with wheezing"
+                    }
+                }
+            ],
+            "linkId": "with wheezing",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "with recurrent wheeze"
+                    }
+                }
+            ],
+            "linkId": "with recurrent wheeze",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "with cough or difficulty breathing for 14 days or more"
+                    }
+                }
+            ],
+            "linkId": "with cough or difficulty breathing for 14 days or more",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -82,12 +165,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "('Age >= 2 months to <60 months' and ('Danger Signs' = 'Yes' and ('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Stridor in a Calm Child' = 'Yes')) or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Danger Signs' = 'Yes' or\n'Stridor in a Calm Child' = 'Yes' or 'Oxygen Saturation' = '<90%') and 'Wheezing' = 'Yes') or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Danger Signs' = 'Yes' and 'Wheezing' = 'Yes' and 'Oxygen Saturation' = '<90%') or ('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Oxygen Saturation' = '<90%')"
+                        "expression": "%resource.repeat(item).where(linkId='Severe Pneumonia or Very Severe Disease').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE03",
             "text": "Severe Pneumonia or Very Severe Disease",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "pneumonia"
+                    }
+                }
+            ],
+            "linkId": "Pneumonia",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -99,29 +199,33 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification' = 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed') and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'No') or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification' = 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed') and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'Yes' and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' =  'Chest Indrawing (post inhaled bronchodilator trial)')) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification'= 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed' ) and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'Yes' and ('Cough for how long?' = 'More than 14 days' or 'Recurrent Wheeze' = 'Yes') and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' =  'Chest Indrawing (post inhaled bronchodilator trial)')) or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Fast breathing' = 'Yes' or 'Chest-indrawing' ='Yes')) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Fast breathing' = 'Yes' or 'Chest-indrawing' = 'Yes') and 'Wheezing' = 'Yes' and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' =  'Chest Indrawing (post inhaled bronchodilator trial)' or 'Inhaled Bronchodilator Trial Results' = 'Fast breathing (post inhaled bronchodilator trial)')) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Wheezing' = 'Yes' and 'Recurrent Wheeze' = 'Yes' and ('Fast breathing' = 'Yes' or 'Chest-indrawing' = 'Yes') and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' = 'Chest Indrawing (post inhaled bronchodilator trial)' or 'Inhaled Bronchodilator Trial Results' = 'Fast breathing (post inhaled bronchodilator trial)' )) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Wheezing' = 'Yes' and 'Recurrent Wheeze' = 'Yes' and ('Fast breathing' = 'Yes' or 'Chest-indrawing' = 'Yes') and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' = 'Chest Indrawing (post inhaled bronchodilator trial)' or 'Inhaled Bronchodilator Trial Results' = 'Fast breathing (post inhaled bronchodilator trial)' ))"
+                        "expression": "%resource.repeat(item).where(linkId='Pneumonia').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE06",
             "text": "Pneumonia",
-            "type": "boolean",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification'= 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed' ) and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'Yes' and ('Cough for how long?' = 'More than 14 days' or 'Recurrent Wheeze' = 'Yes') and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' =  'Chest Indrawing (post inhaled bronchodilator trial)')) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Wheezing' = 'Yes' and 'Recurrent Wheeze' = 'Yes' and ('Fast breathing' = 'Yes' or 'Chest-indrawing' = 'Yes') and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' = 'Chest Indrawing (post inhaled bronchodilator trial)' or 'Inhaled Bronchodilator Trial Results' = 'Fast breathing (post inhaled bronchodilator trial)' )) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Cough for how long?' = 'More than 14 days' or 'Difficulty Breathing for how long?' ='More than 14 days') and ('Fast breathing' = 'Yes' or 'Chest-indrawing' = 'Yes') and Classification != 'Severe Pneumonia or Very Severe Disease' and 'Wheezing' = 'No')"
+                        "language": "text/cql-identifier",
+                        "expression": "cough or cold"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE08",
-            "text": "with Cough for more than 14 days or Recurrent Wheeze",
+            "linkId": "Cough or Cold",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -133,46 +237,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification' = 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed') and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'No') or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification' = 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed') and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'Yes' and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' =  'Chest Indrawing (post inhaled bronchodilator trial)')) or \n(('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and ('Classification'= 'Confirmed HIV Infection' or 'Classification' = 'HIV Exposed' ) and 'Chest Indrawing' = 'Yes' and 'Wheezing' = 'Yes' and ('Cough for how long?' = 'More than 14 days' or 'Recurrent Wheeze' = 'Yes') and ('Inhaled Bronchodilator Trial Results' = 'Inhaled Bronchodilator Trial Not Feasible or Available' or 'Inhaled Bronchodilator Trial Results' =  'Chest Indrawing (post inhaled bronchodilator trial)'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE09",
-            "text": "with Chest Indrawing in HIV Exposed / Infected child",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia') or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia' and 'Wheezing' = 'Yes') or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia' and ('Cough for how long?' = '14 days or more' or 'Difficulty Breathing for how long?' = '14 days or more')) or (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia' and 'Wheezing' = 'Yes' and ('Chest indrawing' = 'Yes' or 'Fast Breathing' = 'Yes') and 'Inhaled Bronchodilator Trial Results' =  'No Fast Breathing and No Chest Indrawing (post Inhaled Bronchodilator Trial)')"
+                        "expression": "%resource.repeat(item).where(linkId='Cough or Cold').answer.first().value=true"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE10",
             "text": "Cough or Cold",
-            "type": "boolean",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia' and 'Wheezing' = 'Yes' and ('Chest indrawing' = 'Yes' or 'Fast Breathing' = 'Yes') and 'Inhaled Bronchodilator Trial Results' =  'No Fast Breathing and No Chest Indrawing (post Inhaled Bronchodilator Trial)')"
+                        "language": "text/cql-identifier",
+                        "expression": "severe dehydration"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE12",
-            "text": "with cough for more than 14 days or difficulty breathing for more than 14 days or recurrent wheeze",
+            "linkId": "Severe Dehydration",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -184,7 +271,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "('Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and ('Diarrhoea' = 'Yes' and 'Unconscious or Lethargic' = 'Yes' and 'Unconscious' = 'Yes' and 'Skin Pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' ) or \n('Diarrhoea' = 'Yes' and ('Restless and Irritable' = 'Yes' or 'Skin Pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)')  and ('Oral Fluid Test Results' = 'Completely Unable to Drink' or 'Oral Fluid Test Results' = 'Vomits Immediately / Everything' or 'Oral Fluid Test Results' = 'Completely Unable to Drink or Vomits Immediately / Everything')))"
+                        "expression": "('Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and ('Diarrhoea' = 'Yes' and 'Unconscious or Lethargic' = 'Yes' and 'Unconscious' = 'Yes' and 'Skin pinch of Abdomen' = 'goes back slowly (2 seconds or fewer, but not immediately)' ) or \n('Diarrhoea' = 'Yes' and ('Restless and Irritable' = 'Yes' or 'Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)')  and ('Oral Fluid Test Results' = 'Completely Unable to Drink' or 'Oral Fluid Test Results' = 'Vomits Immediately / Everything' or  'Completely Unable to Drink or Vomits Immediately / Everything' = 'Yes')))"
                     }
                 }
             ],
@@ -201,7 +288,24 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and 'Classification' != 'Severe Dehydration' or ('Restless and irritable' = 'Yes' and ('Oral Fluid Test Results' = 'Completely Unable to drink' or 'Oral Fluid Test Results' = 'Drinks Poorly') and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Restless and irritable' = 'Yes' and 'Skin Pinch of Abdomen' = 'Skin pinch goes back very slowly (More than 2 seconds)'  and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Skin Pinch of Abdomen' = 'Skin pinch goes back very slowly (More than 2 seconds)' and 'Oral Fluid Test Results' = 'Drinks Eagerly / Thirstily' and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Lethargic or Unconscious' = 'Yes' and 'Skin Pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Skin Pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' and ('Oral Fluid Test Results' = 'Completely Unable to drink' or 'Oral Fluid Test Results' = 'Drinks Poorly') and 'Classification' != 'Severe Dehydration')"
+                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia' and 'Wheezing' = 'Yes' and ('Chest Indrawing' = 'Yes' or 'Fast Breathing' = 'Yes') and 'Inhaled Bronchodilator Trial Results' =  'No Fast Breathing and No Chest Indrawing (post Inhaled Bronchodilator Trial)')"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE12",
+            "text": "with cough for more than 14 days or difficulty breathing for more than 14 days or recurrent wheeze",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and 'Classification' != 'Severe Dehydration' or ('Restless and irritable' = 'Yes' and ('Oral Fluid Test Results' = 'Completely Unable to drink' or 'Oral Fluid Test Results' = 'Drinks Poorly') and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Restless and irritable' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin pinch goes back very slowly (More than 2 seconds)'  and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin pinch goes back very slowly (More than 2 seconds)' and 'Oral Fluid Test Results' = 'Drinks Eagerly / Thirstily' and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Lethargic or Unconscious' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' and ('Oral Fluid Test Results' = 'Completely Unable to drink' or 'Oral Fluid Test Results' = 'Drinks Poorly') and 'Classification' != 'Severe Dehydration')"
                     }
                 }
             ],
@@ -1289,7 +1393,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Diarrhoea' = 'Yes' and (('Sunken Eyes' = 'Yes' and 'Restless and Irritable' = 'Yes') or\n('Sunken Eyes' = 'Yes' and 'Skin Pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)') or \n('Skin Pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Restless and Irritable' = 'Yes') or\n('Skin Pinch of Abdomen' = 'Goes back very slowly (More than 2 seconds)' and 'Restless and Irritable' = 'Yes') or\n('Skin Pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Movements' = 'Movement only when Stimulated but then stops' ) or \n('Skin Pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Movements' = 'No Movement at all') or\n('Classification' != 'Severe Dehydration' and 'Classification' != 'Some Dehydration'))"
+                        "expression": "'Diarrhoea' = 'Yes' and (('Sunken Eyes' = 'Yes' and 'Restless and Irritable' = 'Yes') or\n('Sunken Eyes' = 'Yes' and 'Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)') or \n('Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Restless and Irritable' = 'Yes') or\n('Skin pinch of Abdomen' = 'Goes back very slowly (More than 2 seconds)' and 'Restless and Irritable' = 'Yes') or\n('Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Movements' = 'Movement only when Stimulated but then stops' ) or \n('Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Movements' = 'No Movement at all') or\n('Classification' != 'Severe Dehydration' and 'Classification' != 'Some Dehydration'))"
                     }
                 }
             ],

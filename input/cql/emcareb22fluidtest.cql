@@ -13,10 +13,10 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* EmCare.B8-B9.DE03 : Has danger signs*/
-define "EmCare.B8-B9.DE03":
+/* emcare.b8-b9.de03 : Has danger signs*/
+define "emcare.b8-b9.de03":
     Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Has danger signs : Has danger signs*/
-define "Has danger signs":
+/* has danger signs : Has danger signs*/
+define "has danger signs":
     Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

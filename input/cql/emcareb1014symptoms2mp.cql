@@ -13,58 +13,58 @@ include EmCareValueSet version '0.99.99' called val
 context Patient
       
 
-/* EmCare.B.G.DE01 : Danger Signs*/
-define "EmCare.B.G.DE01":
+/* emcare.b.g.de01 : Danger Signs*/
+define "emcare.b.g.de01":
     Base.HasObs('EmCare.B6.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Danger Signs : Danger Signs*/
-define "Danger Signs":
+/* danger signs : Danger Signs*/
+define "danger signs":
     Base.HasObs('EmCare.B6.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B6.DE01 : Axiliary Temperature*/
-define "EmCare.B6.DE01":
+/* emcare.b6.de01 : Axiliary Temperature*/
+define "emcare.b6.de01":
     Base.HasObs('EmCare.B6.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Axiliary Temperature : Axiliary Temperature*/
-define "Axiliary Temperature":
+/* axiliary temperature : Axiliary Temperature*/
+define "axiliary temperature":
     Base.HasObs('EmCare.B6.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B6.DE05 : Hot to Touch*/
-define "EmCare.B6.DE05":
+/* emcare.b6.de05 : Hot to Touch*/
+define "emcare.b6.de05":
     Base.HasObs('EmCare.B6.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Hot to Touch : Hot to Touch*/
-define "Hot to Touch":
+/* hot to touch : Hot to Touch*/
+define "hot to touch":
     Base.HasObs('EmCare.B6.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B8-B9.DE03 : Has danger signs*/
-define "EmCare.B8-B9.DE03":
+/* emcare.b8-b9.de03 : Has danger signs*/
+define "emcare.b8-b9.de03":
     Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Has danger signs : Has danger signs*/
-define "Has danger signs":
+/* has danger signs : Has danger signs*/
+define "has danger signs":
     Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* AgeInMonths : Age*/
-define "AgeInMonths":
+/* ageinmonths : Age*/
+define "ageinmonths":
     AgeInMonths()
 
-/* Age : Age*/
-define "Age":
+/* age : Age*/
+define "age":
     AgeInMonths()
 
-/* EmCare.B14S2.DE05 : Generalised or Localised Skin Problem*/
-define "EmCare.B14S2.DE05":
+/* emcare.b14s2.de05 : Generalised or Localised Skin Problem*/
+define "emcare.b14s2.de05":
     Base.HasObs('EmCare.B14S2.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Generalised or Localised Skin Problem : Generalised or Localised Skin Problem*/
-define "Generalised or Localised Skin Problem":
+/* generalised or localised skin problem : Generalised or Localised Skin Problem*/
+define "generalised or localised skin problem":
     Base.HasObs('EmCare.B14S2.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* EmCare.B12S2.DE09 : Measles Rash*/
-define "EmCare.B12S2.DE09":
+/* emcare.b12s2.de09 : Measles Rash*/
+define "emcare.b12s2.de09":
     Base.HasObs('EmCare.B12S2.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* Measles Rash : Measles Rash*/
-define "Measles Rash":
+/* measles rash : Measles Rash*/
+define "measles rash":
     Base.HasObs('EmCare.B12S2.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

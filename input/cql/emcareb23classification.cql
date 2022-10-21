@@ -83,7 +83,7 @@ define "danger signs":
 
 /* emcare.b.g.de05 : Severe Classification up to assessments and tests excluding Severe Dehydration*/
 define "emcare.b.g.de05":
-        obs."danger signs" = Base."Yes"
+        obs."danger signs" = true
      or     obs."stridor in a calm child" = Base."Yes"
      or     obs."oxygen saturation" <=  90 '%'
      or     obs."stiff neck" = Base."Yes"
@@ -93,7 +93,7 @@ define "emcare.b.g.de05":
 
 /* severe classification up to assessments and tests excluding severe dehydration : Severe Classification up to assessments and tests excluding Severe Dehydration*/
 define "severe classification up to assessments and tests excluding severe dehydration":
-        obs."danger signs" = Base."Yes"
+        obs."danger signs" = true
      or     obs."stridor in a calm child" = Base."Yes"
      or     obs."oxygen saturation" <=  90 '%'
      or     obs."stiff neck" = Base."Yes"
@@ -103,19 +103,19 @@ define "severe classification up to assessments and tests excluding severe dehyd
 
 /* emcare.b.g.de06 : Fever*/
 define "emcare.b.g.de06":
-        obs."axaliary temperature" >= 37.5
+        obs."axillary temperature" >= 37.5 'Cel'
      or     obs."hot to touch" = Base."Yes"
      or     obs."fever reported" = Base."Yes"
 
 /* fever : Fever*/
 define "fever":
-        obs."axaliary temperature" >= 37.5
+        obs."axillary temperature" >= 37.5 'Cel'
      or     obs."hot to touch" = Base."Yes"
      or     obs."fever reported" = Base."Yes"
 
 /* severe pneumonia or very severe disease : nan*/
 define "severe pneumonia or very severe disease":
-    "age >= 2 months to <60 months" and (obs."cough" = Base."Yes"  or  obs."difficulty breathing" = Base."Yes") and (obs."danger signs" = Base."Yes" or  obs."stridor in a calm child" = Base."Yes")
+    "age >= 2 months to <60 months" and (obs."cough" = Base."Yes"  or  obs."difficulty breathing" = Base."Yes") and (obs."danger signs" = true or  obs."stridor in a calm child" = Base."Yes" or obs."oxygen saturation" < 90  '%{Oxygen}')
 
 /* with low oxygen saturation (spo2 < 90%) : nan*/
 define "with low oxygen saturation (spo2 < 90%)":
@@ -133,6 +133,10 @@ define "with recurrent wheeze":
 define "with cough or difficulty breathing for 14 days or more":
     obs."cough for how long?" = val."14 days or more" or obs."difficulty breathing for how long?" = val."14 days or more"
 
+/* measles in last 3 months : nan*/
+define "measles in last 3 months":
+    Base.HasCondHistory('EmCare.B23.DE27',94) = Base."Yes" or  Base.HasCondHistory('EmCare.B23.DE28',94) = Base."Yes" or Base.HasCondHistory('EmCare.B23.DE29',94) = Base."Yes"
+
 /* pneumonia : nan*/
 define "pneumonia":
     "age >= 2 months to <60 months" and (obs."cough"= Base."Yes"  or  obs."difficulty breathing" = Base."Yes") and (obs."fast breathing" = Base."Yes" or  obs."chest indrawing" = Base."Yes") and ( obs."wheezing" = Base."No") and ("severe pneumonia or very severe disease" = false) and (obs."inhaled bronchodilator trial not feasible or available"=Base."Yes" or obs."chest indrawing (post inhaled bronchodilator trial)"=Base."Yes" or   obs."fast breathing (post inhaled bronchodilator trial)"=Base."Yes")
@@ -144,6 +148,166 @@ define "cough or cold":
 /* severe dehydration : nan*/
 define "severe dehydration":
     ("age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes")
-     and (    obs."unconscious" = Base."Yes" and obs."skin pinch of abdomen" = val."goes back slowly (2 seconds or fewer, but not immediately)"
-     or     (obs."restless and irritable" = Base."Yes" or obs."skin pinch of abdomen" = val."goes back slowly (2 seconds or fewer, but not immediately)" ) and (obs."oral fluid test results" = val."completely unable to drink" or obs."oral fluid test results" = val."vomits immediately / everything" or  obs."completely unable to drink or vomits immediately / everything"=Base."Yes")
-     or     (ToInteger(obs."unconscious or lethargic" = Base."Yes") + ToInteger(obs."sunken eyes" = Base."Yes") +ToInteger(obs."skin pinch of abdomen" = val."goes back very slowly (more than 2 seconds)" )+ToInteger( obs."oral fluid test results" = val."completely unable to drink"  or obs."oral fluid test results" = val."vomits immediately / everything"  or obs."completely unable to drink or vomits immediately / everything"=Base."Yes" or obs."oral fluid test results" = val."drinks poorly") )>1)
+     and (    obs."unconscious" = Base."Yes" and obs."skin pinch of abdomen" = val."skin pinch goes back slowly (2 seconds or fewer, but not immediately)"
+     or     (obs."restless and irritable" = Base."Yes" or obs."skin pinch of abdomen" = val."skin pinch goes back slowly (2 seconds or fewer, but not immediately)" ) and (obs."oral fluid test results" = val."completely unable to drink" or obs."oral fluid test results" = val."vomits immediately / everything" or  obs."completely unable to drink or vomits immediately / everything"=Base."Yes")
+     or     (ToInteger(obs."unconscious or lethargic" = Base."Yes") + ToInteger(obs."sunken eyes" = Base."Yes") +ToInteger(obs."skin pinch of abdomen" = val."skin pinch goes back very slowly (more than 2 seconds)" )+ToInteger( obs."oral fluid test results" = val."completely unable to drink"  or obs."oral fluid test results" = val."vomits immediately / everything"  or obs."completely unable to drink or vomits immediately / everything"=Base."Yes" or obs."oral fluid test results" = val."drinks poorly") )>1)
+
+/* some dehydration : nan*/
+define "some dehydration":
+    ("age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes" and  "severe dehydration"=false)
+     and (    (ToInteger(obs."restless and irritable" = Base."Yes") + ToInteger(obs."sunken eyes" = Base."Yes") + ToInteger(obs."skin pinch of abdomen" = val."skin pinch goes back slowly (2 seconds or fewer, but not immediately)" ) + ToInteger(obs."oral fluid test results" = val."drinks eagerly / thirstily" ))>1
+     or     obs."restless and irritable" = Base."Yes" and (obs."oral fluid test results" = val."drinks poorly" or  obs."skin pinch of abdomen" = val."skin pinch goes back very slowly (more than 2 seconds)" )
+     or     (obs."lethargic" = Base."Yes" or obs."oral fluid test results" = val."drinks poorly") and (obs."skin pinch of abdomen" = val."skin pinch goes back slowly (2 seconds or fewer, but not immediately)" ))
+
+/* no dehydration : nan*/
+define "no dehydration":
+    "age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes" and  "severe dehydration"=false  and  "some dehydration"=false
+
+/* severe persistent diarrhoea : nan*/
+define "severe persistent diarrhoea":
+    "age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes" and  ("severe dehydration"=true  or  "some dehydration"=true) and obs."diarrhoea for how long?" = val."14 days or more"
+
+/* persistent diarrhoea : nan*/
+define "persistent diarrhoea":
+    "age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes" and  "no dehydration"=true   and obs."diarrhoea for how long?" = val."14 days or more"
+
+/* dysentery : nan*/
+define "dysentery":
+    "age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes" and obs."blood in the stool in this illness" = Base."Yes" and obs."axillary temperature" < 38.5 'Cel'
+
+/* possible shigella : nan*/
+define "possible shigella":
+    "age >= 2 months to <60 months"  and obs."diarrhoea" = Base."Yes" and obs."blood in the stool in this illness" = Base."Yes" and obs."axillary temperature" >= 38.5 'Cel'
+
+/* throat abscess or possible diptheria : nan*/
+define "throat abscess or possible diptheria":
+    "age >= 2 months to <60 months"  and obs."fever" = Base."Yes" and obs."throat problem" = Base."Yes" and (obs."not able to drink or breastfeed" = Base."Yes" or obs."ability to swallow" = val."unable to swallow" or obs."specify throat problem" = val."membrane on throat")
+
+/* streptococcal sore throat : nan*/
+define "streptococcal sore throat":
+    "age >= 2 months to <60 months"  and (obs."fever" = Base."Yes" or obs."ability to swallow" = val."difficulty in swallowing" ) and obs."throat problem" = Base."Yes" and (obs."not able to drink or breastfeed" = Base."Yes" or obs."ability to swallow" = val."unable to swallow" or obs."specify throat problem" = val."membrane on throat") and (ToInteger(obs."enlarged lymph nodes on front of neck" = Base."Yes" )+ToInteger(obs."specify throat problem" = val."red (congested) throat")+ToInteger(obs."specify throat problem" = val."exudate on throat"))>1 and "throat abscess or possible diptheria"=false
+
+/* non-streptococcal sore throat : nan*/
+define "non-streptococcal sore throat":
+    "age >= 2 months to <60 months"  and (obs."ability to swallow" = val."difficulty in swallowing" or obs."enlarged lymph nodes on front of neck" = Base."Yes" or obs."specify throat problem" = val."red (congested) throat" or obs."specify throat problem" = val."exudate on throat" ) and obs."throat problem" = Base."Yes" and  "throat abscess or possible diptheria"=false and "streptococcal sore throat"=false
+
+/* no throat problem : nan*/
+define "no throat problem":
+    "age >= 2 months to <60 months" and obs."throat problem" = Base."Yes" and  "throat abscess or possible diptheria"=false and "streptococcal sore throat"=false and "non-streptococcal sore throat"=false
+
+/* mastoiditis : nan*/
+define "mastoiditis":
+    "age >= 2 months to <60 months" and obs."ear problem" = Base."Yes" and   obs."tender swelling behind the ear" = Base."Yes"
+
+/* acute ear infection : nan*/
+define "acute ear infection":
+    ("age >= 2 months to <60 months" and obs."ear problem" = Base."Yes" and   obs."tender swelling behind the ear" = Base."Yes")
+     and (    obs."ear pain" = Base."Yes" and "chronic ear infection"=false
+     or     obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
+     or     obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days")
+
+/* dl-g-cl1-74 : nan*/
+define "dl-g-cl1-74":
+    obs."ear pain" = Base."Yes" and "chronic ear infection"=false
+
+/* dl-g-cl1-75 : nan*/
+define "dl-g-cl1-75":
+    obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
+
+/* dl-g-cl1-76 : nan*/
+define "dl-g-cl1-76":
+    obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days"
+
+/* chronic ear infection : nan*/
+define "chronic ear infection":
+    ("age >= 2 months to <60 months" and obs."ear problem" = Base."Yes" and   obs."pus seen draining from the ear" = Base."Yes")
+     and (    obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
+     or     obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days")
+
+/* dl-i-cl1-11 : nan*/
+define "dl-i-cl1-11":
+    obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
+
+/* dl-i-cl1-12 : nan*/
+define "dl-i-cl1-12":
+    obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days"
+
+/* with ear pain or fever : nan*/
+define "with ear pain or fever":
+    obs."ear pain" = Base."Yes" or obs."fever" = Base."Yes"
+
+/* no ear infection : nan*/
+define "no ear infection":
+    "age >= 2 months to <60 months" and obs."ear problem" = Base."Yes" and  "chronic ear infection"=false and "mastoiditis"=false and "acute ear infection"=false
+
+/* very severe febrile disease : nan*/
+define "very severe febrile disease":
+    "age >= 2 months to <60 months" and obs."fever" = Base."Yes" and (obs."danger signs" = true or  obs."stiff neck" = Base."Yes")
+
+/* fever: possible bacterial infection : nan*/
+define "fever: possible bacterial infection":
+    "age >= 2 months to <60 months" and obs."fever" = Base."Yes" and ( "streptococcal sore throat"=true  or "pneumonia"=true or "acute ear infection"=true  or  "chronic ear infection"=true or  "dysentery"=false) and "possible shigella"=false and  "throat abscess or possible diptheria"=false and "severe complicated measles"=false and "measles with eye or mouth complication"=false and "possible measles"=false and  "mastoiditis"=false and "very severe febrile disease"=false and  "severe pneumonia or very severe disease"=false
+
+/* fever present every day for 7 days or more : nan*/
+define "fever present every day for 7 days or more":
+    obs."fever for how long?" = val."7 days or more" and obs."has fever been present every day since the fever started?" = Base."Yes"
+
+/* fever: bacterial infection unlikely : nan*/
+define "fever: bacterial infection unlikely":
+    "age >= 2 months to <60 months" and obs."fever" = Base."Yes" and "possible shigella"=false and "fever: possible bacterial infection"=false and "throat abscess or possible diptheria"=false and "severe complicated measles"=false and "measles with eye or mouth complication"=false and "possible measles"=false and "mastoiditis"=false and "very severe febrile disease"=false
+
+/* severe complicated measles : nan*/
+define "severe complicated measles":
+    ("age >= 2 months to <60 months" and obs."fever" = Base."Yes")
+     and (    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" or  "pneumonia"=true  or obs."diarrhoea" = Base."Yes") and obs."measles rash" = Base."Yes"
+     or     obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" = true and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive"))
+
+/* dl-i-cl1-16 : nan*/
+define "dl-i-cl1-16":
+    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" or  "pneumonia"=true  or obs."diarrhoea" = Base."Yes") and obs."measles rash" = Base."Yes"
+
+/* dl-i-cl1-67.a : nan*/
+define "dl-i-cl1-67.a":
+    ((obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."danger signs" = true  or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" ) and obs."measles rash" = Base."Yes")
+     and (    "measles in last 3 months" =true and obs."generalised or localised skin problem" != val."generalised skin problem"
+     or     obs."measles rash" = Base."No" and "measles in last 3 months" = true and obs."generalised or localised skin problem" = val."generalised skin problem")
+
+/* dl-g-cl1-67a : nan*/
+define "dl-g-cl1-67a":
+    "measles in last 3 months" =true and obs."generalised or localised skin problem" != val."generalised skin problem"
+
+/* dl-g-cl1-67 : nan*/
+define "dl-g-cl1-67":
+    obs."measles rash" = Base."No" and "measles in last 3 months" = true and obs."generalised or localised skin problem" = val."generalised skin problem"
+
+/* dl-g-cl1-66 : nan*/
+define "dl-g-cl1-66":
+    obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" = true and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive")
+
+/* measles with eye or mouth complication : nan*/
+define "measles with eye or mouth complication":
+    ("age >= 2 months to <60 months" and obs."fever" = Base."Yes"   and "severe complicated measles"=false)
+     and (    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."pus draining from eye" = Base."Yes"  or  val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive"  ) and obs."measles rash" = Base."Yes"
+     or     obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" =true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+     or     (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."measles rash" = Base."No" and "measles in last 3 months" = true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+     or     (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and obs."generalised or localised skin problem" != val."generalised skin problem" and obs."measles rash" = Base."Yes")
+
+/* dl-g-cl1-68 : nan*/
+define "dl-g-cl1-68":
+    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."pus draining from eye" = Base."Yes"  or  val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive"  ) and obs."measles rash" = Base."Yes"
+
+/* dl-g-cl1-69 : nan*/
+define "dl-g-cl1-69":
+    obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" =true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+
+/* dl-g-cl1-70 : nan*/
+define "dl-g-cl1-70":
+    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."measles rash" = Base."No" and "measles in last 3 months" = true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+
+/* dl-i-cl1-17 : nan*/
+define "dl-i-cl1-17":
+    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and obs."generalised or localised skin problem" != val."generalised skin problem" and obs."measles rash" = Base."Yes"
+
+/* possible measles : nan*/
+define "possible measles":
+    "age >= 2 months to <60 months" and obs."fever" = Base."Yes"  and (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and "severe complicated measles"=false and "measles with eye or mouth complication"=false and obs."measles rash" = Base."Yes"  and obs."generalised or localised skin problem" = val."generalised skin problem"

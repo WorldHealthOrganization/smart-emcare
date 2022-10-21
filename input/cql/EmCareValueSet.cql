@@ -97,13 +97,13 @@ define "female":
  define "two or more convulsions":
   B.c('EmCare.B7.DE06')
 
- define "goes back very slowly (more than 2 seconds)":
+ define "skin pinch goes back very slowly (more than 2 seconds)":
   B.c('EmCare.B20S2.DE03')
 
- define "goes back slowly (2 seconds or fewer, but not immediately)":
+ define "skin pinch goes back slowly (2 seconds or fewer, but not immediately)":
   B.c('EmCare.B20S2.DE04')
 
- define "goes back normally (immediately)":
+ define "skin pinch goes back normally (immediately)":
   B.c('EmCare.B20S2.DE05')
 
  define "skin lesions ≥ 4 cm":

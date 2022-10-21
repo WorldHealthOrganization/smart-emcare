@@ -48,35 +48,35 @@ define "determine basic anthropometric and others measurement":
 
 /* emcaredt05 : Assess sick child for Symptoms 2 m*/
 define "emcaredt05":
-    clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
+    clas."age >=28 days to 2 months" or clas."age < 28 days to 2 months"
 
 /* assess sick child for symptoms 2 m : Assess sick child for Symptoms 2 m*/
 define "assess sick child for symptoms 2 m":
-    clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
+    clas."age >=28 days to 2 months" or clas."age < 28 days to 2 months"
 
 /* emcaredt06 : Assess sick child for Symptoms 2p*/
 define "emcaredt06":
-    clas."Age >= 2 months to <60 months"
+    clas."age >= 2 months to <60 months"
 
 /* assess sick child for symptoms 2p : Assess sick child for Symptoms 2p*/
 define "assess sick child for symptoms 2p":
-    clas."Age >= 2 months to <60 months"
+    clas."age >= 2 months to <60 months"
 
 /* emcaredt07 : Assess sick child for Signs 2 m*/
 define "emcaredt07":
-    clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
+    clas."age >=28 days to 2 months" or clas."age < 28 days to 2 months"
 
 /* assess sick child for signs 2 m : Assess sick child for Signs 2 m*/
 define "assess sick child for signs 2 m":
-    clas."Age >=28 days to 2 Months" or clas."Age < 28 days to 2 Months"
+    clas."age >=28 days to 2 months" or clas."age < 28 days to 2 months"
 
 /* emcaredt08 : Assess sick child for Signs 2p*/
 define "emcaredt08":
-    clas."Age >= 2 months to <60 months"
+    clas."age >= 2 months to <60 months"
 
 /* assess sick child for signs 2p : Assess sick child for Signs 2p*/
 define "assess sick child for signs 2p":
-    clas."Age >= 2 months to <60 months"
+    clas."age >= 2 months to <60 months"
 
 /* emcaredt09 : Propose classification*/
 define "emcaredt09":

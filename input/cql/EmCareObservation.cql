@@ -64,8 +64,8 @@ define "continue to assess sick child":
 define "emcare.b7-b8-b9.de01":
   B.HasObs(B.c('EmCare.B7-B8-B9.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"axaliary temperature"*/
-define "axaliary temperature":
+/*"axillary temperature"*/
+define "axillary temperature":
   B.HasObs(B.c('EmCare.B6.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b6.de01":
   B.HasObs(B.c('EmCare.B6.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -328,6 +328,18 @@ define "diarrhoea for how long?":
 define "emcare.b11s1.de02":
   B.HasObs(B.c('EmCare.B11S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
+/*"blood in the stool in this illness"*/
+define "blood in the stool in this illness":
+  B.HasObs(B.c('EmCare.B11S1.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b11s1.de05":
+  B.HasObs(B.c('EmCare.B11S1.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"measured fever"*/
+define "measured fever":
+  B.HasObs(B.c('EmCare.B12S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b12s1.de01":
+  B.HasObs(B.c('EmCare.B12S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
 /*"fever reported"*/
 define "fever reported":
   B.HasObs(B.c('EmCare.B12S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -340,6 +352,24 @@ define "fever for how long?":
 define "emcare.b12s1.de03":
   B.HasObs(B.c('EmCare.B12S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
+/*"has fever been present every day since the fever started?"*/
+define "has fever been present every day since the fever started?":
+  B.HasObs(B.c('EmCare.B12S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b12s1.de06":
+  B.HasObs(B.c('EmCare.B12S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"ear problem"*/
+define "ear problem":
+  B.HasObs(B.c('EmCare.B13S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b13s1.de01":
+  B.HasObs(B.c('EmCare.B13S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"ear pain"*/
+define "ear pain":
+  B.HasObs(B.c('EmCare.B13S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b13s1.de02":
+  B.HasObs(B.c('EmCare.B13S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
 /*"ear discharge"*/
 define "ear discharge":
   B.HasObs(B.c('EmCare.B13S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -351,6 +381,24 @@ define "ear discharge for how long?":
   B.HasObs(B.c('EmCare.B13S1.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b13s1.de04":
   B.HasObs(B.c('EmCare.B13S1.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"eye problem"*/
+define "eye problem":
+  B.HasObs(B.c('EmCare.B14S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b14s1.de03":
+  B.HasObs(B.c('EmCare.B14S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"skin problem"*/
+define "skin problem":
+  B.HasObs(B.c('EmCare.B14S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b14s1.de01":
+  B.HasObs(B.c('EmCare.B14S1.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"itchy skin"*/
+define "itchy skin":
+  B.HasObs(B.c('EmCare.B14S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b14s1.de02":
+  B.HasObs(B.c('EmCare.B14S1.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /*"respiratory rate"*/
 define "respiratory rate":
@@ -430,8 +478,8 @@ define "pus seen draining from the ear":
 define "emcare.b13s2.de02":
   B.HasObs(B.c('EmCare.B13S2.DE02'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"pus seen draining from the ear for how long"*/
-define "pus seen draining from the ear for how long":
+/*"pus seen draining from the ear for how long?"*/
+define "pus seen draining from the ear for how long?":
   B.HasObs(B.c('EmCare.B13S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b13s2.de03":
   B.HasObs(B.c('EmCare.B13S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

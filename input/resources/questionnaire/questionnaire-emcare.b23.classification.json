@@ -162,6 +162,26 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "measles in last 3 months"
+                    }
+                }
+            ],
+            "linkId": "measles in last 3 months",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
@@ -268,15 +288,46 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "('Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and ('Diarrhoea' = 'Yes' and 'Unconscious or Lethargic' = 'Yes' and 'Unconscious' = 'Yes' and 'Skin pinch of Abdomen' = 'goes back slowly (2 seconds or fewer, but not immediately)' ) or \n('Diarrhoea' = 'Yes' and ('Restless and Irritable' = 'Yes' or 'Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)')  and ('Oral Fluid Test Results' = 'Completely Unable to Drink' or 'Oral Fluid Test Results' = 'Vomits Immediately / Everything' or  'Completely Unable to Drink or Vomits Immediately / Everything' = 'Yes')))"
+                        "language": "text/cql-identifier",
+                        "expression": "some dehydration"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE13",
-            "text": "Severe Dehydration",
+            "linkId": "Some Dehydration",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "no dehydration"
+                    }
+                }
+            ],
+            "linkId": "No Dehydration",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "severe persistent diarrhoea"
+                    }
+                }
+            ],
+            "linkId": "Severe Persistent Diarrhoea",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -288,63 +339,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Cough' = 'Yes' or 'Difficulty Breathing' = 'Yes') and 'Classification' != 'Severe Pneumonia or Very Severe Disease' and 'Classification' != 'Pneumonia' and 'Wheezing' = 'Yes' and ('Chest Indrawing' = 'Yes' or 'Fast Breathing' = 'Yes') and 'Inhaled Bronchodilator Trial Results' =  'No Fast Breathing and No Chest Indrawing (post Inhaled Bronchodilator Trial)')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE12",
-            "text": "with cough for more than 14 days or difficulty breathing for more than 14 days or recurrent wheeze",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and 'Classification' != 'Severe Dehydration' or ('Restless and irritable' = 'Yes' and ('Oral Fluid Test Results' = 'Completely Unable to drink' or 'Oral Fluid Test Results' = 'Drinks Poorly') and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Restless and irritable' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin pinch goes back very slowly (More than 2 seconds)'  and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin pinch goes back very slowly (More than 2 seconds)' and 'Oral Fluid Test Results' = 'Drinks Eagerly / Thirstily' and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Lethargic or Unconscious' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' and 'Classification' != 'Severe Dehydration') or ('Diarrhoea' = 'Yes' and 'Skin pinch of Abdomen' = 'Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)' and ('Oral Fluid Test Results' = 'Completely Unable to drink' or 'Oral Fluid Test Results' = 'Drinks Poorly') and 'Classification' != 'Severe Dehydration')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE14",
-            "text": "Some Dehydration",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and 'Classification' != 'Severe Dehydration' and 'Classification' != 'Some Dehydration'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE15",
-            "text": "No Dehydration",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and ('Classification' = 'Severe Dehydration' or 'Classification' = 'Some Dehydration') and 'Diarrhoea for how long?' = '14 days or more'"
+                        "expression": "%resource.repeat(item).where(linkId='Severe Persistent Diarrhoea').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE16",
             "text": "Severe Persistent Diarrhoea",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "persistent diarrhoea"
+                    }
+                }
+            ],
+            "linkId": "Persistent Diarrhoea",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -356,12 +373,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and 'Classification' = 'No Dehydration' and 'Diarrhoea for how long?' = '14 days or more'"
+                        "expression": "%resource.repeat(item).where(linkId='Persistent Diarrhoea').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE17",
             "text": "Persistent Diarrhoea",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "dysentery"
+                    }
+                }
+            ],
+            "linkId": "Dysentery",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -373,29 +407,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Diarrhoea' = 'Yes' and 'Blood in the stool in this Illness' = 'Yes'"
+                        "expression": "%resource.repeat(item).where(linkId='Dysentery').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE18",
             "text": "Dysentery",
-            "type": "boolean",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Fever' = 'Yes' and ('Danger Signs' = 'Yes' or 'Stiff Neck' = 'Yes')"
+                        "language": "text/cql-identifier",
+                        "expression": "possible shigella"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE19",
-            "text": "Very Severe Febrile Disease",
+            "linkId": "Possible Shigella",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -407,29 +441,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Malaria Risk' = 'High Malaria Risk' and ('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Test Results' = 'Malaria Positive') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results'= 'Malaria Positive') or ((('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive' and 'High Parasite Density' = 'Yes') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and EmCare.B23.DE20 and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive' and 'High Parasite Density' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes')"
+                        "expression": "%resource.repeat(item).where(linkId='Possible Shigella').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE20",
-            "text": "Malaria",
-            "type": "boolean",
+            "linkId": "EmCare.B23.DE18.a",
+            "text": "Possible Shigella",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive' and 'High Parasite Density' = 'Yes') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive' and 'High Parasite Density' = 'Yes')"
+                        "language": "text/cql-identifier",
+                        "expression": "throat abscess or possible diptheria"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE21",
-            "text": "High Parasite Density",
+            "linkId": "Throat Abscess or Possible Diptheria",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -441,29 +475,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' ='No') and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk'  and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes')"
+                        "expression": "%resource.repeat(item).where(linkId='Throat Abscess or Possible Diptheria').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE22",
-            "text": "Malaria Unconfirmed (no test available or performed)",
-            "type": "boolean",
+            "linkId": "EmCare.B23.DE100",
+            "text": "Throat Abscess or Possible Diptheria",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Positive') or (('Fever' = 'Yes' or 'Palmar Pallor'= 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'No' and 'Malaria Test Results' = 'Malaria Positive' and 'High Parasite Density' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk'  and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Malaria Test Results' = 'Malaria Status Unknown / Unavailable / Invalid / Not Feasible') or (('Fever' = 'Yes' or 'Palmar Pallor' = 'Some Palmar Pallor') and 'Malaria Risk' = 'High Malaria Risk' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and ('Recent Travel to a High Malaria Risk area' = 'Yes' or 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No') and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Severe Classification up to assessments and tests excluding Severe Dehydration' = 'Yes')"
+                        "language": "text/cql-identifier",
+                        "expression": "streptococcal sore throat"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE22a",
-            "text": "Fever present every day for more than 7 days",
+            "linkId": "Streptococcal Sore Throat",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -475,29 +509,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Fever' = 'Yes' and ('Refusal to Use a Limb Reported' = 'Yes' or 'Pain' = 'Joint or Bone Pain') and ('Refusal to Use a Limb' = 'Yes' or 'Warm Tender or Swollen Joint or Bone' = 'Yes')"
+                        "expression": "%resource.repeat(item).where(linkId='Streptococcal Sore Throat').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE23",
-            "text": "Possible Bone/Joint Infection",
-            "type": "boolean",
+            "linkId": "EmCare.B23.DE6101",
+            "text": "Streptococcal Sore Throat",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Fever' = 'Yes' and 'Pain' = 'Pain or Difficulty Passing Urine or Crying when Passing Urine'"
+                        "language": "text/cql-identifier",
+                        "expression": "non-streptococcal sore throat"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE24",
-            "text": "Possible Urine Infection",
+            "linkId": "Non-Streptococcal Sore Throat",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -509,29 +543,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Result' = 'Malaria Negative' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and ('Malaria Risk' = 'Low Malaria Risk' or 'Malaria Risk' = 'No Malaria Risk') and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Malaria Test Result' = 'Malaria Negative' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No' and 'Malaria Test Result' = 'Malaria Negative' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'No' and 'Obvious Causes of Fever (to determine if Malaria test required)' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Result' = 'Malaria Negative' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and ('Malaria Risk' = 'Low Malaria Risk' or 'Malaria Risk' = 'No Malaria Risk') and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'No' and 'Obvious Causes of Fever (to determine if Malaria test required)' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria'))"
+                        "expression": "%resource.repeat(item).where(linkId='Non-Streptococcal Sore Throat').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE25",
-            "text": "Fever: No Malaria",
-            "type": "boolean",
+            "linkId": "EmCare.B23.DE6102",
+            "text": "Non-Streptococcal Sore Throat",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Fever' = 'Yes' and 'Malaria Risk' = 'High Malaria Risk' and 'Malaria Test Result' = 'Malaria Negative' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and ('Malaria Risk' = 'Low Malaria Risk' or 'Malaria Risk' = 'No Malaria Risk') and 'Recent Travel to a High Malaria Risk area' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and 'Obvious Causes of Fever (to determine if Malaria test required)' = 'No' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria') or ('Fever' = 'Yes' and 'Malaria Risk' = 'Low Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'No' and 'Obvious Causes of Fever (to determine if Malaria test required)' = 'Yes' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes' and 'Classification' != 'Malaria')"
+                        "language": "text/cql-identifier",
+                        "expression": "no throat problem"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE25a",
-            "text": "Fever present every day for more than 7 days",
+            "linkId": "No Throat Problem",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -543,29 +577,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'No') or ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk'  and 'Recent Travel to a High Malaria Risk area' = 'No' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes'))"
+                        "expression": "%resource.repeat(item).where(linkId='No Throat Problem').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE26",
-            "text": "Fever",
-            "type": "boolean",
+            "linkId": "EmCare.B23.DE6103",
+            "text": "No Throat Problem",
+            "type": "choice",
             "required": false,
             "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Fever' = 'Yes' and 'Malaria Risk' = 'No Malaria Risk' and 'Recent Travel to a High Malaria Risk area' = 'No' and 'Fever for how long?' = 'More than 7 days' and 'Has Fever been present every day for more than 7 days' = 'Yes')"
+                        "language": "text/cql-identifier",
+                        "expression": "mastoiditis"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE26a",
-            "text": "Fever present every day for more than 7 days",
+            "linkId": "Mastoiditis",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -577,63 +611,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' and ('Cough' = 'Yes' or 'Runny Nose' = 'Yes' or 'Red eyes' = 'Yes') and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Measles Rash' = 'Yes' and ('Danger Signs' ='Yes' or 'Clouding of the Cornea' = 'Yes' or 'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Deep and Extensive')) or ('Fever' = 'Yes' and 'Cough' = 'No' and 'Runny Nose' = 'No' and 'Red eyes' = 'No' and 'Measles in last 3 months' = 'Yes' and ('Danger Signs' = 'Yes' or 'Clouding of the Cornea' = 'Yes' or 'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Deep and Extensive') or ('Fever' = 'Yes' and ('Cough' = 'Yes' or 'Runny Nose' = 'Yes' or 'Red eyes' = 'Yes') and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Measles Rash' = 'Yes' and 'Measles in last 3 months' = 'Yes' and ('Danger Signs' = 'Yes' or 'Clouding of the Cornea' ='Yes' or 'Oral Sores or Mouth Ulcers' ='Mouth Sores or Mouth Ulcers - Deep and Extensive'))))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE27",
-            "text": "Severe Complicated Measles",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' and ('Cough' = 'Yes' or 'Runny Nose' = 'Yes' or 'Red eyes' = 'Yes') and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Measles Rash' = 'Yes' and ('Danger Signs' ='Yes' or 'Clouding of the Cornea' = 'Yes' or \n'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Deep and Extensive')) or ('Fever' = 'Yes' and 'Cough' = 'No' and 'Runny Nose' = 'No' and 'Red eyes' = 'No' and 'Measles in last 3 months' = 'Yes' and ('Danger Signs' = 'Yes' or 'Clouding of the Cornea' = 'Yes' or 'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Deep and Extensive')) or \n('Fever' = 'Yes' and ('Cough' = 'Yes' or 'Runny Nose' = 'Yes' or 'Red eyes' = 'Yes') and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Measles Rash' = 'Yes' and 'Measles in last 3 months' = 'Yes' and ('Danger Signs' = 'Yes' or 'Clouding of the Cornea' ='Yes' or 'Oral Sores or Mouth Ulcers' ='Mouth Sores or Mouth Ulcers - Deep and Extensive')))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE28",
-            "text": "Measles with Eye or Mouth Complication",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Fever' = 'Yes' and ('Cough' = 'Yes' or 'Runny Nose' = 'Yes' or 'Red eyes' = 'Yes') and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Measles Rash' = 'Yes'  and 'Classification' != 'Severe Complicated Measles' and 'Classification' != 'Measles with Eye or Mouth Complications') or ('Fever' = 'Yes' and 'Cough' = 'No' and 'Runny Nose' = 'No' and 'Red eyes'= 'No' and 'Measles in last 3 months' = 'Yes' and 'Classification' != 'Severe Complicated Measles' and 'Classification' != 'Measles with Eye or Mouth Complications')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE29",
-            "text": "Measles",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Ear Problem' = 'Yes' and 'Tender swelling behind the ear' = 'Yes'"
+                        "expression": "%resource.repeat(item).where(linkId='Mastoiditis').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE30",
             "text": "Mastoiditis",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "acute ear infection"
+                    }
+                }
+            ],
+            "linkId": "Acute Ear Infection",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -645,12 +645,45 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Ear Problem' = 'Yes' and 'Ear Pain' = 'Yes') or ('Ear Problem' = 'Yes' and 'Pus Seen Draining from the Ear' = 'Yes' and 'Ear Discharge' = 'Yes' and 'Ear Discharge for how long?' = 'Less than 14 days') or ('Ear Problem' = 'Yes' and 'Pus Seen Draining from the Ear' = 'Yes' and 'Ear Discharge' = 'No' and 'Pus Seen Draining from the Ear for how long?' = 'Less than 14 days')"
+                        "expression": "%resource.repeat(item).where(linkId='Acute Ear Infection').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE31",
             "text": "Acute Ear Infection",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "chronic ear infection"
+                    }
+                }
+            ],
+            "linkId": "Chronic Ear Infection",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "with ear pain or fever"
+                    }
+                }
+            ],
+            "linkId": "with ear pain or fever",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -662,12 +695,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Ear Problem' = 'Yes' and 'Ear Pain' = 'No' and 'Pus Seen Draining from the Ear' = 'Yes'  and 'Ear Discharge' = 'Yes' and 'Ear Discharge for how long?' = '14 days or more') or ('Ear Problem' = 'Yes' and 'Ear Pain' = 'No' and 'Pus Seen Draining from the Ear' = 'Yes' and 'Ear Discharge' = 'No' and 'Pus Seen Draining from the Ear for how long?' = '14 days or more')"
+                        "expression": "%resource.repeat(item).where(linkId='Chronic Ear Infection').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE32",
             "text": "Chronic Ear Infection",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "no ear infection"
+                    }
+                }
+            ],
+            "linkId": "No Ear Infection",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -679,12 +729,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Ear Problem' = 'Yes' and 'Classification' != 'Mastoiditis' and 'Classification' != 'Acute Ear Infection' and 'Classification' != 'Chronic Ear Infection'"
+                        "expression": "%resource.repeat(item).where(linkId='No Ear Infection').answer.first().value"
                     }
                 }
             ],
             "linkId": "EmCare.B23.DE33",
             "text": "No Ear Infection",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "very severe febrile disease"
+                    }
+                }
+            ],
+            "linkId": "Very Severe Febrile Disease",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -696,12 +763,45 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Eye Problem' = 'Yes' and 'Pus Draining from Eye' = 'Yes'"
+                        "expression": "%resource.repeat(item).where(linkId='Very Severe Febrile Disease').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE34",
-            "text": "Eye Infection",
+            "linkId": "EmCare.B23.DE19",
+            "text": "Very Severe Febrile Disease",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "fever: possible bacterial infection"
+                    }
+                }
+            ],
+            "linkId": "Fever: possible bacterial infection",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "fever present every day for 7 days or more"
+                    }
+                }
+            ],
+            "linkId": "Fever present every day for 7 Days or more",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -713,12 +813,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Eye Problem' = 'Yes' and 'Clouding of the Cornea' = 'Yes' and 'Is Clouding of the Cornea a new problem' = 'Yes') or ('Eye Problem' = 'Yes' and 'Clouding of the Cornea' = 'Yes' and 'Is Clouding of the Cornea a new problem' = 'No' and 'Has Clouding of the Cornea previously been treated' = 'No') or ('Eye Problem' = 'Yes' and 'Clouding of the Cornea = Yes' and 'Is Clouding of the Cornea a new problem' = 'No' and 'Has Clouding of the Cornea previously been treated' = 'Yes'))"
+                        "expression": "%resource.repeat(item).where(linkId='Fever: possible bacterial infection').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE35",
-            "text": "Clouding of the Cornea",
+            "linkId": "EmCare.B23.DE104",
+            "text": "Fever: possible bacterial infection",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "fever: bacterial infection unlikely"
+                    }
+                }
+            ],
+            "linkId": "Fever: bacterial infection unlikely",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -730,12 +847,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Eye Problem' = 'Yes' and 'Clouding of the Cornea' = 'Yes' and 'Is Clouding of the Cornea a new problem' = 'Yes') or ('Eye Problem' = 'Yes' and 'Clouding of the Cornea' = 'Yes' and 'Is Clouding of the Cornea a new problem' = 'No' and 'Has Clouding of the Cornea previously been treated' = 'No')"
+                        "expression": "%resource.repeat(item).where(linkId='Fever: bacterial infection unlikely').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE36",
-            "text": "New and not previously treated",
+            "linkId": "EmCare.B23.DE105",
+            "text": "Fever: bacterial infection unlikely",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "severe complicated measles"
+                    }
+                }
+            ],
+            "linkId": "Severe Complicated Measles",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -747,12 +881,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem' ) and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Type of Skin Problem' =  'Abscess - Hot Tender Swelling' and ('Deep or extends to muscle' = 'Yes' or 'Measured Fever' = 'Yes')) or (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Measured Fever' = 'No' and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Type of Skin Problem' =  'Abscess - Hot Tender Swelling' and 'Deep or extends to muscle' = 'No')"
+                        "expression": "%resource.repeat(item).where(linkId='Severe Complicated Measles').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE37",
-            "text": "Abscess",
+            "linkId": "EmCare.B23.DE27",
+            "text": "Severe Complicated Measles",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "measles with eye or mouth complication"
+                    }
+                }
+            ],
+            "linkId": "Measles with Eye or Mouth Complication",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -764,12 +915,29 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Type of Skin Problem' =  'Abscess - Hot Tender Swelling' and 'Deep or extends to muscle' = 'Yes' or 'Measured Fever' = 'Yes')"
+                        "expression": "%resource.repeat(item).where(linkId='Measles with Eye or Mouth Complication').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE38",
-            "text": "Deep or extends to muscle, or with measured fever",
+            "linkId": "EmCare.B23.DE28",
+            "text": "Measles with Eye or Mouth Complication",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "possible measles"
+                    }
+                }
+            ],
+            "linkId": "Possible Measles",
             "type": "boolean",
             "required": false,
             "repeats": false,
@@ -781,652 +949,16 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Cellulitis \u2013 Red Tender Skin' and 'Rapidly spreading, extensive, or not responding to oral antibiotics' = 'Yes') or (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Cellulitis \u2013 Red Tender Skin' and 'Rapidly spreading, extensive, or not responding to oral antibiotics' = 'No')"
+                        "expression": "%resource.repeat(item).where(linkId='Possible Measles').answer.first().value"
                     }
                 }
             ],
-            "linkId": "EmCare.B23.DE39",
-            "text": "Cellulitis",
-            "type": "boolean",
+            "linkId": "EmCare.B23.DE29",
+            "text": "Possible Measles",
+            "type": "choice",
             "required": false,
             "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Cellulitis \u2013 Red Tender Skin' and 'Rapidly spreading, extensive, or not responding to oral antibiotics' = 'Yes')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE40",
-            "text": "Rapidly spreading, extensive, or not responding to oral antibiotics",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'Yes' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Papular Itching Rash (Prurigo) - Itching rash with small papules and scratch marks. Dark spots with pale centre')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE41",
-            "text": "Papular Itching Rash (Prurigo)",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ((('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Ringworm (Tinea) - An itchy circular lesion with a raised edge and fine scaly area in the centre with loss of hair.  May also be found on body or web on feet' and 'Extensive Ringworm' = 'Yes') or (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Ringworm (Tinea) - An itchy circular lesion with a raised edge and fine scaly area in the centre with loss of hair.  May also be found on body or web on feet' and 'Extensive Ringworm' = 'No'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE42",
-            "text": "Ringworm (Tinea)",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ((('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Ringworm (Tinea) - An itchy circular lesion with a raised edge and fine scaly area in the centre with loss of hair.  May also be found on body or web on feet' and 'Extensive Ringworm' = 'Yes'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE43",
-            "text": "Extensive Ringworm (Tinea)",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ((('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'Yes' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Scabies - Rash and excoriations on torso; burrows in web space and wrists, face spared'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE44",
-            "text": "Scabies",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ((('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'Yes' and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Chickenpox - Vesicles over body.  Vesicles appear progressively over days and form scabs after they ruptured' and 'Classification' = 'Pneumonia') or \n(('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'Yes' and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Chickenpox - Vesicles over body.  Vesicles appear progressively over days and form scabs after they ruptured'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE45",
-            "text": "Chickenpox",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'Yes' and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Chickenpox - Vesicles over body.  Vesicles appear progressively over days and form scabs after they ruptured' and 'Classification' = 'Pneumonia')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE46",
-            "text": "with Pneumonia",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ((('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Herpes Zoster -  Vesicles in one area on one side of body with intense pain or scars plus shooting pain. Uncommon in children except where they are immuno-compromised (e.g. if infected with HIV)' and 'Eye Involvement' = 'Yes') or (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Herpes Zoster -  Vesicles in one area on one side of body with intense pain or scars plus shooting pain. Uncommon in children except where they are immuno-compromised (e.g. if infected with HIV)' and 'Eye Involvement' = 'No'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE47",
-            "text": "Herpes Zoster",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' ='Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Herpes Zoster -  Vesicles in one area on one side of body with intense pain or scars plus shooting pain. Uncommon in children except where they are immuno-compromised (e.g. if infected with HIV)' and 'Eye Involvement' = 'Yes')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE48",
-            "text": "with eye involvement",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and \n(('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Impetigo / Folliculitis - Red, Tender, Warm Crusts or Small lesions' and 'Signs of Severe Impetigo / Folliculitis' = 'Skin infection extends to muscle' or 'Measured Fever' = 'Yes') or \n(('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Impetigo / Folliculitis - Red, Tender, Warm Crusts or Small lesions' and ('Signs of Severe Impetigo / Folliculitis' = 'Skin Lesions \u2265 4 cm' or 'Signs of Severe Impetigo / Folliculitis' = 'Red Skin Streaks' or 'Signs of Severe Impetigo / Folliculitis' = 'Tender Nodes (Nodules) under the skin')) or \n(('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Impetigo / Folliculitis - Red, Tender, Warm Crusts or Small lesions' and 'Signs of Severe Impetigo / Folliculitis' = 'No signs of severe Impetigo / Folliculitis')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE49",
-            "text": "Impetigo or Folliculitis",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Impetigo / Folliculitis - Red, Tender, Warm Crusts or Small lesions' and ('Signs of Severe Impetigo / Folliculitis' = 'Skin infection extends to muscle' or 'Measured Fever' = 'Yes'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE50",
-            "text": "Extends to muscle or with measured fever",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Impetigo / Folliculitis - Red, Tender, Warm Crusts or Small lesions' and ('Signs of Severe Impetigo / Folliculitis' = 'Skin Lesions \u2265 4 cm' or 'Signs of Severe Impetigo / Folliculitis' = 'Red Skin Streaks' or 'Signs of Severe Impetigo / Folliculitis' = 'Tender Nodes (Nodules) under the skin'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE51",
-            "text": "Size larger than 4cm, red streaks, tender nodes or multiple abscesses",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Molluscum Contagiosum - Skin coloured pearly white papules with central umbilication. Most commonly seen on face and trunk in children')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE52",
-            "text": "Molluscum Contagiosum",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Warts - Papules or nodules with a rough (Verrucous) surface')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE53",
-            "text": "Warts",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ((('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Type of Skin Problem \u2013 Seborrhoea - Greasy scales and redness on central face and body folds' and 'Severe Seborrhoea' = 'Yes') or (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Type of Skin Problem \u2013 Seborrhoea - Greasy scales and redness on central face and body folds' and 'Severe Seborrhoea' = 'No'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE54",
-            "text": "Seborrhoea",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Generalised or Localised Skin Problem' = 'Localised Skin Problem' and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Type of Skin Problem \u2013 Seborrhoea - Greasy scales and redness on central face and body folds' and 'Severe Seborrhoea' = 'Yes')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE55",
-            "text": "Severe Seborrhoea",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Fixed Drug Reactions - Generalised red, wide spread with small bumps or blisters; or one or more dark skin areas')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE56",
-            "text": "Fixed Drug Reactions",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' ='Yes' or 'Pain' = 'Skin Problem') and 'Blisters, Sores or Pustules' = 'No' and 'Type of Skin Problem' =  'Eczema - Wet oozing sores or excoriated, thick patches')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE57",
-            "text": "Eczema",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Skin Problem' = 'Yes' or 'Pain' = 'Skin Problem') and 'Itchy Skin' = 'No' and 'Generalised or Localised Skin Problem' = 'Generalised Skin Problem' and 'Blisters, Sores or Pustules' = 'Yes' and 'Type of Skin Problem' =  'Steven Johnson Syndrome - Severe reaction due to cotrimoxazole or NVP involving the skin as well as the eyes and the mouth.  Might cause difficulty in breathing')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE58",
-            "text": "Steven Johnson Syndrome",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and (('Fever' = 'Yes' and 'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Deep and Extensive' ) or ('Fever' = 'Yes' and 'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Not Deep and Extensive' ))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE59",
-            "text": "Mouth Sores or Ulcer",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Fever' = 'Yes' and 'Oral Sores or Mouth Ulcers' = 'Mouth Sores or Mouth Ulcers - Deep and Extensive' )"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE60",
-            "text": "Deep or Extensive",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and ('Fever' = 'Yes' and 'Oral Sores or Mouth Ulcers' = 'Oral Thrush')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE61",
-            "text": "Oral Thrush",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Palmar Pallor' = 'Severe Palmar Pallor'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE62",
-            "text": "Severe Anaemia",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Palmar Pallor' = 'Some Palmar Pallor'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE63",
-            "text": "Anaemia",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age >= 2 months to <60 months' and 'Palmar Pallor' = 'No Palmar Pallor'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE64",
-            "text": "No Anaemia",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Obstructed or Absent Breathing' = 'Yes' and 'Continue to Assess Sick Child' = 'Stabilised, continue consultation'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE82",
-            "text": "History of Obstructed or Absent Breathing",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "('Convulsing Now' = 'Yes') or  \n('Difficulty with Feeding' = 'Not Able to Feed at all' or 'Difficulty with Feeding' = 'Not Feeding Well') or \n('Convulsions in this illness' = 'Yes' or 'Severe Chest Indrawing' = 'Yes' or 'Movements' = 'Movement only when stimulated but then stops' or 'Movements' = 'No movement at all') or ('Age' = '< 7 days' and 'Fast Breathing' = 'Yes') or \n('Measured Temperature' = 'Measured Fever'  and ('Axaliary Temperature (second measurement)'= 'Measured Fever (second measurement)' or 'Rectal Temperature (second measurement)' = 'Measured Fever (second measurement)')) or ('Measured Temperature' = 'Measured Low Body Temperature' and ('Axillary Temperature (second measurement)' = 'Measured Low Body Temperature (second measurement)' or 'Rectal Temperature (second measurement)' = 'Measured Low Body Temperature (second measurement)')) or ('Measured Temperature' = 'Measured Fever' and 'Second Temperature Measurement Feasible' = 'No') or ('Measured Temperature' = 'Measured Low Body Temperature' and 'Second Temperature Measurement Feasible' = 'No')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE83",
-            "text": "Possible Serious Bacterial Infection or Very Severe Disease",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age' = '\u2265 7 days to < 2 months' and 'Fast Breathing' = 'Yes'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE84",
-            "text": "Pneumonia",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Umbilicus Red or Pus Draining' = Yes or 'Skin Pustules' = 'Yes'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE85",
-            "text": "Local Infection",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Classification' != 'Possible Serious Bacterial Infection or Very Severe Disease' and 'Classification' != 'Pneumonia' and 'Classification' != 'Local Infection'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE86",
-            "text": "Infection Unlikely",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "('Yellow Skin' ='Yes' and 'When did the Jaundice first appear?' = 'Within less than 24 hours of birth' ) or 'Yellow Palms or Yellow Soles' = 'Yes'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE87",
-            "text": "Severe Jaundice",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "('Yellow Skin' = 'Yes' and ('When did the Jaundice first appear?' = '24 hours or more after birth' or 'When did the Jaundice first appear?' = 'Unknown when Jaundice first appeared') and 'Yellow Palms or Yellow Soles' = 'No') or ('Yellow Skin' = 'Yes' and 'Age' = '\u2265 21 days' and 'Classification' != 'Severe Jaundice')"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE88",
-            "text": "Jaundice",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Yellow Skin' = 'Yes' and 'Age' = '\u2265 21 days' and 'Classification' != 'Severe Jaundice'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE88A",
-            "text": "Prolonged Jaundice",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Yellow Skin' = 'No' and 'Yellow Palms or Yellow Soles' = 'No'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE89",
-            "text": "No Jaundice",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Diarrhoea' = 'Yes'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE90",
-            "text": "Severe Dehydration",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Diarrhoea' = 'Yes' and (('Sunken Eyes' = 'Yes' and 'Restless and Irritable' = 'Yes') or\n('Sunken Eyes' = 'Yes' and 'Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)') or \n('Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Restless and Irritable' = 'Yes') or\n('Skin pinch of Abdomen' = 'Goes back very slowly (More than 2 seconds)' and 'Restless and Irritable' = 'Yes') or\n('Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Movements' = 'Movement only when Stimulated but then stops' ) or \n('Skin pinch of Abdomen' = 'Goes back slowly (2 seconds or fewer, but not immediately)' and 'Movements' = 'No Movement at all') or\n('Classification' != 'Severe Dehydration' and 'Classification' != 'Some Dehydration'))"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE91",
-            "text": "Some Dehydration",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "linkId": "EmCare.B23.DE92",
-            "text": "No Dehydration",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "'Age' = ' < 7 days' and 'Weight Status' = 'Very Low Weight for Age'"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B23.DE93",
-            "text": "Very Low Weight for Age",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
             "designNote": "status::draft"
         },
         {

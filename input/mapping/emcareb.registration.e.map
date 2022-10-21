@@ -141,7 +141,7 @@ group emcareobservationemcareb3de05(source src,target tgt){
             CodeID.value = 'uuid',
             CodeID.id = uuid()
          'id-emcareb3de05';
-        src.encounter as encounter -> tgt.encounter = encounter,
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
         src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
@@ -153,7 +153,7 @@ group emcareobservationemcareb3de05(source src,target tgt){
             a.value as val -> tgt.issued = val  '8945c96b';
         } '4272fc8b';
     } 'f4472f32';
-    src ->   tgt.subject = src.subject  'patient';
+    src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B3.DE05' then {
         item.answer first as a then {
             a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb3de05';

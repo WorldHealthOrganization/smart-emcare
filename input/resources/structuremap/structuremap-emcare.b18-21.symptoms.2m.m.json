@@ -3,7 +3,7 @@
     "id": "emcare.b18-21.symptoms.2m.m",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m&quot; = &quot;emcare.b18-21.symptoms.2m.m&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B18S1.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb18s1de01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B18S1.DE02').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb18s1de02(src, tgt) &quot;DE02&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B20S1.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb20s1de01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B21S1.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb21s1de01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B21S1.DE06').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb21s1de06(src, tgt) &quot;DE06&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n}\r\n\r\ngroup emcareobservationselectoneyesno(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb18s1de01&quot;;\r\n  src -&gt;  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'select_one yesno' &quot;code-emcareb18s1de01&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb18s1de01&quot;;\r\n  src -&gt; tgt.subject = src.subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one yesno' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-selectoneyesno&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-selectoneyesno&quot;;\r\n    } &quot;an-selectoneyesno&quot;;\r\n  } &quot;it-selectoneyesno&quot;;\r\n}\r\n\r\ngroup emcareobservationselectonedifficultyfeeding(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb18s1de02&quot;;\r\n  src -&gt;  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'select_one difficulty_feeding' &quot;code-emcareb18s1de02&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb18s1de02&quot;;\r\n  src -&gt; tgt.subject = src.subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one difficulty_feeding' then {\r\n    item.answer first as a then {\r\n      a -&gt;  tgt.value = a,  tgt.status = 'final' &quot;val-selectonedifficultyfeeding&quot;;\r\n    } &quot;an-selectonedifficultyfeeding&quot;;\r\n  } &quot;it-selectonedifficultyfeeding&quot;;\r\n}\r\n\r\ngroup emcareobservationselectoneyesno(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb20s1de01&quot;;\r\n  src -&gt;  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'select_one yesno' &quot;code-emcareb20s1de01&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb20s1de01&quot;;\r\n  src -&gt; tgt.subject = src.subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one yesno' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-selectoneyesno&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-selectoneyesno&quot;;\r\n    } &quot;an-selectoneyesno&quot;;\r\n  } &quot;it-selectoneyesno&quot;;\r\n}\r\n\r\ngroup emcareobservationselectonehivstatus(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb21s1de01&quot;;\r\n  src -&gt;  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'select_one hiv_status' &quot;code-emcareb21s1de01&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb21s1de01&quot;;\r\n  src -&gt; tgt.subject = src.subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one hiv_status' then {\r\n    item.answer first as a then {\r\n      a -&gt;  tgt.value = a,  tgt.status = 'final' &quot;val-selectonehivstatus&quot;;\r\n    } &quot;an-selectonehivstatus&quot;;\r\n  } &quot;it-selectonehivstatus&quot;;\r\n}\r\n\r\ngroup emcareobservationselectoneyesno(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb21s1de06&quot;;\r\n  src -&gt;  tgt.encounter = src.encounter,  tgt.subject = src.subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  concept.code = 'select_one yesno' &quot;code-emcareb21s1de06&quot;;\r\n  src.item as item where linkId = 'timestamp', item.answer as a -&gt; tgt.issued = a &quot;timestamp-emcareb21s1de06&quot;;\r\n  src -&gt; tgt.subject = src.subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one yesno' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-selectoneyesno&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-selectoneyesno&quot;;\r\n    } &quot;an-selectoneyesno&quot;;\r\n  } &quot;it-selectoneyesno&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m&quot; = &quot;emcare.b18-21.symptoms.2m.m&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B18S1.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb18s1de01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B18S1.DE02').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb18s1de02(src, tgt) &quot;DE02&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B20S1.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb20s1de01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B21S1.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb21s1de01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B21S1.DE06').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcareb21s1de06(src, tgt) &quot;DE06&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n}\r\n\r\ngroup emcareobservationselectoneyesno(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb18s1de01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'select_one yesno' &quot;code-emcareb18s1de01&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one yesno' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-selectoneyesno&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-selectoneyesno&quot;;\r\n    } &quot;an-selectoneyesno&quot;;\r\n  } &quot;it-selectoneyesno&quot;;\r\n}\r\n\r\ngroup emcareobservationselectonedifficultyfeeding(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb18s1de02&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'select_one difficulty_feeding' &quot;code-emcareb18s1de02&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one difficulty_feeding' then {\r\n    item.answer first as a then {\r\n      a -&gt;  tgt.value = a,  tgt.status = 'final' &quot;val-selectonedifficultyfeeding&quot;;\r\n    } &quot;an-selectonedifficultyfeeding&quot;;\r\n  } &quot;it-selectonedifficultyfeeding&quot;;\r\n}\r\n\r\ngroup emcareobservationselectoneyesno(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb20s1de01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'select_one yesno' &quot;code-emcareb20s1de01&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one yesno' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-selectoneyesno&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-selectoneyesno&quot;;\r\n    } &quot;an-selectoneyesno&quot;;\r\n  } &quot;it-selectoneyesno&quot;;\r\n}\r\n\r\ngroup emcareobservationselectonehivstatus(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb21s1de01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'select_one hiv_status' &quot;code-emcareb21s1de01&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one hiv_status' then {\r\n    item.answer first as a then {\r\n      a -&gt;  tgt.value = a,  tgt.status = 'final' &quot;val-selectonehivstatus&quot;;\r\n    } &quot;an-selectonehivstatus&quot;;\r\n  } &quot;it-selectonehivstatus&quot;;\r\n}\r\n\r\ngroup emcareobservationselectoneyesno(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb21s1de06&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'select_one yesno' &quot;code-emcareb21s1de06&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'select_one yesno' then {\r\n    item.answer first as a then {\r\n      a where a.value = 'yes' -&gt; tgt.status = 'final' &quot;final-selectoneyesno&quot;;\r\n      a where a.value = 'no' -&gt; tgt.status = 'cancelled' &quot;notfound-selectoneyesno&quot;;\r\n    } &quot;an-selectoneyesno&quot;;\r\n  } &quot;it-selectoneyesno&quot;;\r\n}\r\n\r\n</pre></div>"
     },
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m",
     "name": "emcare.b18-21.symptoms.2m.m",
@@ -487,10 +487,12 @@
                     ]
                 },
                 {
-                    "name": "code-emcareb18s1de01",
+                    "name": "35bc6b82",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "encounter",
+                            "variable": "encounter"
                         }
                     ],
                     "target": [
@@ -501,10 +503,22 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.encounter"
+                                    "valueId": "encounter"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "code-emcareb18s1de01",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
+                        }
+                    ],
+                    "target": [
                         {
                             "context": "tgt",
                             "contextType": "variable",
@@ -512,7 +526,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         },
@@ -554,6 +568,18 @@
                         {
                             "context": "concept",
                             "contextType": "variable",
+                            "element": "coding",
+                            "variable": "coding",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Coding"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "coding",
+                            "contextType": "variable",
                             "element": "system",
                             "transform": "copy",
                             "parameter": [
@@ -563,7 +589,7 @@
                             ]
                         },
                         {
-                            "context": "concept",
+                            "context": "coding",
                             "contextType": "variable",
                             "element": "code",
                             "transform": "copy",
@@ -576,29 +602,49 @@
                     ]
                 },
                 {
-                    "name": "timestamp-emcareb18s1de01",
+                    "name": "f4472f32",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "variable": "item",
                             "condition": "linkId = 'timestamp'"
-                        },
-                        {
-                            "context": "item",
-                            "element": "answer",
-                            "variable": "a"
                         }
                     ],
-                    "target": [
+                    "rule": [
                         {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "issued",
-                            "transform": "copy",
-                            "parameter": [
+                            "name": "4272fc8b",
+                            "source": [
                                 {
-                                    "valueId": "a"
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "8945c96b",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "issued",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -608,7 +654,9 @@
                     "name": "patient",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
                         }
                     ],
                     "target": [
@@ -619,7 +667,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         }
@@ -774,10 +822,12 @@
                     ]
                 },
                 {
-                    "name": "code-emcareb18s1de02",
+                    "name": "35bc6b82",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "encounter",
+                            "variable": "encounter"
                         }
                     ],
                     "target": [
@@ -788,10 +838,22 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.encounter"
+                                    "valueId": "encounter"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "code-emcareb18s1de02",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
+                        }
+                    ],
+                    "target": [
                         {
                             "context": "tgt",
                             "contextType": "variable",
@@ -799,7 +861,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         },
@@ -841,6 +903,18 @@
                         {
                             "context": "concept",
                             "contextType": "variable",
+                            "element": "coding",
+                            "variable": "coding",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Coding"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "coding",
+                            "contextType": "variable",
                             "element": "system",
                             "transform": "copy",
                             "parameter": [
@@ -850,7 +924,7 @@
                             ]
                         },
                         {
-                            "context": "concept",
+                            "context": "coding",
                             "contextType": "variable",
                             "element": "code",
                             "transform": "copy",
@@ -863,29 +937,49 @@
                     ]
                 },
                 {
-                    "name": "timestamp-emcareb18s1de02",
+                    "name": "f4472f32",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "variable": "item",
                             "condition": "linkId = 'timestamp'"
-                        },
-                        {
-                            "context": "item",
-                            "element": "answer",
-                            "variable": "a"
                         }
                     ],
-                    "target": [
+                    "rule": [
                         {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "issued",
-                            "transform": "copy",
-                            "parameter": [
+                            "name": "4272fc8b",
+                            "source": [
                                 {
-                                    "valueId": "a"
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "8945c96b",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "issued",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -895,7 +989,9 @@
                     "name": "patient",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
                         }
                     ],
                     "target": [
@@ -906,7 +1002,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         }
@@ -1049,10 +1145,12 @@
                     ]
                 },
                 {
-                    "name": "code-emcareb20s1de01",
+                    "name": "35bc6b82",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "encounter",
+                            "variable": "encounter"
                         }
                     ],
                     "target": [
@@ -1063,10 +1161,22 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.encounter"
+                                    "valueId": "encounter"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "code-emcareb20s1de01",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
+                        }
+                    ],
+                    "target": [
                         {
                             "context": "tgt",
                             "contextType": "variable",
@@ -1074,7 +1184,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         },
@@ -1116,6 +1226,18 @@
                         {
                             "context": "concept",
                             "contextType": "variable",
+                            "element": "coding",
+                            "variable": "coding",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Coding"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "coding",
+                            "contextType": "variable",
                             "element": "system",
                             "transform": "copy",
                             "parameter": [
@@ -1125,7 +1247,7 @@
                             ]
                         },
                         {
-                            "context": "concept",
+                            "context": "coding",
                             "contextType": "variable",
                             "element": "code",
                             "transform": "copy",
@@ -1138,29 +1260,49 @@
                     ]
                 },
                 {
-                    "name": "timestamp-emcareb20s1de01",
+                    "name": "f4472f32",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "variable": "item",
                             "condition": "linkId = 'timestamp'"
-                        },
-                        {
-                            "context": "item",
-                            "element": "answer",
-                            "variable": "a"
                         }
                     ],
-                    "target": [
+                    "rule": [
                         {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "issued",
-                            "transform": "copy",
-                            "parameter": [
+                            "name": "4272fc8b",
+                            "source": [
                                 {
-                                    "valueId": "a"
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "8945c96b",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "issued",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -1170,7 +1312,9 @@
                     "name": "patient",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
                         }
                     ],
                     "target": [
@@ -1181,7 +1325,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         }
@@ -1336,10 +1480,12 @@
                     ]
                 },
                 {
-                    "name": "code-emcareb21s1de01",
+                    "name": "35bc6b82",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "encounter",
+                            "variable": "encounter"
                         }
                     ],
                     "target": [
@@ -1350,10 +1496,22 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.encounter"
+                                    "valueId": "encounter"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "code-emcareb21s1de01",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
+                        }
+                    ],
+                    "target": [
                         {
                             "context": "tgt",
                             "contextType": "variable",
@@ -1361,7 +1519,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         },
@@ -1403,6 +1561,18 @@
                         {
                             "context": "concept",
                             "contextType": "variable",
+                            "element": "coding",
+                            "variable": "coding",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Coding"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "coding",
+                            "contextType": "variable",
                             "element": "system",
                             "transform": "copy",
                             "parameter": [
@@ -1412,7 +1582,7 @@
                             ]
                         },
                         {
-                            "context": "concept",
+                            "context": "coding",
                             "contextType": "variable",
                             "element": "code",
                             "transform": "copy",
@@ -1425,29 +1595,49 @@
                     ]
                 },
                 {
-                    "name": "timestamp-emcareb21s1de01",
+                    "name": "f4472f32",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "variable": "item",
                             "condition": "linkId = 'timestamp'"
-                        },
-                        {
-                            "context": "item",
-                            "element": "answer",
-                            "variable": "a"
                         }
                     ],
-                    "target": [
+                    "rule": [
                         {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "issued",
-                            "transform": "copy",
-                            "parameter": [
+                            "name": "4272fc8b",
+                            "source": [
                                 {
-                                    "valueId": "a"
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "8945c96b",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "issued",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -1457,7 +1647,9 @@
                     "name": "patient",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
                         }
                     ],
                     "target": [
@@ -1468,7 +1660,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         }
@@ -1611,10 +1803,12 @@
                     ]
                 },
                 {
-                    "name": "code-emcareb21s1de06",
+                    "name": "35bc6b82",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "encounter",
+                            "variable": "encounter"
                         }
                     ],
                     "target": [
@@ -1625,10 +1819,22 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.encounter"
+                                    "valueId": "encounter"
                                 }
                             ]
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "code-emcareb21s1de06",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
+                        }
+                    ],
+                    "target": [
                         {
                             "context": "tgt",
                             "contextType": "variable",
@@ -1636,7 +1842,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         },
@@ -1678,6 +1884,18 @@
                         {
                             "context": "concept",
                             "contextType": "variable",
+                            "element": "coding",
+                            "variable": "coding",
+                            "transform": "create",
+                            "parameter": [
+                                {
+                                    "valueString": "Coding"
+                                }
+                            ]
+                        },
+                        {
+                            "context": "coding",
+                            "contextType": "variable",
                             "element": "system",
                             "transform": "copy",
                             "parameter": [
@@ -1687,7 +1905,7 @@
                             ]
                         },
                         {
-                            "context": "concept",
+                            "context": "coding",
                             "contextType": "variable",
                             "element": "code",
                             "transform": "copy",
@@ -1700,29 +1918,49 @@
                     ]
                 },
                 {
-                    "name": "timestamp-emcareb21s1de06",
+                    "name": "f4472f32",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "variable": "item",
                             "condition": "linkId = 'timestamp'"
-                        },
-                        {
-                            "context": "item",
-                            "element": "answer",
-                            "variable": "a"
                         }
                     ],
-                    "target": [
+                    "rule": [
                         {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "issued",
-                            "transform": "copy",
-                            "parameter": [
+                            "name": "4272fc8b",
+                            "source": [
                                 {
-                                    "valueId": "a"
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "8945c96b",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "issued",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -1732,7 +1970,9 @@
                     "name": "patient",
                     "source": [
                         {
-                            "context": "src"
+                            "context": "src",
+                            "element": "subject",
+                            "variable": "subject"
                         }
                     ],
                     "target": [
@@ -1743,7 +1983,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueId": "src.subject"
+                                    "valueId": "subject"
                                 }
                             ]
                         }

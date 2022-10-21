@@ -127,7 +127,37 @@ define function coding(s System.String, url System.String):
 
 define function ToUrl(s System.String):
   url {value:s}
+// ************************   PatientHasHistoryOfCondition ************************/
 
+define function GetHistoricCondition(idlist List<code>, codesystem FHIR.url, nbdays Integer):
+      Last([Condition] O
+        where  difference in days between O.recordedDate and Today() < nbdays
+        and exists(O.code.coding C where C.code in idlist 
+        and C.system = codesystem)
+        and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
+        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
+
+
+define function assesCondition(O Condition):
+  if O is null then 
+    "No"
+  else
+    "Yes"
+
+
+define function HasCondHistory(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
+  assesCondition(GetHistoricCondition(idlist, ToUrl(codesystem), nbdays))
+
+
+define function HasCondHistory(id FHIR.code, codesystem System.String, nbdays Integer):
+  assesCondition(GetHistoricCondition({id}, ToUrl(codesystem), nbdays))
+
+define function HasCondHistory(id System.String, codesystem System.String, nbdays Integer):
+  assesCondition(GetHistoricCondition({c(id)}, ToUrl(codesystem), nbdays))
+
+
+define function HasCondHistory(id System.String, nbdays Integer):
+  assesCondition(GetHistoricCondition({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/'), nbdays))
 //define function PatientHasConditionDuringEncounter(id String, codesystem url, duration Integer)):
 
 //define function PatientHasConditionFromValueSetDuringEncounter(id String, codesystem url, duration Integer)):

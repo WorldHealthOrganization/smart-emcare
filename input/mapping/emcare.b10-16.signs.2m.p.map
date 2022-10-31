@@ -171,7 +171,7 @@ group emcareobservationemcareb22de01(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE01' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de01';
+            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb22de01';
         } 'an-emcareb22de01';
     } 'it-emcareb22de01';
 }
@@ -338,7 +338,7 @@ group emcareobservationemcareb10s2de07(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B10S2.DE07' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb10s2de07';
+            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb10s2de07';
         } 'an-emcareb10s2de07';
     } 'it-emcareb10s2de07';
 }
@@ -365,7 +365,8 @@ group emcareobservationemcareb10s2de08(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B10S2.DE08' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb10s2de08';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb10s2de08';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de08';
         } 'an-emcareb10s2de08';
     } 'it-emcareb10s2de08';
 }
@@ -420,7 +421,8 @@ group emcareobservationemcareb11s2de02(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B11S2.DE02' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb11s2de02';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb11s2de02';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb11s2de02';
         } 'an-emcareb11s2de02';
     } 'it-emcareb11s2de02';
 }
@@ -503,7 +505,8 @@ group emcareobservationemcareb17s1de02(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B17S1.DE02' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb17s1de02';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb17s1de02';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb17s1de02';
         } 'an-emcareb17s1de02';
     } 'it-emcareb17s1de02';
 }
@@ -558,7 +561,8 @@ group emcareobservationemcareb17s1de07(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B17S1.DE07' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb17s1de07';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb17s1de07';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb17s1de07';
         } 'an-emcareb17s1de07';
     } 'it-emcareb17s1de07';
 }
@@ -641,7 +645,8 @@ group emcareobservationemcareb13s2de03(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B13S2.DE03' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb13s2de03';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb13s2de03';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb13s2de03';
         } 'an-emcareb13s2de03';
     } 'it-emcareb13s2de03';
 }
@@ -2058,8 +2063,8 @@ group emcareobservationemcareb14s2de36c(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B14S2.DE36c' then {
         item.answer first as a then {
-            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de36c';
-            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de36c';
+            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de36c';
+             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de36c';
         } 'an-emcareb14s2de36c';
     } 'it-emcareb14s2de36c';
 }
@@ -2086,7 +2091,8 @@ group emcareobservationemcareb14s2de38(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B14S2.DE38' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb14s2de38';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb14s2de38';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de38';
         } 'an-emcareb14s2de38';
     } 'it-emcareb14s2de38';
 }
@@ -2308,7 +2314,8 @@ group emcareobservationemcareb15s2de01(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B15S2.DE01' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb15s2de01';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb15s2de01';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb15s2de01';
         } 'an-emcareb15s2de01';
     } 'it-emcareb15s2de01';
 }
@@ -2335,7 +2342,8 @@ group emcareobservationemcareb15s2de09(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B15S2.DE09' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb15s2de09';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb15s2de09';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb15s2de09';
         } 'an-emcareb15s2de09';
     } 'it-emcareb15s2de09';
 }

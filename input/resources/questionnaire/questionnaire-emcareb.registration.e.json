@@ -79,6 +79,26 @@
             "type": "dateTime",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -88,25 +108,26 @@
             "type": "boolean",
             "required": true,
             "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+            "item": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.empty()"
-                    }
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
                 }
             ],
-            "linkId": "EmCare.A.DE45",
-            "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-            "text": "Participant type Person accompanying child",
-            "type": "choice",
-            "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/relationship-to-client",
             "designNote": "status::draft"
         },
         {
@@ -119,7 +140,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.first().value.code='no'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value = false"
                     }
                 }
             ],
@@ -129,45 +150,24 @@
             "type": "boolean",
             "required": false,
             "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+            "item": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "check-box",
-                                "display": "Check-box"
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
                             }
-                        ],
-                        "text": "Check-box"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE49').answer.empty() and %resource.repeat(item).where(linkId='EmCare.A.DE45').answer.first().value.code='no'"
-                    }
-                }
-            ],
-            "linkId": "newPerson",
-            "type": "choice",
-            "required": false,
-            "repeats": true,
-            "answerOption": [
-                {
-                    "valueCoding": {
-                        "code": "newPerson",
-                        "display": "Register a new Person accompanying child"
-                    }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
                 }
             ],
             "designNote": "status::draft"
@@ -178,7 +178,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.first().value.code='no'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value = false"
                     }
                 }
             ],
@@ -207,75 +207,120 @@
                     "required": false
                 },
                 {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
-                            }
-                        }
-                    ],
                     "linkId": "EmCare.A.DE40",
                     "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Person accompanying child Today's First Name",
                     "type": "string",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
-                            }
-                        }
-                    ],
                     "linkId": "EmCare.A.DE41",
                     "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Person accompanying child Today's Last Name",
                     "type": "string",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
-                            }
-                        }
-                    ],
                     "linkId": "EmCare.A.DE42",
                     "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Person accompanying child Today's contact's phone number",
                     "type": "integer",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE45').answer.exists()"
-                            }
-                        }
-                    ],
                     "linkId": "EmCare.A.DE43",
                     "definition": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
                     "text": "Person accompanying child Today's Relationship to Client",
-                    "type": "string",
+                    "type": "choice",
                     "required": false,
                     "repeats": false,
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/relationship-to-client",
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 }
             ],
@@ -289,6 +334,26 @@
             "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/visit-type",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -308,6 +373,26 @@
             "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/reason-consultation",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -318,6 +403,26 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -337,6 +442,26 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/consultation-type",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -346,6 +471,26 @@
             "type": "boolean",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         }
     ]

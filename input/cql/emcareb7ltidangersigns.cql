@@ -16,15 +16,3 @@ context Patient
 /* ageinmonth.cql : nan*/
 define "ageinmonth.cql":
     AgeInMonths()
-
-/* ageinyears.cql : Age in years*/
-define "ageinyears.cql":
-    AgeInYears()
-
-/* age in years : Age in years*/
-define "age in years":
-    AgeInYears()
-
-/* age2mp : nan*/
-define "age2mp":
-    AgeInMonths() >= 2 and AgeInYears() <5

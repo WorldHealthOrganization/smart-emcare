@@ -48,7 +48,7 @@ group emcareobservationemcareb22de01(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE01' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de01';
+            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb22de01';
         } 'an-emcareb22de01';
     } 'it-emcareb22de01';
 }
@@ -75,7 +75,8 @@ group emcareobservationemcareb22de02(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE02' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de02';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de02';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de02';
         } 'an-emcareb22de02';
     } 'it-emcareb22de02';
 }
@@ -102,7 +103,7 @@ group emcareobservationemcareb22de03(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE03' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de03';
+            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb22de03';
         } 'an-emcareb22de03';
     } 'it-emcareb22de03';
 }
@@ -129,7 +130,7 @@ group emcareobservationemcareb22de04(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE04' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de04';
+            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb22de04';
         } 'an-emcareb22de04';
     } 'it-emcareb22de04';
 }
@@ -156,7 +157,8 @@ group emcareobservationemcareb22de05(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE05' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de05';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de05';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de05';
         } 'an-emcareb22de05';
     } 'it-emcareb22de05';
 }
@@ -183,7 +185,8 @@ group emcareobservationemcareb22de07(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId =  'EmCare.B22.DE07' then {
         item.answer first as a then {
-            a   -> tgt.value = a, tgt.status = 'final' 'val-emcareb22de07';
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de07';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de07';
         } 'an-emcareb22de07';
     } 'it-emcareb22de07';
 }

@@ -3,7 +3,7 @@
     "id": "emcare.b23.classification",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b23.classification&quot; = &quot;emcare.b23.classification&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B.G.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcarebgde01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B.G.DE06').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcarebgde06(src, tgt) &quot;DE06&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n}\r\n\r\ngroup emcareobservationemcarebgde01(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcarebgde01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B.G.DE01' &quot;code-emcarebgde01&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B.G.DE01' then {\r\n    item.answer first as a then {\r\n      a -&gt;  tgt.value = a,  tgt.status = 'final' &quot;val-emcarebgde01&quot;;\r\n    } &quot;an-emcarebgde01&quot;;\r\n  } &quot;it-emcarebgde01&quot;;\r\n}\r\n\r\ngroup emcareobservationemcarebgde06(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcarebgde06&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B.G.DE06' &quot;code-emcarebgde06&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B.G.DE06' then {\r\n    item.answer first as a then {\r\n      a -&gt;  tgt.value = a,  tgt.status = 'final' &quot;val-emcarebgde06&quot;;\r\n    } &quot;an-emcarebgde06&quot;;\r\n  } &quot;it-emcarebgde06&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b23.classification&quot; = &quot;emcare.b23.classification&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B.G.DE01').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcarebgde01(src, tgt) &quot;DE01&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n  src where src.item.where(linkId = 'EmCare.B.G.DE06').exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('Observation') as tgt then emcareobservationemcarebgde06(src, tgt) &quot;DE06&quot;;\r\n  } &quot;emcareobservation&quot;;\r\n}\r\n\r\ngroup emcareobservationemcarebgde01(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcarebgde01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B.G.DE01' &quot;code-emcarebgde01&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B.G.DE01' then {\r\n    item.answer first as a then {\r\n      a.value as val where val != 'none' -&gt;  tgt.value = val,  tgt.status = 'final' &quot;final-emcarebgde01&quot;;\r\n      a where a.value = 'none' -&gt; tgt.status = 'cancelled' &quot;notfound-emcarebgde01&quot;;\r\n    } &quot;an-emcarebgde01&quot;;\r\n  } &quot;it-emcarebgde01&quot;;\r\n}\r\n\r\ngroup emcareobservationemcarebgde06(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcarebgde06&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B.G.DE06' &quot;code-emcarebgde06&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B.G.DE06' then {\r\n    item.answer first as a then {\r\n      a.value as val where val != 'none' -&gt;  tgt.value = val,  tgt.status = 'final' &quot;final-emcarebgde06&quot;;\r\n      a where a.value = 'none' -&gt; tgt.status = 'cancelled' &quot;notfound-emcarebgde06&quot;;\r\n    } &quot;an-emcarebgde06&quot;;\r\n  } &quot;it-emcarebgde06&quot;;\r\n}\r\n\r\n</pre></div>"
     },
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b23.classification",
     "name": "emcare.b23.classification",
@@ -502,10 +502,13 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "val-emcarebgde01",
+                                    "name": "final-emcarebgde01",
                                     "source": [
                                         {
-                                            "context": "a"
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val",
+                                            "condition": "val != 'none'"
                                         }
                                     ],
                                     "target": [
@@ -516,7 +519,7 @@
                                             "transform": "copy",
                                             "parameter": [
                                                 {
-                                                    "valueId": "a"
+                                                    "valueId": "val"
                                                 }
                                             ]
                                         },
@@ -528,6 +531,28 @@
                                             "parameter": [
                                                 {
                                                     "valueString": "final"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "notfound-emcarebgde01",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "a.value = 'none'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "status",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "cancelled"
                                                 }
                                             ]
                                         }
@@ -825,10 +850,13 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "val-emcarebgde06",
+                                    "name": "final-emcarebgde06",
                                     "source": [
                                         {
-                                            "context": "a"
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val",
+                                            "condition": "val != 'none'"
                                         }
                                     ],
                                     "target": [
@@ -839,7 +867,7 @@
                                             "transform": "copy",
                                             "parameter": [
                                                 {
-                                                    "valueId": "a"
+                                                    "valueId": "val"
                                                 }
                                             ]
                                         },
@@ -851,6 +879,28 @@
                                             "parameter": [
                                                 {
                                                     "valueString": "final"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "notfound-emcarebgde06",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "condition": "a.value = 'none'"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "status",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "cancelled"
                                                 }
                                             ]
                                         }

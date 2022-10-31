@@ -26,9 +26,9 @@
         {
             "url": "http://hl7.org/fhir/StructureDefinition/variable",
             "valueExpression": {
-                "name": "AgeInDays.cql",
+                "name": "AgeInDays",
                 "language": "text/fhirpath",
-                "expression": "iif(${dob}.exists(),(${dob}- now()).toQuantity('days'),{})"
+                "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),(today()-%resource.repeat(item).where(linkId='dob').answer.first().value).toQuantity('days'),{})"
             }
         },
         {
@@ -36,7 +36,7 @@
             "valueExpression": {
                 "name": "AgeInMonths.cql",
                 "language": "text/fhirpath",
-                "expression": "iif(${dob}.exists(),(${dob}- now()).toQuantity('months')-(${dob}- now()).toQuantity('years'),{})"
+                "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),(today()-%resource.repeat(item).where(linkId='dob').answer.first().value).toQuantity('months')-(today()-%resource.repeat(item).where(linkId='dob').answer.first().value).toQuantity('years'),{})"
             }
         },
         {
@@ -44,7 +44,7 @@
             "valueExpression": {
                 "name": "AgeInYears.cql",
                 "language": "text/fhirpath",
-                "expression": "iif(${dob}.exists(),(${dob}- now()).toQuantity('years'),{})"
+                "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),(today()-%resource.repeat(item).where(linkId='dob').answer.first().value).toQuantity('years'),{})"
             }
         },
         {
@@ -52,7 +52,7 @@
             "valueExpression": {
                 "name": "EmCare.A.DE13.2.d",
                 "language": "text/fhirpath",
-                "expression": "iif(${EmCare.A.DE08}.exists(),(${dob}- now()).toQuantity('days'),{})"
+                "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.exists(),( today()-%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value).toQuantity('days'),{})"
             }
         },
         {
@@ -60,7 +60,7 @@
             "valueExpression": {
                 "name": "EmCare.A.DE13.2.mo",
                 "language": "text/fhirpath",
-                "expression": "iif(${EmCare.A.DE08}.exists(),(${dob}- now()).toQuantity('months')-(${dob}- now()).toQuantity('years'),{})"
+                "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.exists(),( today()-%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value).toQuantity('months')-(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value- today()).toQuantity('years'),{})"
             }
         },
         {
@@ -68,7 +68,47 @@
             "valueExpression": {
                 "name": "EmCare.A.DE13.2.a",
                 "language": "text/fhirpath",
-                "expression": "iif(${EmCare.A.DE08}.exists(),(${dob}- now()).toQuantity('years'),{})"
+                "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.exists(),( today()-%resource.repeat(item).where(linkId='EmCare.A.DE08').answer.first().value).toQuantity('years'),{})"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "dol",
+                "language": "text/fhirpath",
+                "expression": "iif( %resource.repeat(item).where(linkId='EmCare.A.DE14.d').answer.hasValue(),%resource.repeat(item).where(linkId='EmCare.A.DE14.d').answer.first().value as Quantity , 0 days)"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "wol",
+                "language": "text/fhirpath",
+                "expression": "iif( %resource.repeat(item).where(linkId='EmCare.A.DE14.w').answer.hasValue(),%resource.repeat(item).where(linkId='EmCare.A.DE14.w').answer.first().value as Quantity , 0 weeks)"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "mol",
+                "language": "text/fhirpath",
+                "expression": "iif( %resource.repeat(item).where(linkId='EmCare.A.DE14.mo').answer.hasValue(),%resource.repeat(item).where(linkId='EmCare.A.DE14.mo').answer.first().value as Quantity , 0 months)"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "yol",
+                "language": "text/fhirpath",
+                "expression": "iif( %resource.repeat(item).where(linkId='EmCare.A.DE14.a').answer.hasValue(),%resource.repeat(item).where(linkId='EmCare.A.DE14.a').answer.first().value as Quantity , 0 years)"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "cdob",
+                "language": "text/fhirpath",
+                "expression": "today() - %dol -%wol   -%mol  -%yol"
             }
         },
         {
@@ -109,6 +149,26 @@
             "type": "string",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -139,6 +199,26 @@
                     }
                 }
             ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -156,6 +236,26 @@
             "type": "string",
             "required": true,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -173,6 +273,26 @@
             "type": "string",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -190,6 +310,26 @@
             "type": "string",
             "required": true,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -207,6 +347,26 @@
             "type": "date",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -244,6 +404,26 @@
                     }
                 }
             ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -275,6 +455,26 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/dob-estimator",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -283,7 +483,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE15' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE15'"
                     }
                 }
             ],
@@ -292,6 +492,26 @@
             "type": "date",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -324,7 +544,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14'"
                     }
                 }
             ],
@@ -333,6 +553,26 @@
             "type": "quantity",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -365,7 +605,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14'"
                     }
                 }
             ],
@@ -374,6 +614,26 @@
             "type": "quantity",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -406,7 +666,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE13' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE13'"
                     }
                 }
             ],
@@ -415,6 +675,26 @@
             "type": "quantity",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -447,7 +727,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE13' and %resource.repeat(item).where(linkId='EmCare.A.DE11').answer.first().value.code = 'EmCare.A.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE13'"
                     }
                 }
             ],
@@ -456,6 +736,70 @@
             "type": "quantity",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
+            "designNote": "status::draft"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE13' or %resource.repeat(item).where(linkId='EmCare.A.DE12').answer.first().value.code = 'EmCare.A.DE14'"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%cdob"
+                    }
+                }
+            ],
+            "linkId": "edob",
+            "text": "Calculated Date of Birth",
+            "type": "date",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -475,7 +819,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='dob').answer.exists(),%resource.repeat(item).where(linkId='dob').answer.first().value,iif(%resource.repeat(item).where(linkId='EmCare.A.DE15.1').answer.exists(),%resource.repeat(item).where(linkId='EmCare.A.DE15.1').answer.first().value, today() - 31.5*%EmCare.A.DE13.mo ))"
+                        "expression": "iif( %resource.repeat(item).where(linkId='dob').answer.exists(),%resource.repeat(item).where(linkId='dob').answer.first().value,\niif( %resource.repeat(item).where(linkId='EmCare.A.DE15.1').answer.exists(),%resource.repeat(item).where(linkId='EmCare.A.DE15.1').answer.first().value, \n %cdob ))"
                     }
                 }
             ],
@@ -484,6 +828,26 @@
             "type": "date",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -493,6 +857,26 @@
             "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/sex-of-the-client",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -510,6 +894,26 @@
             "type": "string",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -524,6 +928,26 @@
             "type": "boolean",
             "required": false,
             "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -559,6 +983,26 @@
                         "code": "newPrimaryCaregiver",
                         "display": "Register a new Primary Caregiver"
                     }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "now()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                            "valueBoolean": true
+                        }
+                    ],
+                    "linkId": "timestamp",
+                    "type": "dateTime",
+                    "required": false
                 }
             ],
             "designNote": "status::draft"
@@ -602,6 +1046,26 @@
                     "type": "string",
                     "required": true,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -610,6 +1074,26 @@
                     "type": "string",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -618,6 +1102,26 @@
                     "type": "string",
                     "required": true,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -626,6 +1130,26 @@
                     "type": "integer",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -634,6 +1158,26 @@
                     "type": "integer",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -642,6 +1186,26 @@
                     "type": "integer",
                     "required": false,
                     "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -660,6 +1224,26 @@
                     "required": false,
                     "repeats": false,
                     "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/relationship-to-client",
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -692,6 +1276,26 @@
                     "required": false,
                     "repeats": false,
                     "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -724,6 +1328,26 @@
                     "required": false,
                     "repeats": false,
                     "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status",
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
+                        }
+                    ],
                     "designNote": "status::draft"
                 },
                 {
@@ -759,6 +1383,26 @@
                                 "code": "EmCare.A.DE38",
                                 "display": "Primary Caregiver wants to receive SMS or other messages regarding the child's visits and health status"
                             }
+                        }
+                    ],
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "now()"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                                    "valueBoolean": true
+                                }
+                            ],
+                            "linkId": "timestamp",
+                            "type": "dateTime",
+                            "required": false
                         }
                     ],
                     "designNote": "status::draft"

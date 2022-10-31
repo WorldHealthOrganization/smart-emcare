@@ -2,10 +2,8 @@ map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registra
 uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
 uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter' alias 'Encounter' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' alias 'RelatedPerson' as target
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter' alias 'EmCare Encounter' as produced
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedperson' alias 'EmCare RelatedPerson' as produced
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
@@ -19,16 +17,6 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             src.subject as sub -> tgt.subject = sub '23252e10';
         } 'aa65c498';
     } 'put-emcareencounter';
-    src where src.item.where(linkId='emcarerelatedpersonid').answer.exists()-> bundle.entry as entry then {
-        src.item first as item where linkId  =  'emcarerelatedpersonid' -> entry.request as request, request.method = 'PUT' then {
-            item.answer first as a ->  request then {
-                a.value as val ->  request.url = append('/RelatedPerson/', val) '11e3b388';
-            } 'c5e7331f';
-        } '0e46d0c4';
-        src -> entry.resource = create("RelatedPerson") as tgt then {
-            src -> tgt then emcarerelatedperson(src, tgt) 'ec9147dd';
-        } '3aa4d4d9';
-    } 'put-emcarerelatedperson';
     src where src.item.where(linkId='EmCare.B3.DE05').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb3de05(src,tgt) 'act-EmCare.B3.DE05';
     } 'emcareobservation';
@@ -84,54 +72,6 @@ group getUrlemcareencounter(source src,target tgt){
             a.value as val ->  ref.reference = append('/Encounter/', val) 'e8494603';
         } '35ea1ad7';
     } '558d60eb';
-}
-
-group emcarerelatedperson(source src : questionnaireResponse,target tgt : RelatedPerson){
-    src.item first as item  where linkId =  'EmCare.A.DE40' or linkId =  'EXXXXXXX' or linkId =  'EmCare.A.DE40' -> tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedperson(src, name) 'emcareade40';
-}
-
-group SetOfficalGivenNameemcarerelatedperson(source src,target tgt){
-    src -> tgt.use = 'official' then {
-        src.item as item where linkId  =  'EmCare.A.DE40' then {
-            item.answer first as a then {
-                a.value as val -> tgt.given = val  '577eab5d';
-            } 'dcd99d74';
-        } '3674e72e';
-        src.item as item where linkId  =  'EXXXXXXX' then {
-            item.answer first as a then {
-                a.value as val -> tgt.given = val  '577eab5d';
-            } 'dcd99d74';
-        } '901b64d6';
-        src.item as item where linkId  =  'EmCare.A.DE40' then {
-            item.answer first as a then {
-                a.value as val -> tgt.family = val  '2374a9a1';
-            } '09801739';
-        } '512ccb78';
-    } 'eb5b3f08';
-}
-
-group getIdemcarerelatedperson(source src,target tgt){
-    src.item first as item where linkId  =  'emcarerelatedpersonid' -> tgt then {
-        item.answer first as a ->  tgt  then {
-            a.value as val ->  tgt.id = val '8e3eaf71';
-        } 'f3550c0d';
-    } 'de9cc039';
-}
-
-group getFullUrlemcarerelatedperson(source src,target tgt){
-    src.item first as item where linkId  =  'emcarerelatedpersonid' -> tgt then {
-        item.answer first as a -> tgt then {
-            a.value as val ->  tgt.fullUrl = append('urn:uuid:', val) 'a6735326';
-        } '8a0f6df2';
-    } '00c7b89d';
-}
-
-group getUrlemcarerelatedperson(source src,target tgt){
-    src.item first as item where linkId  =  'emcarerelatedpersonid' -> tgt then {
-        item.answer first as a ->  tgt then {
-            a.value as val ->  ref.reference = append('/RelatedPerson/', val) '25b16148';
-        } '00b2016a';
-    } 'ce147194';
 }
 
 group emcareobservationemcareb3de05(source src,target tgt){

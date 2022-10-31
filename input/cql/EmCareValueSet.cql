@@ -106,18 +106,6 @@ define "female":
  define "skin pinch goes back normally (immediately)":
   B.c('EmCare.B20S2.DE05')
 
- define "skin lesions ≥ 4 cm":
-  B.c('EmCare.B14S2.DE27')
-
- define "red skin streaks":
-  B.c('EmCare.B14S2.DE28')
-
- define "tender nodes (nodules) under the skin":
-  B.c('EmCare.B14S2.DE29')
-
- define "skin infection extends to muscle":
-  B.c('EmCare.B14S2.DE30')
-
  define "generalised skin problem":
   B.c('EmCare.B14S2.DE07')
 
@@ -174,18 +162,6 @@ define "female":
 
  define "mouth sores or mouth ulcers - not deep and extensive":
   B.c('EmCare.B14S2.DE42')
-
- define "skin problem":
-  B.c('EmCare.B14S2.DE44')
-
- define "oral sores or mouth ulcers":
-  B.c('EmCare.B14S2.DE45')
-
- define "eye problem":
-  B.c('EmCare.B14S2.DE46')
-
- define "no - do not add a skin or mouth or eye problem":
-  B.c('EmCare.B14S2.DE47')
 
  define "severe palmar pallor":
   B.c('EmCare.B15S2.DE02')

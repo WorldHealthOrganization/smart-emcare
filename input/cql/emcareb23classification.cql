@@ -8,6 +8,7 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
+include EmCareZScore version '0.99.99' called Z
 
 
 context Patient
@@ -206,31 +207,11 @@ define "acute ear infection":
      or     obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
      or     obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days")
 
-/* dl-g-cl1-74 : nan*/
-define "dl-g-cl1-74":
-    obs."ear pain" = Base."Yes" and "chronic ear infection"=false
-
-/* dl-g-cl1-75 : nan*/
-define "dl-g-cl1-75":
-    obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
-
-/* dl-g-cl1-76 : nan*/
-define "dl-g-cl1-76":
-    obs."pus seen draining from the ear" = Base."Yes"  and obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days"
-
 /* chronic ear infection : nan*/
 define "chronic ear infection":
     ("age >= 2 months to <60 months" and obs."ear problem" = Base."Yes" and   obs."pus seen draining from the ear" = Base."Yes")
      and (    obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
      or     obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days")
-
-/* dl-i-cl1-11 : nan*/
-define "dl-i-cl1-11":
-    obs."ear discharge" = Base."Yes" and obs."ear discharge for how long?" = val."less than 14 days"
-
-/* dl-i-cl1-12 : nan*/
-define "dl-i-cl1-12":
-    obs."ear discharge" = Base."No" and obs."pus seen draining from the ear for how long?" = val."less than 14 days"
 
 /* with ear pain or fever : nan*/
 define "with ear pain or fever":
@@ -259,55 +240,209 @@ define "fever: bacterial infection unlikely":
 /* severe complicated measles : nan*/
 define "severe complicated measles":
     ("age >= 2 months to <60 months" and obs."fever" = Base."Yes")
-     and (    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" or  "pneumonia"=true  or obs."diarrhoea" = Base."Yes") and obs."measles rash" = Base."Yes"
-     or     obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" = true and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive"))
-
-/* dl-i-cl1-16 : nan*/
-define "dl-i-cl1-16":
-    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" or  "pneumonia"=true  or obs."diarrhoea" = Base."Yes") and obs."measles rash" = Base."Yes"
-
-/* dl-i-cl1-67.a : nan*/
-define "dl-i-cl1-67.a":
-    ((obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."danger signs" = true  or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" ) and obs."measles rash" = Base."Yes")
-     and (    "measles in last 3 months" =true and obs."generalised or localised skin problem" != val."generalised skin problem"
-     or     obs."measles rash" = Base."No" and "measles in last 3 months" = true and obs."generalised or localised skin problem" = val."generalised skin problem")
-
-/* dl-g-cl1-67a : nan*/
-define "dl-g-cl1-67a":
-    "measles in last 3 months" =true and obs."generalised or localised skin problem" != val."generalised skin problem"
-
-/* dl-g-cl1-67 : nan*/
-define "dl-g-cl1-67":
-    obs."measles rash" = Base."No" and "measles in last 3 months" = true and obs."generalised or localised skin problem" = val."generalised skin problem"
-
-/* dl-g-cl1-66 : nan*/
-define "dl-g-cl1-66":
-    obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" = true and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive")
+     and (    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" or  "pneumonia"=true  or obs."diarrhoea" = Base."Yes") and obs."measles rash" = Base."Yes"
+     or     ((obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."danger signs" = true  or  obs."clouding of the cornea" = Base."Yes"  or obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive" ) and obs."measles rash" = Base."Yes")
+         and (    "measles in last 3 months" =true and obs."generalised or localised skin problem" != val."generalised skin problem"
+         or     obs."measles rash" = Base."No" and "measles in last 3 months" = true and obs."generalised or localised skin problem" = val."generalised skin problem")
+     or     obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" = true and (obs."danger signs" = true or  obs."clouding of the cornea" = Base."Yes"  or obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive"))
 
 /* measles with eye or mouth complication : nan*/
 define "measles with eye or mouth complication":
     ("age >= 2 months to <60 months" and obs."fever" = Base."Yes"   and "severe complicated measles"=false)
-     and (    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."pus draining from eye" = Base."Yes"  or  val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive"  ) and obs."measles rash" = Base."Yes"
-     or     obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" =true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
-     or     (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."measles rash" = Base."No" and "measles in last 3 months" = true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+     and (    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."pus draining from eye" = Base."Yes"  or  obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive"  ) and obs."measles rash" = Base."Yes"
+     or     obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" =true and (obs."pus draining from eye" = Base."Yes"  or obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+     or     (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."measles rash" = Base."No" and "measles in last 3 months" = true and (obs."pus draining from eye" = Base."Yes"  or obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
      or     (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and obs."generalised or localised skin problem" != val."generalised skin problem" and obs."measles rash" = Base."Yes")
-
-/* dl-g-cl1-68 : nan*/
-define "dl-g-cl1-68":
-    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and (obs."generalised or localised skin problem" = val."generalised skin problem") and (obs."pus draining from eye" = Base."Yes"  or  val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive"  ) and obs."measles rash" = Base."Yes"
-
-/* dl-g-cl1-69 : nan*/
-define "dl-g-cl1-69":
-    obs."cough" = Base."No"  and obs."runny nose" = Base."No" and obs."red eyes" = Base."No" and "measles in last 3 months" =true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
-
-/* dl-g-cl1-70 : nan*/
-define "dl-g-cl1-70":
-    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes") and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."measles rash" = Base."No" and "measles in last 3 months" = true and (obs."pus draining from eye" = Base."Yes"  or val."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
-
-/* dl-i-cl1-17 : nan*/
-define "dl-i-cl1-17":
-    (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and obs."generalised or localised skin problem" != val."generalised skin problem" and obs."measles rash" = Base."Yes"
 
 /* possible measles : nan*/
 define "possible measles":
     "age >= 2 months to <60 months" and obs."fever" = Base."Yes"  and (obs."cough" = Base."Yes"  or  obs."runny nose" = Base."Yes" or obs."red eyes" = Base."Yes")  and "severe complicated measles"=false and "measles with eye or mouth complication"=false and obs."measles rash" = Base."Yes"  and obs."generalised or localised skin problem" = val."generalised skin problem"
+
+/* dl-g-cl1-109 : Severe Anaemia*/
+define "dl-g-cl1-109":
+    "age >= 2 months to <60 months" and (obs."palmar pallor" = val."severe palmar pallor" or obs."mucous membrane pallor" = val."severe mucous membrane pallor" or obs."hemoglobin (hb) g/dl" < 7 'g/dL' )
+
+/* severe anaemia : Severe Anaemia*/
+define "severe anaemia":
+    "age >= 2 months to <60 months" and (obs."palmar pallor" = val."severe palmar pallor" or obs."mucous membrane pallor" = val."severe mucous membrane pallor" or obs."hemoglobin (hb) g/dl" < 7 'g/dL' )
+
+/* dl-g-cl1-110 : Anaemia*/
+define "dl-g-cl1-110":
+    "age >= 2 months to <60 months" and (obs."palmar pallor" = val."some palmar pallor" or obs."mucous membrane pallor" = val."some mucous membrane pallor" or (obs."hemoglobin (hb) g/dl" >= 7 'g/dL' and obs."hemoglobin (hb) g/dl" < 11 'g/dL' )) and "severe anaemia"=false
+
+/* anaemia : Anaemia*/
+define "anaemia":
+    "age >= 2 months to <60 months" and (obs."palmar pallor" = val."some palmar pallor" or obs."mucous membrane pallor" = val."some mucous membrane pallor" or (obs."hemoglobin (hb) g/dl" >= 7 'g/dL' and obs."hemoglobin (hb) g/dl" < 11 'g/dL' )) and "severe anaemia"=false
+
+/* dl-g-cl1-111 : No Anaemia*/
+define "dl-g-cl1-111":
+    "age >= 2 months to <60 months" and obs."palmar pallor" = val."no palmar pallor" and obs."mucous membrane pallor" = val."no mucous membrane pallor" and  (obs."hemoglobin (hb) g/dl" >= 11 'g/dL' or obs."hemoglobin test not available"= Base."Yes")
+
+/* no anaemia : No Anaemia*/
+define "no anaemia":
+    "age >= 2 months to <60 months" and obs."palmar pallor" = val."no palmar pallor" and obs."mucous membrane pallor" = val."no mucous membrane pallor" and  (obs."hemoglobin (hb) g/dl" >= 11 'g/dL' or obs."hemoglobin test not available"= Base."Yes")
+
+/* dl-g-cl1-80 : Eye Infection*/
+define "dl-g-cl1-80":
+    "age >= 2 months to <60 months"  and obs."eye problem" = Base."Yes" and obs."pus draining from eye" = Base."Yes" and "severe complicated measles"=false or "measles with eye or mouth complication"=false
+
+/* eye infection : Eye Infection*/
+define "eye infection":
+    "age >= 2 months to <60 months"  and obs."eye problem" = Base."Yes" and obs."pus draining from eye" = Base."Yes" and "severe complicated measles"=false or "measles with eye or mouth complication"=false
+
+/* dl-g-cl1-83 : Clouding of the Cornea*/
+define "dl-g-cl1-83":
+    "age >= 2 months to <60 months"  and obs."eye problem" = Base."Yes" and  obs."clouding of the cornea" = Base."Yes" and "severe complicated measles"=false
+
+/* clouding of the cornea : Clouding of the Cornea*/
+define "clouding of the cornea":
+    "age >= 2 months to <60 months"  and obs."eye problem" = Base."Yes" and  obs."clouding of the cornea" = Base."Yes" and "severe complicated measles"=false
+
+/* new or not previously treated : nan*/
+define "new or not previously treated":
+        obs."is clouding of the cornea a new problem" = Base."Yes"
+     or     obs."is clouding of the cornea a new problem" = Base."No" and obs."has clouding of the cornea previously been treated" = Base."No"
+
+/* dl-g-cl1-88 : Papular Urticaria or Papular Pruritic Eruptions*/
+define "dl-g-cl1-88":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."itchy skin" = Base."Yes" and obs."type of skin problem" =  val."papular urticaria or papular pruritic eruptions"
+
+/* papular urticaria or papular pruritic eruptions : Papular Urticaria or Papular Pruritic Eruptions*/
+define "papular urticaria or papular pruritic eruptions":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."itchy skin" = Base."Yes" and obs."type of skin problem" =  val."papular urticaria or papular pruritic eruptions"
+
+/* dl-g-cl1-90 : Ringworm (Tinea)*/
+define "dl-g-cl1-90":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."type of skin problem" =  val."ringworm (tinea)"
+
+/* ringworm (tinea) : Ringworm (Tinea)*/
+define "ringworm (tinea)":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."type of skin problem" =  val."ringworm (tinea)"
+
+/* dl-i-cl1-15 : nan*/
+define "dl-i-cl1-15":
+    obs."scalp infection (tinea capitis)" = Base."Yes"
+
+/* dl-g-cl1-91 : Scabies*/
+define "dl-g-cl1-91":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."itchy skin" = Base."Yes" and obs."type of skin problem" =  val."scabies"
+
+/* scabies : Scabies*/
+define "scabies":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."itchy skin" = Base."Yes" and obs."type of skin problem" =  val."scabies"
+
+/* dl-g-cl1-93 : Chickenpox*/
+define "dl-g-cl1-93":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."itchy skin" = Base."Yes" and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."blisters, sores or pustules" = Base."Yes" and obs."type of skin problem" = val."chickenpox"
+
+/* chickenpox : Chickenpox*/
+define "chickenpox":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes" and obs."itchy skin" = Base."Yes" and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."blisters, sores or pustules" = Base."Yes" and obs."type of skin problem" = val."chickenpox"
+
+/* dl-i-cl1-16 : Severe rash*/
+define "dl-i-cl1-16":
+    obs."severe rash"= Base."Yes"
+
+/* severe rash : Severe rash*/
+define "severe rash":
+    obs."severe rash"= Base."Yes"
+
+/* dl-g-cl1-92 : nan*/
+define "dl-g-cl1-92":
+    "pneumonia"=true
+
+/* dl-g-cl1-95 : nan*/
+define "dl-g-cl1-95":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"  and obs."generalised or localised skin problem" = val."localised skin problem" and obs."blisters, sores or pustules" = Base."Yes" and obs."type of skin problem" = val."herpes zoster"
+
+/* dl-g-cl1-94 : nan*/
+define "dl-g-cl1-94":
+    obs."eye involvement" = Base."Yes"
+
+/* dl-i-cl1-17 : nan*/
+define "dl-i-cl1-17":
+    obs."disseminated herpes zoster" = Base."Yes"
+
+/* dl-g-cl1-98 : nan*/
+define "dl-g-cl1-98":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and obs."blisters, sores or pustules" = Base."Yes" and obs."type of skin problem" =  val."impetigo"
+
+/* dl-g-cl1-96 : nan*/
+define "dl-g-cl1-96":
+    obs."skin infection extends to muscle" = Base."Yes" or obs."measured temperature" = val."measured fever"
+
+/* dl-i-cl1-18 : nan*/
+define "dl-i-cl1-18":
+    obs."extensive impetigo lesions" = Base."Yes"
+
+/* dl-g-cl1-99 : nan*/
+define "dl-g-cl1-99":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and obs."type of skin problem" =  val."molluscum contagiosum"
+
+/* dl-i-cl1-19 : nan*/
+define "dl-i-cl1-19":
+    obs."extensive molluscum lesions"  = Base."Yes" or obs."molluscum lesions close to the eye"=Base."Yes"
+
+/* dl-g-cl1-100 : nan*/
+define "dl-g-cl1-100":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and obs."generalised or localised skin problem" = val."localised skin problem" and obs."type of skin problem" =  val."warts"
+
+/* dl-i-cl1-20 : nan*/
+define "dl-i-cl1-20":
+    obs."extensive warts" = Base."Yes"
+
+/* dl-g-cl1-102 : nan*/
+define "dl-g-cl1-102":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and obs."generalised or localised skin problem" = val."localised skin problem" and obs."blisters, sores or pustules" = Base."No" and obs."type of skin problem" =  val."seborrhoeic dermatitis"
+
+/* dl-g-cl1-101 : nan*/
+define "dl-g-cl1-101":
+    obs."severe seborrhoeic dermatitis" = Base."Yes"
+
+/* dl-g-cl1-103 : nan*/
+define "dl-g-cl1-103":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and obs."type of skin problem" =  val."fixed drug reaction"
+
+/* dl-g-cl1-104 : nan*/
+define "dl-g-cl1-104":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and  obs."type of skin problem" =  val."eczema"
+
+/* dl-i-cl1-21 : nan*/
+define "dl-i-cl1-21":
+    obs."severe acute moist or weeping eczema" = Base."Yes"
+
+/* dl-i-cl1-22 : nan*/
+define "dl-i-cl1-22":
+    obs."secondary bacterial infection of eczema" = Base."Yes"
+
+/* dl-i-cl1-23 : nan*/
+define "dl-i-cl1-23":
+    obs."secondary herpes infection of eczema (eczema herpeticum)" = Base."Yes"
+
+/* dl-g-cl1-105 : nan*/
+define "dl-g-cl1-105":
+    "age >= 2 months to <60 months" and obs."skin problem" = Base."Yes"   and obs."generalised or localised skin problem" = val."generalised skin problem" and obs."blisters, sores or pustules" = Base."Yes" and obs."type of skin problem" =  val."steven johnson syndrome (sjs)"
+
+/* dl-g-cl1-106 : nan*/
+define "dl-g-cl1-106":
+    "age >= 2 months to <60 months" and obs."fever" = Base."Yes" and (obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" or obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - not deep and extensive" )
+
+/* dl-g-cl1-107 : nan*/
+define "dl-g-cl1-107":
+    obs."oral sores or mouth ulcers" = val."mouth sores or mouth ulcers - deep and extensive"
+
+/* dl-g-cl1-108 : nan*/
+define "dl-g-cl1-108":
+    "age >= 2 months to <60 months" and obs."fever" = Base."Yes" and obs."oral sores or mouth ulcers" = val."oral thrush"
+
+/* dl-i-cl1-28 : nan*/
+define "dl-i-cl1-28":
+    Z."WAZ"<-3
+
+/* dl-i-cl1-33 : nan*/
+define "dl-i-cl1-33":
+    Z."WAZ">=-3
+
+/* dl-i-cl1-34 : nan*/
+define "dl-i-cl1-34":
+    obs."weight" = Base."No" and (AgeInMonths()> 6 and (obs."muac (mid upper arm circumference)" is Quantity and (convert obs."muac (mid upper arm circumference)" to 'cm').value < 12.5 ) or AgeInMonths()<= 6 and obs."muac cannot be measured"=Base."Yes")

@@ -24,6 +24,14 @@
             "valueCode": "structured"
         },
         {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "Fever",
+                "language": "text/fhirpath",
+                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 37.5 'Cel' or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.first().value.code='yes' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.first().value.code='yes'"
+            }
+        },
+        {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
             "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b10-14.symptoms.2m.p"
         },
@@ -118,9 +126,14 @@
             ],
             "linkId": "AgeInMonths",
             "text": "Age",
-            "type": "decimal",
+            "type": "integer",
             "required": false,
             "repeats": false,
+            "initial": [
+                {
+                    "valueInteger": 2
+                }
+            ],
             "designNote": "status::draft"
         },
         {
@@ -272,7 +285,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 35 or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.first().value.code='yes'"
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 37.5 'Cel' or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.first().value.code='yes'.'yes','no')"
                     }
                 }
             ],
@@ -299,14 +312,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B12S1.DE01').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.first().value.code = 'yes')"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 37.5 or %resource.repeat(item).where(linkId='EmCare.B6.DE05').answer.first().value='yes', 'EmCare.B12S1.DE05', {})"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value=true"
                     }
                 }
             ],
@@ -324,7 +330,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.first().value.code= 'EmCare.B12S1.DE05' or %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.first().value.code='yes')"
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.first().value.code= 'EmCare.B12S1.DE05' )"
                     }
                 }
             ],
@@ -414,7 +420,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE01').answer.first().value.code='yes'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE01').answer.first().value.code='no'"
                     }
                 }
             ],
@@ -427,6 +433,15 @@
             "designNote": "status::draft"
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S1.DE01').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
             "linkId": "EmCare.B14S1.DE02",
             "text": "Itchy Skin",
             "type": "choice",

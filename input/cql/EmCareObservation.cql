@@ -76,6 +76,12 @@ define "hot to touch":
 define "emcare.b6.de05":
   B.HasObs(B.c('EmCare.B6.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
+/*"weight"*/
+define "weight":
+  B.HasObs(B.c('EmCare.B6.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b6.de06":
+  B.HasObs(B.c('EmCare.B6.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
 /*"weight cannot be measured"*/
 define "weight cannot be measured":
   B.HasObs(B.c('EmCare.B6.DE07'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -129,6 +135,12 @@ define "muac (mid upper arm circumference)":
   B.HasObs(B.c('EmCare.B6.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b6.de17":
   B.HasObs(B.c('EmCare.B6.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"muac cannot be measured"*/
+define "muac cannot be measured":
+  B.HasObs(B.c('EmCare.B6.DE17a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b6.de17a":
+  B.HasObs(B.c('EmCare.B6.DE17a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /*"visually assess for whether underweight (for drug dose calculation)"*/
 define "visually assess for whether underweight (for drug dose calculation)":
@@ -514,14 +526,14 @@ define "clouding of the cornea":
 define "emcare.b14s2.de03":
   B.HasObs(B.c('EmCare.B14S2.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"is clouding of cornea a new problem"*/
-define "is clouding of cornea a new problem":
+/*"is clouding of the cornea a new problem"*/
+define "is clouding of the cornea a new problem":
   B.HasObs(B.c('EmCare.B14S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b14s2.de04":
   B.HasObs(B.c('EmCare.B14S2.DE04'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"has clouding of cornea previously been treated"*/
-define "has clouding of cornea previously been treated":
+/*"has clouding of the cornea previously been treated"*/
+define "has clouding of the cornea previously been treated":
   B.HasObs(B.c('EmCare.B14S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b14s2.de05":
   B.HasObs(B.c('EmCare.B14S2.DE05'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -610,8 +622,8 @@ define "extensive warts":
 define "emcare.b14s2.de32a":
   B.HasObs(B.c('EmCare.B14S2.DE32a'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"severe seborrhea"*/
-define "severe seborrhea":
+/*"severe seborrhoeic dermatitis"*/
+define "severe seborrhoeic dermatitis":
   B.HasObs(B.c('EmCare.B14S2.DE34'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b14s2.de34":
   B.HasObs(B.c('EmCare.B14S2.DE34'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -893,4 +905,10 @@ define "fever":
   B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b.g.de06":
   B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"no - do not add a skin or mouth or eye problem"*/
+define "no - do not add a skin or mouth or eye problem":
+  B.HasObs(B.c('EmCare.B14S2.DE47'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b14s2.de47":
+  B.HasObs(B.c('EmCare.B14S2.DE47'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 

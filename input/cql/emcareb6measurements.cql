@@ -26,8 +26,8 @@ define "age in days":
 define "pastweightactualised":
     Z."pastweightactualised"
 
-/* ageinmonth.cql : Age in months*/
-define "ageinmonth.cql":
+/* ageinmonths.cql : Age in months*/
+define "ageinmonths.cql":
     AgeInMonths()
 
 /* age in months : Age in months*/

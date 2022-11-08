@@ -36,6 +36,9 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src where src.item.where(linkId='EmCare.B12S1.DE03').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb12s1de03(src,tgt) 'act-EmCare.B12S1.DE03';
     } 'emcareobservation';
+    src where src.item.where(linkId='EmCare.B.G.DE06').exists() then {
+        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcarebgde06(src,tgt) 'act-EmCare.B.G.DE06';
+    } 'emcareobservation';
     src where src.item.where(linkId='EmCare.B12S1.DE06').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb12s1de06(src,tgt) 'act-EmCare.B12S1.DE06';
     } 'emcareobservation';
@@ -340,6 +343,34 @@ group emcareobservationemcareb12s1de03(source src,target tgt){
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb12s1de03';
         } 'an-emcareb12s1de03';
     } 'it-emcareb12s1de03';
+}
+
+group emcareobservationemcarebgde06(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-emcarebgde06';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B.G.DE06'
+         'code-emcarebgde06';
+    src.item as item where linkId  =  'timestamp' then {
+        item.answer first as a then {
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    src.item first as item  where linkId =  'EmCare.B.G.DE06' then {
+        item.answer first as a then {
+            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcarebgde06';
+             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcarebgde06';
+        } 'an-emcarebgde06';
+    } 'it-emcarebgde06';
 }
 
 group emcareobservationemcareb12s1de06(source src,target tgt){

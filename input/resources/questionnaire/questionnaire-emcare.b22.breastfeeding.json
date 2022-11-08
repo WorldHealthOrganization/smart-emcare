@@ -1,0 +1,340 @@
+{
+    "resourceType": "Questionnaire",
+    "id": "emcare.b22.breastfeeding",
+    "meta": {
+        "profile": [
+            "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
+        ]
+    },
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "shareable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "computable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "publishable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+            "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.breastfeeding"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb22breastfeeding"
+        }
+    ],
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b22.breastfeeding",
+    "name": "EmCare.B22.BreastFeeding",
+    "title": "EmCare.B22.BreastFeeding",
+    "status": "active",
+    "experimental": false,
+    "subjectType": [
+        "Patient"
+    ],
+    "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "ageinmonths"
+                    }
+                }
+            ],
+            "linkId": "AgeInMonths",
+            "text": "Age",
+            "type": "integer",
+            "required": false,
+            "repeats": false,
+            "initial": [
+                {
+                    "valueInteger": 2
+                }
+            ]
+        },
+        {
+            "linkId": "EmCare.B22.DE27",
+            "text": "Breastfeeding Assessment",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "linkId": "EmCare.B22.DE28",
+            "text": "Breastfed in the previous hour",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE29",
+            "text": "Mother able to wait until young infant is willing to breastfeed again",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and (%resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'yes' or (%resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE29').answer.first().value.code = 'no'))"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE30",
+            "text": "Mother reports difficulty breastfeeding",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE29').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE31",
+            "text": "Chin Touching Breast",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE29').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE32",
+            "text": "Mouth Wide Open",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE29').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE33",
+            "text": "Lower Lip Turned Outwards",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE29').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE34",
+            "text": "More Areola Visible above than below the Mouth",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE28').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE29').answer.first().value.code = 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE35",
+            "text": "Slow Deep Sucks, Sometimes Pausing",
+            "type": "choice",
+            "required": true,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "open-choice",
+                                "display": "Open choice"
+                            }
+                        ],
+                        "text": "Open choice"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<6"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE31').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B22.DE32').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B22.DE33').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B22.DE34').answer.first().value.code = 'yes', 'EmCare.B22.DE37', iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and %resource.repeat(item).where(linkId='EmCare.B22.DE31').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE32').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE33').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B22.DE34').answer.first().value.code = 'no', 'EmCare.B22.DE38' , iif(%resource.repeat(item).where(linkId='EmCare.B22.DE35').answer.first().value.code = 'no', 'EmCare.B22.DE39', 'EmCare.B22.DE40') ))"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE36",
+            "text": "Breastfeeding Assessment Results",
+            "type": "choice",
+            "required": true,
+            "repeats": true,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/breastfeed-assessment"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 6 and (%resource.repeat(item).where(linkId='EmCare.B22.DE30').answer.first().value.code = 'no' or %resource.repeat(item).where(linkId='EmCare.B22.DE31').answer.first().value.code.exists() or %resource.repeat(item).where(linkId='EmCare.B22.DE32').answer.first().value.code.exists() or %resource.repeat(item).where(linkId='EmCare.B22.DE33').answer.first().value.code.exists() or %resource.repeat(item).where(linkId='EmCare.B22.DE34').answer.first().value.code.exists() or %resource.repeat(item).where(linkId='EmCare.B22.DE35').answer.first().value.code.exists() )"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE41",
+            "text": "Breastfeeding Assessment Not Possible",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<6 and %resource.repeat(item).where(linkId='EmCare.B22.DE30').answer.first().value.code != 'yes' and %resource.repeat(item).where(linkId='EmCare.B22.DE35').answer.first().value.code= 'yes'"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE42",
+            "text": "Difficulty Breastfeeding Reported",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<6"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE43",
+            "text": "No Difficulty Breastfeeding Reported",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<6"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE44",
+            "text": "Difficulty Breastfeeding Observed",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<6"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE45",
+            "text": "No Difficulty Breastfeeding Observed",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "now()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "timestamp",
+            "type": "dateTime",
+            "required": false
+        }
+    ]
+}

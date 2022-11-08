@@ -364,6 +364,12 @@ define "fever for how long?":
 define "emcare.b12s1.de03":
   B.HasObs(B.c('EmCare.B12S1.DE03'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
+/*"fever"*/
+define "fever":
+  B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b.g.de06":
+  B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
 /*"has fever been present every day since the fever started?"*/
 define "has fever been present every day since the fever started?":
   B.HasObs(B.c('EmCare.B12S1.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -712,12 +718,6 @@ define "no fast breathing and no chest indrawing (post inhaled bronchodilator tr
 define "emcare.b22.de21":
   B.HasObs(B.c('EmCare.B22.DE21'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"inhaled bronchodilator trial results"*/
-define "inhaled bronchodilator trial results":
-  B.HasObs(B.c('EmCare.B22.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "emcare.b22.de17":
-  B.HasObs(B.c('EmCare.B22.DE17'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
 /*"breastfeeding assessment"*/
 define "breastfeeding assessment":
   B.HasObs(B.c('EmCare.B22.DE27'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -808,6 +808,18 @@ define "no difficulty breastfeeding observed":
 define "emcare.b22.de45":
   B.HasObs(B.c('EmCare.B22.DE45'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
+/*"hemoglobin (hb) g/dl"*/
+define "hemoglobin (hb) g/dl":
+  B.HasObs(B.c('EmCare.B22.DE81'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b22.de81":
+  B.HasObs(B.c('EmCare.B22.DE81'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/*"hemoglobin test not available"*/
+define "hemoglobin test not available":
+  B.HasObs(B.c('EmCare.B22.DE82'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b22.de82":
+  B.HasObs(B.c('EmCare.B22.DE82'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
 /*"second temperature measurement feasible"*/
 define "second temperature measurement feasible":
   B.HasObs(B.c('EmCare.B22.DE46'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -852,18 +864,6 @@ no low body temperature":
 define "emcare.b22.de52":
   B.HasObs(B.c('EmCare.B22.DE52'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/*"hemoglobin (hb) g/dl"*/
-define "hemoglobin (hb) g/dl":
-  B.HasObs(B.c('EmCare.B22.DE81'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "emcare.b22.de81":
-  B.HasObs(B.c('EmCare.B22.DE81'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/*"hemoglobin test not available"*/
-define "hemoglobin test not available":
-  B.HasObs(B.c('EmCare.B22.DE82'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "emcare.b22.de82":
-  B.HasObs(B.c('EmCare.B22.DE82'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
 /*"oral fluid test results"*/
 define "oral fluid test results":
   B.HasObs(B.c('EmCare.B22.DE08'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
@@ -893,18 +893,6 @@ define "how did the child last drink":
   B.HasObs(B.c('EmCare.B22.DE16'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 define "emcare.b22.de16":
   B.HasObs(B.c('EmCare.B22.DE16'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/*"danger signs"*/
-define "danger signs":
-  B.HasObs(B.c('EmCare.B.G.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "emcare.b.g.de01":
-  B.HasObs(B.c('EmCare.B.G.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/*"fever"*/
-define "fever":
-  B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "emcare.b.g.de06":
-  B.HasObs(B.c('EmCare.B.G.DE06'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /*"no - do not add a skin or mouth or eye problem"*/
 define "no - do not add a skin or mouth or eye problem":

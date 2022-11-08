@@ -44,10 +44,17 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "cel"
+                    }
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.first().empty()"
                     }
                 }
             ],
@@ -55,8 +62,7 @@
             "text": "Axillary Temperature",
             "type": "quantity",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -77,7 +83,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().empty()"
                     }
                 }
             ],
@@ -92,8 +98,7 @@
                         "display": "Thermometer not available"
                     }
                 }
-            ],
-            "designNote": "status::draft"
+            ]
         },
         {
             "extension": [
@@ -101,7 +106,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.exists()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.first().exists()"
                     }
                 }
             ],
@@ -110,16 +115,22 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                        "code": "kg"
+                    }
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().empty()"
                     }
                 }
             ],
@@ -127,8 +138,7 @@
             "text": "Weight",
             "type": "quantity",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -149,7 +159,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.first().empty()"
                     }
                 }
             ],
@@ -164,8 +174,7 @@
                         "display": "Weight cannot be measured"
                     }
                 }
-            ],
-            "designNote": "status::draft"
+            ]
         },
         {
             "extension": [
@@ -173,7 +182,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.exists()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().exists()"
                     }
                 }
             ],
@@ -181,8 +190,7 @@
             "text": "Estimated Weight",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -202,8 +210,7 @@
             "text": "Age in Days",
             "type": "integer",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -222,8 +229,7 @@
             "linkId": "pastWeightActualised",
             "type": "decimal",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -235,11 +241,11 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "ageinmonth.cql"
+                        "expression": "ageinmonths.cql"
                     }
                 }
             ],
-            "linkId": "AgeInMonth.cql",
+            "linkId": "AgeInMonths.cql",
             "text": "Age in months",
             "type": "integer",
             "required": false,
@@ -248,8 +254,7 @@
                 {
                     "valueInteger": 2
                 }
-            ],
-            "designNote": "status::draft"
+            ]
         },
         {
             "extension": [
@@ -269,8 +274,7 @@
             "text": "Age in years",
             "type": "integer",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -278,7 +282,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='pastWeightActualised').answer.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='pastWeightActualised').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().value = true"
                     }
                 }
             ],
@@ -290,10 +294,17 @@
                 {
                     "extension": [
                         {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                            "valueCoding": {
+                                "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                                "code": "cm"
+                            }
+                        },
+                        {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonth.cql').answer.first().value>=24  or %resource.repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().value.code='yes') and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.empty()"
+                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value>=24  or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().value.code='yes') and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().empty() and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().empty()"
                             }
                         }
                     ],
@@ -301,8 +312,7 @@
                     "text": "Height",
                     "type": "quantity",
                     "required": false,
-                    "repeats": false,
-                    "designNote": "status::draft"
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -323,7 +333,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.empty() and %resource.repeat(item).where(linkId='AgeInMonth.cql').answer.first().value>=24"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().empty() and %resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value>=24"
                             }
                         }
                     ],
@@ -338,8 +348,7 @@
                                 "display": "Prefer to measure length"
                             }
                         }
-                    ],
-                    "designNote": "status::draft"
+                    ]
                 },
                 {
                     "extension": [
@@ -360,7 +369,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.empty() and %resource.repeat(item).where(linkId='AgeInMonth.cql').answer.first().value>=24"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().empty() and %resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value>=24"
                             }
                         }
                     ],
@@ -375,23 +384,29 @@
                                 "display": "Height cannot be measured"
                             }
                         }
-                    ],
-                    "designNote": "status::draft"
+                    ]
                 },
                 {
                     "extension": [
                         {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                            "valueCoding": {
+                                "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                                "code": "cm"
+                            }
+                        },
+                        {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.exists()'"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().exists()'"
                             }
                         },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value >= 24 and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value.code = 'yes', %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.first().value-0.7, '')"
+                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value >= 24 and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value.code = 'yes', %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().value-0.7, '')"
                             }
                         }
                     ],
@@ -399,8 +414,7 @@
                     "text": "Length",
                     "type": "quantity",
                     "required": false,
-                    "repeats": false,
-                    "designNote": "status::draft"
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -408,7 +422,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE12').answer.exists() and %resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.empty()"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12').answer.first().exists() and %resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().empty()"
                             }
                         }
                     ],
@@ -417,8 +431,7 @@
                     "type": "choice",
                     "required": false,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-                    "designNote": "status::draft"
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
                 },
                 {
                     "extension": [
@@ -426,7 +439,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE12').answer.exists() and %resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='EmCare.B6.DE09').answer.empty()"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12').answer.first().exists() and %resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<24 or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().empty()"
                             }
                         }
                     ],
@@ -435,8 +448,7 @@
                     "type": "choice",
                     "required": false,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-                    "designNote": "status::draft"
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
                 },
                 {
                     "extension": [
@@ -444,7 +456,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE11').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value.code ='no' and %resource.repeat(item).where(linkId='AgeInYear.cq').answer.first().value>=2"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value.code ='no' and %resource.repeat(item).where(linkId='AgeInYears.cql').answer.first().value>=2"
                             }
                         }
                     ],
@@ -452,8 +464,7 @@
                     "text": "Weight for Height (WFH) Z Scores",
                     "type": "integer",
                     "required": false,
-                    "repeats": false,
-                    "designNote": "status::draft"
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -461,7 +472,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE13').answer.first().value.code = 'no' and  %resource.repeat(item).where(linkId='AgeInDays.cql').answer.first().value>=60"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE13').answer.first().value.code = 'no' and  %resource.repeat(item).where(linkId='AgeInDays.cql').answer.first().value>=60"
                             }
                         }
                     ],
@@ -469,24 +480,29 @@
                     "text": "Weight for Length (WFL) Z Scores",
                     "type": "integer",
                     "required": false,
-                    "repeats": false,
-                    "designNote": "status::draft"
+                    "repeats": false
                 },
                 {
                     "linkId": "EmCare.B6.DE16",
                     "text": "Weight for Age (WFA) Z Scores",
                     "type": "integer",
                     "required": false,
-                    "repeats": false,
-                    "designNote": "status::draft"
+                    "repeats": false
                 },
                 {
                     "extension": [
                         {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                            "valueCoding": {
+                                "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                                "code": "mm"
+                            }
+                        },
+                        {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonth.cql').answer.first().value<6 and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.empty()"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value<6 and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE17').answer.first().empty()"
                             }
                         }
                     ],
@@ -494,8 +510,7 @@
                     "text": "MUAC (Mid Upper Arm Circumference)",
                     "type": "quantity",
                     "required": false,
-                    "repeats": false,
-                    "designNote": "status::draft"
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -516,7 +531,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.empty()"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE17').answer.first().empty()"
                             }
                         }
                     ],
@@ -531,8 +546,7 @@
                                 "display": "MUAC cannot be measured"
                             }
                         }
-                    ],
-                    "designNote": "status::draft"
+                    ]
                 },
                 {
                     "extension": [
@@ -553,7 +567,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE17a').answer.first().value.code='yes'"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE17a').answer.first().value.code='yes'"
                             }
                         }
                     ],
@@ -562,11 +576,9 @@
                     "type": "choice",
                     "required": false,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/underweight",
-                    "designNote": "status::draft"
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/underweight"
                 }
-            ],
-            "designNote": "status::draft"
+            ]
         },
         {
             "extension": [

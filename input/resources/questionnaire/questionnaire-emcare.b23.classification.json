@@ -51,15 +51,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "severe pneumonia or very severe disease"
+                        "expression": "dl-g-cl1-07"
                     }
                 }
             ],
-            "linkId": "Severe Pneumonia or Very Severe Disease",
+            "linkId": "DL-G-CL1-07",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -71,15 +70,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "with low oxygen saturation (spo2 < 90%)"
+                        "expression": "emcare.b23.de04"
                     }
                 }
             ],
-            "linkId": "with low oxygen saturation (SPO2 < 90%)",
+            "linkId": "EmCare.B23.DE04",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -91,15 +89,26 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "with wheezing"
+                        "expression": "emcare.b23.de05"
                     }
                 }
             ],
-            "linkId": "with wheezing",
+            "linkId": "EmCare.B23.DE05",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "nan",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
         },
         {
             "extension": [
@@ -111,35 +120,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "with recurrent wheeze"
+                        "expression": "emcare.b23.de08"
                     }
                 }
             ],
-            "linkId": "with recurrent wheeze",
+            "linkId": "EmCare.B23.DE08",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "with cough or difficulty breathing for 14 days or more"
-                    }
-                }
-            ],
-            "linkId": "with cough or difficulty breathing for 14 days or more",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -158,8 +146,7 @@
             "linkId": "measles in last 3 months",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -167,7 +154,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Severe Pneumonia or Very Severe Disease').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-07').answer.first().value = true"
                     }
                 }
             ],
@@ -177,41 +164,40 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+            "item": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "pneumonia"
-                    }
-                }
-            ],
-            "linkId": "Pneumonia",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE04').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE04_l",
+                    "text": "with low oxygen saturation (SPO2 < 90%)",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Pneumonia').answer.first().value = true"
-                    }
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE05').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE05_l",
+                    "text": "with wheezing",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
                 }
-            ],
-            "linkId": "EmCare.B23.DE06",
-            "text": "Pneumonia",
-            "type": "choice",
-            "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            ]
         },
         {
             "extension": [
@@ -223,15 +209,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "cough or cold"
+                        "expression": "dl-g-cl1-14"
                     }
                 }
             ],
-            "linkId": "Cough or Cold",
+            "linkId": "DL-G-CL1-14",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -239,7 +224,77 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Cough or Cold').answer.first().value=true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-14').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE06",
+            "text": "Pneumonia",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE05').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE05_l",
+                    "text": "with wheezing",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE08').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE08_l",
+                    "text": "with cough or difficulty breathing for 14 days or more or recurrent wheeze",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "dl-g-cl1-19"
+                    }
+                }
+            ],
+            "linkId": "DL-G-CL1-19",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-19').answer.first().value=true"
                     }
                 }
             ],
@@ -249,23 +304,59 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE05').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE05_l",
+                    "text": "with wheezing",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE08').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE08_l",
+                    "text": "with cough or difficulty breathing for 14 days or more or recurrent wheeze",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "severe dehydration"
+                        "expression": "dl-g-cl1-23-30"
                     }
                 }
             ],
-            "linkId": "Severe Dehydration",
+            "linkId": "DL-G-CL1-23-30",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -273,7 +364,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Severe Dehydration').answer.first().value=true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-23-30').answer.first().value=true"
                     }
                 }
             ],
@@ -282,24 +373,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "some dehydration"
+                        "expression": "dl-g-cl1-24-32"
                     }
                 }
             ],
-            "linkId": "Some Dehydration",
+            "linkId": "DL-G-CL1-24-32",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -307,7 +400,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Some Dehydration').answer.first().value=true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-24-32').answer.first().value=true"
                     }
                 }
             ],
@@ -316,24 +409,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "no dehydration"
+                        "expression": "dl-g-cl1-30"
                     }
                 }
             ],
-            "linkId": "No Dehydration",
+            "linkId": "DL-G-CL1-30",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -341,7 +436,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='No Dehydration').answer.first().value=true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-30').answer.first().value=true"
                     }
                 }
             ],
@@ -350,24 +445,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "severe persistent diarrhoea"
+                        "expression": "dl-g-cl1-31"
                     }
                 }
             ],
-            "linkId": "Severe Persistent Diarrhoea",
+            "linkId": "DL-G-CL1-31",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -375,7 +472,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Severe Persistent Diarrhoea').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-31').answer.first().value = true"
                     }
                 }
             ],
@@ -384,24 +481,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "persistent diarrhoea"
+                        "expression": "dl-g-cl1-32"
                     }
                 }
             ],
-            "linkId": "Persistent Diarrhoea",
+            "linkId": "DL-G-CL1-32",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -409,7 +508,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Persistent Diarrhoea').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-32').answer.first().value = true"
                     }
                 }
             ],
@@ -418,24 +517,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dysentery"
+                        "expression": "dl-g-cl1-33"
                     }
                 }
             ],
-            "linkId": "Dysentery",
+            "linkId": "DL-G-CL1-33",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -443,7 +544,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Dysentery').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-33').answer.first().value = true"
                     }
                 }
             ],
@@ -452,24 +553,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "possible shigella"
+                        "expression": "dl-i-cl1-01"
                     }
                 }
             ],
-            "linkId": "Possible Shigella",
+            "linkId": "DL-I-CL1-01",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -477,7 +580,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Possible Shigella').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-01').answer.first().value = true"
                     }
                 }
             ],
@@ -486,24 +589,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "throat abscess or possible diptheria"
+                        "expression": "dl-i-cl1-05"
                     }
                 }
             ],
-            "linkId": "Throat Abscess or Possible Diptheria",
+            "linkId": "DL-I-CL1-05",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -511,7 +616,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Throat Abscess or Possible Diptheria').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-05').answer.first().value = true"
                     }
                 }
             ],
@@ -520,24 +625,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "streptococcal sore throat"
+                        "expression": "dl-i-cl1-06"
                     }
                 }
             ],
-            "linkId": "Streptococcal Sore Throat",
+            "linkId": "DL-I-CL1-06",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -545,7 +652,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Streptococcal Sore Throat').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-06').answer.first().value = true"
                     }
                 }
             ],
@@ -554,24 +661,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "non-streptococcal sore throat"
+                        "expression": "dl-i-cl1-07"
                     }
                 }
             ],
-            "linkId": "Non-Streptococcal Sore Throat",
+            "linkId": "DL-I-CL1-07",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -579,7 +688,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Non-Streptococcal Sore Throat').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-07').answer.first().value = true"
                     }
                 }
             ],
@@ -588,24 +697,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "no throat problem"
+                        "expression": "dl-i-cl1-09"
                     }
                 }
             ],
-            "linkId": "No Throat Problem",
+            "linkId": "DL-I-CL1-09",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -613,7 +724,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='No Throat Problem').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-09').answer.first().value = true"
                     }
                 }
             ],
@@ -622,24 +733,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "mastoiditis"
+                        "expression": "dl-g-cl1-73"
                     }
                 }
             ],
-            "linkId": "Mastoiditis",
+            "linkId": "DL-G-CL1-73",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -647,7 +760,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Mastoiditis').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-73').answer.first().value = true"
                     }
                 }
             ],
@@ -656,24 +769,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "acute ear infection"
+                        "expression": "dl-g-cl1-74-76"
                     }
                 }
             ],
-            "linkId": "Acute Ear Infection",
+            "linkId": "DL-G-CL1-74-76",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -681,7 +796,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Acute Ear Infection').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-74-76').answer.first().value = true"
                     }
                 }
             ],
@@ -690,40 +805,45 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "chronic ear infection"
-                    }
-                }
-            ],
-            "linkId": "Chronic Ear Infection",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "with ear pain or fever"
+                        "expression": "dl-i-cl1-11-12"
                     }
                 }
             ],
-            "linkId": "with ear pain or fever",
+            "linkId": "DL-I-CL1-11-12",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b23.de32a"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE32a",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
         },
         {
             "extension": [
@@ -731,7 +851,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Chronic Ear Infection').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-11-12').answer.first().value = true"
                     }
                 }
             ],
@@ -741,23 +861,43 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE32a').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE32a_l",
+                    "text": "with ear pain or fever",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "no ear infection"
+                        "expression": "dl-g-cl1-79"
                     }
                 }
             ],
-            "linkId": "No Ear Infection",
+            "linkId": "DL-G-CL1-79",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -765,7 +905,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='No Ear Infection').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-79').answer.first().value = true"
                     }
                 }
             ],
@@ -774,24 +914,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "very severe febrile disease"
+                        "expression": "dl-g-cl1-34"
                     }
                 }
             ],
-            "linkId": "Very Severe Febrile Disease",
+            "linkId": "DL-G-CL1-34",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -799,7 +941,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Very Severe Febrile Disease').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-34').answer.first().value = true"
                     }
                 }
             ],
@@ -808,40 +950,45 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "fever: possible bacterial infection"
-                    }
-                }
-            ],
-            "linkId": "Fever: possible bacterial infection",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "fever present every day for 7 days or more"
+                        "expression": "dl-i-cl1-03"
                     }
                 }
             ],
-            "linkId": "Fever present every day for 7 Days or more",
+            "linkId": "DL-I-CL1-03",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b23.de26a"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE26a",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
         },
         {
             "extension": [
@@ -849,7 +996,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Fever: possible bacterial infection').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-03').answer.first().value = true"
                     }
                 }
             ],
@@ -859,23 +1006,43 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE26a').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE26a_l",
+                    "text": "Fever present every day for 7 Days or more",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "fever: bacterial infection unlikely"
+                        "expression": "dl-i-cl1-26"
                     }
                 }
             ],
-            "linkId": "Fever: bacterial infection unlikely",
+            "linkId": "DL-I-CL1-26",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -883,7 +1050,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Fever: bacterial infection unlikely').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-26').answer.first().value = true"
                     }
                 }
             ],
@@ -892,24 +1059,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "severe complicated measles"
+                        "expression": "dl-i-cl1-16-67a"
                     }
                 }
             ],
-            "linkId": "Severe Complicated Measles",
+            "linkId": "DL-I-CL1-16-67a",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -917,7 +1086,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Severe Complicated Measles').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-16-67a').answer.first().value = true"
                     }
                 }
             ],
@@ -926,24 +1095,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "measles with eye or mouth complication"
+                        "expression": "dl-g-cl1-68-70"
                     }
                 }
             ],
-            "linkId": "Measles with Eye or Mouth Complication",
+            "linkId": "DL-G-CL1-68-70",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -951,7 +1122,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Measles with Eye or Mouth Complication').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-68-70').answer.first().value = true"
                     }
                 }
             ],
@@ -960,24 +1131,26 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "possible measles"
+                        "expression": "dl-g-cl1-71"
                     }
                 }
             ],
-            "linkId": "Possible Measles",
+            "linkId": "DL-G-CL1-71",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -985,7 +1158,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Possible Measles').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-71').answer.first().value = true"
                     }
                 }
             ],
@@ -994,11 +1167,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1008,11 +1184,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-109",
-            "text": "Severe Anaemia",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1029,11 +1203,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1043,11 +1220,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-110",
-            "text": "Anaemia",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1064,11 +1239,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1078,11 +1256,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-111",
-            "text": "No Anaemia",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1099,11 +1275,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1113,11 +1292,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-80",
-            "text": "Eye Infection",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1134,11 +1311,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1148,11 +1328,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-83",
-            "text": "Clouding of the Cornea",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1170,26 +1348,50 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE36').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B23.DE36_l",
+                    "text": "New or not previously treated",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "new or not previously treated"
+                        "expression": "emcare.b23.de36"
                     }
                 }
             ],
-            "linkId": "New or not previously treated",
+            "linkId": "EmCare.B23.DE36",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1199,11 +1401,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-88",
-            "text": "Papular Urticaria or Papular Pruritic Eruptions",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1220,11 +1420,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1234,11 +1437,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-90",
-            "text": "Ringworm (Tinea)",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1256,26 +1457,50 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE43a').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-15",
+                    "text": "Scalp Infection (tinea capitis)",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-15"
+                        "expression": "emcare.b23.de43a"
                     }
                 }
             ],
-            "linkId": "DL-I-CL1-15",
+            "linkId": "EmCare.B23.DE43a",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1285,11 +1510,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-91",
-            "text": "Scabies",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1306,11 +1529,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1320,11 +1546,9 @@
                 }
             ],
             "linkId": "DL-G-CL1-93",
-            "text": "Chickenpox",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1342,43 +1566,85 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE46A').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-16",
+                    "text": "with Severe Rash",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE46').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-G-CL1-92",
+                    "text": "with Pneumonia",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-16"
-                    }
-                }
-            ],
-            "linkId": "DL-I-CL1-16",
-            "text": "Severe rash",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-g-cl1-92"
+                        "expression": "emcare.b23.de46a"
                     }
                 }
             ],
-            "linkId": "DL-G-CL1-92",
+            "linkId": "EmCare.B23.DE46A",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b23.de46"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE46",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1390,8 +1656,7 @@
             "linkId": "DL-G-CL1-95",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1408,43 +1673,84 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-g-cl1-94"
+                        "expression": "emcare.b23.de48"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE48",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE48').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "DL-G-CL1-94",
-            "type": "boolean",
+            "text": "with eye involvement",
+            "type": "display",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-17"
+                        "expression": "emcare.b23.de48a"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE48a",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE48a').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "DL-I-CL1-17",
-            "type": "boolean",
+            "text": "with Disseminated Herpes Zoste",
+            "type": "display",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1456,8 +1762,7 @@
             "linkId": "DL-G-CL1-98",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1475,42 +1780,85 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE50').answer.first().value=true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-G-CL1-96",
+                    "text": "extends to muscle or with measured fever",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "$EmCare.B23.DE50a} = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-18",
+                    "text": "with extensive lesions",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "dl-g-cl1-96"
-                    }
-                }
-            ],
-            "linkId": "DL-G-CL1-96",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-18"
+                        "expression": "emcare.b23.de50"
                     }
                 }
             ],
-            "linkId": "DL-I-CL1-18",
+            "linkId": "EmCare.B23.DE50",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b23.de50a"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE50a",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1522,8 +1870,7 @@
             "linkId": "DL-G-CL1-99",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1541,26 +1888,50 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE52a').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-19",
+                    "text": "with extensive lesions or lesions close to the eye",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-19"
+                        "expression": "emcare.b23.de52a"
                     }
                 }
             ],
-            "linkId": "DL-I-CL1-19",
+            "linkId": "EmCare.B23.DE52a",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1572,8 +1943,7 @@
             "linkId": "DL-G-CL1-100",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1591,26 +1961,50 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE53a').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-20",
+                    "text": "Extensive warts",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-20"
+                        "expression": "emcare.b23.de53a"
                     }
                 }
             ],
-            "linkId": "DL-I-CL1-20",
+            "linkId": "EmCare.B23.DE53a",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1622,8 +2016,7 @@
             "linkId": "DL-G-CL1-102",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1641,26 +2034,50 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE55').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-G-CL1-101",
+                    "text": "Severe Seborrhoeic Dermatitis",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-g-cl1-101"
+                        "expression": "emcare.b23.de55"
                     }
                 }
             ],
-            "linkId": "DL-G-CL1-101",
+            "linkId": "EmCare.B23.DE55",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1672,8 +2089,7 @@
             "linkId": "DL-G-CL1-103",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1690,11 +2106,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1706,8 +2125,7 @@
             "linkId": "DL-G-CL1-104",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1725,58 +2143,120 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE57a').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-21",
+                    "text": "Severe acute moist or weeping eczema",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE57').repeat(item).where(linkId='DL-I-CL1-22').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-22",
+                    "text": "Secondary bacterial infection of eczema",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B23.DE57').repeat(item).where(linkId='DL-I-CL1-23').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-I-CL1-23",
+                    "text": "Secondary herpes infection (eczema herpeticum)",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-21"
-                    }
-                }
-            ],
-            "linkId": "DL-I-CL1-21",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
-        },
-        {
-            "extension": [
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-22"
+                        "expression": "emcare.b23.de57a"
                     }
                 }
             ],
-            "linkId": "DL-I-CL1-22",
+            "linkId": "EmCare.B23.DE57a",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-i-cl1-23"
+                        "expression": "emcare.b23.de57b"
                     }
                 }
             ],
-            "linkId": "DL-I-CL1-23",
+            "linkId": "EmCare.B23.DE57b",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b23.de57c"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B23.DE57c",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1788,8 +2268,7 @@
             "linkId": "DL-G-CL1-105",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1806,11 +2285,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1822,8 +2304,7 @@
             "linkId": "DL-G-CL1-106",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1841,26 +2322,50 @@
             "required": false,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='DL-G-CL1-108').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "DL-G-CL1-107",
+                    "text": "Deep or Extensive",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "dl-g-cl1-107"
+                        "expression": "emcare.b23.de60"
                     }
                 }
             ],
-            "linkId": "DL-G-CL1-107",
+            "linkId": "EmCare.B23.DE60",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1872,8 +2377,7 @@
             "linkId": "DL-G-CL1-108",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1890,11 +2394,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1906,20 +2413,31 @@
             "linkId": "DL-I-CL1-28",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='DL-I-CL1-28').answer.first().value = true"
+                    }
+                }
+            ],
             "linkId": "EmCare.B23.DE106",
             "text": "Very Low Weight for Age",
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1931,8 +2449,7 @@
             "linkId": "DL-I-CL1-33",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1949,11 +2466,14 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -1965,8 +2485,7 @@
             "linkId": "DL-I-CL1-34",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "designNote": "status::draft"
+            "repeats": false
         },
         {
             "extension": [
@@ -1983,8 +2502,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno",
-            "designNote": "status::draft"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
         },
         {
             "extension": [

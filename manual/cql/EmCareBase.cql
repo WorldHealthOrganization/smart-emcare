@@ -24,6 +24,14 @@ define "Yes":
 define "No":
   coding('no', '{{cs_url}}')
 
+define function getValue(O Observation):
+  case  
+      when  O = null then null
+      when O.value is null then true
+      else O.value
+  end
+
+
 define function assesObservation(O Observation):
   case  
       when  O = null then null
@@ -39,6 +47,7 @@ define function GetObservationDuringEncounter(idlist List<code>, codesystem FHIR
       GetObservationDuringEncounterDone(idlist , codesystem  )
   else
     GetObservationDuringEncounterNotFound(idlist , codesystem  )
+
 
 
 define function GetObservationDuringEncounterDone(idlist List<code>, codesystem FHIR.url):
@@ -63,6 +72,23 @@ define function GetNumberObservationDuringEncounter(idlist List<code>, codesyste
         and O.status in { 'final', 'amended', 'corrected'}
         and exists((O.code.coding C where C.code in idlist 
         and C.system = codesystem)))
+
+// ************************   GetObsValue ************************/
+
+define function GetObsValue(idlist List<FHIR.code>, codesystem System.String):
+    getValue(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
+
+define function GetObsValue(id FHIR.code, codesystem System.String):
+    getValue(GetObservationDuringEncounter({id}, ToUrl(codesystem)))
+
+define function GetObsValue(id System.String, codesystem System.String):
+    getValue(GetObservationDuringEncounter({c(id)}, ToUrl(codesystem)))
+
+define function GetObsValue(id System.String):
+    getValue(GetObservationDuringEncounter({c(id)}, ToUrl('{{cs_url}}')))
+
+
+// ************************   HasObs ************************/
 
 define function HasObs(idlist List<FHIR.code>, codesystem System.String):
     assesObservation(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
@@ -98,7 +124,7 @@ define function GetHistoricObservationNotfound(idlist List<code>, codesystem FHI
           and exists(O.code.coding C where C.code in idlist 
           and C.system = codesystem))
   
-// ************************   PatientHasHistoryOfObservation ************************/
+// ************************   HasObsHistory ************************/
 
 
 define function HasObsHistory(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):

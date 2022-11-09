@@ -90,10 +90,10 @@ group getUrlemcareencounter(source src,target tgt){
 
 group emcarerelatedpersonaccompanying(source src : questionnaireResponse,target tgt : RelatedPerson){
     src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
-        itm1.item first as item  where linkId =  'EmCare.A.DE40' then {
+        itm1.item first as item  where linkId =  'EmCare.A.DE41' or linkId= 'EmCare.A.DE40' then {
             src -> tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedpersonaccompanying(src, name) '3810df8b';
-        } '27be6d40';
-    } '2b3f4975';
+        } 'e7f1578a';
+    } 'd100c750';
     src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
         itm1.item first as item  where linkId =  'EmCare.A.DE41' then {
             item.answer first as a then {
@@ -110,22 +110,21 @@ group emcarerelatedpersonaccompanying(source src : questionnaireResponse,target 
 
 group SetOfficalGivenNameemcarerelatedpersonaccompanying(source src,target tgt){
     src -> tgt.use = 'official' then {
-        src.item as item where linkId  =  'EmCare.A.DE40' then {
-            item.answer first as a then {
-                a.value as val -> tgt.given = val  '577eab5d';
-            } 'dcd99d74';
-        } '3674e72e';
-        src.item as item where linkId  =  'xx' then {
-            item.answer first as a then {
-                a.value as val -> tgt.given = val  '577eab5d';
-            } 'dcd99d74';
-        } 'ed185a8f';
-        src.item as item where linkId  =  'EmCare.A.DE41' then {
-            item.answer first as a then {
-                a.value as val -> tgt.family = val  '2374a9a1';
-            } '09801739';
-        } '5e808790';
-    } 'a27aa7d2';
+        src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
+            itm1.item first as item  where linkId =  'EmCare.A.DE41' then {
+                item.answer first as a then {
+                    a.value as val -> tgt.family = val '77d1bd4f';
+                } 'e0827d5d';
+            } 'ff55696b';
+        } 'd7e96bf2';
+        src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
+            itm1.item first as item  where linkId =  'EmCare.A.DE40' then {
+                item.answer first as a then {
+                    a.value as val -> tgt.given = val '5d3d44f6';
+                } '18edd234';
+            } 'e84a0f31';
+        } 'f3fd65b0';
+    } '226010d3';
 }
 
 group MapValueSetExtCodeemcareade43(source src,target tgt){
@@ -185,11 +184,11 @@ group emcareobservationemcareb3de05(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B3.DE05' then {
+    src.item first as item  where linkId = 'EmCare.B3.DE05' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb3de05';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb3de05';
-        } 'an-emcareb3de05';
-    } 'it-emcareb3de05';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb3de05';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb3de05';
+        } '41672faa';
+    } 'ef117a34';
 }
 

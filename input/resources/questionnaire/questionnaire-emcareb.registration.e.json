@@ -26,10 +26,6 @@
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
             "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e"
-        },
-        {
-            "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcarebregistratione"
         }
     ],
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcareb.registration.e",
@@ -48,26 +44,25 @@
                     "valueBoolean": true
                 },
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "emcare.a.de07"
+                        "language": "text/fhirpath",
+                        "expression": "today()"
                     }
                 }
             ],
             "linkId": "EmCare.A.DE07",
             "text": "Visit date",
-            "type": "dateTime",
+            "type": "date",
             "required": false,
             "repeats": false
         },
         {
             "linkId": "EmCare.A.DE39",
             "text": "Person accompanying child Today is the primary Caregiver",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -79,7 +74,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value.code = 'no'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value = false"
                     }
                 }
             ],
@@ -112,7 +107,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value.code = 'no'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value = false"
                     }
                 }
             ],
@@ -156,7 +151,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value.code = 'no', %resource.repeat(item).where(linkId='relatedpersonuuid').answer.first().value,{})"
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value = false, %resource.repeat(item).where(linkId='relatedpersonuuid').answer.first().value,{})"
                     }
                 }
             ],
@@ -171,7 +166,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value.code = 'no'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE39').answer.first().value = false"
                     }
                 }
             ],
@@ -226,7 +221,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B3.DE05').answer.first().value.code = 'yes', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'|'Sick Child', {})"
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B3.DE05').answer.first().value = true, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'|'Sick Child', {})"
                     }
                 }
             ],
@@ -240,10 +235,9 @@
         {
             "linkId": "EmCare.B3.DE05",
             "text": "Is the child sick Today?",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [

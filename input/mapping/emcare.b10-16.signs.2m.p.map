@@ -6,8 +6,8 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src where src.item.where(linkId='EmCare.B22.DE01').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de01(src,tgt) 'act-EmCare.B22.DE01';
+    src where src.item.where(linkId='EmCare.B22.RespiratoryRate').exists() then {
+        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22respiratoryrate(src,tgt) 'act-EmCare.B22.RespiratoryRate';
     } 'emcareobservation';
     src where src.item.where(linkId='EmCare.B10S2.DE02').exists() then {
         src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb10s2de02(src,tgt) 'act-EmCare.B10S2.DE02';
@@ -149,33 +149,6 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     } 'emcareobservation';
 }
 
-group emcareobservationemcareb22de01(source src,target tgt){
-        src -> tgt.identifier = create('Identifier') as CodeID,
-            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
-            CodeID.use =  'official',
-            CodeID.value = 'uuid',
-            CodeID.id = uuid()
-         'id-emcareb22de01';
-    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
-        src.subject as subject -> tgt.subject = subject,
-            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
-                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                coding.code = 'EmCare.B22.DE01'
-         'code-emcareb22de01';
-    src.item as item where linkId  =  'timestamp' then {
-        item.answer first as a then {
-            a.value as val -> tgt.issued = val  '8945c96b';
-        } '4272fc8b';
-    } 'f4472f32';
-    src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B22.DE01' then {
-        item.answer first as a then {
-            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb22de01';
-        } 'an-emcareb22de01';
-    } 'it-emcareb22de01';
-}
-
 group emcareobservationemcareb10s2de02(source src,target tgt){
         src -> tgt.identifier = create('Identifier') as CodeID,
             CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
@@ -196,12 +169,12 @@ group emcareobservationemcareb10s2de02(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE02' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE02' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb10s2de02';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de02';
-        } 'an-emcareb10s2de02';
-    } 'it-emcareb10s2de02';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb10s2de02';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb10s2de02';
+        } '41672faa';
+    } 'cff5e2b4';
 }
 
 group emcareobservationemcareb10s2de03(source src,target tgt){
@@ -224,12 +197,12 @@ group emcareobservationemcareb10s2de03(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE03' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE03' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb10s2de03';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de03';
-        } 'an-emcareb10s2de03';
-    } 'it-emcareb10s2de03';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb10s2de03';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb10s2de03';
+        } '41672faa';
+    } '745cf28f';
 }
 
 group emcareobservationemcareb10s2de04(source src,target tgt){
@@ -252,12 +225,12 @@ group emcareobservationemcareb10s2de04(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE04' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE04' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb10s2de04';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de04';
-        } 'an-emcareb10s2de04';
-    } 'it-emcareb10s2de04';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb10s2de04';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb10s2de04';
+        } '41672faa';
+    } '2d31c1fd';
 }
 
 group emcareobservationemcareb10s2de05(source src,target tgt){
@@ -280,12 +253,12 @@ group emcareobservationemcareb10s2de05(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE05' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE05' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb10s2de05';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de05';
-        } 'an-emcareb10s2de05';
-    } 'it-emcareb10s2de05';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb10s2de05';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb10s2de05';
+        } '41672faa';
+    } 'c94a0f87';
 }
 
 group emcareobservationemcareb10s2de06(source src,target tgt){
@@ -308,12 +281,12 @@ group emcareobservationemcareb10s2de06(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE06' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE06' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb10s2de06';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de06';
-        } 'an-emcareb10s2de06';
-    } 'it-emcareb10s2de06';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb10s2de06';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb10s2de06';
+        } '41672faa';
+    } '01a7fb00';
 }
 
 group emcareobservationemcareb10s2de07(source src,target tgt){
@@ -336,11 +309,11 @@ group emcareobservationemcareb10s2de07(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE07' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE07' then {
         item.answer first as a then {
             a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb10s2de07';
-        } 'an-emcareb10s2de07';
-    } 'it-emcareb10s2de07';
+        } 'd40466ff';
+    } 'db5c539a';
 }
 
 group emcareobservationemcareb10s2de08(source src,target tgt){
@@ -363,12 +336,12 @@ group emcareobservationemcareb10s2de08(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B10S2.DE08' then {
+    src.item first as item  where linkId = 'EmCare.B10S2.DE08' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb10s2de08';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de08';
-        } 'an-emcareb10s2de08';
-    } 'it-emcareb10s2de08';
+        } '0a27a0eb';
+    } '2c87d6ae';
 }
 
 group emcareobservationemcareb11s2de01(source src,target tgt){
@@ -391,12 +364,12 @@ group emcareobservationemcareb11s2de01(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B11S2.DE01' then {
+    src.item first as item  where linkId = 'EmCare.B11S2.DE01' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb11s2de01';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb11s2de01';
-        } 'an-emcareb11s2de01';
-    } 'it-emcareb11s2de01';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb11s2de01';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb11s2de01';
+        } '41672faa';
+    } '9db86810';
 }
 
 group emcareobservationemcareb11s2de02(source src,target tgt){
@@ -419,12 +392,12 @@ group emcareobservationemcareb11s2de02(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B11S2.DE02' then {
+    src.item first as item  where linkId = 'EmCare.B11S2.DE02' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb11s2de02';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb11s2de02';
-        } 'an-emcareb11s2de02';
-    } 'it-emcareb11s2de02';
+        } '0a27a0eb';
+    } 'c5ba3f1e';
 }
 
 group emcareobservationemcareb11s2de06(source src,target tgt){
@@ -447,12 +420,12 @@ group emcareobservationemcareb11s2de06(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B11S2.DE06' then {
+    src.item first as item  where linkId = 'EmCare.B11S2.DE06' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb11s2de06';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb11s2de06';
-        } 'an-emcareb11s2de06';
-    } 'it-emcareb11s2de06';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb11s2de06';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb11s2de06';
+        } '41672faa';
+    } 'ea7748e9';
 }
 
 group emcareobservationemcareb17s1de01(source src,target tgt){
@@ -475,12 +448,12 @@ group emcareobservationemcareb17s1de01(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B17S1.DE01' then {
+    src.item first as item  where linkId = 'EmCare.B17S1.DE01' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb17s1de01';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb17s1de01';
-        } 'an-emcareb17s1de01';
-    } 'it-emcareb17s1de01';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb17s1de01';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb17s1de01';
+        } '41672faa';
+    } 'f0fee1f4';
 }
 
 group emcareobservationemcareb17s1de02(source src,target tgt){
@@ -503,12 +476,12 @@ group emcareobservationemcareb17s1de02(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B17S1.DE02' then {
+    src.item first as item  where linkId = 'EmCare.B17S1.DE02' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb17s1de02';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb17s1de02';
-        } 'an-emcareb17s1de02';
-    } 'it-emcareb17s1de02';
+        } '0a27a0eb';
+    } '7c15d94f';
 }
 
 group emcareobservationemcareb17s1de06(source src,target tgt){
@@ -531,12 +504,12 @@ group emcareobservationemcareb17s1de06(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B17S1.DE06' then {
+    src.item first as item  where linkId = 'EmCare.B17S1.DE06' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb17s1de06';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb17s1de06';
-        } 'an-emcareb17s1de06';
-    } 'it-emcareb17s1de06';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb17s1de06';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb17s1de06';
+        } '41672faa';
+    } 'fa0fe661';
 }
 
 group emcareobservationemcareb17s1de07(source src,target tgt){
@@ -559,12 +532,12 @@ group emcareobservationemcareb17s1de07(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B17S1.DE07' then {
+    src.item first as item  where linkId = 'EmCare.B17S1.DE07' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb17s1de07';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb17s1de07';
-        } 'an-emcareb17s1de07';
-    } 'it-emcareb17s1de07';
+        } '0a27a0eb';
+    } '9db29646';
 }
 
 group emcareobservationemcareb13s2de01(source src,target tgt){
@@ -587,12 +560,12 @@ group emcareobservationemcareb13s2de01(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B13S2.DE01' then {
+    src.item first as item  where linkId = 'EmCare.B13S2.DE01' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb13s2de01';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb13s2de01';
-        } 'an-emcareb13s2de01';
-    } 'it-emcareb13s2de01';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb13s2de01';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb13s2de01';
+        } '41672faa';
+    } '564a2caa';
 }
 
 group emcareobservationemcareb13s2de02(source src,target tgt){
@@ -615,12 +588,12 @@ group emcareobservationemcareb13s2de02(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B13S2.DE02' then {
+    src.item first as item  where linkId = 'EmCare.B13S2.DE02' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb13s2de02';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb13s2de02';
-        } 'an-emcareb13s2de02';
-    } 'it-emcareb13s2de02';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb13s2de02';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb13s2de02';
+        } '41672faa';
+    } '548d61ba';
 }
 
 group emcareobservationemcareb13s2de03(source src,target tgt){
@@ -643,12 +616,12 @@ group emcareobservationemcareb13s2de03(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B13S2.DE03' then {
+    src.item first as item  where linkId = 'EmCare.B13S2.DE03' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb13s2de03';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb13s2de03';
-        } 'an-emcareb13s2de03';
-    } 'it-emcareb13s2de03';
+        } '0a27a0eb';
+    } '95875df6';
 }
 
 group emcareobservationemcareb12s2de01(source src,target tgt){
@@ -671,12 +644,12 @@ group emcareobservationemcareb12s2de01(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B12S2.DE01' then {
+    src.item first as item  where linkId = 'EmCare.B12S2.DE01' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb12s2de01';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb12s2de01';
-        } 'an-emcareb12s2de01';
-    } 'it-emcareb12s2de01';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb12s2de01';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb12s2de01';
+        } '41672faa';
+    } '3a141b9f';
 }
 
 group emcareobservationemcareb12s2de05(source src,target tgt){
@@ -699,12 +672,12 @@ group emcareobservationemcareb12s2de05(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B12S2.DE05' then {
+    src.item first as item  where linkId = 'EmCare.B12S2.DE05' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb12s2de05';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb12s2de05';
-        } 'an-emcareb12s2de05';
-    } 'it-emcareb12s2de05';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb12s2de05';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb12s2de05';
+        } '41672faa';
+    } '7a224539';
 }
 
 group emcareobservationemcareb14s2de01(source src,target tgt){
@@ -727,12 +700,12 @@ group emcareobservationemcareb14s2de01(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE01' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE01' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de01';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de01';
-        } 'an-emcareb14s2de01';
-    } 'it-emcareb14s2de01';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de01';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de01';
+        } '41672faa';
+    } '9f70aa80';
 }
 
 group emcareobservationemcareb14s2de02(source src,target tgt){
@@ -755,12 +728,12 @@ group emcareobservationemcareb14s2de02(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE02' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE02' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de02';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de02';
-        } 'an-emcareb14s2de02';
-    } 'it-emcareb14s2de02';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de02';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de02';
+        } '41672faa';
+    } '8fc25ae2';
 }
 
 group emcareobservationemcareb14s2de03(source src,target tgt){
@@ -783,12 +756,12 @@ group emcareobservationemcareb14s2de03(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE03' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE03' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de03';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de03';
-        } 'an-emcareb14s2de03';
-    } 'it-emcareb14s2de03';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de03';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de03';
+        } '41672faa';
+    } 'a79d757d';
 }
 
 group emcareobservationemcareb14s2de04(source src,target tgt){
@@ -811,12 +784,12 @@ group emcareobservationemcareb14s2de04(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE04' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE04' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de04';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de04';
-        } 'an-emcareb14s2de04';
-    } 'it-emcareb14s2de04';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de04';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de04';
+        } '41672faa';
+    } '17447318';
 }
 
 group emcareobservationemcareb14s2de05(source src,target tgt){
@@ -839,12 +812,12 @@ group emcareobservationemcareb14s2de05(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE05' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE05' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de05';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de05';
-        } 'an-emcareb14s2de05';
-    } 'it-emcareb14s2de05';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de05';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de05';
+        } '41672faa';
+    } 'd55b0c0a';
 }
 
 group emcareobservationemcareb14s2de06(source src,target tgt){
@@ -966,12 +939,12 @@ group emcareobservationemcareb14s2de10(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE10' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE10' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de10';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de10';
-        } 'an-emcareb14s2de10';
-    } 'it-emcareb14s2de10';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de10';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de10';
+        } '41672faa';
+    } '6bb92b2c';
 }
 
 group emcareobservationemcareb14s2de11(source src,target tgt){
@@ -994,12 +967,12 @@ group emcareobservationemcareb14s2de11(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE11' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE11' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de11';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de11';
-        } 'an-emcareb14s2de11';
-    } 'it-emcareb14s2de11';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de11';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de11';
+        } '41672faa';
+    } 'fcf488f2';
 }
 
 group emcareobservationemcareb14s2de12(source src,target tgt){
@@ -1022,12 +995,12 @@ group emcareobservationemcareb14s2de12(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE12' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE12' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de12';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de12';
-        } 'an-emcareb14s2de12';
-    } 'it-emcareb14s2de12';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de12';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de12';
+        } '41672faa';
+    } 'd5d4febd';
 }
 
 group emcareobservationemcareb14s2de13(source src,target tgt){
@@ -1725,12 +1698,12 @@ group emcareobservationemcareb14s2de19a(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE19a' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE19a' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de19a';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de19a';
-        } 'an-emcareb14s2de19a';
-    } 'it-emcareb14s2de19a';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de19a';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de19a';
+        } '41672faa';
+    } '44382841';
 }
 
 group emcareobservationemcareb14s2de22a(source src,target tgt){
@@ -1753,12 +1726,12 @@ group emcareobservationemcareb14s2de22a(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE22A' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE22A' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de22a';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de22a';
-        } 'an-emcareb14s2de22a';
-    } 'it-emcareb14s2de22a';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de22a';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de22a';
+        } '41672faa';
+    } '8c7c43de';
 }
 
 group emcareobservationemcareb14s2de23a(source src,target tgt){
@@ -1781,12 +1754,12 @@ group emcareobservationemcareb14s2de23a(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE23a' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE23a' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de23a';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de23a';
-        } 'an-emcareb14s2de23a';
-    } 'it-emcareb14s2de23a';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de23a';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de23a';
+        } '41672faa';
+    } '6717d5e4';
 }
 
 group emcareobservationemcareb14s2de24(source src,target tgt){
@@ -1809,12 +1782,12 @@ group emcareobservationemcareb14s2de24(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE24' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE24' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de24';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de24';
-        } 'an-emcareb14s2de24';
-    } 'it-emcareb14s2de24';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de24';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de24';
+        } '41672faa';
+    } '2126b930';
 }
 
 group emcareobservationemcareb14s2de30(source src,target tgt){
@@ -1837,12 +1810,12 @@ group emcareobservationemcareb14s2de30(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE30' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE30' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de30';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de30';
-        } 'an-emcareb14s2de30';
-    } 'it-emcareb14s2de30';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de30';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de30';
+        } '41672faa';
+    } '179893aa';
 }
 
 group emcareobservationemcareb14s2de30b(source src,target tgt){
@@ -1865,12 +1838,12 @@ group emcareobservationemcareb14s2de30b(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE30b' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE30b' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de30b';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de30b';
-        } 'an-emcareb14s2de30b';
-    } 'it-emcareb14s2de30b';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de30b';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de30b';
+        } '41672faa';
+    } 'ccce1e28';
 }
 
 group emcareobservationemcareb14s2de31a(source src,target tgt){
@@ -1893,12 +1866,12 @@ group emcareobservationemcareb14s2de31a(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE31a' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE31a' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de31a';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de31a';
-        } 'an-emcareb14s2de31a';
-    } 'it-emcareb14s2de31a';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de31a';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de31a';
+        } '41672faa';
+    } '39120ccc';
 }
 
 group emcareobservationemcareb14s2de31b(source src,target tgt){
@@ -1921,12 +1894,12 @@ group emcareobservationemcareb14s2de31b(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE31b' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE31b' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de31b';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de31b';
-        } 'an-emcareb14s2de31b';
-    } 'it-emcareb14s2de31b';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de31b';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de31b';
+        } '41672faa';
+    } '8b42fa13';
 }
 
 group emcareobservationemcareb14s2de32a(source src,target tgt){
@@ -1949,12 +1922,12 @@ group emcareobservationemcareb14s2de32a(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE32a' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE32a' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de32a';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de32a';
-        } 'an-emcareb14s2de32a';
-    } 'it-emcareb14s2de32a';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de32a';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de32a';
+        } '41672faa';
+    } '4aec2098';
 }
 
 group emcareobservationemcareb14s2de34(source src,target tgt){
@@ -1977,12 +1950,12 @@ group emcareobservationemcareb14s2de34(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE34' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE34' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de34';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de34';
-        } 'an-emcareb14s2de34';
-    } 'it-emcareb14s2de34';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de34';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de34';
+        } '41672faa';
+    } 'e389680b';
 }
 
 group emcareobservationemcareb14s2de36a(source src,target tgt){
@@ -2005,12 +1978,12 @@ group emcareobservationemcareb14s2de36a(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE36a' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE36a' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de36a';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de36a';
-        } 'an-emcareb14s2de36a';
-    } 'it-emcareb14s2de36a';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de36a';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de36a';
+        } '41672faa';
+    } 'a47d73eb';
 }
 
 group emcareobservationemcareb14s2de36b(source src,target tgt){
@@ -2033,12 +2006,12 @@ group emcareobservationemcareb14s2de36b(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE36b' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE36b' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de36b';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de36b';
-        } 'an-emcareb14s2de36b';
-    } 'it-emcareb14s2de36b';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de36b';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de36b';
+        } '41672faa';
+    } '7420822b';
 }
 
 group emcareobservationemcareb14s2de36c(source src,target tgt){
@@ -2061,12 +2034,12 @@ group emcareobservationemcareb14s2de36c(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE36c' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE36c' then {
         item.answer first as a then {
-            a  where a.value = 'yes' -> tgt.status = 'final'  'final-emcareb14s2de36c';
-             a  where a.value = 'no' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de36c';
-        } 'an-emcareb14s2de36c';
-    } 'it-emcareb14s2de36c';
+            a  where a.value = true -> tgt.status = 'final' 'final-emcareb14s2de36c';
+            a  where a.value = false -> tgt.status = 'cancelled' 'notfound-emcareb14s2de36c';
+        } '41672faa';
+    } '0dd05cf2';
 }
 
 group emcareobservationemcareb14s2de38(source src,target tgt){
@@ -2089,12 +2062,12 @@ group emcareobservationemcareb14s2de38(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B14S2.DE38' then {
+    src.item first as item  where linkId = 'EmCare.B14S2.DE38' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb14s2de38';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb14s2de38';
-        } 'an-emcareb14s2de38';
-    } 'it-emcareb14s2de38';
+        } '0a27a0eb';
+    } 'c71fb6b6';
 }
 
 group emcareobservationemcareb14s2de43(source src,target tgt){
@@ -2312,12 +2285,12 @@ group emcareobservationemcareb15s2de01(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B15S2.DE01' then {
+    src.item first as item  where linkId = 'EmCare.B15S2.DE01' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb15s2de01';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb15s2de01';
-        } 'an-emcareb15s2de01';
-    } 'it-emcareb15s2de01';
+        } '0a27a0eb';
+    } '69ceca80';
 }
 
 group emcareobservationemcareb15s2de09(source src,target tgt){
@@ -2340,11 +2313,11 @@ group emcareobservationemcareb15s2de09(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId =  'EmCare.B15S2.DE09' then {
+    src.item first as item  where linkId = 'EmCare.B15S2.DE09' then {
         item.answer first as a then {
             a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb15s2de09';
              a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb15s2de09';
-        } 'an-emcareb15s2de09';
-    } 'it-emcareb15s2de09';
+        } '0a27a0eb';
+    } '80150f0d';
 }
 

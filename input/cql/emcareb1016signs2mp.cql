@@ -8,10 +8,15 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
+include emcareb23classification version '0.99.99' called clas
 
 
 context Patient
       
+
+/* has danger signs : nan*/
+define "has danger signs":
+    clas."emcare.b.g.de01"
 
 /* ageinmonths : Age*/
 define "ageinmonths":
@@ -23,11 +28,11 @@ define "age":
 
 /* cough : nan*/
 define "cough":
-    Base.HasObs('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* difficulty breathing : nan*/
 define "difficulty breathing":
-    Base.HasObs('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* oral fluid test results : nan*/
 define "oral fluid test results":
@@ -35,11 +40,11 @@ define "oral fluid test results":
 
 /* diarrhoea : nan*/
 define "diarrhoea":
-    Base.HasObs('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* not able to drink or breastfeed : nan*/
 define "not able to drink or breastfeed":
-    Base.HasObs('EmCare.B7.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B7.DE09','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* unconscious or lethargic : nan*/
 define "unconscious or lethargic":
@@ -47,36 +52,40 @@ define "unconscious or lethargic":
 
 /* fever : nan*/
 define "fever":
-    Base.HasObs('EmCare.B12S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B.G.DE06','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* refusal to use a limb : nan*/
 define "refusal to use a limb":
-    Base.HasObs('EmCare.B12S1.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B12S1.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* has danger signs : nan*/
-define "has danger signs":
-    Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+/* emcare.b14s2.de07 : Generalised Skin Problem*/
+define "emcare.b14s2.de07":
+    Base.GetObsValue('EmCare.B14S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+/* generalised skin problem : Generalised Skin Problem*/
+define "generalised skin problem":
+    Base.GetObsValue('EmCare.B14S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* ear problem : nan*/
 define "ear problem":
-    Base.HasObs('EmCare.B13S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B13S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* eye problem : nan*/
 define "eye problem":
-    Base.HasObs('EmCare.B14S1.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B14S1.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* skin problem : nan*/
 define "skin problem":
-    Base.HasObs('EmCare.B14S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B14S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* ear discharge : nan*/
 define "ear discharge":
-    Base.HasObs('EmCare.B13S1.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B13S1.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* ear discharge for how long? : nan*/
 define "ear discharge for how long?":
-    Base.HasObs('EmCare.B13S1.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B13S1.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* itchy skin : nan*/
 define "itchy skin":
-    Base.HasObs('EmCare.B14S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B14S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

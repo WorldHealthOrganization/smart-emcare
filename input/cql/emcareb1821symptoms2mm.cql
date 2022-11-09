@@ -15,8 +15,8 @@ context Patient
 
 /* emcare.b7.de02 : Convulsing Now*/
 define "emcare.b7.de02":
-    Base.HasObs('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /* convulsing now : Convulsing Now*/
 define "convulsing now":
-    Base.HasObs('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')

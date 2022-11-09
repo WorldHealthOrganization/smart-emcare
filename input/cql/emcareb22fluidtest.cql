@@ -8,15 +8,12 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
+include emcareb23classification version '0.99.99' called clas
 
 
 context Patient
       
 
-/* emcare.b8-b9.de03 : Has danger signs*/
-define "emcare.b8-b9.de03":
-    Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* has danger signs : Has danger signs*/
+/* has danger signs : nan*/
 define "has danger signs":
-    Base.HasObs('EmCare.B8-B9.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    clas."emcare.b.g.de01"

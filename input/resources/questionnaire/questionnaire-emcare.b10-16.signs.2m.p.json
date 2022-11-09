@@ -51,6 +51,25 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
+                        "expression": "has danger signs"
+                    }
+                }
+            ],
+            "linkId": "Has danger signs",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
                         "expression": "ageinmonths"
                     }
                 }
@@ -81,10 +100,9 @@
                 }
             ],
             "linkId": "Cough",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -101,10 +119,9 @@
                 }
             ],
             "linkId": "Difficulty Breathing",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -140,10 +157,9 @@
                 }
             ],
             "linkId": "Diarrhoea",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -198,10 +214,9 @@
                 }
             ],
             "linkId": "Fever",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -218,10 +233,9 @@
                 }
             ],
             "linkId": "Refusal to Use a Limb",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -233,14 +247,16 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "has danger signs"
+                        "expression": "emcare.b14s2.de07"
                     }
                 }
             ],
-            "linkId": "Has danger signs",
-            "type": "boolean",
+            "linkId": "EmCare.B14S2.DE07",
+            "text": "Generalised Skin Problem",
+            "type": "choice",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/skin-pb-location"
         },
         {
             "extension": [
@@ -257,10 +273,9 @@
                 }
             ],
             "linkId": "Ear problem",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -277,10 +292,9 @@
                 }
             ],
             "linkId": "Eye Problem",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -297,10 +311,9 @@
                 }
             ],
             "linkId": "Skin Problem",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -317,10 +330,9 @@
                 }
             ],
             "linkId": "Ear discharge",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -357,10 +369,9 @@
                 }
             ],
             "linkId": "Itchy Skin",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -368,14 +379,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B22.DE01",
             "text": "Respiratory Rate",
             "type": "quantity",
-            "required": true,
+            "required": false,
             "repeats": false
         },
         {
@@ -390,10 +401,9 @@
             ],
             "linkId": "EmCare.B10S2.DE02",
             "text": "Fast breathing",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -401,16 +411,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B10S2.DE03",
             "text": "Chest Indrawing",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -418,16 +427,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B10S2.DE04",
             "text": "Stridor in a calm child",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -435,16 +443,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B10S2.DE05",
             "text": "Wheezing",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -452,16 +459,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B10S2.DE05').answer.first().value.code='yes'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B10S2.DE05').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B10S2.DE06",
             "text": "Recurrent Wheeze",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -476,7 +482,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "((%resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value.code = 'no')).not()\nor (%resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B10S2.DE04').answer.first().value.code = 'yes') and %resource.repeat(item).where(linkId='EmCare.B10S2.DE09').answer.first().empty()"
+                        "expression": "((%resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = false)).not()\nor (%resource.repeat(item).where(linkId='Cough').answer.first().value = true or %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B10S2.DE04').answer.first().value = true) and %resource.repeat(item).where(linkId='EmCare.B10S2.DE09').answer.first().empty()"
                     }
                 }
             ],
@@ -544,16 +550,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value.code='no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B11S2.DE01",
             "text": "Sunken eyes",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -561,7 +566,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value.code='no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = false).not()"
                     }
                 }
             ],
@@ -578,24 +583,22 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value.code='no' and %resource.repeat(item).where(linkId='Unconscious or Lethargic').answer.first().value.code = 'yes').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = false and %resource.repeat(item).where(linkId='Unconscious or Lethargic').answer.first().value = true).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B11S2.DE06",
             "text": "Restless and Irritable",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "linkId": "EmCare.B17S1.DE01",
             "text": "Throat problem",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -603,7 +606,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value.code ='no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = false).not()"
                     }
                 }
             ],
@@ -620,16 +623,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value.code ='no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B17S1.DE06",
             "text": "Enlarged lymph nodes on front of neck",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -637,7 +639,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value.code = 'yes' and (%resource.repeat(item).where(linkId='Oral Fluid Test Results').answer.first().value.code = 'EmCare.B22.DE09' or %resource.repeat(item).where(linkId='Oral Fluid Test Results').answer.first().value.code = 'EmCare.B22.DE14') or %resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value.code='no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value = true and (%resource.repeat(item).where(linkId='Oral Fluid Test Results').answer.first().value.code = 'EmCare.B22.DE09' or %resource.repeat(item).where(linkId='Oral Fluid Test Results').answer.first().value.code = 'EmCare.B22.DE14') or %resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = false).not()"
                     }
                 }
             ],
@@ -654,16 +656,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Ear problem').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Ear problem').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B13S2.DE01",
             "text": "Tender swelling behind the ear",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -671,16 +672,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Ear problem').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Ear problem').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B13S2.DE02",
             "text": "Pus Seen Draining from the Ear",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -688,7 +688,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Ear discharge').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='Ear discharge for how long?').answer.first().exists()).not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Ear discharge').answer.first().value = true and %resource.repeat(item).where(linkId='Ear discharge for how long?').answer.first().exists()).not()"
                     }
                 }
             ],
@@ -705,16 +705,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B12S2.DE01",
             "text": "Stiff neck",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -722,16 +721,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B12S2.DE05",
             "text": "Runny nose",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -739,16 +737,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no' or (%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='Eye Problem').answer.first().value='no')).not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and %resource.repeat(item).where(linkId='Eye Problem').answer.first().value='no')).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE01",
             "text": "Red eyes",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -756,16 +753,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Eye Problem').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Eye Problem').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE02",
             "text": "Pus Draining from Eye",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -773,16 +769,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Eye Problem').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Eye Problem').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE03",
             "text": "Clouding of the Cornea",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -790,16 +785,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value.code='no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE04",
             "text": "Is Clouding of the Cornea a new problem",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -807,16 +801,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value.code='no' or %resource.repeat(item).where(linkId='EmCare.B14S2.DE04').answer.first().value.code='yes').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value = false or %resource.repeat(item).where(linkId='EmCare.B14S2.DE04').answer.first().value = true).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE05",
             "text": "Has Clouding of the Cornea previously been treated",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -837,7 +830,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "((%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no' and  (%resource.repeat(item).where(linkId='Has danger signs').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value.code = 'no') or (%resource.repeat(item).where(linkId='Has danger signs').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='Skin Problem').answer.first().value.code = 'no')) or (%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='Cough').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value.code ='no' and %resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value.code = 'no')).not()"
+                        "expression": "((%resource.repeat(item).where(linkId='Fever').answer.first().value=false and  (%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false) or (%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = false and %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false)) or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and %resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = false and %resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = false)).not()"
                     }
                 }
             ],
@@ -854,16 +847,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no' or (%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'yes' and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value.code ='yes' and %resource.repeat(item).where(linkId='Cough').answer.first().value.code='no' and %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value.code='no' )).not() or ((%resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.first().value.code ='EmCare.B14S2.DE07').not()))"
+                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = false )).not() or ((%resource.repeat(item).where(linkId='EmCare.B14S2.DE07').answer.first().value=true).not()))"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE10",
             "text": "Measles Rash",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -871,16 +863,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no' or (%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'yes' and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value.code ='yes' or %resource.repeat(item).where(linkId='Cough').answer.first().value.code='yes' or %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value.code='yes' ) and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.first().value.code ='EmCare.B14S2.DE07') and %resource.repeat(item).where(linkId='EmCare.B14S2.DE10').answer.first().value.code ='yes')).not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='Cough').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = true ) and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE07').answer.first().value=true) and %resource.repeat(item).where(linkId='EmCare.B14S2.DE10').answer.first().value = true)).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE11",
             "text": "Measles within the last 3 months",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -888,16 +879,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false).not()"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE12",
             "text": "Blisters, Sores or Pustules",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -918,7 +908,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false).not()"
                     }
                 }
             ],
@@ -941,10 +931,9 @@
             ],
             "linkId": "EmCare.B14S2.DE19a",
             "text": "Scalp Infection (tinea capitis)",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -958,10 +947,9 @@
             ],
             "linkId": "EmCare.B14S2.DE22A",
             "text": "Severe rash",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -975,10 +963,9 @@
             ],
             "linkId": "EmCare.B14S2.DE23a",
             "text": "Disseminated Herpes Zoster",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -992,10 +979,9 @@
             ],
             "linkId": "EmCare.B14S2.DE24",
             "text": "Eye Involvement",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1009,10 +995,9 @@
             ],
             "linkId": "EmCare.B14S2.DE30",
             "text": "Skin Infection extends to Muscle",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1026,10 +1011,9 @@
             ],
             "linkId": "EmCare.B14S2.DE30b",
             "text": "Extensive impetigo lesions",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1043,10 +1027,9 @@
             ],
             "linkId": "EmCare.B14S2.DE31a",
             "text": "Extensive molluscum lesions",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1060,10 +1043,9 @@
             ],
             "linkId": "EmCare.B14S2.DE31b",
             "text": "Molluscum lesions close to the eye",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1077,10 +1059,9 @@
             ],
             "linkId": "EmCare.B14S2.DE32a",
             "text": "Extensive warts",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1094,10 +1075,9 @@
             ],
             "linkId": "EmCare.B14S2.DE34",
             "text": "Severe Seborrhoeic Dermatitis",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1111,10 +1091,9 @@
             ],
             "linkId": "EmCare.B14S2.DE36a",
             "text": "Secondary bacterial infection of eczema",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1128,10 +1107,9 @@
             ],
             "linkId": "EmCare.B14S2.DE36b",
             "text": "Severe acute moist or weeping eczema",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1145,10 +1123,9 @@
             ],
             "linkId": "EmCare.B14S2.DE36c",
             "text": "Secondary herpes infection of eczema (eczema herpeticum)",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -1156,7 +1133,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value.code = 'no').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false).not()"
                     }
                 }
             ],
@@ -1186,7 +1163,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value.code = 'yes').not()"
+                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true).not()"
                     }
                 }
             ],

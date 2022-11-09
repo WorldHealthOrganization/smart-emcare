@@ -112,10 +112,9 @@
             ],
             "linkId": "EmCare.B6.DE05",
             "text": "Hot to Touch",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -304,7 +303,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value>=24  or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().value.code='yes') and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().empty() and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().empty()"
+                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value>=24  or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().value = true) and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().empty() and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().empty()"
                             }
                         }
                     ],
@@ -406,7 +405,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value >= 24 and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value.code = 'yes', %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().value-0.7, '')"
+                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths.cql').answer.first().value >= 24 and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value = true, %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE09').answer.first().value-0.7, '')"
                             }
                         }
                     ],
@@ -428,10 +427,9 @@
                     ],
                     "linkId": "EmCare.B6.DE13",
                     "text": "Length cannot be measured",
-                    "type": "choice",
+                    "type": "boolean",
                     "required": false,
-                    "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -445,10 +443,9 @@
                     ],
                     "linkId": "EmCare.B6.DE12a",
                     "text": "Prefer to measure height",
-                    "type": "choice",
+                    "type": "boolean",
                     "required": false,
-                    "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -456,7 +453,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().value.code = 'no' and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value.code ='no' and %resource.repeat(item).where(linkId='AgeInYears.cql').answer.first().value>=2"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().value = false and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().value = false and %resource.repeat(item).where(linkId='AgeInYears.cql').answer.first().value>=2"
                             }
                         }
                     ],
@@ -472,7 +469,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE13').answer.first().value.code = 'no' and  %resource.repeat(item).where(linkId='AgeInDays.cql').answer.first().value>=60"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE13').answer.first().value = false and  %resource.repeat(item).where(linkId='AgeInDays.cql').answer.first().value>=60"
                             }
                         }
                     ],
@@ -567,7 +564,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE17a').answer.first().value.code='yes'"
+                                "expression": "%resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE17a').answer.first().value = true"
                             }
                         }
                     ],

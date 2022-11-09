@@ -420,9 +420,9 @@ define "emcare.b14s1.de02":
 
 /*"respiratory rate"*/
 define "respiratory rate":
-  B.HasObs(B.c('EmCare.B22.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-define "emcare.b22.de01":
-  B.HasObs(B.c('EmCare.B22.DE01'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+  B.HasObs(B.c('EmCare.B22.RespiratoryRate'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+define "emcare.b22.respiratoryrate":
+  B.HasObs(B.c('EmCare.B22.RespiratoryRate'), 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 /*"chest indrawing"*/
 define "chest indrawing":

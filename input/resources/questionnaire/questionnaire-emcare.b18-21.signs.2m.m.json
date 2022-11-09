@@ -82,10 +82,9 @@
             ],
             "linkId": "EmCare.B20S1.DE01",
             "text": "Diarrhoea",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -124,10 +123,9 @@
             ],
             "linkId": "EmCare.B21S1.DE01",
             "text": "Breastfed",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -145,10 +143,9 @@
             ],
             "linkId": "EmCare.B18S1.DE02",
             "text": "Difficulty with Feeding",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -231,10 +228,9 @@
             ],
             "linkId": "EmCare.B18S2.DE06",
             "text": "Fast Breathing",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -248,10 +244,9 @@
             ],
             "linkId": "EmCare.B18S2.DE07",
             "text": "Severe Chest Indrawing",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -282,10 +277,9 @@
             ],
             "linkId": "EmCare.B18S2.DE12",
             "text": "Umbilicus Red or Pus Draining",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -299,10 +293,9 @@
             ],
             "linkId": "EmCare.B18S2.DE13",
             "text": "Skin Pustules",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -316,10 +309,9 @@
             ],
             "linkId": "EmCare.B19S2.DE01",
             "text": "Yellow Skin",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -333,10 +325,9 @@
             ],
             "linkId": "EmCare.B19S2.DE02",
             "text": "Yellow Palms or Yellow Soles",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -350,10 +341,9 @@
             ],
             "linkId": "EmCare.B19S2.DE03",
             "text": "Jaundice (Yellow skin or palms or soles)",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -361,7 +351,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value * 730.0008> 24 or (%resource.repeat(item).where(linkId='EmCare.B19S2.DE01').answer.first().value.code = 'yes' and %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.first().value.code = 'yes') or %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.first().value.code = 'no' or %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value * 30.4167 < 21"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value * 730.0008> 24 or (%resource.repeat(item).where(linkId='EmCare.B19S2.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.first().value = true) or %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.first().value = false or %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value * 30.4167 < 21"
                     }
                 }
             ],
@@ -378,16 +368,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B20S2.DE01",
             "text": "Sunken Eyes",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -395,7 +384,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value.code = 'yes'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value = true"
                     }
                 }
             ],
@@ -412,16 +401,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value.code = 'no' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.first().value.code = 'EmCare.B18S2.DE09' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.first().value.code = 'EmCare.B18S2.DE10' )"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value = false or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.first().value.code = 'EmCare.B18S2.DE09' or %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.first().value.code = 'EmCare.B18S2.DE10' )"
                     }
                 }
             ],
             "linkId": "EmCare.B20S2.DE06",
             "text": "Restless and Irritable",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -446,7 +434,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
                     }
                 }
             ],
@@ -502,16 +490,15 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
                     }
                 }
             ],
             "linkId": "EmCare.B21S2.DE08",
             "text": "Young Infant receives other food or fluids",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -532,7 +519,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
                     }
                 }
             ],
@@ -549,7 +536,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
                     }
                 }
             ],
@@ -712,7 +699,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value.code = 'yes' or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B21S2.DE01').answer.first().value.code != 'EmCare.B21S2.DE02')"
                     }
                 }
             ],
@@ -735,10 +722,9 @@
             ],
             "linkId": "EmCare.B21S2.DE30",
             "text": "Ulcers or White Patches in Mouth",
-            "type": "choice",
+            "type": "boolean",
             "required": true,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [
@@ -752,10 +738,9 @@
             ],
             "linkId": "EmCare.B21S2.DE31",
             "text": "Unable to check if Ulcers or White Patches in Mouth",
-            "type": "choice",
+            "type": "boolean",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/yesno"
+            "repeats": false
         },
         {
             "extension": [

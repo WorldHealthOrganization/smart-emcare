@@ -19,10 +19,18 @@ context Encounter
 // obs not found : return null
 
 define "Yes":
-  coding('yes', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/')
+  coding('yes', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
 define "No":
-  coding('no', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/')
+  coding('no', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+
+define function getValue(O Observation):
+  case  
+      when  O = null then null
+      when O.value is null then true
+      else O.value
+  end
+
 
 define function assesObservation(O Observation):
   case  
@@ -39,6 +47,7 @@ define function GetObservationDuringEncounter(idlist List<code>, codesystem FHIR
       GetObservationDuringEncounterDone(idlist , codesystem  )
   else
     GetObservationDuringEncounterNotFound(idlist , codesystem  )
+
 
 
 define function GetObservationDuringEncounterDone(idlist List<code>, codesystem FHIR.url):
@@ -64,6 +73,23 @@ define function GetNumberObservationDuringEncounter(idlist List<code>, codesyste
         and exists((O.code.coding C where C.code in idlist 
         and C.system = codesystem)))
 
+// ************************   GetObsValue ************************/
+
+define function GetObsValue(idlist List<FHIR.code>, codesystem System.String):
+    getValue(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
+
+define function GetObsValue(id FHIR.code, codesystem System.String):
+    getValue(GetObservationDuringEncounter({id}, ToUrl(codesystem)))
+
+define function GetObsValue(id System.String, codesystem System.String):
+    getValue(GetObservationDuringEncounter({c(id)}, ToUrl(codesystem)))
+
+define function GetObsValue(id System.String):
+    getValue(GetObservationDuringEncounter({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')))
+
+
+// ************************   HasObs ************************/
+
 define function HasObs(idlist List<FHIR.code>, codesystem System.String):
     assesObservation(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
 
@@ -74,7 +100,7 @@ define function HasObs(id System.String, codesystem System.String):
     assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl(codesystem)))
 
 define function HasObs(id System.String):
-    assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/')))
+    assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')))
 
 
 
@@ -98,7 +124,7 @@ define function GetHistoricObservationNotfound(idlist List<code>, codesystem FHI
           and exists(O.code.coding C where C.code in idlist 
           and C.system = codesystem))
   
-// ************************   PatientHasHistoryOfObservation ************************/
+// ************************   HasObsHistory ************************/
 
 
 define function HasObsHistory(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
@@ -113,7 +139,7 @@ define function HasObsHistory(id System.String, codesystem System.String, nbdays
 
 
 define function HasObsHistory(id System.String, nbdays Integer):
-  assesObservation(GetHistoricObservation({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/'), nbdays))
+  assesObservation(GetHistoricObservation({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'), nbdays))
 
 define function c(s System.String):
   FHIR.code { value: s }
@@ -157,7 +183,7 @@ define function HasCondHistory(id System.String, codesystem System.String, nbday
 
 
 define function HasCondHistory(id System.String, nbdays Integer):
-  assesCondition(GetHistoricCondition({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/'), nbdays))
+  assesCondition(GetHistoricCondition({c(id)}, ToUrl('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'), nbdays))
 //define function PatientHasConditionDuringEncounter(id String, codesystem url, duration Integer)):
 
 //define function PatientHasConditionFromValueSetDuringEncounter(id String, codesystem url, duration Integer)):

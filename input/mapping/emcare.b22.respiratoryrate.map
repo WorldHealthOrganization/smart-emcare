@@ -6,24 +6,54 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src where src.item.where(linkId='EmCare.B22.DE01').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de01(src,tgt) 'act-EmCare.B22.DE01';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE02').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de02(src,tgt) 'act-EmCare.B22.DE02';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE03').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de03(src,tgt) 'act-EmCare.B22.DE03';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE04').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de04(src,tgt) 'act-EmCare.B22.DE04';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE05').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de05(src,tgt) 'act-EmCare.B22.DE05';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE07').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de07(src,tgt) 'act-EmCare.B22.DE07';
-    } 'emcareobservation';
+    src.item first as item  where linkId = 'EmCare.B22.DE01' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de01(src, tgt) '94788d70';
+            } 'cafa1f90';
+        } '44017cb3';
+    } 'ae152ecc';
+    src.item first as item  where linkId = 'EmCare.B22.DE02' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de02(src, tgt) 'c3e885af';
+            } '60b301de';
+        } '815e425c';
+    } 'b1c87f93';
+    src.item first as item  where linkId = 'EmCare.B22.DE03' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de03(src, tgt) 'df6b952c';
+            } 'af6e5d83';
+        } '288864bb';
+    } 'a9ecde34';
+    src.item first as item  where linkId = 'EmCare.B22.DE04' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de04(src, tgt) '42ed4c3a';
+            } 'b802d4a2';
+        } 'c7431f4f';
+    } 'f5ea671a';
+    src.item first as item  where linkId = 'EmCare.B22.DE05' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de05(src, tgt) '3be4cd34';
+            } 'b7585bc2';
+        } '61b1a5c6';
+    } 'c5da6f29';
+    src.item first as item  where linkId = 'EmCare.B22.DE07' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de07(src, tgt) 'fa30cee1';
+            } 'aad75965';
+        } '8267defb';
+    } 'a48e115b';
 }
 
 group emcareobservationemcareb22de01(source src,target tgt){

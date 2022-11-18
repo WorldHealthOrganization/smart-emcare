@@ -9,9 +9,10 @@ include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 
+context Encounter
 
-context Patient
-context Encounter      
+define Patient:
+    Base.EmCarePatient    
 
 /* load-emcare.c10.it.de01 : nan*/
 define "load-emcare.c10.it.de01":

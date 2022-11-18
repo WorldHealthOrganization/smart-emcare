@@ -6,21 +6,46 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src where src.item.where(linkId='EmCare.B22.DE08').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de08(src,tgt) 'act-EmCare.B22.DE08';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE14').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de14(src,tgt) 'act-EmCare.B22.DE14';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE14a').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de14a(src,tgt) 'act-EmCare.B22.DE14a';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE15').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de15(src,tgt) 'act-EmCare.B22.DE15';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE16').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de16(src,tgt) 'act-EmCare.B22.DE16';
-    } 'emcareobservation';
+    src.item first as item  where linkId = 'EmCare.B22.DE08' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de08(src, tgt) 'd34db40c';
+            } 'bd8403a6';
+        } '09eb3e1a';
+    } '5d67a31e';
+    src.item first as item  where linkId = 'EmCare.B22.DE14' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de14(src, tgt) '128f555c';
+            } '2cba61ee';
+        } '1eb502ac';
+    } '24ec3f15';
+    src.item first as item  where linkId = 'EmCare.B22.DE14a' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de14a(src, tgt) '7b46291c';
+            } '17f1508c';
+        } '64f82f5e';
+    } '204a0428';
+    src.item first as item  where linkId = 'EmCare.B22.DE15' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de15(src, tgt) '0d25d61c';
+            } '49095bbf';
+        } '7ffa5829';
+    } 'ff310b7d';
+    src.item first as item  where linkId = 'EmCare.B22.DE16' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de16(src, tgt) '2bef72fa';
+            } 'f426fdde';
+        } 'f53bf22c';
+    } 'ddeb7d72';
 }
 
 group emcareobservationemcareb22de08(source src,target tgt){

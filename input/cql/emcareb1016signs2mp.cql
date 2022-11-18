@@ -10,9 +10,10 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
+context Encounter
 
-context Patient
-context Encounter      
+define Patient:
+    Base.EmCarePatient    
 
 /* has danger signs : nan*/
 define "has danger signs":
@@ -20,7 +21,7 @@ define "has danger signs":
 
 /* ageinmonths : Age*/
 define "ageinmonths":
-    AgeInMonths()
+    Base.AgeInMonths
 
 /* alias age : ageinmonths*/
 define "age":
@@ -34,9 +35,9 @@ define "cough":
 define "difficulty breathing":
     Base.GetObsValue('EmCare.B10S1.DE01')
 
-/* oral fluid test results : nan*/
-define "oral fluid test results":
-    obs."completely unable to drink or vomits immediately / everything" is not null and obs."completely unable to drink or vomits immediately / everything"=true or  obs."unable to perform oral fluid test" is not null and obs."unable to perform oral fluid test"=true
+/* oral fluid test : nan*/
+define "oral fluid test":
+    obs."completely unable to drink or vomits immediately / everything"=true or  obs."unable to perform oral fluid test"=true
 
 /* diarrhoea : nan*/
 define "diarrhoea":
@@ -48,7 +49,7 @@ define "not able to drink or breastfeed":
 
 /* unconscious or lethargic : nan*/
 define "unconscious or lethargic":
-    Base.HasObs('EmCare.B7.DE08') is not null and Base.HasObs('EmCare.B7.DE08') != false or Base.HasObs('EmCare.B7.DE08a') is not null and Base.HasObs('EmCare.B7.DE08a') != false
+    Base.HasObs('EmCare.B7.DE08') = true or  Base.HasObs('EmCare.B7.DE08a') = true
 
 /* fever : nan*/
 define "fever":

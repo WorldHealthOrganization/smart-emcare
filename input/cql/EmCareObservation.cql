@@ -7,9 +7,10 @@ using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 include EmCareBase version '0.99.99' called B
 
+context Encounter
 
-context Patient
-context Encounter      
+define Patient:
+    B.EmCarePatient    
 /*"is the child sick today?"*/
 define "is the child sick today?":
   B.HasObs('EmCare.B3.DE05')
@@ -418,8 +419,8 @@ define "itchy skin":
 define "emcare.b14s1.de02":
   B.HasObs('EmCare.B14S1.DE02')
 
-/*"respiratory rate"*/
-define "respiratory rate":
+/*"nan"*/
+define "nan":
   B.HasObs('EmCare.B22.RespiratoryRate')
 define "emcare.b22.respiratoryrate":
   B.HasObs('EmCare.B22.RespiratoryRate')
@@ -676,6 +677,42 @@ define "mucous membrane pallor":
 define "emcare.b15s2.de09":
   B.HasObs('EmCare.B15S2.DE09')
 
+/*"oral fluid test results"*/
+define "oral fluid test results":
+  B.HasObs('EmCare.B22.DE08')
+define "emcare.b22.de08":
+  B.HasObs('EmCare.B22.DE08')
+
+/*"unable to perform oral fluid test"*/
+define "unable to perform oral fluid test":
+  B.HasObs('EmCare.B22.DE14')
+define "emcare.b22.de14":
+  B.HasObs('EmCare.B22.DE14')
+
+/*"completely unable to drink or vomits immediately / everything"*/
+define "completely unable to drink or vomits immediately / everything":
+  B.HasObs('EmCare.B22.DE14a')
+define "emcare.b22.de14a":
+  B.HasObs('EmCare.B22.DE14a')
+
+/*"has the child had anything to drink today?"*/
+define "has the child had anything to drink today?":
+  B.HasObs('EmCare.B22.DE15')
+define "emcare.b22.de15":
+  B.HasObs('EmCare.B22.DE15')
+
+/*"how did the child last drink"*/
+define "how did the child last drink":
+  B.HasObs('EmCare.B22.DE16')
+define "emcare.b22.de16":
+  B.HasObs('EmCare.B22.DE16')
+
+/*"respiratory rate"*/
+define "respiratory rate":
+  B.HasObs('EmCare.B22.DE01')
+define "emcare.b22.de01":
+  B.HasObs('EmCare.B22.DE01')
+
 /*"unable to perform respiratory rate at this time"*/
 define "unable to perform respiratory rate at this time":
   B.HasObs('EmCare.B22.DE02')
@@ -862,36 +899,6 @@ define "no measured fever orno low body temperature":
   B.HasObs('EmCare.B22.DE52')
 define "emcare.b22.de52":
   B.HasObs('EmCare.B22.DE52')
-
-/*"oral fluid test results"*/
-define "oral fluid test results":
-  B.HasObs('EmCare.B22.DE08')
-define "emcare.b22.de08":
-  B.HasObs('EmCare.B22.DE08')
-
-/*"unable to perform oral fluid test"*/
-define "unable to perform oral fluid test":
-  B.HasObs('EmCare.B22.DE14')
-define "emcare.b22.de14":
-  B.HasObs('EmCare.B22.DE14')
-
-/*"completely unable to drink or vomits immediately / everything"*/
-define "completely unable to drink or vomits immediately / everything":
-  B.HasObs('EmCare.B22.DE14a')
-define "emcare.b22.de14a":
-  B.HasObs('EmCare.B22.DE14a')
-
-/*"has the child had anything to drink today?"*/
-define "has the child had anything to drink today?":
-  B.HasObs('EmCare.B22.DE15')
-define "emcare.b22.de15":
-  B.HasObs('EmCare.B22.DE15')
-
-/*"how did the child last drink"*/
-define "how did the child last drink":
-  B.HasObs('EmCare.B22.DE16')
-define "emcare.b22.de16":
-  B.HasObs('EmCare.B22.DE16')
 
 /*"no - do not add a skin or mouth or eye problem"*/
 define "no - do not add a skin or mouth or eye problem":

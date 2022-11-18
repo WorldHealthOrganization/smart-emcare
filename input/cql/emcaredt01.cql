@@ -10,17 +10,10 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
+context Encounter
 
-context Patient
-context Encounter      
-
-/* emcaredt01 : Register a child < 5 years*/
-define "emcaredt01":
-    difference in years between Today() and  Patient.birthDate < 5
-
-/* alias register a child < 5 years : emcaredt01*/
-define "register a child < 5 years":
-    "emcaredt01"
+define Patient:
+    Base.EmCarePatient    
 
 /* emcaredt02 : Register the child in the encounter*/
 define "emcaredt02":

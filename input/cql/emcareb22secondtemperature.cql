@@ -9,13 +9,14 @@ include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 
+context Encounter
 
-context Patient
-context Encounter      
+define Patient:
+    Base.EmCarePatient    
 
 /* ageinmonths : Age*/
 define "ageinmonths":
-    AgeInMonths()
+    Base.AgeInMonths
 
 /* alias age : ageinmonths*/
 define "age":

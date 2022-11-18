@@ -6,12 +6,22 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src where src.item.where(linkId='EmCare.B22.DE81').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de81(src,tgt) 'act-EmCare.B22.DE81';
-    } 'emcareobservation';
-    src where src.item.where(linkId='EmCare.B22.DE82').exists() then {
-        src -> bundle.entry as entry, entry.request as request, request.method = 'POST', entry.resource = create('Observation') as tgt then emcareobservationemcareb22de82(src,tgt) 'act-EmCare.B22.DE82';
-    } 'emcareobservation';
+    src.item first as item  where linkId = 'EmCare.B22.DE81' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de81(src, tgt) 'f56b8d65';
+            } '42cac8d1';
+        } '00ff1e0b';
+    } '02fe51e1';
+    src.item first as item  where linkId = 'EmCare.B22.DE82' then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb22de82(src, tgt) '1118b2e0';
+            } '565f125e';
+        } 'cc5012ad';
+    } 'e30669ae';
 }
 
 group emcareobservationemcareb22de81(source src,target tgt){

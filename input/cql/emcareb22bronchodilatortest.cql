@@ -10,9 +10,10 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
+context Encounter
 
-context Patient
-context Encounter      
+define Patient:
+    Base.EmCarePatient    
 
 /* has danger signs : nan*/
 define "has danger signs":
@@ -20,7 +21,7 @@ define "has danger signs":
 
 /* ageinmonths : Age*/
 define "ageinmonths":
-    AgeInMonths()
+    Base.AgeInMonths
 
 /* alias age : ageinmonths*/
 define "age":
@@ -42,13 +43,13 @@ define "emcare.b10s1.de01":
 define "difficulty breathing":
     "emcare.b10s1.de01"
 
-/* emcare.b10s2.de01 : Respiratory Rate*/
-define "emcare.b10s2.de01":
-    Base.GetObsValue('EmCare.B10S2.DE01')
+/* emcare.b22.de01 : Respiratory Rate*/
+define "emcare.b22.de01":
+    Base.GetObsValue('EmCare.B22.DE01')
 
-/* alias respiratory rate : emcare.b10s2.de01*/
+/* alias respiratory rate : emcare.b22.de01*/
 define "respiratory rate":
-    "emcare.b10s2.de01"
+    "emcare.b22.de01"
 
 /* emcare.b11s1.de01 : Diarrhoea*/
 define "emcare.b11s1.de01":

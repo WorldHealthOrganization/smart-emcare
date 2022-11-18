@@ -144,6 +144,10 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-subQuestionnaire",
+                    "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b22.fluidtest"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
@@ -151,11 +155,106 @@
                     }
                 }
             ],
-            "linkId": "link.test.oral",
-            "text": "Perform Oral Fluid Test",
-            "type": "display",
+            "linkId": "EmCare.B22.FluidTest",
+            "type": "group",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "linkId": "EmCare.B22.DE08",
+                    "text": "Oral Fluid Test Results",
+                    "type": "choice",
+                    "required": true,
+                    "repeats": false,
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/oral-fluid-test"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "check-box",
+                                        "display": "Check-box"
+                                    }
+                                ],
+                                "text": "Check-box"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE14",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": true,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "code": "EmCare.B22.DE14",
+                                "display": "Unable to Perform Oral Fluid Test"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.first().value.code = 'EmCare.B22.DE14' and %resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.first().value.code = 'EmCare.B22.DE14' and %resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE14a",
+                    "text": "Completely Unable to Drink or Vomits Immediately / Everything",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "readOnly": true
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE15",
+                    "text": "Has the Child had anything to drink today?",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE16",
+                    "text": "How did the child last drink",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": false,
+                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/oral-fluid-test"
+                }
+            ]
         },
         {
             "extension": [
@@ -173,6 +272,25 @@
             "required": true,
             "repeats": false,
             "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/consultation-status"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "has danger signs"
+                    }
+                }
+            ],
+            "linkId": "Has danger signs",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
         },
         {
             "extension": [

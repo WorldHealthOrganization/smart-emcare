@@ -9,7 +9,7 @@ include EmCareBase version '0.99.99' called B
 
 
 context Patient
-      
+context Encounter      
 define "female":
   B.c('EmCare.A.DE17')
 

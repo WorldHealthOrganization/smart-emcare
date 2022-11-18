@@ -19,15 +19,14 @@ context Encounter
 // obs not found : return null
 
 define "Yes":
-  coding('yes', '{{cs_url}}')
+  true
 
 define "No":
-  coding('no', '{{cs_url}}')
+  false 
 
 define function getValue(O Observation):
   case  
-      when  O = null then null
-      when O.value is null then true
+      when  O is null then null
       else O.value
   end
 
@@ -35,155 +34,268 @@ define function getValue(O Observation):
 define function assesObservation(O Observation):
   case  
       when  O = null then null
-      when  O.status in  {'cancelled'} then "No"
-      when O.value is null then  "Yes"
-      when O.value is FHIR.boolean and O.value = true then "Yes"
-      when O.value is FHIR.boolean and O.value = false then "No"
+      when  O.status in  {'cancelled'} then false
+      when O.value is null then  true
+
       else O.value
   end
-      
-define function GetObservationDuringEncounter(idlist List<code>, codesystem FHIR.url):
-  if GetObservationDuringEncounterDone(idlist , codesystem) is null then 
-      GetObservationDuringEncounterDone(idlist , codesystem  )
+/*      
+define function GetObservationDuringEncounter(idlist List<System.Code>):
+  if GetObservationDuringEncounterDone(idlist ) is null then 
+      GetObservationDuringEncounterDone(idlist )
   else
-    GetObservationDuringEncounterNotFound(idlist , codesystem  )
+    GetObservationDuringEncounterNotFound(idlist )
+*/
+define function GetObservationDuringEncounter(id System.Code):
+  if GetObservationDuringEncounterDone(id ) is null then 
+      GetObservationDuringEncounterDone(id )
+  else
+    GetObservationDuringEncounterNotFound(id )
+/*
+define function GetObservationDuringEncounterDone(idlist List<System.Code>):
+      Last([Observation: idlist ] O
+        where  O.encounter.id = Encounter.id
+        and O.status in { 'final', 'amended', 'corrected'})
+*/
+define function GetObservationDuringEncounterDone(id System.Code):
+      Last([Observation: id ] O
+        where  O.encounter.id = Encounter.id
+        and O.status in { 'final', 'amended', 'corrected'})
 
+/*
+define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
+      Last([Observation: idlist] O
+       where O.encounter.id = Encounter.id
+          and O.status in {'cancelled'})
+          */
+define function GetObservationDuringEncounterNotFound(id System.Code):
+      Last([Observation: id] O
+       where O.encounter.id = Encounter.id
+          and O.status in {'cancelled'})
+/*
 
-
-define function GetObservationDuringEncounterDone(idlist List<code>, codesystem FHIR.url):
-      Last([Observation ] O
-        where Last(Split(O.encounter.reference, '/')) = Encounter.id
-        and O.status in { 'final', 'amended', 'corrected'}
-        and exists(O.code.coding C where C.code in idlist 
-        and C.system = codesystem))
-
-
-define function GetObservationDuringEncounterNotFound(idlist List<code>, codesystem FHIR.url):
-      Last([Observation] O
-        where Last(Split(O.encounter.reference, '/')) = Encounter.id
-          and O.status in {'cancelled'}
-          and exists(O.code.coding C where C.code in idlist 
-          and C.system = codesystem))
-
-define function GetNumberObservationDuringEncounter(idlist List<code>, codesystem FHIR.url):
+define function GetNumberObservationDuringEncounter(idlist List<System.Code>):
   Count(
-    [Observation] O
-        where Last(Split(O.encounter.reference, '/')) = Encounter.id
-        and O.status in { 'final', 'amended', 'corrected'}
-        and exists((O.code.coding C where C.code in idlist 
-        and C.system = codesystem)))
+    [Observation: idlist] O
+        where O.encounter.id = Encounter.id
+        and O.status in { 'final', 'amended', 'corrected'})
+*/
+define function GetNumberObservationDuringEncounter(id System.Code):
+  Count(
+    [Observation: id] O
+        where O.encounter.id = Encounter.id
+        and O.status in { 'final', 'amended', 'corrected'})
 
 // ************************   GetObsValue ************************/
+/*
+define function GetObsValue(idlist List<System.Code>):
+    getValue(GetObservationDuringEncounter(idlist))
 
-define function GetObsValue(idlist List<FHIR.code>, codesystem System.String):
-    getValue(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
+define function GetObsValue(id System.Code):
+    getValue(GetObservationDuringEncounter({id}))
+*/
 
-define function GetObsValue(id FHIR.code, codesystem System.String):
-    getValue(GetObservationDuringEncounter({id}, ToUrl(codesystem)))
+define function GetObsValue(id System.Code):
+    getValue(GetObservationDuringEncounter(id))
 
 define function GetObsValue(id System.String, codesystem System.String):
-    getValue(GetObservationDuringEncounter({c(id)}, ToUrl(codesystem)))
+    getValue(GetObservationDuringEncounter(coding(id, codesystem)))
 
 define function GetObsValue(id System.String):
-    getValue(GetObservationDuringEncounter({c(id)}, ToUrl('{{cs_url}}')))
+    getValue(GetObservationDuringEncounter(coding(id, '{{cs_url}}')))
 
 
 // ************************   HasObs ************************/
+/*
+define function HasObs(idlist List<System.Code>):
+    assesObservation(GetObservationDuringEncounter(idlist))
 
-define function HasObs(idlist List<FHIR.code>, codesystem System.String):
-    assesObservation(GetObservationDuringEncounter(idlist, ToUrl(codesystem)))
-
-define function HasObs(id FHIR.code, codesystem System.String):
-    assesObservation(GetObservationDuringEncounter({id}, ToUrl(codesystem)))
+define function HasObs(id System.Code):
+    assesObservation(GetObservationDuringEncounter({id}))
+*/
+define function HasObs(id System.Code):
+    assesObservation(GetObservationDuringEncounter(id))
 
 define function HasObs(id System.String, codesystem System.String):
-    assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl(codesystem)))
+    assesObservation(GetObservationDuringEncounter(coding(id, codesystem)))
 
 define function HasObs(id System.String):
-    assesObservation(GetObservationDuringEncounter({c(id)}, ToUrl('{{cs_url}}')))
+    assesObservation(GetObservationDuringEncounter(coding(id, '{{cs_url}}')))
 
-
-
-define function GetHistoricObservation(idlist List<code>, codesystem FHIR.url, nbdays Integer):
+define function HasObs(id FHIR.code, codesystem System.String):
+    assesObservation(GetObservationDuringEncounter(coding(id, codesystem)))
+/*
+define function GetHistoricObservation(idlist List<System.Code>, nbdays Integer):
   if GetHistoricObservationNotfound(idlist , codesystem , nbdays ) is null then 
       GetHistoricObservationNotfound(idlist , codesystem , nbdays )
   else
     GetHistoricObservationNotfound(idlist , codesystem , nbdays )
-
-define function GetHistoricObservationDone(idlist List<code>, codesystem FHIR.url, nbdays Integer):
-      Last([Observation] O
+*/
+define function GetHistoricObservation(id System.Code, nbdays Integer):
+  if GetHistoricObservationNotfound(id ,  nbdays ) is null then 
+      GetHistoricObservationNotfound(id ,  nbdays )
+  else
+    GetHistoricObservationNotfound(id  , nbdays )
+/*
+define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Integer):
+      Last([Observation: idlist ] O
         where  O.status in { 'final', 'amended', 'corrected'}
-        and difference in days between O.issued and Today() < nbdays
-        and exists(O.code.coding C where C.code in idlist 
-        and C.system = codesystem))
+        and difference in days between O.issued and Today() < nbdays)
+*/
+define function GetHistoricObservationDone(id System.Code, nbdays Integer):
+      Last([Observation: id ] O
+        where  O.status in { 'final', 'amended', 'corrected'}
+        and difference in days between O.issued and Today() < nbdays)
 
-define function GetHistoricObservationNotfound(idlist List<code>, codesystem FHIR.url, nbdays Integer):
-      Last([Observation] O
+/*
+define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays Integer):
+      Last([Observation: idlist] O
         where  O.status in {'cancelled'}
-          and difference in days between O.issued and Today() < nbdays
-          and exists(O.code.coding C where C.code in idlist 
-          and C.system = codesystem))
-  
+          and difference in days between O.issued and Today() < nbdays)
+*/ 
+
+define function GetHistoricObservationNotfound(id System.Code, nbdays Integer):
+      Last([Observation: id] O
+        where  O.status in {'cancelled'}
+          and difference in days between O.issued and Today() < nbdays)
 // ************************   HasObsHistory ************************/
 
+/*
+define function HasObsHistory(idlist List<System.Code>,  nbdays Integer):
+  assesObservation(GetHistoricObservation(idlist, nbdays))
 
-define function HasObsHistory(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
-  assesObservation(GetHistoricObservation(idlist, ToUrl(codesystem), nbdays))
 
-
-define function HasObsHistory(id FHIR.code, codesystem System.String, nbdays Integer):
-  assesObservation(GetHistoricObservation({id}, ToUrl(codesystem), nbdays))
+define function HasObsHistory(id System.Code, cnbdays Integer):
+  assesObservation(GetHistoricObservation({id}, nbdays))
+*/
+define function HasObsHistory(id System.Code, nbdays Integer):
+  assesObservation(GetHistoricObservation(id, nbdays))
 
 define function HasObsHistory(id System.String, codesystem System.String, nbdays Integer):
-  assesObservation(GetHistoricObservation({c(id)}, ToUrl(codesystem), nbdays))
+  assesObservation(GetHistoricObservation(coding(id, codesystem), nbdays))
 
 
 define function HasObsHistory(id System.String, nbdays Integer):
-  assesObservation(GetHistoricObservation({c(id)}, ToUrl('{{cs_url}}'), nbdays))
+  assesObservation(GetHistoricObservation(coding(id, '{{cs_url}}'), nbdays))
 
 define function c(s System.String):
   FHIR.code { value: s }
 
+
+
 define function coding(s System.String, url System.String):
-  FHIR.Coding {
-                code: FHIR.code { value: s },
-                system: FHIR.uri { value: url },
-                "display": FHIR.string { value: s }
+  System.Code {
+                code:  s ,
+                system:  url ,
             }
+
+define function coding(s FHIR.code, url System.String):
+  System.Code {
+                code:  s.value ,
+                system:  url ,
+            }
+
+define function coding(s System.String):
+  coding(s , '{{cs_url}}')
 
 define function ToUrl(s System.String):
   url {value:s}
-// ************************   PatientHasHistoryOfCondition ************************/
 
-define function GetHistoricCondition(idlist List<code>, codesystem FHIR.url, nbdays Integer):
-      Last([Condition] O
-        where  difference in days between O.recordedDate and Today() < nbdays
-        and exists(O.code.coding C where C.code in idlist 
-        and C.system = codesystem)
+// ************************   GetCond ************************/
+/*
+define function GetCondition(idlist List<System.Code>):
+      Last([Condition: idlist] O
+        where O.encounter.id = Encounter.id
+        and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
+        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
+*/
+define function GetCondition(id System.Code):
+      Last([Condition: id] O
+        where O.encounter.id = Encounter.id
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 
 
 define function assesCondition(O Condition):
   if O is null then 
-    "No"
+    false
   else
-    "Yes"
+    true
+/*
+define function GetCond(idlist List<System.Code>):
+  GetCondition(idlist)
+
+define function GetCond(id System.Code):
+  GetCondition({id})
+*/
+define function GetCond(id System.Code):
+  (GetCondition(id))
+
+define function GetCond(id System.String, codesystem System.String):
+  (GetCondition(coding(id, codesystem)))
+
+define function GetCond(id System.String):
+  (GetCondition(coding(id, '{{cs_url}}')))
+
+// ************************   HasCond ************************/
+/*
+define function HasCond(idlist List<System.Code>):
+  assesCondition(GetCondition(idlist))
+
+define function HasCond(id System.Code):
+  assesCondition(GetCondition({id}))
+*/
 
 
-define function HasCondHistory(idlist List<FHIR.code>, codesystem System.String, nbdays Integer):
-  assesCondition(GetHistoricCondition(idlist, ToUrl(codesystem), nbdays))
+define function HasCond(id System.Code):
+  assesCondition(GetCondition(id))
+
+define function HasCond(id System.String, codesystem System.String):
+  assesCondition(GetCondition(coding(id, codesystem)))
+
+define function HasCond(id System.String):
+  assesCondition(GetCondition(coding(id, '{{cs_url}}')))
 
 
-define function HasCondHistory(id FHIR.code, codesystem System.String, nbdays Integer):
-  assesCondition(GetHistoricCondition({id}, ToUrl(codesystem), nbdays))
+
+// ************************   PatientHasHistoryOfCondition ************************/
+/*
+define function GetHistoricCondition(idlist List<System.Code>,  nbdays Integer):
+      Last([Condition: idlist] O
+        where  difference in days between O.recordedDate and Today() < nbdays
+        and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
+        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
+*/
+
+define function GetHistoricCondition(id System.Code,  nbdays Integer):
+      Last([Condition: id] O
+        where  difference in days between O.recordedDate and Today() < nbdays
+        and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
+        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
+
+
+
+
+/*
+define function HasCondHistory(idlist List<System.Code>,  nbdays Integer):
+  assesCondition(GetHistoricCondition(idlist,  nbdays))
+
+
+define function HasCondHistory(id System.Code,  nbdays Integer):
+  assesCondition(GetHistoricCondition({id}, nbdays))
+*/
+define function HasCondHistory(id System.Code, nbdays Integer):
+  assesCondition(GetHistoricCondition(id,  nbdays))
 
 define function HasCondHistory(id System.String, codesystem System.String, nbdays Integer):
-  assesCondition(GetHistoricCondition({c(id)}, ToUrl(codesystem), nbdays))
+  assesCondition(GetHistoricCondition(coding(id,codesystem),nbdays))
 
 
 define function HasCondHistory(id System.String, nbdays Integer):
-  assesCondition(GetHistoricCondition({c(id)}, ToUrl('{{cs_url}}'), nbdays))
+  assesCondition(GetHistoricCondition(coding(id,'{{cs_url}}'),  nbdays))
+
+
+
 //define function PatientHasConditionDuringEncounter(id String, codesystem url, duration Integer)):
 
 //define function PatientHasConditionFromValueSetDuringEncounter(id String, codesystem url, duration Integer)):

@@ -14,18 +14,18 @@ context Encounter
 context Patient
       
 define "Weight code":
-    Base.c('EmCare.B6.DE06')
+  Base.coding('EmCare.B6.DE06')
 
 /* pastweight : Previous Weight*/
 define "pastweight":
-    if AgeInMonths()< 4 and Base.HasObsHistory("Weight code",'{{cs_url}}', 63) as FHIR.Quantity is not null then
-      Base.HasObsHistory("Weight code",'{{cs_url}}', 63)  as FHIR.Quantity
-    else  if AgeInMonths()< 6 and Base.HasObsHistory("Weight code",'{{cs_url}}', 94) as FHIR.Quantity  is not null then
-      Base.HasObsHistory("Weight code",'{{cs_url}}', 94)  as  FHIR.Quantity
-    else if AgeInMonths()< 6 and Base.HasObsHistory("Weight code",'{{cs_url}}', 126) as FHIR.Quantity  is not null then
-       Base.HasObsHistory("Weight code",'{{cs_url}}', 126)  as FHIR.Quantity
-    else if Base.HasObsHistory("Weight code",'{{cs_url}}', 201) as FHIR.Quantity  is not null then
-       Base.HasObsHistory("Weight code",'{{cs_url}}', 201)  as FHIR.Quantity
+    if AgeInMonths()< 4 and Base.HasObsHistory("Weight code", 63) as FHIR.Quantity is not null then
+      Base.HasObsHistory("Weight code", 63)  as FHIR.Quantity
+    else  if AgeInMonths()< 6 and Base.HasObsHistory("Weight code", 94) as FHIR.Quantity  is not null then
+      Base.HasObsHistory("Weight code", 94)  as  FHIR.Quantity
+    else if AgeInMonths()< 6 and Base.HasObsHistory("Weight code", 126) as FHIR.Quantity  is not null then
+       Base.HasObsHistory("Weight code", 126)  as FHIR.Quantity
+    else if Base.HasObsHistory("Weight code", 201) as FHIR.Quantity  is not null then
+       Base.HasObsHistory("Weight code", 201)  as FHIR.Quantity
     else
       null
 
@@ -37,7 +37,7 @@ define "patientsex":
 /* ageatpastweight : Age at Previous Weight*/
 define "ageatpastweight":
     if "pastweight" is not null  then
-      (difference in days between ToDate(Last([Observation ] O where  O.status in { 'final', 'amended', 'corrected'} and  exists(O.code.coding C where C.code = "Weight code"  and C.system = FHIR.uri {value : '{{cs_url}}'})).issued) and Patient.birthDate) * ( 1.0 as System.Decimal )
+      (difference in days between ToDate(Last([Observation:"Weight code" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued) and Patient.birthDate) * ( 1.0 as System.Decimal )
     else
      null
 
@@ -70,10 +70,10 @@ define "weight from  at previous weight":
       null
 
 define "WAZ":
-    if Base.HasObs("Weight code",'{{cs_url}}') = Base."No"   then 
+    if Base.HasObs("Weight code") = Base."No"   then 
         "z-score at previous weight"
-    else if Base.HasObs("Weight code",'{{cs_url}}') is not null then
-         weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert Base.HasObs("Weight code",'{{cs_url}}') to 'Kg').value * ( 1.0 as System.Decimal )))
+    else if Base.HasObs("Weight code") is not null then
+         weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert Base.HasObs("Weight code") to 'Kg').value * ( 1.0 as System.Decimal )))
     else
         null
 

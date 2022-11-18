@@ -11,7 +11,7 @@ include EmCareValueSet version '0.99.99' called val
 
 
 context Patient
-      
+context Encounter      
 
 /* ageinmonth.cql : nan*/
 define "ageinmonth.cql":

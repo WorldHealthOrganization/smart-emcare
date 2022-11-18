@@ -11,52 +11,52 @@ include EmCareValueSet version '0.99.99' called val
 
 
 context Patient
-      
+context Encounter      
 
 /* ageinmonths : Age in Month*/
 define "ageinmonths":
     AgeInMonths()
 
-/* age in month : Age in Month*/
+/* alias age in month : ageinmonths*/
 define "age in month":
-    AgeInMonths()
+    "ageinmonths"
 
 /* emcare.b20s1.de01 : Diarrhoea*/
 define "emcare.b20s1.de01":
-    Base.GetObsValue('EmCare.B20S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B20S1.DE01')
 
-/* diarrhoea : Diarrhoea*/
+/* alias diarrhoea : emcare.b20s1.de01*/
 define "diarrhoea":
-    Base.GetObsValue('EmCare.B20S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b20s1.de01"
 
 /* emcare.a.de31 : Biological Mother Vital Status*/
 define "emcare.a.de31":
-    Base.GetObsValue('EmCare.A.DE31','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.A.DE31')
 
-/* biological mother vital status : Biological Mother Vital Status*/
+/* alias biological mother vital status : emcare.a.de31*/
 define "biological mother vital status":
-    Base.GetObsValue('EmCare.A.DE31','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.a.de31"
 
 /* emcare.b21s1.de01 : Breastfed*/
 define "emcare.b21s1.de01":
-    Base.GetObsValue('EmCare.B21S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B21S1.DE01')
 
-/* breastfed : Breastfed*/
+/* alias breastfed : emcare.b21s1.de01*/
 define "breastfed":
-    Base.GetObsValue('EmCare.B21S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b21s1.de01"
 
 /* emcare.b18s1.de02 : Difficulty with Feeding*/
 define "emcare.b18s1.de02":
-    Base.GetObsValue('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B18S1.DE02')
 
-/* difficulty with feeding : Difficulty with Feeding*/
+/* alias difficulty with feeding : emcare.b18s1.de02*/
 define "difficulty with feeding":
-    Base.GetObsValue('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b18s1.de02"
 
 /* emcare.b6.de06 : Weight*/
 define "emcare.b6.de06":
-    Base.GetObsValue('EmCare.B6.DE06','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B6.DE06')
 
-/* weight : Weight*/
+/* alias weight : emcare.b6.de06*/
 define "weight":
-    Base.GetObsValue('EmCare.B6.DE06','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b6.de06"

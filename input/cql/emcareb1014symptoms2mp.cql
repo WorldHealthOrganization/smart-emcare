@@ -8,40 +8,40 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
-include emcareb23classification version '0.99.99' called clas
+include emcarecombineddataelements version '0.99.99' called clas
 
 
 context Patient
-      
+context Encounter      
 
 /* emcare.b.g.de01 : Danger Signs*/
 define "emcare.b.g.de01":
     clas."emcare.b.g.de01"
 
-/* danger signs : Danger Signs*/
+/* alias danger signs : emcare.b.g.de01*/
 define "danger signs":
-    clas."emcare.b.g.de01"
+    "emcare.b.g.de01"
 
-/* emcare.b6.de01 : Axiliary Temperature*/
+/* emcare.b6.de01 : Temp*/
 define "emcare.b6.de01":
-    Base.GetObsValue('EmCare.B6.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B6.DE01')
 
-/* axiliary temperature : Axiliary Temperature*/
-define "axiliary temperature":
-    Base.GetObsValue('EmCare.B6.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* emcare.b6.de05 : Hot to Touch*/
-define "emcare.b6.de05":
-    Base.GetObsValue('EmCare.B6.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* hot to touch : Hot to Touch*/
-define "hot to touch":
-    Base.GetObsValue('EmCare.B6.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+/* alias temp : emcare.b6.de01*/
+define "temp":
+    "emcare.b6.de01"
 
 /* ageinmonths : Age*/
 define "ageinmonths":
     AgeInMonths()
 
-/* age : Age*/
+/* alias age : ageinmonths*/
 define "age":
-    AgeInMonths()
+    "ageinmonths"
+
+/* emcare.b12s1.de01 : Measured Fever*/
+define "emcare.b12s1.de01":
+    Base.GetObsValue('EmCare.B6.DE01') is not null and Base.GetObsValue('EmCare.B6.DE01')   >= 37.5 'Cel' or Base.GetObsValue('EmCare.B6.DE05') is not null and  Base.GetObsValue('EmCare.B6.DE05')  = true
+
+/* alias measured fever : emcare.b12s1.de01*/
+define "measured fever":
+    "emcare.b12s1.de01"

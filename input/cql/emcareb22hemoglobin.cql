@@ -11,12 +11,12 @@ include EmCareValueSet version '0.99.99' called val
 
 
 context Patient
-      
+context Encounter      
 
 /* ageinmonths : Age*/
 define "ageinmonths":
     AgeInMonths()
 
-/* age : Age*/
+/* alias age : ageinmonths*/
 define "age":
-    AgeInMonths()
+    "ageinmonths"

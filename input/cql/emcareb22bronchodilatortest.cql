@@ -8,11 +8,11 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
-include emcareb23classification version '0.99.99' called clas
+include emcarecombineddataelements version '0.99.99' called clas
 
 
 context Patient
-      
+context Encounter      
 
 /* has danger signs : nan*/
 define "has danger signs":
@@ -22,182 +22,182 @@ define "has danger signs":
 define "ageinmonths":
     AgeInMonths()
 
-/* age : Age*/
+/* alias age : ageinmonths*/
 define "age":
-    AgeInMonths()
+    "ageinmonths"
 
 /* emcare.b10s1.de05 : Cough*/
 define "emcare.b10s1.de05":
-    Base.GetObsValue('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S1.DE05')
 
-/* cough : Cough*/
+/* alias cough : emcare.b10s1.de05*/
 define "cough":
-    Base.GetObsValue('EmCare.B10S1.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s1.de05"
 
 /* emcare.b10s1.de01 : Difficulty Breathing*/
 define "emcare.b10s1.de01":
-    Base.GetObsValue('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S1.DE01')
 
-/* difficulty breathing : Difficulty Breathing*/
+/* alias difficulty breathing : emcare.b10s1.de01*/
 define "difficulty breathing":
-    Base.GetObsValue('EmCare.B10S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s1.de01"
 
 /* emcare.b10s2.de01 : Respiratory Rate*/
 define "emcare.b10s2.de01":
-    Base.GetObsValue('EmCare.B10S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S2.DE01')
 
-/* respiratory rate : Respiratory Rate*/
+/* alias respiratory rate : emcare.b10s2.de01*/
 define "respiratory rate":
-    Base.GetObsValue('EmCare.B10S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s2.de01"
 
 /* emcare.b11s1.de01 : Diarrhoea*/
 define "emcare.b11s1.de01":
-    Base.GetObsValue('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B11S1.DE01')
 
-/* diarrhoea : Diarrhoea*/
+/* alias diarrhoea : emcare.b11s1.de01*/
 define "diarrhoea":
-    Base.GetObsValue('EmCare.B11S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b11s1.de01"
 
 /* emcare.b10s2.de03 : Chest Indrawing*/
 define "emcare.b10s2.de03":
-    Base.GetObsValue('EmCare.B10S2.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S2.DE03')
 
-/* chest indrawing : Chest Indrawing*/
+/* alias chest indrawing : emcare.b10s2.de03*/
 define "chest indrawing":
-    Base.GetObsValue('EmCare.B10S2.DE03','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s2.de03"
 
 /* emcare.b10s2.de05 : Wheezing*/
 define "emcare.b10s2.de05":
-    Base.GetObsValue('EmCare.B10S2.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S2.DE05')
 
-/* wheezing : Wheezing*/
+/* alias wheezing : emcare.b10s2.de05*/
 define "wheezing":
-    Base.GetObsValue('EmCare.B10S2.DE05','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s2.de05"
 
 /* emcare.b10s2.de04 : Stridor in a calm child*/
 define "emcare.b10s2.de04":
-    Base.GetObsValue('EmCare.B10S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S2.DE04')
 
-/* stridor in a calm child : Stridor in a calm child*/
+/* alias stridor in a calm child : emcare.b10s2.de04*/
 define "stridor in a calm child":
-    Base.GetObsValue('EmCare.B10S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s2.de04"
 
 /* emcare.b10s2.de07 : Oxygen Saturation*/
 define "emcare.b10s2.de07":
-    Base.GetObsValue('EmCare.B10S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B10S2.DE07')
 
-/* oxygen saturation : Oxygen Saturation*/
+/* alias oxygen saturation : emcare.b10s2.de07*/
 define "oxygen saturation":
-    Base.GetObsValue('EmCare.B10S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b10s2.de07"
 
 /* emcare.a.de24 : Primary Caregiver's Relationship to Client*/
 define "emcare.a.de24":
-    Base.GetObsValue('EmCare.A.DE24','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.A.DE24')
 
-/* primary caregiver's relationship to client : Primary Caregiver's Relationship to Client*/
+/* alias primary caregiver's relationship to client : emcare.a.de24*/
 define "primary caregiver's relationship to client":
-    Base.GetObsValue('EmCare.A.DE24','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.a.de24"
 
 /* emcare.b21s1.de01 : Breastfed*/
 define "emcare.b21s1.de01":
     Base.GetObsValue('EmCare.B21S1.DE01', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
 
-/* breastfed : Breastfed*/
+/* alias breastfed : emcare.b21s1.de01*/
 define "breastfed":
-    Base.GetObsValue('EmCare.B21S1.DE01', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b21s1.de01"
 
 /* emcare.b8-b9.de01 : Obstructed or Absent Breathing*/
 define "emcare.b8-b9.de01":
-    Base.GetObsValue('EmCare.B8-B9.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B8-B9.DE01')
 
-/* obstructed or absent breathing : Obstructed or Absent Breathing*/
+/* alias obstructed or absent breathing : emcare.b8-b9.de01*/
 define "obstructed or absent breathing":
-    Base.GetObsValue('EmCare.B8-B9.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b8-b9.de01"
 
 /* emcare.b7.de02 : Convulsing Now*/
 define "emcare.b7.de02":
-    Base.GetObsValue('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B7.DE02')
 
-/* convulsing now : Convulsing Now*/
+/* alias convulsing now : emcare.b7.de02*/
 define "convulsing now":
-    Base.GetObsValue('EmCare.B7.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b7.de02"
 
 /* emcare.b18s1.de02 : Difficulty with Feeding*/
 define "emcare.b18s1.de02":
-    Base.GetObsValue('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B18S1.DE02')
 
-/* difficulty with feeding : Difficulty with Feeding*/
+/* alias difficulty with feeding : emcare.b18s1.de02*/
 define "difficulty with feeding":
-    Base.GetObsValue('EmCare.B18S1.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b18s1.de02"
 
 /* emcare.b18s1.de01 : Convulsions in this Illness*/
 define "emcare.b18s1.de01":
-    Base.GetObsValue('EmCare.B18S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B18S1.DE01')
 
-/* convulsions in this illness : Convulsions in this Illness*/
+/* alias convulsions in this illness : emcare.b18s1.de01*/
 define "convulsions in this illness":
-    Base.GetObsValue('EmCare.B18S1.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b18s1.de01"
 
 /* emcare.b18s2.de07 : Severe Chest Indrawing*/
 define "emcare.b18s2.de07":
-    Base.GetObsValue('EmCare.B18S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B18S2.DE07')
 
-/* severe chest indrawing : Severe Chest Indrawing*/
+/* alias severe chest indrawing : emcare.b18s2.de07*/
 define "severe chest indrawing":
-    Base.GetObsValue('EmCare.B18S2.DE07','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b18s2.de07"
 
 /* emcare.b18s2.de08 : Movements*/
 define "emcare.b18s2.de08":
-    Base.GetObsValue('EmCare.B18S2.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B18S2.DE08')
 
-/* movements : Movements*/
+/* alias movements : emcare.b18s2.de08*/
 define "movements":
-    Base.GetObsValue('EmCare.B18S2.DE08','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b18s2.de08"
 
 /* emcare.b18s2.de01 : Measured Temperature*/
 define "emcare.b18s2.de01":
-    Base.GetObsValue('EmCare.B18S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B18S2.DE01')
 
-/* measured temperature : Measured Temperature*/
+/* alias measured temperature : emcare.b18s2.de01*/
 define "measured temperature":
-    Base.GetObsValue('EmCare.B18S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b18s2.de01"
 
 /* emcare.b19s2.de01 : Yellow Skin*/
 define "emcare.b19s2.de01":
-    Base.GetObsValue('EmCare.B19S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B19S2.DE01')
 
-/* yellow skin : Yellow Skin*/
+/* alias yellow skin : emcare.b19s2.de01*/
 define "yellow skin":
-    Base.GetObsValue('EmCare.B19S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b19s2.de01"
 
 /* emcare.b19s2.de04 : When did the Jaundice first appear?*/
 define "emcare.b19s2.de04":
-    Base.GetObsValue('EmCare.B19S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B19S2.DE04')
 
-/* when did the jaundice first appear? : When did the Jaundice first appear?*/
+/* alias when did the jaundice first appear? : emcare.b19s2.de04*/
 define "when did the jaundice first appear?":
-    Base.GetObsValue('EmCare.B19S2.DE04','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b19s2.de04"
 
 /* emcare.b19s2.de02 : Yellow Palms or Yellow Soles*/
 define "emcare.b19s2.de02":
-    Base.GetObsValue('EmCare.B19S2.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B19S2.DE02')
 
-/* yellow palms or yellow soles : Yellow Palms or Yellow Soles*/
+/* alias yellow palms or yellow soles : emcare.b19s2.de02*/
 define "yellow palms or yellow soles":
-    Base.GetObsValue('EmCare.B19S2.DE02','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b19s2.de02"
 
 /* emcare.b21s2.de01 : Weight Status*/
 define "emcare.b21s2.de01":
-    Base.GetObsValue('EmCare.B21S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B21S2.DE01')
 
-/* weight status : Weight Status*/
+/* alias weight status : emcare.b21s2.de01*/
 define "weight status":
-    Base.GetObsValue('EmCare.B21S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b21s2.de01"
 
 /* emcare.b12s2.de01 : Stiff neck*/
 define "emcare.b12s2.de01":
-    Base.GetObsValue('EmCare.B12S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    Base.GetObsValue('EmCare.B12S2.DE01')
 
-/* stiff neck : Stiff neck*/
+/* alias stiff neck : emcare.b12s2.de01*/
 define "stiff neck":
-    Base.GetObsValue('EmCare.B12S2.DE01','https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
+    "emcare.b12s2.de01"

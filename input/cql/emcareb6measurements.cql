@@ -12,15 +12,15 @@ include EmCareZScore version '0.99.99' called Z
 
 
 context Patient
-      
+context Encounter      
 
 /* ageindays.cql : Age in Days*/
 define "ageindays.cql":
     AgeInDays()
 
-/* age in days : Age in Days*/
+/* alias age in days : ageindays.cql*/
 define "age in days":
-    AgeInDays()
+    "ageindays.cql"
 
 /* pastweightactualised : nan*/
 define "pastweightactualised":
@@ -30,14 +30,14 @@ define "pastweightactualised":
 define "ageinmonths.cql":
     AgeInMonths()
 
-/* age in months : Age in months*/
+/* alias age in months : ageinmonths.cql*/
 define "age in months":
-    AgeInMonths()
+    "ageinmonths.cql"
 
 /* ageinyears.cql : Age in years*/
 define "ageinyears.cql":
     AgeInYears()
 
-/* age in years : Age in years*/
+/* alias age in years : ageinyears.cql*/
 define "age in years":
-    AgeInYears()
+    "ageinyears.cql"

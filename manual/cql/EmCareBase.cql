@@ -1,4 +1,4 @@
-/*
+/*nter"
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
 */
@@ -9,38 +9,9 @@ using FHIR version '{{FHIR_VERSION}}'
 
 include FHIRHelpers version '4.0.1'
 
+parameter EmCareEncounter Encounter
 
-context Encounter
-define function Equal(id FHIR.id ,ref FHIR.Reference):
-  case
-    when id = ref.id then true
-    when id = Last(Split(ref.reference, '/')) then true
-    when ref.identifier is not null and id = ref.identifier.id then true
-    else false
-end
-
-define EmCarePatient: First([Patient] P where Equal(P.id, Encounter.subject))
-
-context Patient 
-
-define AgeInDays:
-  difference in days between EmCarePatient.birthDate and Today()  
-
-define AgeInMonths: 
-  difference in months between EmCarePatient.birthDate and Today()  
-
-define AgeInYears:
-  difference in years between EmCarePatient.birthDate and Today()  
-
-
-
-
-// *********************   PatientHasObservationDuringEncounter *********************/
-// obs and value : return value
-// obs and no value: return true
-// obs cancelled (not found) : return false
-// obs not found : return null
-
+context Patient
 
 
 
@@ -49,6 +20,16 @@ define "Yes":
 
 define "No":
   false 
+
+define function Equal(id FHIR.id ,ref FHIR.Reference):
+  case
+    when id = ref.id then true
+    when id = Last(Split(ref.reference, '/')) then true
+   // when ref.identifier is not null and id = ref.identifier.id then true
+    else false
+end
+
+
 
 define function getValue(O Observation):
   case  
@@ -71,7 +52,6 @@ define function GetObservationDuringEncounter(idlist List<System.Code>):
   else
     GetObservationDuringEncounterNotFound(idlist )
 */
-context Encounter
 
 define function GetObservationDuringEncounter(id System.Code):
   if GetObservationDuringEncounterDone(id ) is not null then 
@@ -86,31 +66,31 @@ define function GetObservationDuringEncounterDone(idlist List<System.Code>):
 */
 define function GetObservationDuringEncounterDone(id System.Code):
       Last([Observation: id ] O
-        where   Equal(Encounter.id, O.encounter) 
+        where   Equal(EmCareEncounter.id, O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 
 /*
 define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
       Last([Observation: idlist] O
-       where  Equal(Encounter.id, O.encounter) 
+       where  Equal(EmCareEncounter.id, O.encounter) 
           and O.status in {'cancelled'})
           */
 define function GetObservationDuringEncounterNotFound(id System.Code):
       Last([Observation: id] O
-       where  Equal(Encounter.id, O.encounter) 
+       where  Equal(EmCareEncounter.id, O.encounter) 
           and O.status in {'cancelled'})
 /*
 
 define function GetNumberObservationDuringEncounter(idlist List<System.Code>):
   Count(
     [Observation: idlist] O
-        where  Equal(Encounter.id, O.encounter) 
+        where  Equal(EmCareEncounter.id, O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 */
 define function GetNumberObservationDuringEncounter(id System.Code):
   Count(
     [Observation: id] O
-        where  Equal(Encounter.id, O.encounter) 
+        where  Equal(EmCareEncounter.id, O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 
 // ************************   GetObsValue ************************/
@@ -159,7 +139,6 @@ define function GetHistoricObservation(idlist List<System.Code>, nbdays Integer)
     GetHistoricObservationNotfound(idlist , codesystem , nbdays )
 */
 
-context Patient
 define function GetHistoricObservation(id System.Code, nbdays Integer):
   if GetHistoricObservationDone(id ,  nbdays ) is not null then 
       GetHistoricObservationDone(id ,  nbdays )
@@ -174,12 +153,12 @@ define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Inte
 define function GetHistoricObservationDone(id System.Code, nbdays Integer):
       Last([Observation: id ] O
         where  O.status in { 'final', 'amended', 'corrected'}
-        and (difference in days between O.issued and Today()) < nbdays)
+        and (difference in days between O.issued and Today()) < nbdays  )
 
 /*
 define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays Integer):
       Last([Observation: idlist] O
-        where  O.status in {'cancelled'}define Patient: singleton from ([Patient: Encounter.subject]]
+        where  O.status in {'cancelled'}
 */
 define function GetHistoricObservationNotfound(id System.Code, nbdays Integer):
       Last([Observation: id] O
@@ -232,20 +211,19 @@ define function coding(s System.String):
 define function ToUrl(s System.String):
   url {value:s}
 
-context Encounter
 
 
 // ************************   GetCond ************************/
 /*
 define function GetCoO.encounterndition(idlist List<System.Code>):
       Last([Condition: idlist] O
-        where  Equal(Encounter.id, O.encounter) 
+        where  Equal(EmCareEncounter.id, O.encounter) 
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 */
 define function GetCondition(id System.Code):
       Last([Condition: id] O
-        where  Equal(Encounter.id, O.encounter) 
+        where  Equal(EmCareEncounter.id, O.encounter) 
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 
@@ -276,14 +254,9 @@ define function GetCond(id System.String):
 define function HasCond(idlist List<System.Code>):
   assesCondition(GetCondition(idlist))
 
-define function HasCond(id System.Code):
-  assesCondition(GetCondition({id}))
+
+3518GetCondition(id))
 */
-
-
-define function HasCond(id System.Code):
-  assesCondition(GetCondition(id))
-
 define function HasCond(id System.String, codesystem System.String):
   assesCondition(GetCondition(coding(id, codesystem)))
 
@@ -300,7 +273,6 @@ define function GetHistoricCondition(idlist List<System.Code>,  nbdays Integer):
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 */
-context Patient
 
 define function GetHistoricCondition(id System.Code,  nbdays Integer):
       Last([Condition: id] O

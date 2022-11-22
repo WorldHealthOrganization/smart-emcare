@@ -11,14 +11,15 @@ include EmCareValueSet version '0.99.99' called val
 include EmCareZScore version '0.99.99' called Z
 include emcarecombineddataelements version '0.99.99' called C
 
-context Encounter
 
-define Patient:
-    Base.EmCarePatient    
+parameter "encounter"  Encounter
+
+
+context Patient    
 
 /* dl-g-cl1-07 : Severe Pneumonia or Very Severe Disease*/
 define "dl-g-cl1-07":
-    C."age >= 2 months to <60 months" and (obs."cough" = true  or  obs."difficulty breathing" = true) and (C."danger signs" = true or  obs."stridor in a calm child" = true or obs."oxygen saturation" < 90  '%{Oxygen}')
+    C."age >= 2 months to <60 months" and (obs."cough" = true  or  obs."difficulty breathing" = true) and (C."danger signs" = true or  obs."stridor in a calm child" = true or obs."oxygen saturation" < 90  '%')
 
 /* alias severe pneumonia or very severe disease : dl-g-cl1-07*/
 define "severe pneumonia or very severe disease":
@@ -26,7 +27,7 @@ define "severe pneumonia or very severe disease":
 
 /* emcare.b23.de04 : nan*/
 define "emcare.b23.de04":
-    obs."oxygen saturation" < 90  '%{Oxygen}'
+    obs."oxygen saturation" < 90  '%'
 
 /* emcare.b23.de05 : nan*/
 define "emcare.b23.de05":
@@ -495,7 +496,7 @@ define "low weight for age":
 
 /* dl-i-cl1-34 : Low MUAC or visual report of wasting*/
 define "dl-i-cl1-34":
-    obs."weight" = false and ((Base.AgeInMonths> 6 and  obs."muac (mid upper arm circumference)" < 12.5 'cm' ) or (Base.AgeInMonths<= 6 and obs."muac cannot be measured"=true))
+    obs."weight" = false and ((AgeInMonths()> 6 and  obs."muac (mid upper arm circumference)" < 12.5 'cm' ) or (AgeInMonths()<= 6 and obs."muac cannot be measured"=true))
 
 /* alias low muac or visual report of wasting : dl-i-cl1-34*/
 define "low muac or visual report of wasting":

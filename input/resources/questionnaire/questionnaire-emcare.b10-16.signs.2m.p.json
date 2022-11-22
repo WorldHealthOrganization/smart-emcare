@@ -396,7 +396,7 @@
                         {
                             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                             "valueCoding": {
-                                "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                                "system": "http://unitsofmeasure.org",
                                 "code": "{Counts}/min"
                             }
                         },
@@ -471,7 +471,7 @@
                         {
                             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                             "valueCoding": {
-                                "system": "http://hl7.org/fhir/ValueSet/ucum-units",
+                                "system": "http://unitsofmeasure.org",
                                 "code": "{Counts}/min"
                             }
                         },
@@ -538,7 +538,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >2,iif((%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12) or (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true,false) ,iif(%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60, true, iif(%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value .exists(),false,{})))"
+                                "expression": "iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>2,\n  iif((%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12) or (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), \n    true,\n    false\n) , iif(%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60, true, iif(%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value.exists(),false,{}))\n\n)"
                             }
                         }
                     ],
@@ -620,8 +620,8 @@
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
-                        "system": "http://hl7.org/fhir/ValueSet/ucum-units",
-                        "code": "%{Oxygen}"
+                        "system": "http://unitsofmeasure.org",
+                        "code": "%"
                     }
                 },
                 {
@@ -644,7 +644,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B10S2.DE07').answer.first().value<90"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B10S2.DE07').answer.first().value< 90 '%'"
                     }
                 }
             ],
@@ -785,7 +785,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value != true  or  (%resource.repeat(item).where(linkId='Oral Fluid Test').answer.first().value.display in ('Completely unable to drink' , 'unable to perform test') or %resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value != true  or  %resource.repeat(item).where(linkId='Oral Fluid Test').answer.first().value.display = 'Completely unable to drink'  or  %resource.repeat(item).where(linkId='Oral Fluid Test').answer.first().value.display ='unable to perform test' or %resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = true"
                     }
                 }
             ],

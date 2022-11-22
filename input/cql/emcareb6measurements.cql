@@ -10,14 +10,15 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include EmCareZScore version '0.99.99' called Z
 
-context Encounter
 
-define Patient:
-    Base.EmCarePatient    
+parameter "encounter"  Encounter
+
+
+context Patient    
 
 /* ageindays.cql : Age in Days*/
 define "ageindays.cql":
-    Base.AgeInDays
+    AgeInDays()
 
 /* alias age in days : ageindays.cql*/
 define "age in days":
@@ -29,7 +30,7 @@ define "pastweightactualised":
 
 /* ageinmonths.cql : Age in months*/
 define "ageinmonths.cql":
-    Base.AgeInMonths
+    AgeInMonths()
 
 /* alias age in months : ageinmonths.cql*/
 define "age in months":
@@ -37,7 +38,7 @@ define "age in months":
 
 /* ageinyears.cql : Age in years*/
 define "ageinyears.cql":
-    Base.AgeInYears
+    AgeInYears()
 
 /* alias age in years : ageinyears.cql*/
 define "age in years":

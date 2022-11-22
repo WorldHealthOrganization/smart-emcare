@@ -9,24 +9,22 @@ include EmCareBase version '0.99.99' called Base
 include WeightForAge version '0.99.99' called weianthro
 
 
-
-context Encounter
-
-
+parameter encounter Encounter
       
+context Patient
 
 define "Weight code":
   Base.coding('EmCare.B6.DE06')
 
 /* pastweight : Previous Weight*/
 define "pastweight":
-    if Base.AgeInMonths< 4 and Base.HasObsHistory("Weight code", 63) as FHIR.Quantity is not null then
+    if AgeInMonths()< 4 and Base.HasObsHistory("Weight code", 63) is not null then
       Base.HasObsHistory("Weight code", 63)  as FHIR.Quantity
-    else  if Base.AgeInMonths< 6 and Base.HasObsHistory("Weight code", 94) as FHIR.Quantity  is not null then
+    else  if AgeInMonths()< 6 and Base.HasObsHistory("Weight code", 94)   is not null then
       Base.HasObsHistory("Weight code", 94)  as  FHIR.Quantity
-    else if Base.AgeInMonths< 6 and Base.HasObsHistory("Weight code", 126) as FHIR.Quantity  is not null then
+    else if AgeInMonths()< 6 and Base.HasObsHistory("Weight code", 126)   is not null then
        Base.HasObsHistory("Weight code", 126)  as FHIR.Quantity
-    else if Base.HasObsHistory("Weight code", 201) as FHIR.Quantity  is not null then
+    else if Base.HasObsHistory("Weight code", 201)  is not null then
        Base.HasObsHistory("Weight code", 201)  as FHIR.Quantity
     else
       null
@@ -34,40 +32,40 @@ define "pastweight":
 
 /* patientsex : Patient sex*/
 define "patientsex":
-    if Base.Patient.gender = 'female' then 'female' else 'male'
+    if Patient.gender = 'female' then 'female' else 'male'
 
 /* ageatpastweight : Age at Previous Weight*/
 define "ageatpastweight":
     if "pastweight" is not null  then
-      (difference in days between ToDate(Last([Observation:"Weight code" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued) and Base.Patient.birthDate) * ( 1.0 as System.Decimal )
+      (difference in days between ToDate(Last([Observation:"Weight code" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued) and Patient.birthDate) * ( 1.0 as System.Decimal )
     else
      null
 
 /* pastweightzscore : Z-Score at Previous Weight*/
 define "pastweightzscore":
     if "pastweight" is not null  then
-      weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'Kg').value * ( 1.0 as System.Decimal)))
+      weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'kg').value * ( 1.0 as System.Decimal)))
     else
       null
 
 /* z-score at previous weight : Z-Score at Previous Weight*/
 define "z-score at previous weight":
     if "pastweight" is not null  then
-      weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'Kg').value * ( 1.0 as System.Decimal )))
+      weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'kg').value * ( 1.0 as System.Decimal )))
     else
       null
 
 /* pastweightactualised : Weight from  at Previous Weight*/
 define "pastweightactualised":
     if "pastweight" is not null then
-      weianthro.generateWeightFromAge("patientsex",Base.AgeInDays * ( 1.0 as System.Decimal ), "pastweightzscore")
+      weianthro.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), "pastweightzscore")
     else
       null
 
 /* weight from  at previous weight : Weight from  at Previous Weight*/
 define "weight from  at previous weight":
     if "pastweight">0 then
-      weianthro.generateWeightFromAge("patientsex",Base.AgeInDays * ( 1.0 as System.Decimal ), "pastweightzscore")
+      weianthro.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), "pastweightzscore")
     else
       null
 
@@ -76,7 +74,7 @@ define "weight from  at previous weight":
 (convert Base.HasObs("Weight code") to 'Kg') does not work, so let's assume the weight is in Kg
 */
 define "WAZ":
-    if Base.HasObs("Weight code") = true   then 
+    if Base.HasObs("Weight code") is null   then 
         "z-score at previous weight"
     else if Base.HasObs("Weight code") is not null then
          weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ( Base.HasObs("Weight code").value * ( 1.0 as System.Decimal )))

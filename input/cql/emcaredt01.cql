@@ -10,10 +10,11 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
-context Encounter
 
-define Patient:
-    Base.EmCarePatient    
+parameter "encounter"  Encounter
+
+
+context Patient    
 
 /* emcaredt02 : Register the child in the encounter*/
 define "emcaredt02":

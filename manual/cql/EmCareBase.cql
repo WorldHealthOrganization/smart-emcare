@@ -9,10 +9,12 @@ using FHIR version '{{FHIR_VERSION}}'
 
 include FHIRHelpers version '4.0.1'
 
-parameter EmCareEncounter Encounter
+parameter "Encounter" Encounter
 
 context Patient
 
+define encounterid:
+  "Encounter".id
 
 
 define "Yes":
@@ -21,13 +23,15 @@ define "Yes":
 define "No":
   false 
 
-define function Equal(id FHIR.id ,ref FHIR.Reference):
-  case
-    when id = ref.id then true
-    when id = Last(Split(ref.reference, '/')) then true
+
+define function IsInEncounter(ref FHIR.Reference):
+    case
+    when encounterid = ref.id then true
+    when encounterid = Last(Split(ref.reference, '/')) then true
    // when ref.identifier is not null and id = ref.identifier.id then true
     else false
 end
+
 
 
 
@@ -61,36 +65,36 @@ define function GetObservationDuringEncounter(id System.Code):
 /*
 define function GetObservationDuringEncounterDone(idlist List<System.Code>):
       Last([Observation: idlist ] O
-        where   Equal(Encounter.id, O.encounter) 
+        where   IsInEncounter(O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 */
 define function GetObservationDuringEncounterDone(id System.Code):
       Last([Observation: id ] O
-        where   Equal(EmCareEncounter.id, O.encounter) 
+        where   IsInEncounter(O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 
 /*
 define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
       Last([Observation: idlist] O
-       where  Equal(EmCareEncounter.id, O.encounter) 
+       where  IsInEncounter(O.encounter) 
           and O.status in {'cancelled'})
           */
 define function GetObservationDuringEncounterNotFound(id System.Code):
       Last([Observation: id] O
-       where  Equal(EmCareEncounter.id, O.encounter) 
+       where  IsInEncounter(O.encounter) 
           and O.status in {'cancelled'})
 /*
 
 define function GetNumberObservationDuringEncounter(idlist List<System.Code>):
   Count(
     [Observation: idlist] O
-        where  Equal(EmCareEncounter.id, O.encounter) 
+        where  IsInEncounter( O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 */
 define function GetNumberObservationDuringEncounter(id System.Code):
   Count(
     [Observation: id] O
-        where  Equal(EmCareEncounter.id, O.encounter) 
+        where  IsInEncounter( O.encounter) 
         and O.status in { 'final', 'amended', 'corrected'})
 
 // ************************   GetObsValue ************************/
@@ -217,13 +221,13 @@ define function ToUrl(s System.String):
 /*
 define function GetCoO.encounterndition(idlist List<System.Code>):
       Last([Condition: idlist] O
-        where  Equal(EmCareEncounter.id, O.encounter) 
+        where  IsInEncounter( O.encounter) 
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 */
 define function GetCondition(id System.Code):
       Last([Condition: id] O
-        where  Equal(EmCareEncounter.id, O.encounter) 
+        where  IsInEncounter(O.encounter) 
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 

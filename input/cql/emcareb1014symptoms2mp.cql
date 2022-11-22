@@ -10,10 +10,11 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
-context Encounter
 
-define Patient:
-    Base.EmCarePatient    
+parameter "encounter"  Encounter
+
+
+context Patient    
 
 /* emcare.b.g.de01 : Danger Signs*/
 define "emcare.b.g.de01":
@@ -23,17 +24,9 @@ define "emcare.b.g.de01":
 define "danger signs":
     "emcare.b.g.de01"
 
-/* emcare.b6.de01 : Temp*/
-define "emcare.b6.de01":
-    Base.GetObsValue('EmCare.B6.DE01')
-
-/* alias temp : emcare.b6.de01*/
-define "temp":
-    "emcare.b6.de01"
-
 /* ageinmonths : Age*/
 define "ageinmonths":
-    Base.AgeInMonths
+    AgeInMonths()
 
 /* alias age : ageinmonths*/
 define "age":
@@ -41,7 +34,7 @@ define "age":
 
 /* emcare.b12s1.de01 : Measured Fever*/
 define "emcare.b12s1.de01":
-    Base.GetObsValue('EmCare.B6.DE01') is not null and Base.GetObsValue('EmCare.B6.DE01')   >= 37.5 or Base.GetObsValue('EmCare.B6.DE05') is not null and  Base.GetObsValue('EmCare.B6.DE05')  = true
+    Base.GetObsValue('EmCare.B6.DE01')   >= 37.5 'Cel' or Base.GetObsValue('EmCare.B6.DE05')  = true
 
 /* alias measured fever : emcare.b12s1.de01*/
 define "measured fever":

@@ -10,10 +10,11 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
-context Encounter
 
-define Patient:
-    Base.EmCarePatient    
+parameter "encounter"  Encounter
+
+
+context Patient    
 
 /* has danger signs : nan*/
 define "has danger signs":
@@ -21,7 +22,7 @@ define "has danger signs":
 
 /* ageinmonths : Age*/
 define "ageinmonths":
-    Base.AgeInMonths
+    AgeInMonths()
 
 /* alias age : ageinmonths*/
 define "age":

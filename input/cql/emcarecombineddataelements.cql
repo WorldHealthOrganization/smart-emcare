@@ -9,14 +9,15 @@ include EmCareBase version '0.99.99' called Base
 include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 
-context Encounter
 
-define Patient:
-    Base.EmCarePatient    
+parameter "encounter"  Encounter
+
+
+context Patient    
 
 /* child : Age >= 2 months to <60 months*/
 define "child":
-    Base.AgeInMonths>= 2 and  Base.AgeInMonths<60
+    AgeInMonths()>= 2 and  AgeInMonths()<60
 
 /* alias age >= 2 months to <60 months : child*/
 define "age >= 2 months to <60 months":
@@ -24,7 +25,7 @@ define "age >= 2 months to <60 months":
 
 /* yi : Age >=28 days to 2 Months*/
 define "yi":
-    Base.AgeInDays>= 28 and Base.AgeInMonths<2
+    AgeInDays()>= 28 and AgeInMonths()<2
 
 /* alias age >=28 days to 2 months : yi*/
 define "age >=28 days to 2 months":
@@ -32,7 +33,7 @@ define "age >=28 days to 2 months":
 
 /* nb : Age < 28 days to 2 Months*/
 define "nb":
-    Base.AgeInDays< 28
+    AgeInDays()< 28
 
 /* alias age < 28 days to 2 months : nb*/
 define "age < 28 days to 2 months":

@@ -9,8 +9,8 @@ include EmCareBase version '{{LIB_VERSION}}' called Base
 include WeightForAge version '{{LIB_VERSION}}' called weianthro
 
 
-parameter encounter Encounter
-      
+parameter "encounterid" String
+
 context Patient
 
 define "Weight code":

@@ -12,7 +12,7 @@ include EmCareZScore version '0.99.99' called Z
 include emcarecombineddataelements version '0.99.99' called C
 
 
-parameter "encounter"  Encounter
+parameter "encounterid"  String
 
 
 context Patient    

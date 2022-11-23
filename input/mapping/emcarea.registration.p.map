@@ -47,10 +47,8 @@ group emcarepatient(source src : questionnaireResponse,target tgt : Patient){
         } 'aemcareade01';
     } 'dd2d3e8e';
     src.item first as item  where linkId = 'EmCare.A.DE03' then {
-        item.answer first as a -> tgt.identifier = create('Identifier' ) as identifier then {
-                a -> identifier.value = 'EmCare.A.DE03',  identifier.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'  "noid";
-            } 'aemcareade03';
-    } 'cee1d73d';
+        item.answer first as a -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true 'aemcareade03';
+    } '17de7410';
     src.item first as item  where linkId = 'EmCare.A.DE06' or linkId= 'EmCare.A.DE04' or linkId= 'EmCare.A.DE05' then {
         src -> tgt as target,  target.name as name then SetOfficalGivenNameemcarepatient(src, name) '30643049';
     } '8313c875';

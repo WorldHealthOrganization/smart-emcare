@@ -6,14 +6,6 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src.item first as item  where linkId = 'EmCare.B22.RespiratoryRate' then {
-        src -> bundle.entry as entry  then {
-            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
-            src -> entry.resource = create('Observation') as tgt then {
-                src -> tgt then emcareobservationemcareb22respiratoryrate(src, tgt) '45ba0121';
-            } 'a3c07bbe';
-        } 'b0ab04d5';
-    } '3ecb2478';
     src.item first as item  where linkId = 'EmCare.B10S2.DE03' then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
@@ -46,22 +38,26 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             } '1045a48d';
         } '3d816032';
     } '8bb4445f';
-    src.item first as item  where linkId = 'EmCare.B10S2.DE07' then {
-        src -> bundle.entry as entry  then {
-            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
-            src -> entry.resource = create('Observation') as tgt then {
-                src -> tgt then emcareobservationemcareb10s2de07(src, tgt) '8ed85169';
-            } '115f4673';
-        } 'c898e9da';
-    } '63c9e54a';
-    src.item first as item  where linkId = 'EmCare.B10S2.DE08' then {
-        src -> bundle.entry as entry  then {
-            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
-            src -> entry.resource = create('Observation') as tgt then {
-                src -> tgt then emcareobservationemcareb10s2de08(src, tgt) '318baabd';
-            } 'ae093e75';
-        } '172e83a6';
-    } '06d41884';
+    src.item first as itm1  where linkId =  'Oxygen_Saturation' then {
+        itm1.item first as item  where linkId =  'EmCare.B10S2.DE07' then {
+            src -> bundle.entry as entry  then {
+                src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+                src -> entry.resource = create('Observation') as tgt then {
+                    src -> tgt then emcareobservationemcareb10s2de07(src, tgt) '8ed85169';
+                } '115f4673';
+            } 'c898e9da';
+        } 'ef843a83';
+    } '1c60d48d';
+    src.item first as itm1  where linkId =  'Oxygen_Saturation' then {
+        itm1.item first as item  where linkId =  'EmCare.B10S2.DE08' then {
+            src -> bundle.entry as entry  then {
+                src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+                src -> entry.resource = create('Observation') as tgt then {
+                    src -> tgt then emcareobservationemcareb10s2de08(src, tgt) '318baabd';
+                } 'ae093e75';
+            } '172e83a6';
+        } '97aba5d9';
+    } '1947e95d';
     src.item first as item  where linkId = 'EmCare.B11S2.DE01' then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
@@ -588,11 +584,13 @@ group emcareobservationemcareb10s2de07(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B10S2.DE07' then {
-        item.answer first as a then {
-            a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb10s2de07';
-        } 'd40466ff';
-    } 'db5c539a';
+    src.item first as itm1  where linkId =  'Oxygen_Saturation' then {
+        itm1.item first as item  where linkId =  'EmCare.B10S2.DE07' then {
+            item.answer first as a then {
+                a.value as val -> tgt.value = val, tgt.status = 'final' 'val-emcareb10s2de07';
+            } 'd40466ff';
+        } 'bed9fd75';
+    } '5da7be6e';
 }
 
 group emcareobservationemcareb10s2de08(source src,target tgt){
@@ -615,12 +613,14 @@ group emcareobservationemcareb10s2de08(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B10S2.DE08' then {
-        item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb10s2de08';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de08';
-        } '0a27a0eb';
-    } '2c87d6ae';
+    src.item first as itm1  where linkId =  'Oxygen_Saturation' then {
+        itm1.item first as item  where linkId =  'EmCare.B10S2.DE08' then {
+            item.answer first as a then {
+                a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb10s2de08';
+                 a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb10s2de08';
+            } '0a27a0eb';
+        } '6257a739';
+    } '18532ad3';
 }
 
 group emcareobservationemcareb11s2de01(source src,target tgt){

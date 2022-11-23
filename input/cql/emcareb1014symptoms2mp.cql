@@ -11,7 +11,7 @@ include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
 
-parameter "encounter"  Encounter
+parameter "encounterid"  String
 
 
 context Patient    
@@ -34,7 +34,7 @@ define "age":
 
 /* emcare.b12s1.de01 : Measured Fever*/
 define "emcare.b12s1.de01":
-    Base.GetObsValue('EmCare.B6.DE01')   >= 37.5 'Cel' or Base.GetObsValue('EmCare.B6.DE05')  = true
+    Coalesce(Base.GetObsValue('EmCare.B6.DE01')   >= 37.5 'Cel' or Base.GetObsValue('EmCare.B6.DE05')  = true, false)
 
 /* alias measured fever : emcare.b12s1.de01*/
 define "measured fever":

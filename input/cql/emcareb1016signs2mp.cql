@@ -11,7 +11,7 @@ include EmCareValueSet version '0.99.99' called val
 include emcarecombineddataelements version '0.99.99' called clas
 
 
-parameter "encounter"  Encounter
+parameter "encounterid"  String
 
 
 context Patient    

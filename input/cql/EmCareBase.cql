@@ -9,12 +9,13 @@ using FHIR version '4.0.1'
 
 include FHIRHelpers version '4.0.1'
 
-parameter "Encounter" Encounter
+parameter "encounterid" String
+//parameter "Encounter" Encounter
 
 context Patient
 
-define encounterid:
-  "Encounter".id
+//define encounterid:
+//  "Encounter".id
 
 
 define "Yes":
@@ -24,7 +25,6 @@ define "No":
   false 
 
 
-
 define function IsInEncounter(ref FHIR.Reference):
     case
     when encounterid = ref.id then true
@@ -32,8 +32,6 @@ define function IsInEncounter(ref FHIR.Reference):
    // when ref.identifier is not null and id = ref.identifier.id then true
     else false
 end
-
-
 
 
 define function getValue(O Observation):

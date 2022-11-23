@@ -10,7 +10,7 @@ include EmCareObservation version '0.99.99' called obs
 include EmCareValueSet version '0.99.99' called val
 
 
-parameter "encounter"  Encounter
+parameter "encounterid"  String
 
 
 context Patient    

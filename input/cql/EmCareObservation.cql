@@ -419,12 +419,6 @@ define "itchy skin":
 define "emcare.b14s1.de02":
   B.HasObs('EmCare.B14S1.DE02')
 
-/*"nan"*/
-define "nan":
-  B.HasObs('EmCare.B22.RespiratoryRate')
-define "emcare.b22.respiratoryrate":
-  B.HasObs('EmCare.B22.RespiratoryRate')
-
 /*"chest indrawing"*/
 define "chest indrawing":
   B.HasObs('EmCare.B10S2.DE03')

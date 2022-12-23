@@ -2,11 +2,11 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library EmCareZScore version '{{LIB_VERSION}}'
+library emcarezscore version '{{LIB_VERSION}}'
 using FHIR version '{{FHIR_VERSION}}'
 include FHIRHelpers version '{{FHIR_VERSION}}' called FHIRHelpers 
-include EmCareBase version '{{LIB_VERSION}}' called Base
-include WeightForAge version '{{LIB_VERSION}}' called weianthro
+include emcarebase version '{{LIB_VERSION}}' called Base
+include WeightForAge version '1.0.0' called weianthro
 
 
 parameter "encounterid" String
@@ -37,7 +37,7 @@ define "patientsex":
 /* ageatpastweight : Age at Previous Weight*/
 define "ageatpastweight":
     if "pastweight" is not null  then
-      (difference in days between ToDate(Last([Observation:"Weight code" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued) and Patient.birthDate) * ( 1.0 as System.Decimal )
+      (difference in days between Patient.birthDate and ToDate(Last([Observation:"Weight code" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued) ) * ( 1.0 as System.Decimal )
     else
      null
 
@@ -48,26 +48,15 @@ define "pastweightzscore":
     else
       null
 
-/* z-score at previous weight : Z-Score at Previous Weight*/
-define "z-score at previous weight":
-    if "pastweight" is not null  then
-      weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'kg').value * ( 1.0 as System.Decimal )))
-    else
-      null
+
 
 /* pastweightactualised : Weight from  at Previous Weight*/
 define "pastweightactualised":
-    if "pastweight" is not null then
+    if "pastweightzscore" is not null then
       weianthro.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), "pastweightzscore")
     else
       null
 
-/* weight from  at previous weight : Weight from  at Previous Weight*/
-define "weight from  at previous weight":
-    if "pastweight">0 then
-      weianthro.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), "pastweightzscore")
-    else
-      null
 
 
 /*
@@ -75,7 +64,7 @@ define "weight from  at previous weight":
 */
 define "WAZ":
     if Base.HasObs("Weight code") is null   then 
-        "z-score at previous weight"
+        "pastweightzscore"
     else if Base.HasObs("Weight code") is not null then
          weianthro.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ( Base.HasObs("Weight code").value * ( 1.0 as System.Decimal )))
     else

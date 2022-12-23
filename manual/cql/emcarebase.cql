@@ -3,19 +3,22 @@
 @description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
 */
 
-library EmCareBase version '{{LIB_VERSION}}'
+library emcarebase version '{{LIB_VERSION}}'
 
 using FHIR version '{{FHIR_VERSION}}'
 
 include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
-//parameter "Encounter" Encounter
+//parameter "Encounter" Encounter$
+
 
 context Patient
 
 //define encounterid:
 //  "Encounter".id
+
+
 
 
 define "Yes":
@@ -33,10 +36,49 @@ define function IsInEncounter(ref FHIR.Reference):
     else false
 end
 
+define getEncounters:
+    [Encounter] E 
+      where E.id = "encounterid"
+        return E
+
+define getEncounter:
+    singleton from getEncounters
+
+define function EmCareExtensions(element Patient, id String):
+  element.extension E
+      where E.url = ('{{canonical_base}}/StructureDefinition/' + id)
+      return E
+
+define function EmCareExtension(element Patient, id String):
+  singleton from EmCareExtensions(element, id)
+
+
+define getPrimaryCareGiver:
+  EmCareExtension(Patient, 'primarycaregiver').value
+    
+// person accompanying the child is a participant with a null type
+define getRelatedPersonReferenceAccompanyingTheChild:
+  Coalesce(First(getEncounter.participant P where P.type is null).individual, getPrimaryCareGiver)
+
+define getRelatedPersonsAccompanyingTheChild:
+  [RelatedPerson] RP where RP.id = Last(Split(getRelatedPersonReferenceAccompanyingTheChild.reference, '/'))
+    return RP
+
+
+define getRelatedPersonAccompanyingTheChild:
+  singleton from getRelatedPersonsAccompanyingTheChild
+
+
+define "Person accompanying child today's Relationship to Client":
+  getRelatedPersonAccompanyingTheChild.relationship
+
+
+
 
 define function getValue(O Observation):
   case  
       when  O is null then null
+      when O.value is CodeableConcept then Coalesce(First(O.value.coding C where C.system  = '{{cs_url}}'), First(O.value.coding))
       else O.value
   end
 
@@ -57,10 +99,7 @@ define function GetObservationDuringEncounter(idlist List<System.Code>):
 */
 
 define function GetObservationDuringEncounter(id System.Code):
-  if GetObservationDuringEncounterDone(id ) is not null then 
-      GetObservationDuringEncounterDone(id )
-  else
-    GetObservationDuringEncounterNotFound(id )
+  Coalesce(GetObservationDuringEncounterDone(id ), GetObservationDuringEncounterNotFound(id ))
 /*
 define function GetObservationDuringEncounterDone(idlist List<System.Code>):
       Last([Observation: idlist ] O
@@ -130,7 +169,7 @@ define function HasObs(id System.String, codesystem System.String):
     assesObservation(GetObservationDuringEncounter(coding(id, codesystem)))
 
 define function HasObs(id System.String):
-    assesObservation(GetObservationDuringEncounter(coding(id, '{{cs_url}}')))
+    assesObservation(GetObservationDuringEncounter(coding(id)))
 
 define function HasObs(id FHIR.code, codesystem System.String):
     assesObservation(GetObservationDuringEncounter(coding(id, codesystem)))
@@ -143,10 +182,7 @@ define function GetHistoricObservation(idlist List<System.Code>, nbdays Integer)
 */
 
 define function GetHistoricObservation(id System.Code, nbdays Integer):
-  if GetHistoricObservationDone(id ,  nbdays ) is not null then 
-      GetHistoricObservationDone(id ,  nbdays )
-  else
-    GetHistoricObservationNotfound(id  , nbdays )
+  Coalesce(GetHistoricObservationDone(id ,  nbdays ),  GetHistoricObservationNotfound(id  , nbdays ))
 /*
 define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Integer):
       Last([Observation: idlist ] O
@@ -174,7 +210,7 @@ define function HasObsHistory(idlist List<System.Code>,  nbdays Integer):
   assesObservation(GetHistoricObservation(idlist, nbdays))
 
 
-define function HasObsHistory(id System.Code, cnbdays Integer):
+ define function HasObsHistory(id System.Code, cnbdays Integer):
   assesObservation(GetHistoricObservation({id}, nbdays))
 */
 define function HasObsHistory(id System.Code, nbdays Integer):
@@ -185,7 +221,7 @@ define function HasObsHistory(id System.String, codesystem System.String, nbdays
 
 
 define function HasObsHistory(id System.String, nbdays Integer):
-  assesObservation(GetHistoricObservation(coding(id, '{{cs_url}}'), nbdays))
+  assesObservation(GetHistoricObservation(coding(id), nbdays))
 
 define function c(s System.String):
   FHIR.code { value: s }
@@ -207,7 +243,7 @@ define function coding(s FHIR.code, url System.String):
 define function coding(s System.String):
   System.Code {
                 code:  s ,
-                system:  '{{cs_url}}' 
+                system:  '{{cs_url}}'
             }
 
 
@@ -250,7 +286,7 @@ define function GetCond(id System.String, codesystem System.String):
   (GetCondition(coding(id, codesystem)))
 
 define function GetCond(id System.String):
-  (GetCondition(coding(id, '{{cs_url}}')))
+  (GetCondition(coding(id)))
 
 // ************************   HasCond ************************/
 /*
@@ -264,9 +300,10 @@ define function HasCond(id System.String, codesystem System.String):
   assesCondition(GetCondition(coding(id, codesystem)))
 
 define function HasCond(id System.String):
-  assesCondition(GetCondition(coding(id, '{{cs_url}}')))
+  assesCondition(GetCondition(coding(id)))
 
-
+define function HasCond(id System.Code):
+  assesCondition(GetCondition(id))
 
 // ************************   PatientHasHistoryOfCondition ************************/
 /*
@@ -302,7 +339,7 @@ define function HasCondHistory(id System.String, codesystem System.String, nbday
 
 
 define function HasCondHistory(id System.String, nbdays Integer):
-  assesCondition(GetHistoricCondition(coding(id,'{{cs_url}}'),  nbdays))
+  assesCondition(GetHistoricCondition(coding(id),  nbdays))
 
 
 

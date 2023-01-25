@@ -1,7 +1,7 @@
 
-library WeightForHeight version '0.99.99'
+library WeightForHeight version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '0.99.99' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
 // Antrho library for WeightForHeight  Z-Score from the wfhanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
@@ -1124,20 +1124,23 @@ define function ZscoreWeightForHeighttables(sex String, Height Decimal):
 		else First(WeightForHeightMale c where  c.y = Height)
             
 define function generateZScoreWeightForHeight(sex System.String, Height System.Decimal, weight  System.Decimal)  : 
-	base.computeZScore(
-		weight,
-		(ZscoreWeightForHeighttables(sex,Height).m ), 
-		(ZscoreWeightForHeighttables(sex,Height).l ),
-		(ZscoreWeightForHeighttables(sex,Height).s )
-	)
+	if ZscoreWeightForHeighttables(sex,Height) is not null then 
+        base.computeZScore(
+            weight,
+            (ZscoreWeightForHeighttables(sex,Height).m ), 
+            (ZscoreWeightForHeighttables(sex,Height).l ),
+            (ZscoreWeightForHeighttables(sex,Height).s )
+        )
+    else null
 
 define function generateWeightFromHeight(sex System.String, Height System.Decimal, zscore  System.Decimal) : 
-	base.computeReverseZScore(
-		zscore,
-		(ZscoreWeightForHeighttables(sex,Height).m ), 
-		(ZscoreWeightForHeighttables(sex,Height).l ),
-		(ZscoreWeightForHeighttables(sex,Height).s )
-	)
-        
+	if ZscoreWeightForHeighttables(sex,Height) is not null then 
+        base.computeReverseZScore(
+            zscore,
+            (ZscoreWeightForHeighttables(sex,Height).m ), 
+            (ZscoreWeightForHeighttables(sex,Height).l ),
+            (ZscoreWeightForHeighttables(sex,Height).s )
+        )
+    else null    
 
     

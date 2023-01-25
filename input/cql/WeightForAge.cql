@@ -1,7 +1,7 @@
 
-library WeightForAge version '0.99.99'
+library WeightForAge version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '0.99.99' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
 // Antrho library for WeightForAge  Z-Score from the weianthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
@@ -3736,20 +3736,23 @@ define function ZscoreWeightForAgetables(sex String, Age Decimal):
 		else First(WeightForAgeMale c where  c.y = Age)
             
 define function generateZScoreWeightForAge(sex System.String, Age System.Decimal, weight  System.Decimal)  : 
-	base.computeZScore(
-		weight,
-		(ZscoreWeightForAgetables(sex,Age).m ), 
-		(ZscoreWeightForAgetables(sex,Age).l ),
-		(ZscoreWeightForAgetables(sex,Age).s )
-	)
+	if ZscoreWeightForAgetables(sex,Age) is not null then 
+        base.computeZScore(
+            weight,
+            (ZscoreWeightForAgetables(sex,Age).m ), 
+            (ZscoreWeightForAgetables(sex,Age).l ),
+            (ZscoreWeightForAgetables(sex,Age).s )
+        )
+    else null
 
 define function generateWeightFromAge(sex System.String, Age System.Decimal, zscore  System.Decimal) : 
-	base.computeReverseZScore(
-		zscore,
-		(ZscoreWeightForAgetables(sex,Age).m ), 
-		(ZscoreWeightForAgetables(sex,Age).l ),
-		(ZscoreWeightForAgetables(sex,Age).s )
-	)
-        
+	if ZscoreWeightForAgetables(sex,Age) is not null then 
+        base.computeReverseZScore(
+            zscore,
+            (ZscoreWeightForAgetables(sex,Age).m ), 
+            (ZscoreWeightForAgetables(sex,Age).l ),
+            (ZscoreWeightForAgetables(sex,Age).s )
+        )
+    else null    
 
     

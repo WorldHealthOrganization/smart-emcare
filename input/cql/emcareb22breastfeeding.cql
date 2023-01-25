@@ -2,19 +2,23 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22breastfeeding version '0.99.99'
+library emcareb22breastfeeding version '1.0.1.rc11.build.71'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include EmCareBase version '0.99.99' called Base
-include EmCareObservation version '0.99.99' called obs
-include EmCareValueSet version '0.99.99' called val
+include emcarebase version '1.0.1.rc11.build.71' called Base
+include emcareobservation version '1.0.1.rc11.build.71' called obs
+include emcarevalueset version '1.0.1.rc11.build.71' called val
 
 
 
 
-context Patient    
+context Patient
 
-/* ageinmonths : Age*/
+
+/* 
+ageinmonths : Age
+    AgeInMonths()
+*/
 define "ageinmonths":
     AgeInMonths()
 

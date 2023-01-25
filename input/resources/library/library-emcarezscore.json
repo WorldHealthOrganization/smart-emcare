@@ -1,0 +1,130 @@
+{
+    "resourceType": "Library",
+    "id": "emcarezscore",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir//Library/emcarezscore",
+    "identifier": [
+        {
+            "use": "official",
+            "value": "EmCareZScore"
+        }
+    ],
+    "version": "1.0.1.rc11.build.71",
+    "name": "emcarezscore",
+    "title": "EmCare.Z.Score",
+    "status": "active",
+    "type": {
+        "coding": [
+            {
+                "system": "http://hl7.org/fhir/ValueSet/library-type",
+                "code": "logic-library"
+            }
+        ]
+    },
+    "relatedArtifact": [
+        {
+            "type": "depends-on",
+            "resource": "http://fhir.org/guides/who/anc-cds/Library/FHIRHelpers"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcarebase"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/weightforage"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/anthrobase"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/weightforlength"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/weightforheight"
+        }
+    ],
+    "parameter": [
+        {
+            "name": "encounter",
+            "use": "in",
+            "type": "Encounter"
+        },
+        {
+            "name": "pastweight",
+            "use": "out",
+            "type": "decimal"
+        },
+        {
+            "name": "patientsex",
+            "use": "out",
+            "type": "string"
+        },
+        {
+            "name": "ageatpastweight",
+            "use": "out",
+            "type": "integer"
+        },
+        {
+            "name": "pastweightzscore",
+            "use": "out",
+            "type": "decimal"
+        },
+        {
+            "name": "pastweightactualised",
+            "use": "out",
+            "type": "decimal"
+        },
+        {
+            "name": "WAZ",
+            "use": "out",
+            "type": "decimal"
+        }
+    ],
+    "dataRequirement": [
+        {
+            "type": "Patient",
+            "profile": [
+                "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+        },
+        {
+            "type": "Encounter",
+            "profile": [
+                "http://hl7.org/fhir/StructureDefinition/Encounter"
+            ]
+        },
+        {
+            "type": "Observation",
+            "profile": [
+                "http://hl7.org/fhir/StructureDefinition/Observation"
+            ],
+            "mustSupport": [
+                "code",
+                "encounter.reference",
+                "encounter",
+                "value",
+                "status"
+            ],
+            "codeFilter": [
+                {
+                    "path": "code",
+                    "code": [
+                        {
+                            "code": "EmCare.B6.DE06"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "content": [
+        {
+            "id": "ig-loader-emcarezscore.cql",
+            "contentType": "text/cql",
+            "data": "LyoKQGF1dGhvcjogUGF0cmljayBEZWxjcm9peApAZGVzY3JpcHRpb246IFRoaXMgbGlicmFyeSBpcyBwYXJ0IG9mIHRoZSBwcm9qZWN0IEVtQ2FyZQoqLwpsaWJyYXJ5IGVtY2FyZXpzY29yZSB2ZXJzaW9uICcxLjAuMS5yYzExLmJ1aWxkLjcxJwp1c2luZyBGSElSIHZlcnNpb24gJzQuMC4xJwppbmNsdWRlIEZISVJIZWxwZXJzIHZlcnNpb24gJzQuMC4xJyBjYWxsZWQgRkhJUkhlbHBlcnMgCmluY2x1ZGUgZW1jYXJlYmFzZSB2ZXJzaW9uICcxLjAuMS5yYzExLmJ1aWxkLjcxJyBjYWxsZWQgQmFzZQppbmNsdWRlIFdlaWdodEZvckFnZSB2ZXJzaW9uICcxLjAuMCcgY2FsbGVkIHdmYQppbmNsdWRlIFdlaWdodEZvckxlbmd0aCB2ZXJzaW9uICcxLjAuMCcgY2FsbGVkIHdmbAppbmNsdWRlIFdlaWdodEZvckhlaWdodCB2ZXJzaW9uICcxLjAuMCcgY2FsbGVkIHdmaAoKCgovL2NvZGVzeXN0ZW0gIkVtQ2FyZSIgOiAnaHR0cHM6Ly9maGlyLmRrLnN3aXNzdHBoLW1pcy5jaC9tYXRjaGJveC9maGlyL0NvZGVTeXN0ZW0vZW1jYXJlLWN1c3RvbS1jb2RlcycKCgoKLy9jb2RlICJXZWlnaHQiOiAnRW1DYXJlLkI2LkRFMDYnIGZyb20gIkVtQ2FyZSIgZGlzcGxheSAnV2VpZ2h0JwovL2NvZGUgIkVzdGltYXRlZCBXZWlnaHQiOiAnRW1DYXJlLkI2LkRFMDgnIGZyb20gIkVtQ2FyZSIgZGlzcGxheSAnRXN0aW1hdGVkIFdlaWdodCcKLy9jb2RlICJNVUFDIjogJ0VtQ2FyZS5CNi5ERTE3JyBmcm9tICJFbUNhcmUiIGRpc3BsYXkgJ01VQUMnCi8vY29kZSAiTGVuZ3RoIjogJ0VtQ2FyZS5CNi5ERTEyJyBmcm9tICJFbUNhcmUiIGRpc3BsYXkgJ0xlbmd0aCcKLy9jb2RlICJIZWlnaHQiOiAnRW1DYXJlLkI2LkRFMDknIGZyb20gIkVtQ2FyZSIgZGlzcGxheSAnSGVpZ2h0JwoKcGFyYW1ldGVyICJlbmNvdW50ZXJpZCIgU3RyaW5nCgpjb250ZXh0IFBhdGllbnQKCmRlZmluZSAiV2VpZ2h0IjoKICBCYXNlLmNvZGluZygnRW1DYXJlLkI2LkRFMDYnKQpkZWZpbmUgIkVzdGltYXRlZCBXZWlnaHQiOgogIEJhc2UuY29kaW5nKCdFbUNhcmUuQjYuREUwOCcpCmRlZmluZSAiTVVBQyI6CiAgQmFzZS5jb2RpbmcoJ0VtQ2FyZS5CNi5ERTE3JykKZGVmaW5lICJMZW5ndGgiOgogIEJhc2UuY29kaW5nKCdFbUNhcmUuQjYuREUxMicpCiAgZGVmaW5lICJIZWlnaHQiOgogIEJhc2UuY29kaW5nKCdFbUNhcmUuQjYuREUwOScpCgovKiBwYXN0d2VpZ2h0IDogUHJldmlvdXMgV2VpZ2h0Ki8KZGVmaW5lICJwYXN0d2VpZ2h0IjoKICAgIGlmIEFnZUluTW9udGhzKCk8IDQgYW5kIEJhc2UuSGFzT2JzSGlzdG9yeSgiV2VpZ2h0IiwgNjMpIGlzIG5vdCBudWxsIHRoZW4KICAgICAgQmFzZS5IYXNPYnNIaXN0b3J5KCJXZWlnaHQiLCA2MykgIGFzIEZISVIuUXVhbnRpdHkKICAgIGVsc2UgIGlmIEFnZUluTW9udGhzKCk8IDYgYW5kIEJhc2UuSGFzT2JzSGlzdG9yeSgiV2VpZ2h0IiwgOTQpICAgaXMgbm90IG51bGwgdGhlbgogICAgICBCYXNlLkhhc09ic0hpc3RvcnkoIldlaWdodCIsIDk0KSAgYXMgIEZISVIuUXVhbnRpdHkKICAgIGVsc2UgaWYgQWdlSW5Nb250aHMoKTwgNiBhbmQgQmFzZS5IYXNPYnNIaXN0b3J5KCJXZWlnaHQiLCAxMjYpICAgaXMgbm90IG51bGwgdGhlbgogICAgICAgQmFzZS5IYXNPYnNIaXN0b3J5KCJXZWlnaHQiLCAxMjYpICBhcyBGSElSLlF1YW50aXR5CiAgICBlbHNlIGlmIEJhc2UuSGFzT2JzSGlzdG9yeSgiV2VpZ2h0IiwgMjAxKSAgaXMgbm90IG51bGwgdGhlbgogICAgICAgQmFzZS5IYXNPYnNIaXN0b3J5KCJXZWlnaHQiLCAyMDEpICBhcyBGSElSLlF1YW50aXR5CiAgICBlbHNlCiAgICAgIG51bGwKCgovKiBwYXRpZW50c2V4IDogUGF0aWVudCBzZXgqLwpkZWZpbmUgInBhdGllbnRzZXgiOgogICAgaWYgUGF0aWVudC5nZW5kZXIgPSAnZmVtYWxlJyB0aGVuICdmZW1hbGUnIGVsc2UgJ21hbGUnCgovKiBhZ2VhdHBhc3R3ZWlnaHQgOiBBZ2UgYXQgUHJldmlvdXMgV2VpZ2h0Ki8KZGVmaW5lICJhZ2VhdHBhc3R3ZWlnaHQiOgogICAgaWYgInBhc3R3ZWlnaHQiIGlzIG5vdCBudWxsICB0aGVuCiAgICAgIChkaWZmZXJlbmNlIGluIGRheXMgYmV0d2VlbiBQYXRpZW50LmJpcnRoRGF0ZSBhbmQgVG9EYXRlKExhc3QoW09ic2VydmF0aW9uOiJXZWlnaHQiIF0gTyB3aGVyZSAgTy5zdGF0dXMgaW4geyAnZmluYWwnLCAnYW1lbmRlZCcsICdjb3JyZWN0ZWQnfSkuaXNzdWVkKSApICogKCAxLjAgYXMgU3lzdGVtLkRlY2ltYWwgKQogICAgZWxzZQogICAgIG51bGwKCi8qIHBhc3R3ZWlnaHR6c2NvcmUgOiBaLVNjb3JlIGF0IFByZXZpb3VzIFdlaWdodCovCmRlZmluZSAicGFzdHdlaWdodHpzY29yZSI6CiAgICBpZiAicGFzdHdlaWdodCIgaXMgbm90IG51bGwgIHRoZW4KICAgICAgd2ZhLmdlbmVyYXRlWlNjb3JlV2VpZ2h0Rm9yQWdlKCJwYXRpZW50c2V4IiwgImFnZWF0cGFzdHdlaWdodCIgLCAoKGNvbnZlcnQgInBhc3R3ZWlnaHQiIHRvICdrZycpLnZhbHVlICogKCAxLjAgYXMgU3lzdGVtLkRlY2ltYWwpKSkKICAgIGVsc2UKICAgICAgbnVsbAoKLyogcGFzdHdlaWdodGFjdHVhbGlzZWQgOiBXZWlnaHQgZnJvbSAgYXQgUHJldmlvdXMgV2VpZ2h0Ki8KZGVmaW5lICJwYXN0d2VpZ2h0YWN0dWFsaXNlZCI6CiAgICBpZiAicGFzdHdlaWdodHpzY29yZSIgaXMgbm90IG51bGwgdGhlbgogICAgICBSb3VuZCh3ZmEuZ2VuZXJhdGVXZWlnaHRGcm9tQWdlKCJwYXRpZW50c2V4IixBZ2VJbkRheXMoKSAqICggMS4wIGFzIFN5c3RlbS5EZWNpbWFsICksICJwYXN0d2VpZ2h0enNjb3JlIiksMikKICAgIGVsc2UKICAgICAgbnVsbAoKZGVmaW5lIGV4aXN0aW5nd2VpZ2h0OgogIEJhc2UuR2V0T2JzVmFsdWUoIldlaWdodCIpCgpkZWZpbmUgZXhpc3Rpbmdlc3RpbW5hdGVkd2VpZ2h0OgogIGlmIGV4aXN0aW5nd2VpZ2h0IGlzIG51bGwgdGhlbiAgCiAgICBCYXNlLkdldE9ic1ZhbHVlKCJFc3RpbWF0ZWQgV2VpZ2h0IikKICBlbHNlIAogICAgbnVsbAoKZGVmaW5lIGV4aXN0aW5naGVpZ2h0OgogIEJhc2UuR2V0T2JzVmFsdWUoIkhlaWdodCIpCgpkZWZpbmUgZXhpc3RpbmdsZW5ndGg6CiAgQmFzZS5HZXRPYnNWYWx1ZSgiTGVuZ3RoIikKCmRlZmluZSBleGlzdGluZ211YWM6CiAgQmFzZS5HZXRPYnNWYWx1ZSgiTVVBQyIpCgpkZWZpbmUgenNjb3JlZnJvbW11YWM6CiAgaWYgZXhpc3RpbmdtdWFjIGlzIG51bGwgdGhlbiAwLjAKICBlbHNlIGlmIGV4aXN0aW5nbXVhYyA8IDExNSAnbW5tJyB0aGVuIC0zLjAKICBlbHNlIGlmIGV4aXN0aW5nbXVhYyA8IDEyNSAnbW5tJyB0aGVuIC0yLjAKICBlbHNlIDAuMAoKZGVmaW5lIGVzdGltYXRlZHdlaWdodDoKICBjYXNlICAKICB3aGVuIGV4aXN0aW5nd2VpZ2h0IGlzIG5vdCBudWxsIHRoZW4gbnVsbAogIHdoZW4gZXhpc3Rpbmdlc3RpbW5hdGVkd2VpZ2h0IGlzIG5vdCBudWxsIHRoZW4gZXhpc3Rpbmdlc3RpbW5hdGVkd2VpZ2h0CiAgd2hlbiBwYXN0d2VpZ2h0YWN0dWFsaXNlZCBpcyBub3QgbnVsbCB0aGVuIHBhc3R3ZWlnaHRhY3R1YWxpc2VkCiAgd2hlbiBBZ2VJbk1vbnRocygpPjI0IGFuZCBleGlzdGluZ2hlaWdodCB0aGVuIHdlaWdodGZyb21oZWlnaHQKICB3aGVuIEFnZUluTW9udGhzKCk8PTI0IGFuZCBleGlzdGluZ2xlbmd0aCB0aGVuIHdlaWdodGZyb21sZW5ndGgKICBlbHNlIHdlaWdodGZyb21hZ2UKICBlbmQKCgoKCmRlZmluZSB3ZWlnaHRmcm9tbGVuZ3RoOgogICAgUm91bmQod2ZsLmdlbmVyYXRlV2VpZ2h0RnJvbUxlbmd0aCgicGF0aWVudHNleCIsKGNvbnZlcnQgZXhpc3RpbmdsZW5ndGggdG8gJ2NtJykudmFsdWUgKiAoIDEuMCBhcyBTeXN0ZW0uRGVjaW1hbCApLCB6c2NvcmVmcm9tbXVhYykpCgpkZWZpbmUgd2VpZ2h0ZnJvbWhlaWdodDoKICAgIFJvdW5kKHdmaC5nZW5lcmF0ZVdlaWdodEZyb21IZWlnaHQoInBhdGllbnRzZXgiLChjb252ZXJ0IGV4aXN0aW5naGVpZ2h0IHRvICdjbScpLnZhbHVlICogKCAxLjAgYXMgU3lzdGVtLkRlY2ltYWwgKSwgenNjb3JlZnJvbW11YWMpKQoKZGVmaW5lIHdlaWdodGZyb21hZ2U6CiAgICBSb3VuZCh3ZmEuZ2VuZXJhdGVXZWlnaHRGcm9tQWdlKCJwYXRpZW50c2V4IixBZ2VJbkRheXMoKSAqICggMS4wIGFzIFN5c3RlbS5EZWNpbWFsICksIHpzY29yZWZyb21tdWFjKSkKLyoKKGNvbnZlcnQgQmFzZS5IYXNPYnMoIldlaWdodCIpIHRvICdLZycpIGRvZXMgbm90IHdvcmssIHNvIGxldCdzIGFzc3VtZSB0aGUgd2VpZ2h0IGlzIGluIEtnCiovCmRlZmluZSAiV0FaIjoKICAgIGlmIEJhc2UuSGFzT2JzKCJXZWlnaHQiKSBpcyBudWxsICAgdGhlbiAKICAgICAgICAicGFzdHdlaWdodHpzY29yZSIKICAgIGVsc2UgaWYgQmFzZS5IYXNPYnMoIldlaWdodCIpIGlzIG5vdCBudWxsIHRoZW4KICAgICAgICAgd2ZhLmdlbmVyYXRlWlNjb3JlV2VpZ2h0Rm9yQWdlKCJwYXRpZW50c2V4IiwgImFnZWF0cGFzdHdlaWdodCIgLCAoIEJhc2UuSGFzT2JzKCJXZWlnaHQiKS52YWx1ZSAqICggMS4wIGFzIFN5c3RlbS5EZWNpbWFsICkpKQogICAgZWxzZQogICAgICAgIG51bGwKCg=="
+        }
+    ]
+}

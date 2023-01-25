@@ -2,52 +2,68 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcaredt01 version '0.99.99'
+library emcaredt01 version '1.0.1.rc11.build.71'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include EmCareBase version '0.99.99' called Base
-include EmCareObservation version '0.99.99' called obs
-include EmCareValueSet version '0.99.99' called val
-include emcarecombineddataelements version '0.99.99' called clas
+include emcarebase version '1.0.1.rc11.build.71' called Base
+include emcareobservation version '1.0.1.rc11.build.71' called obs
+include emcarevalueset version '1.0.1.rc11.build.71' called val
+include emcarecombineddataelements version '1.0.1.rc11.build.71' called clas
 
 
 
 
-context Patient    
+context Patient
 
-/* emcaredt02 : Register the child in the encounter*/
+
+/* 
+emcaredt02 : Register the child in the encounter
+    AgeInYears() < 5
+*/
 define "emcaredt02":
-    difference in years between Today() and  Patient.birthDate < 5
+    AgeInYears() < 5
 
 /* alias register the child in the encounter : emcaredt02*/
 define "register the child in the encounter":
     "emcaredt02"
 
-/* emcaredt04 : Evaluate DangerSigns*/
+/* 
+emcaredt04 : Evaluate DangerSigns
+    AgeInYears() < 5
+*/
 define "emcaredt04":
-    difference in years between Today() and  Patient.birthDate < 5
+    AgeInYears() < 5
 
 /* alias evaluate dangersigns : emcaredt04*/
 define "evaluate dangersigns":
     "emcaredt04"
 
-/* emcaredt03 : Determine Basic Anthropometric and others measurement*/
+/* 
+emcaredt03 : Determine Basic Anthropometric and others measurement
+    AgeInYears() < 5
+*/
 define "emcaredt03":
-    difference in years between Today() and  Patient.birthDate < 5
+    AgeInYears() < 5
 
 /* alias determine basic anthropometric and others measurement : emcaredt03*/
 define "determine basic anthropometric and others measurement":
     "emcaredt03"
 
-/* emcaredt05 : Assess sick child for Symptoms 2 m*/
+/* 
+emcaredt05 : Assess sick child for Symptoms 2 m
+    AgeInMonths() < 2
+*/
 define "emcaredt05":
-    clas."age >=28 days to 2 months" or clas."age < 28 days to 2 months"
+    AgeInMonths() < 2
 
 /* alias assess sick child for symptoms 2 m : emcaredt05*/
 define "assess sick child for symptoms 2 m":
     "emcaredt05"
 
-/* emcaredt06 : Assess sick child for Symptoms 2p*/
+/* 
+emcaredt06 : Assess sick child for Symptoms 2p
+    clas."age >= 2 months to <60 months"
+*/
 define "emcaredt06":
     clas."age >= 2 months to <60 months"
 
@@ -55,15 +71,21 @@ define "emcaredt06":
 define "assess sick child for symptoms 2p":
     "emcaredt06"
 
-/* emcaredt07 : Assess sick child for Signs 2 m*/
+/* 
+emcaredt07 : Assess sick child for Signs 2 m
+    AgeInMonths() < 2
+*/
 define "emcaredt07":
-    clas."age >=28 days to 2 months" or clas."age < 28 days to 2 months"
+    AgeInMonths() < 2
 
 /* alias assess sick child for signs 2 m : emcaredt07*/
 define "assess sick child for signs 2 m":
     "emcaredt07"
 
-/* emcaredt08 : Assess sick child for Signs 2p*/
+/* 
+emcaredt08 : Assess sick child for Signs 2p
+    clas."age >= 2 months to <60 months"
+*/
 define "emcaredt08":
     clas."age >= 2 months to <60 months"
 
@@ -71,26 +93,46 @@ define "emcaredt08":
 define "assess sick child for signs 2p":
     "emcaredt08"
 
-/* emcaredt09 : Propose classification*/
+/* 
+emcaredt09 : Propose classification
+    clas."age >= 2 months to <60 months"
+*/
 define "emcaredt09":
-    difference in years between Today() and  Patient.birthDate < 5
+    clas."age >= 2 months to <60 months"
 
 /* alias propose classification : emcaredt09*/
 define "propose classification":
     "emcaredt09"
 
-/* emcaredt10 : Do Test*/
+/* 
+emcaredt10 : Do Test
+    AgeInYears() < 5
+*/
 define "emcaredt10":
-    difference in years between Today() and  Patient.birthDate < 5
+    AgeInYears() < 5
 
 /* alias do test : emcaredt10*/
 define "do test":
     "emcaredt10"
 
-/* emcaredt11 : Provide Health prevention*/
+/* 
+emcaredt11 : Provide treatment
+    AgeInYears() < 5
+*/
 define "emcaredt11":
-    difference in years between Today() and  Patient.birthDate < 5
+    AgeInYears() < 5
 
-/* alias provide health prevention : emcaredt11*/
-define "provide health prevention":
+/* alias provide treatment : emcaredt11*/
+define "provide treatment":
     "emcaredt11"
+
+/* 
+emcaredt12 : Propose classification 2m
+    AgeInMonths() < 2
+*/
+define "emcaredt12":
+    AgeInMonths() < 2
+
+/* alias propose classification 2m : emcaredt12*/
+define "propose classification 2m":
+    "emcaredt12"

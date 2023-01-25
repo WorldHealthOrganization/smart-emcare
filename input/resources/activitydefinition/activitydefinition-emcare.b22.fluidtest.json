@@ -35,14 +35,15 @@
             "valueCodeableConcept": {
                 "coding": [
                     {
-                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "emcare.b22.fluidtest",
+                        "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                        "code": "PATDOC",
                         "display": "Collect infornation with questionnaire EmCare.B22.FluidTest"
                     }
                 ]
             }
         }
     ],
+    "kind": "Task",
     "profile": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-questionnairetask",
     "code": {
         "coding": [
@@ -55,10 +56,17 @@
     },
     "dynamicValue": [
         {
-            "path": "input",
+            "path": "input.type",
             "expression": {
-                "language": "text/cql-expression",
-                "expression": "{ type: code, value: extension('http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-collectWith').value }"
+                "language": "text/cql",
+                "expression": "code"
+            }
+        },
+        {
+            "path": "input.value",
+            "expression": {
+                "language": "text/cql",
+                "expression": "extension('http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-collectWith').value"
             }
         }
     ]

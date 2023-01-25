@@ -107,9 +107,21 @@ define function GetObservationDuringEncounterDone(idlist List<System.Code>):
         and O.status in { 'final', 'amended', 'corrected'})
 */
 define function GetObservationDuringEncounterDone(id System.Code):
-      Last([Observation: id ] O
+      First([Observation: id ] O
         where   IsInEncounter(O.encounter) 
-        and O.status in { 'final', 'amended', 'corrected'})
+        and O.status in { 'final', 'amended', 'corrected'} 
+        sort by issued.value desc) 
+
+
+define function HasObservationCodeDuringEncounterDone(id System.Code, valueCode System.Code):
+    
+    Exists([Observation: id ] O
+        where   IsInEncounter(O.encounter) 
+        and O.status in { 'final', 'amended', 'corrected'}
+        and O.value is FHIR.CodeableConcept
+        and O.value ~ valueCode)
+
+//Exists([Observation] O where O.status in { 'final', 'amended', 'corrected'} and O.value is FHIR.CodeableConcept   and Exists( O.value.coding C where C is FHIR.Coding and C.code = FHIR.code {value: 'EmCare.B20S2.DE04'}) )"
 
 /*
 define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
@@ -118,9 +130,10 @@ define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
           and O.status in {'cancelled'})
           */
 define function GetObservationDuringEncounterNotFound(id System.Code):
-      Last([Observation: id] O
+      First([Observation: id] O
        where  IsInEncounter(O.encounter) 
-          and O.status in {'cancelled'})
+          and O.status in {'cancelled'}
+          sort by issued.value desc)
 /*
 
 define function GetNumberObservationDuringEncounter(idlist List<System.Code>):
@@ -153,6 +166,14 @@ define function GetObsValue(id System.String, codesystem System.String):
 define function GetObsValue(id System.String):
     getValue(GetObservationDuringEncounter(coding(id, '{{cs_url}}')))
 
+define function HasObsValueCode(id System.String, value System.Code):
+   HasObservationCodeDuringEncounterDone(coding(id, '{{cs_url}}') , value )
+  
+define function HasObsValueCode(id System.String, value System.String):
+   HasObservationCodeDuringEncounterDone(coding(id, '{{cs_url}}') , coding(value, '{{cs_url}}') )
+
+define function HasObsValueCode(id System.Code, value System.String):
+   HasObservationCodeDuringEncounterDone(id , coding(value, '{{cs_url}}') )
 
 // ************************   HasObs ************************/
 /*
@@ -190,9 +211,10 @@ define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Inte
         and (difference in days between O.issued and Today()) < nbdays)
 */
 define function GetHistoricObservationDone(id System.Code, nbdays Integer):
-      Last([Observation: id ] O
+      First([Observation: id ] O
         where  O.status in { 'final', 'amended', 'corrected'}
-        and (difference in days between O.issued and Today()) < nbdays  )
+        and (difference in days between O.issued and Today()) < nbdays 
+        sort by issued.value desc )
 
 /*
 define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays Integer):
@@ -200,9 +222,10 @@ define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays 
         where  O.status in {'cancelled'}
 */
 define function GetHistoricObservationNotfound(id System.Code, nbdays Integer):
-      Last([Observation: id] O
+      First([Observation: id] O
         where  O.status in {'cancelled'}
-          and (difference in days between O.issued and Today()) < nbdays)
+          and (difference in days between O.issued and Today()) < nbdays 
+        sort by issued.value desc)
 // ************************   HasObsHistory ************************/
 
 /*
@@ -261,10 +284,11 @@ define function GetCoO.encounterndition(idlist List<System.Code>):
         and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
 */
 define function GetCondition(id System.Code):
-      Last([Condition: id] O
+      First([Condition: id] O
         where  IsInEncounter(O.encounter) 
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
-        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
+        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status') 
+        sort by recordedDate desc)
 
 
 define function assesCondition(O Condition):
@@ -315,10 +339,11 @@ define function GetHistoricCondition(idlist List<System.Code>,  nbdays Integer):
 */
 
 define function GetHistoricCondition(id System.Code,  nbdays Integer):
-      Last([Condition: id] O
+      First([Condition: id] O
         where  (difference in days between O.recordedDate and Today()) < nbdays
         and exists(O.verificationStatus.coding C where C.code in {'unconfirmed', 'provisional', 'differential', 'confirmed'} 
-        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status'))
+        and C.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status') 
+        sort by recordedDate desc)
 
 
 

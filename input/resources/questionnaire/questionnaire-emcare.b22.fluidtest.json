@@ -51,16 +51,65 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "has danger signs"
+                        "expression": "danger signs"
                     }
                 }
             ],
-            "linkId": "Has danger signs",
+            "linkId": "Danger Signs",
             "type": "boolean",
             "required": false,
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b7.de09"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE09",
+            "text": "Not able to drink or breastfeed",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b7.de10"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE10",
+            "text": "Vomiting Everything",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE14').answer.first().empty()"
+                    }
+                }
+            ],
             "linkId": "EmCare.B22.DE08",
             "text": "Oral Fluid Test Results",
             "type": "choice",
@@ -82,11 +131,18 @@
                         ],
                         "text": "Check-box"
                     }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.first().empty()"
+                    }
                 }
             ],
             "linkId": "EmCare.B22.DE14",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": true,
             "answerOption": [
                 {
@@ -100,17 +156,21 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.first().value.code = 'EmCare.B22.DE14' and %resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B7.DE09').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B7.DE10').answer.first().value =  true"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.first().value.code = 'EmCare.B22.DE14' and %resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE14').answer.first().value and (%resource.repeat(item).where(linkId='Danger Signs').answer.first().value = true)  or %resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.where(value.code='EmCare.B22.DE09') or %resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.where(value.code='EmCare.B22.DE10')"
                     }
                 }
             ],
@@ -118,8 +178,7 @@
             "text": "Completely Unable to Drink or Vomits Immediately / Everything",
             "type": "boolean",
             "required": false,
-            "repeats": false,
-            "readOnly": true
+            "repeats": false
         },
         {
             "extension": [
@@ -127,7 +186,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE14').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B7.DE09').answer.first().value= false and %resource.repeat(item).where(linkId='EmCare.B7.DE10').answer.first().value = false"
                     }
                 }
             ],
@@ -143,7 +202,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE08').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE15').answer.first().value = true"
                     }
                 }
             ],

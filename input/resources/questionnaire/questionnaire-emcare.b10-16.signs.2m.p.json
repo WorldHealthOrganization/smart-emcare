@@ -51,11 +51,11 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "has danger signs"
+                        "expression": "danger signs"
                     }
                 }
             ],
-            "linkId": "Has danger signs",
+            "linkId": "Danger Signs",
             "type": "boolean",
             "required": false,
             "repeats": false
@@ -128,11 +128,11 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "oral fluid test"
+                        "expression": "oral fluid test failed"
                     }
                 }
             ],
-            "linkId": "Oral Fluid Test",
+            "linkId": "Oral Fluid Test failed",
             "type": "boolean",
             "required": false,
             "repeats": false
@@ -209,45 +209,6 @@
                 }
             ],
             "linkId": "Fever",
-            "type": "boolean",
-            "required": false,
-            "repeats": false
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "refusal to use a limb"
-                    }
-                }
-            ],
-            "linkId": "Refusal to Use a Limb",
-            "type": "boolean",
-            "required": false,
-            "repeats": false
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "emcare.b14s2.de07"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B14S2.DE07",
-            "text": "Generalised Skin Problem",
             "type": "boolean",
             "required": false,
             "repeats": false
@@ -345,8 +306,7 @@
             "linkId": "Ear discharge for how long?",
             "type": "choice",
             "required": false,
-            "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/ear-discharge-duration"
+            "repeats": false
         },
         {
             "extension": [
@@ -383,7 +343,7 @@
             ],
             "linkId": "EmCare.B22.RespiratoryRate",
             "type": "group",
-            "required": true,
+            "required": false,
             "repeats": false,
             "item": [
                 {
@@ -399,7 +359,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 2"
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
                             }
                         }
                     ],
@@ -428,7 +388,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 2  and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
                             }
                         }
                     ],
@@ -448,22 +408,6 @@
                 {
                     "extension": [
                         {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE03",
-                    "text": "Respiratory Rate First Count",
-                    "type": "quantity",
-                    "required": true,
-                    "repeats": false
-                },
-                {
-                    "extension": [
-                        {
                             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                             "valueCoding": {
                                 "system": "http://unitsofmeasure.org",
@@ -474,7 +418,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE03').answer.first().value > 60 '{Counts}/min'"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value > 60 '{Counts}/min' and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty() and  %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
                             }
                         }
                     ],
@@ -503,7 +447,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
                             }
                         }
                     ],
@@ -533,7 +477,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'\nor\n%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12\nor \n%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false)"
+                                "expression": "iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false)"
                             }
                         }
                     ],
@@ -616,7 +560,100 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = true or  %resource.repeat(item).where(linkId='Unconscious or Lethargic').answer.first().value != true"
+                        "expression": "(%resource.repeat(item).where(linkId='Cough').answer.first().value = true or %resource.repeat(item).where(linkId='Difficulty Breathing').answer.first().value = true ) and  %resource.repeat(item).where(linkId='EmCare.B10S2.DE04').answer.first().value = false"
+                    }
+                }
+            ],
+            "linkId": "Oxygen_Saturation",
+            "type": "group",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                            "valueCoding": {
+                                "system": "http://unitsofmeasure.org",
+                                "code": "%"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='Oxygen_Saturation').repeat(item).where(linkId='EmCare.B10S2.DE09').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE07",
+                    "text": "Oxygen Saturation",
+                    "type": "quantity",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='Oxygen_Saturation').repeat(item).where(linkId='EmCare.B10S2.DE07').answer.first().exists() and %resource.repeat(item).where(linkId='Oxygen_Saturation').repeat(item).where(linkId='EmCare.B10S2.DE07').answer.first().value< 90 '%'"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE08",
+                    "text": "Oxygen Saturation < 90 %",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false,
+                    "readOnly": true
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "check-box",
+                                        "display": "Check-box"
+                                    }
+                                ],
+                                "text": "Check-box"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='Oxygen_Saturation').repeat(item).where(linkId='EmCare.B10S2.DE07').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE09",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": true,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "code": "EmCare.B10S2.DE09",
+                                "display": "Oxygen saturation not measured"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = true"
                     }
                 }
             ],
@@ -649,7 +686,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = true or %resource.repeat(item).where(linkId='Unconscious or Lethargic').answer.first().value != true"
+                        "expression": "%resource.repeat(item).where(linkId='Diarrhoea').answer.first().value = true and  iif(%resource.repeat(item).where(linkId='Unconscious or Lethargic').answer.first().value = true,false,true)"
                     }
                 }
             ],
@@ -689,7 +726,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = true"
                     }
                 }
             ],
@@ -705,7 +742,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value != true  or  %resource.repeat(item).where(linkId='Oral Fluid Test').answer.first().value.display = 'Completely unable to drink'  or  %resource.repeat(item).where(linkId='Oral Fluid Test').answer.first().value.display ='unable to perform test' or %resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B17S1.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value = false  or %resource.repeat(item).where(linkId='Not able to drink or breastfeed').answer.first().value = true and %resource.repeat(item).where(linkId='Oral Fluid Test failed').answer.first().value = true"
                     }
                 }
             ],
@@ -754,16 +791,16 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Ear discharge').answer.first().value = true and %resource.repeat(item).where(linkId='Ear discharge for how long?').answer.first().exists()).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Ear discharge').answer.first().value = false   and %resource.repeat(item).where(linkId='EmCare.B13S2.DE02').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B13S2.DE03",
             "text": "Pus Seen Draining from the Ear for how long?",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/ear-discharge-duration"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/more-than-14d"
         },
         {
             "extension": [
@@ -771,7 +808,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value = true"
                     }
                 }
             ],
@@ -787,7 +824,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value = true"
                     }
                 }
             ],
@@ -803,7 +840,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and %resource.repeat(item).where(linkId='Eye Problem').answer.first().value=false)).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value = true and %resource.repeat(item).where(linkId='Eye Problem').answer.first().value = true"
                     }
                 }
             ],
@@ -819,14 +856,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Eye Problem').answer.first().value = false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Eye Problem').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE02",
             "text": "Pus Draining from Eye",
             "type": "boolean",
-            "required": false,
+            "required": true,
             "repeats": false
         },
         {
@@ -835,14 +872,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Eye Problem').answer.first().value = false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Eye Problem').answer.first().value = true"
                     }
                 }
             ],
             "linkId": "EmCare.B14S2.DE03",
             "text": "Clouding of the Cornea",
             "type": "boolean",
-            "required": false,
+            "required": true,
             "repeats": false
         },
         {
@@ -851,7 +888,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value = false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value = true"
                     }
                 }
             ],
@@ -867,7 +904,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value = false or %resource.repeat(item).where(linkId='EmCare.B14S2.DE04').answer.first().value = true).not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE03').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B14S2.DE04').answer.first().value = false"
                     }
                 }
             ],
@@ -885,18 +922,18 @@
                         "coding": [
                             {
                                 "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "open-choice",
-                                "display": "Open choice"
+                                "code": "check-box",
+                                "display": "Check-box"
                             }
                         ],
-                        "text": "Open choice"
+                        "text": "Check-box"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "((%resource.repeat(item).where(linkId='Fever').answer.first().value=false and  (%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false) or (%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = false and %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false)) or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and %resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = false and %resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = false)).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Skin Problem').answer.first().value = true or (%resource.repeat(item).where(linkId='Fever').answer.first().value = true and (%resource.repeat(item).where(linkId='Cough').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true))"
                     }
                 }
             ],
@@ -913,7 +950,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='Cough').answer.first().value = false and %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = false )).not() or ((%resource.repeat(item).where(linkId='EmCare.B14S2.DE07').answer.first().value=true).not()))"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value = true or ( %resource.repeat(item).where(linkId='Cough').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true ) and %resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.where(value.code =  'EmCare.B14S2.DE07').exists()"
                     }
                 }
             ],
@@ -929,7 +966,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false or (%resource.repeat(item).where(linkId='Fever').answer.first().value=true and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='Cough').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = true ) and (%resource.repeat(item).where(linkId='EmCare.B14S2.DE07').answer.first().value=true) and %resource.repeat(item).where(linkId='EmCare.B14S2.DE10').answer.first().value = true)).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value = true and (iif(%resource.repeat(item).where(linkId='EmCare.B14S2.DE01').answer.first().value = true, false, true) or iif(%resource.repeat(item).where(linkId='Cough').answer.first().value = true, false, true) or iif(%resource.repeat(item).where(linkId='EmCare.B12S2.DE05').answer.first().value = true, false, true)) or %resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.where(value.code =  'EmCare.B14S2.DE07').empty() or %resource.repeat(item).where(linkId='EmCare.B14S2.DE10').answer.first().value = false"
                     }
                 }
             ],
@@ -945,7 +982,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Danger Signs').answer.first().value = false or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = true"
                     }
                 }
             ],
@@ -958,23 +995,29 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                    "valueCodeableConcept": {
-                        "coding": [
-                            {
-                                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "open-choice",
-                                "display": "Open choice"
+                    "extension": [
+                        {
+                            "url": "option",
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B14S2.DE22"
                             }
-                        ],
-                        "text": "Open choice"
-                    }
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='Danger Signs').answer.first().value = false and %resource.repeat(item).where(linkId='Itchy Skin').answer.first().value=true and %resource.repeat(item).where(linkId='EmCare.B14S2.DE12').answer.first().value = true and  %resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.first().value !<< \"Generalised Skin Problem\""
+                            }
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-answerOptionsToggleExpression"
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true or %resource.repeat(item).where(linkId='Skin Problem').answer.first().value = false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Danger Signs').answer.first().value = false and  ( %resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.where(value.code =  'EmCare.B14S2.DE07').exists() or %resource.repeat(item).where(linkId='EmCare.B14S2.DE06').answer.where(value.code =  'EmCare.B14S2.DE08').exists() )"
                     }
                 }
             ],
@@ -991,7 +1034,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE19').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE19').exists()"
                     }
                 }
             ],
@@ -1007,7 +1050,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE22').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE22').exists()"
                     }
                 }
             ],
@@ -1023,7 +1066,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE23').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE23').exists()"
                     }
                 }
             ],
@@ -1039,7 +1082,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE23').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE23').exists()"
                     }
                 }
             ],
@@ -1055,7 +1098,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE25').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE25').exists()"
                     }
                 }
             ],
@@ -1071,7 +1114,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE25').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE25').exists()"
                     }
                 }
             ],
@@ -1087,7 +1130,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE31').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE31').exists()"
                     }
                 }
             ],
@@ -1103,7 +1146,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE31').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE31').exists()"
                     }
                 }
             ],
@@ -1119,7 +1162,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE32').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE32').exists()"
                     }
                 }
             ],
@@ -1135,7 +1178,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE33').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE33').exists()"
                     }
                 }
             ],
@@ -1151,7 +1194,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE36').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE36').exists()"
                     }
                 }
             ],
@@ -1167,7 +1210,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE36').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE36').exists()"
                     }
                 }
             ],
@@ -1183,7 +1226,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.first().value.code = 'EmCare.B14S2.DE36').not()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B14S2.DE13').answer.where(value.code='EmCare.B14S2.DE36').exists()"
                     }
                 }
             ],
@@ -1196,10 +1239,23 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "radio-button",
+                                "display": "Radio Button"
+                            }
+                        ],
+                        "text": "Radio Button"
+                    }
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Fever').answer.first().value=false).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Fever').answer.first().value = true"
                     }
                 }
             ],
@@ -1218,18 +1274,18 @@
                         "coding": [
                             {
                                 "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                "code": "open-choice",
-                                "display": "Open choice"
+                                "code": "check-box",
+                                "display": "Check-box"
                             }
                         ],
-                        "text": "Open choice"
+                        "text": "Check-box"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='Has danger signs').answer.first().value = true).not()"
+                        "expression": "%resource.repeat(item).where(linkId='Danger Signs').answer.first().value = false"
                     }
                 }
             ],
@@ -1259,59 +1315,59 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-subQuestionnaire",
-                    "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b22.hemoglobin"
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
                 },
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B15S2.DE01').answer.first().value.code !='EmCare.B15S2.DE04' and %resource.repeat(item).where(linkId='EmCare.B15S2.DE09').answer.first().value.code !='EmCare.B15S2.DE12'"
+                        "language": "text/cql-identifier",
+                        "expression": "respiratory rate profile"
                     }
                 }
             ],
-            "linkId": "EmCare.B22.Hemoglobin",
-            "type": "group",
+            "linkId": "Respiratory Rate profile",
+            "type": "quantity",
             "required": false,
-            "repeats": false,
-            "item": [
+            "repeats": false
+        },
+        {
+            "extension": [
                 {
-                    "linkId": "EmCare.B22.DE81",
-                    "text": "Hemoglobin (Hb) g/dL",
-                    "type": "quantity",
-                    "required": false,
-                    "repeats": false
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
                 },
                 {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "check-box",
-                                        "display": "Check-box"
-                                    }
-                                ],
-                                "text": "Check-box"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE82",
-                    "type": "choice",
-                    "required": false,
-                    "repeats": true,
-                    "answerOption": [
-                        {
-                            "valueCoding": {
-                                "code": "EmCare.B22.DE82",
-                                "display": "Hemoglobin Test Not Available"
-                            }
-                        }
-                    ]
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "respiratory rate second count profile"
+                    }
                 }
-            ]
+            ],
+            "linkId": "Respiratory Rate Second Count Profile",
+            "type": "quantity",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "test"
+                    }
+                }
+            ],
+            "linkId": "test",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
         },
         {
             "extension": [

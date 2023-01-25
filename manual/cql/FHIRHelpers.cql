@@ -15,7 +15,7 @@ define function ToInterval(period FHIR.Period):
         null
     else
         if period."start" is null then
-            Interval(period."start".value, period."end".value]
+            Interval[period."end".value, period."end".value]
         else
             Interval[period."start".value, period."end".value]
 
@@ -63,7 +63,7 @@ define function ToInterval(quantity FHIR.Quantity):
                 Interval[
                     null,
                     ToQuantityIgnoringComparator(quantity)
-                )
+                ]
             when '<=' then
                 Interval[
                     null,
@@ -75,7 +75,7 @@ define function ToInterval(quantity FHIR.Quantity):
                     null
                 ]
             when '>' then
-                Interval(
+                Interval[
                     ToQuantityIgnoringComparator(quantity),
                     null
                 ]

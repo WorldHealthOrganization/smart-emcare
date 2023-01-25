@@ -1,7 +1,7 @@
 
-library subscapularSkinfoldForAge version '0.99.99'
+library subscapularSkinfoldForAge version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '0.99.99' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
 // Antrho library for subscapularSkinfoldForAge  Z-Score from the ssanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
@@ -3554,20 +3554,23 @@ define function ZscoresubscapularSkinfoldForAgetables(sex String, Age Decimal):
 		else First(subscapularSkinfoldForAgeMale c where  c.y = Age)
             
 define function generateZScoresubscapularSkinfoldForAge(sex System.String, Age System.Decimal, weight  System.Decimal)  : 
-	base.computeZScore(
-		weight,
-		(ZscoresubscapularSkinfoldForAgetables(sex,Age).m ), 
-		(ZscoresubscapularSkinfoldForAgetables(sex,Age).l ),
-		(ZscoresubscapularSkinfoldForAgetables(sex,Age).s )
-	)
+	if ZscoresubscapularSkinfoldForAgetables(sex,Age) is not null then 
+        base.computeZScore(
+            weight,
+            (ZscoresubscapularSkinfoldForAgetables(sex,Age).m ), 
+            (ZscoresubscapularSkinfoldForAgetables(sex,Age).l ),
+            (ZscoresubscapularSkinfoldForAgetables(sex,Age).s )
+        )
+    else null
 
 define function generatesubscapularSkinfoldFromAge(sex System.String, Age System.Decimal, zscore  System.Decimal) : 
-	base.computeReverseZScore(
-		zscore,
-		(ZscoresubscapularSkinfoldForAgetables(sex,Age).m ), 
-		(ZscoresubscapularSkinfoldForAgetables(sex,Age).l ),
-		(ZscoresubscapularSkinfoldForAgetables(sex,Age).s )
-	)
-        
+	if ZscoresubscapularSkinfoldForAgetables(sex,Age) is not null then 
+        base.computeReverseZScore(
+            zscore,
+            (ZscoresubscapularSkinfoldForAgetables(sex,Age).m ), 
+            (ZscoresubscapularSkinfoldForAgetables(sex,Age).l ),
+            (ZscoresubscapularSkinfoldForAgetables(sex,Age).s )
+        )
+    else null    
 
     

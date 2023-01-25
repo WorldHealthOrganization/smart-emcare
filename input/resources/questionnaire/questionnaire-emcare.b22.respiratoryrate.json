@@ -64,6 +64,63 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "respiratory rate profile"
+                    }
+                }
+            ],
+            "linkId": "Respiratory Rate profile",
+            "type": "quantity",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "respiratory rate second count profile"
+                    }
+                }
+            ],
+            "linkId": "Respiratory Rate Second Count Profile",
+            "type": "quantity",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "test"
+                    }
+                }
+            ],
+            "linkId": "test",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
                         "system": "http://unitsofmeasure.org",
@@ -74,7 +131,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 2"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
                     }
                 }
             ],
@@ -103,7 +160,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value > 2  and %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
                     }
                 }
             ],
@@ -123,22 +180,6 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B22.DE03",
-            "text": "Respiratory Rate First Count",
-            "type": "quantity",
-            "required": true,
-            "repeats": false
-        },
-        {
-            "extension": [
-                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
                         "system": "http://unitsofmeasure.org",
@@ -149,7 +190,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.DE03').answer.first().value > 60 '{Counts}/min'"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value > 60 '{Counts}/min' and %resource.repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty() and  %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
                     }
                 }
             ],
@@ -178,7 +219,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
                     }
                 }
             ],
@@ -208,7 +249,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'\nor\n%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12\nor \n%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false)"
+                        "expression": "iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false)"
                     }
                 }
             ],

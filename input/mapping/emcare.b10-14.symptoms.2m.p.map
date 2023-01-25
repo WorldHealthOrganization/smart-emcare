@@ -62,14 +62,6 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             } 'c1e233d8';
         } 'c6a3d5c5';
     } '338d49a6';
-    src.item first as item  where linkId = 'EmCare.B12S1.DE01' then {
-        src -> bundle.entry as entry  then {
-            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
-            src -> entry.resource = create('Observation') as tgt then {
-                src -> tgt then emcareobservationemcareb12s1de01(src, tgt) 'bc137ade';
-            } '3b2196be';
-        } '5033cd92';
-    } '57c431d8';
     src.item first as item  where linkId = 'EmCare.B12S1.DE02' then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
@@ -210,10 +202,12 @@ group emcareobservationemcareb10s1de06(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B10S1.DE06' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb10s1de06';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb10s1de06';
-        } '0a27a0eb';
-    } 'd9e1e06f';
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } '14d7a851';
 }
 
 group emcareobservationemcareb10s1de01(source src,target tgt){
@@ -266,10 +260,12 @@ group emcareobservationemcareb10s1de02(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B10S1.DE02' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb10s1de02';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb10s1de02';
-        } '0a27a0eb';
-    } 'cbe146d7';
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } '8d80c7a1';
 }
 
 group emcareobservationemcareb11s1de01(source src,target tgt){
@@ -322,10 +318,12 @@ group emcareobservationemcareb11s1de02(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B11S1.DE02' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb11s1de02';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb11s1de02';
-        } '0a27a0eb';
-    } '7e0ffa40';
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } '728ecbe2';
 }
 
 group emcareobservationemcareb11s1de05(source src,target tgt){
@@ -354,34 +352,6 @@ group emcareobservationemcareb11s1de05(source src,target tgt){
             a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb11s1de05';
         } 'bdab9370';
     } 'e043fedb';
-}
-
-group emcareobservationemcareb12s1de01(source src,target tgt){
-        src -> tgt.identifier = create('Identifier') as CodeID,
-            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
-            CodeID.use =  'official',
-            CodeID.value = 'uuid',
-            CodeID.id = uuid()
-         'id-emcareb12s1de01';
-    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
-        src.subject as subject -> tgt.subject = subject,
-            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
-            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
-                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
-                coding.code = 'EmCare.B12S1.DE01'
-         'code-emcareb12s1de01';
-    src.item as item where linkId  =  'timestamp' then {
-        item.answer first as a then {
-            a.value as val -> tgt.issued = val  '8945c96b';
-        } '4272fc8b';
-    } 'f4472f32';
-    src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B12S1.DE01' then {
-        item.answer first as a then {
-            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcareb12s1de01';
-            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb12s1de01';
-        } 'bdab9370';
-    } '67548fa0';
 }
 
 group emcareobservationemcareb12s1de02(source src,target tgt){
@@ -434,10 +404,12 @@ group emcareobservationemcareb12s1de03(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B12S1.DE03' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb12s1de03';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb12s1de03';
-        } '0a27a0eb';
-    } '8730de61';
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } '5434a3fd';
 }
 
 group emcareobservationemcarebgde06(source src,target tgt){
@@ -462,10 +434,10 @@ group emcareobservationemcarebgde06(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B.G.DE06' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcarebgde06';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcarebgde06';
-        } '0a27a0eb';
-    } 'ba704093';
+            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcarebgde06';
+            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcarebgde06';
+        } 'bdab9370';
+    } 'e4b32f41';
 }
 
 group emcareobservationemcareb12s1de06(source src,target tgt){
@@ -602,10 +574,12 @@ group emcareobservationemcareb13s1de04(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B13S1.DE04' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb13s1de04';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb13s1de04';
-        } '0a27a0eb';
-    } '6063e2fa';
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } 'e828b0ca';
 }
 
 group emcareobservationemcareb14s1de03(source src,target tgt){

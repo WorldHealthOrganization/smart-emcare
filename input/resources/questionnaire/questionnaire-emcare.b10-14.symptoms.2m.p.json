@@ -51,12 +51,30 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "emcare.b.g.de01"
+                        "expression": "danger signs"
                     }
                 }
             ],
-            "linkId": "EmCare.B.G.DE01",
-            "text": "Danger Signs",
+            "linkId": "Danger Signs",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "emcare.b12s1.de01"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B12S1.DE01",
             "type": "boolean",
             "required": false,
             "repeats": false
@@ -103,7 +121,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/cough-duration"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/more-than-14d"
         },
         {
             "linkId": "EmCare.B10S1.DE01",
@@ -127,7 +145,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/difficulty-breathing-duration"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/more-than-14d"
         },
         {
             "linkId": "EmCare.B11S1.DE01",
@@ -142,7 +160,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.first().value= true"
                     }
                 }
             ],
@@ -151,7 +169,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/diarrhoea-duration"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/more-than-14d"
         },
         {
             "extension": [
@@ -159,7 +177,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.first().value = true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B11S1.DE01').answer.first().value= true"
                     }
                 }
             ],
@@ -168,23 +186,6 @@
             "type": "boolean",
             "required": false,
             "repeats": false
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "emcare.b12s1.de01"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B12S1.DE01",
-            "text": "Measured Fever",
-            "type": "boolean",
-            "required": true,
-            "repeats": false,
-            "readOnly": true
         },
         {
             "linkId": "EmCare.B12S1.DE02",
@@ -199,7 +200,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value=true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value= true"
                     }
                 }
             ],
@@ -208,7 +209,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/fever-duration"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/more-than-7d"
         },
         {
             "extension": [
@@ -236,7 +237,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.first().value.code= 'EmCare.B12S1.DE05' )"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.first().value.code= 'EmCare.B12S1.DE05'  and %resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value =  true"
                     }
                 }
             ],
@@ -300,7 +301,7 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/ear-discharge-duration"
+            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/more-than-14d"
         },
         {
             "linkId": "EmCare.B14S1.DE03",
@@ -315,7 +316,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE01').answer.first().value=false"
+                        "expression": "%resource.repeat(item).where(linkId='Danger Signs').answer.first().empty() or %resource.repeat(item).where(linkId='Danger Signs').answer.first().value = false"
                     }
                 }
             ],

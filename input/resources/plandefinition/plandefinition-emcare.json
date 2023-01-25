@@ -8,6 +8,7 @@
             "value": "emcaredt01"
         }
     ],
+    "version": "1.0.1.rc11.build.71",
     "name": "emcaredt01",
     "title": "emcaredt01",
     "type": {
@@ -20,15 +21,11 @@
     },
     "status": "active",
     "experimental": false,
-    "date": "2022-11-23T16:41:00+00:00",
+    "date": "2023-01-24T21:26:36+00:00",
     "library": [
         "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcaredt01"
     ],
     "action": [
-        {
-            "id": "{{library}}",
-            "description": "emcarecombineddataelements::clas::{{LIB_VERSION}}"
-        },
         {
             "id": "emcaredt01",
             "description": "Register a child < 5 years",
@@ -49,9 +46,9 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "description": "AgeInYears() < 5",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT02"
+                        "expression": "emcaredt02"
                     }
                 }
             ],
@@ -72,9 +69,9 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "description": "AgeInYears() < 5",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT04"
+                        "expression": "emcaredt04"
                     }
                 }
             ],
@@ -101,9 +98,9 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "description": "AgeInYears() < 5",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT03"
+                        "expression": "emcaredt03"
                     }
                 }
             ],
@@ -130,9 +127,9 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "clas.\"age >=28 days to 2 months\" or clas.\"age < 28 days to 2 months\"",
+                        "description": "AgeInMonths() < 2",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT05"
+                        "expression": "emcaredt05"
                     }
                 }
             ],
@@ -161,7 +158,7 @@
                     "expression": {
                         "description": "clas.\"age >= 2 months to <60 months\"",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT06"
+                        "expression": "emcaredt06"
                     }
                 }
             ],
@@ -188,9 +185,9 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "clas.\"age >=28 days to 2 months\" or clas.\"age < 28 days to 2 months\"",
+                        "description": "AgeInMonths() < 2",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT07"
+                        "expression": "emcaredt07"
                     }
                 }
             ],
@@ -219,7 +216,7 @@
                     "expression": {
                         "description": "clas.\"age >= 2 months to <60 months\"",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT08"
+                        "expression": "emcaredt08"
                     }
                 }
             ],
@@ -246,19 +243,15 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "description": "clas.\"age >= 2 months to <60 months\"",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT09"
+                        "expression": "emcaredt09"
                     }
                 }
             ],
             "relatedAction": [
                 {
-                    "actionId": "EmCareDT07",
-                    "relationship": "after"
-                },
-                {
-                    "actionId": "EmCareDT08",
+                    "actionId": "EmCareDT10",
                     "relationship": "after"
                 }
             ],
@@ -279,25 +272,45 @@
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "description": "AgeInYears() < 5",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT10"
+                        "expression": "emcaredt10"
                     }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT07",
+                    "relationship": "after"
+                },
+                {
+                    "actionId": "EmCareDT08",
+                    "relationship": "after"
                 }
             ],
             "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b22.assessmentstests"
         },
         {
             "id": "emcaredt11",
-            "description": "Provide Health prevention",
+            "description": "Provide treatment",
             "condition": [
                 {
                     "kind": "applicability",
                     "expression": {
-                        "description": "difference in years between Today() and  Patient.birthDate < 5",
+                        "description": "AgeInYears() < 5",
                         "language": "text/cql-identifier",
-                        "expression": "EmCareDT11"
+                        "expression": "emcaredt11"
                     }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT12",
+                    "relationship": "after"
+                },
+                {
+                    "actionId": "EmCareDT09",
+                    "relationship": "after"
                 }
             ],
             "type": {
@@ -308,7 +321,22 @@
                     }
                 ]
             },
-            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/healthprevention"
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.treatment"
+        },
+        {
+            "id": "emcaredt12",
+            "description": "Propose classification 2m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt12"
+                    }
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b23.classification.2m"
         }
     ]
 }

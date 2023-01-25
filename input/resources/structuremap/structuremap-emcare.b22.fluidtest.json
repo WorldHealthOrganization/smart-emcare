@@ -3,7 +3,7 @@
     "id": "emcare.b22.fluidtest",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.fluidtest&quot; = &quot;emcare.b22.fluidtest&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE08' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de08(src, tgt) &quot;d34db40c&quot;;\r\n      } &quot;bd8403a6&quot;;\r\n    } &quot;09eb3e1a&quot;;\r\n  } &quot;5d67a31e&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de14(src, tgt) &quot;128f555c&quot;;\r\n      } &quot;2cba61ee&quot;;\r\n    } &quot;1eb502ac&quot;;\r\n  } &quot;24ec3f15&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14a' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de14a(src, tgt) &quot;7b46291c&quot;;\r\n      } &quot;17f1508c&quot;;\r\n    } &quot;64f82f5e&quot;;\r\n  } &quot;204a0428&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE15' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de15(src, tgt) &quot;0d25d61c&quot;;\r\n      } &quot;49095bbf&quot;;\r\n    } &quot;7ffa5829&quot;;\r\n  } &quot;ff310b7d&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE16' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de16(src, tgt) &quot;2bef72fa&quot;;\r\n      } &quot;f426fdde&quot;;\r\n    } &quot;f53bf22c&quot;;\r\n  } &quot;ddeb7d72&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de08(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de08&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE08' &quot;code-emcareb22de08&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE08' then {\r\n    item.answer first as a then {\r\n      a.value as val where val != 'none' -&gt;  tgt.value = val,  tgt.status = 'final' &quot;final-emcareb22de08&quot;;\r\n      a where a.value = 'none' -&gt; tgt.status = 'cancelled' &quot;notfound-emcareb22de08&quot;;\r\n    } &quot;0a27a0eb&quot;;\r\n  } &quot;d53d51a6&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de14(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de14&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE14' &quot;code-emcareb22de14&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14' then {\r\n    item.answer first as a then {\r\n      a.value as val where val != 'none' -&gt;  tgt.value = val,  tgt.status = 'final' &quot;final-emcareb22de14&quot;;\r\n      a where a.value = 'none' -&gt; tgt.status = 'cancelled' &quot;notfound-emcareb22de14&quot;;\r\n    } &quot;0a27a0eb&quot;;\r\n  } &quot;682fc478&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de14a(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de14a&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE14a' &quot;code-emcareb22de14a&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14a' then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-emcareb22de14a&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-emcareb22de14a&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;0dfb1dc8&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de15(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de15&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE15' &quot;code-emcareb22de15&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE15' then {\r\n    item.answer first as a then {\r\n      a.value as val where val != 'none' -&gt;  tgt.value = val,  tgt.status = 'final' &quot;final-emcareb22de15&quot;;\r\n      a where a.value = 'none' -&gt; tgt.status = 'cancelled' &quot;notfound-emcareb22de15&quot;;\r\n    } &quot;0a27a0eb&quot;;\r\n  } &quot;2b89bcf0&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de16(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de16&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE16' &quot;code-emcareb22de16&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE16' then {\r\n    item.answer first as a then {\r\n      a.value as val where val != 'none' -&gt;  tgt.value = val,  tgt.status = 'final' &quot;final-emcareb22de16&quot;;\r\n      a where a.value = 'none' -&gt; tgt.status = 'cancelled' &quot;notfound-emcareb22de16&quot;;\r\n    } &quot;0a27a0eb&quot;;\r\n  } &quot;5128944c&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.fluidtest&quot; = &quot;emcare.b22.fluidtest&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE08' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de08(src, tgt) &quot;d34db40c&quot;;\r\n      } &quot;bd8403a6&quot;;\r\n    } &quot;09eb3e1a&quot;;\r\n  } &quot;5d67a31e&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de14(src, tgt) &quot;128f555c&quot;;\r\n      } &quot;2cba61ee&quot;;\r\n    } &quot;1eb502ac&quot;;\r\n  } &quot;24ec3f15&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14a' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de14a(src, tgt) &quot;7b46291c&quot;;\r\n      } &quot;17f1508c&quot;;\r\n    } &quot;64f82f5e&quot;;\r\n  } &quot;204a0428&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE15' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de15(src, tgt) &quot;0d25d61c&quot;;\r\n      } &quot;49095bbf&quot;;\r\n    } &quot;7ffa5829&quot;;\r\n  } &quot;ff310b7d&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE16' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de16(src, tgt) &quot;2bef72fa&quot;;\r\n      } &quot;f426fdde&quot;;\r\n    } &quot;f53bf22c&quot;;\r\n  } &quot;ddeb7d72&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de08(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de08&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE08' &quot;code-emcareb22de08&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE08' then {\r\n    item.answer first as a then {\r\n      a.value as val then {\r\n        val where val.code = 'none' -&gt; tgt.status = 'cancelled' &quot;8ab1d7a5&quot;;\r\n        val where val.code != 'none' -&gt;  tgt.value = create('CodeableConcept') as cc,  cc.coding = val,  tgt.status = 'final' &quot;a1050460&quot;;\r\n      } &quot;4ca9082e&quot;;\r\n    } &quot;7c587a4b&quot;;\r\n  } &quot;faf867e6&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de14(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de14&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE14' &quot;code-emcareb22de14&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14' then {\r\n    item.answer first as a then {\r\n      a.value as val then {\r\n        val where val.code = 'true' -&gt;  tgt.status = 'final',  tgt.value = true &quot;8a65aaa5&quot;;\r\n      } &quot;26c2c8c7&quot;;\r\n    } &quot;721205d5&quot;;\r\n  } &quot;878cf146&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de14a(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de14a&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE14a' &quot;code-emcareb22de14a&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE14a' then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-emcareb22de14a&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-emcareb22de14a&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;0dfb1dc8&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de15(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de15&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE15' &quot;code-emcareb22de15&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE15' then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-emcareb22de15&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-emcareb22de15&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;054df1a5&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de16(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de16&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE16' &quot;code-emcareb22de16&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE16' then {\r\n    item.answer first as a then {\r\n      a.value as val then {\r\n        val where val.code = 'none' -&gt; tgt.status = 'cancelled' &quot;8ab1d7a5&quot;;\r\n        val where val.code != 'none' -&gt;  tgt.value = create('CodeableConcept') as cc,  cc.coding = val,  tgt.status = 'final' &quot;a1050460&quot;;\r\n      } &quot;4ca9082e&quot;;\r\n    } &quot;7c587a4b&quot;;\r\n  } &quot;38681b4e&quot;;\r\n}\r\n\r\n</pre></div>"
     },
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.fluidtest",
     "name": "emcare.b22.fluidtest",
@@ -999,7 +999,7 @@
                     ]
                 },
                 {
-                    "name": "d53d51a6",
+                    "name": "faf867e6",
                     "source": [
                         {
                             "context": "src",
@@ -1011,7 +1011,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "0a27a0eb",
+                            "name": "7c587a4b",
                             "source": [
                                 {
                                     "context": "item",
@@ -1022,57 +1022,79 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "final-emcareb22de08",
+                                    "name": "4ca9082e",
                                     "source": [
                                         {
                                             "context": "a",
                                             "element": "value",
-                                            "variable": "val",
-                                            "condition": "val != 'none'"
+                                            "variable": "val"
                                         }
                                     ],
-                                    "target": [
+                                    "rule": [
                                         {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            "name": "8ab1d7a5",
+                                            "source": [
                                                 {
-                                                    "valueId": "val"
+                                                    "context": "val",
+                                                    "condition": "val.code = 'none'"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "status",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "cancelled"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
                                         {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            "name": "a1050460",
+                                            "source": [
                                                 {
-                                                    "valueString": "final"
+                                                    "context": "val",
+                                                    "condition": "val.code != 'none'"
                                                 }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "notfound-emcareb22de08",
-                                    "source": [
-                                        {
-                                            "context": "a",
-                                            "condition": "a.value = 'none'"
-                                        }
-                                    ],
-                                    "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            ],
+                                            "target": [
                                                 {
-                                                    "valueString": "cancelled"
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "variable": "cc",
+                                                    "transform": "create",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "CodeableConcept"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "cc",
+                                                    "contextType": "variable",
+                                                    "element": "coding",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "status",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "final"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -1347,7 +1369,7 @@
                     ]
                 },
                 {
-                    "name": "682fc478",
+                    "name": "878cf146",
                     "source": [
                         {
                             "context": "src",
@@ -1359,7 +1381,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "0a27a0eb",
+                            "name": "721205d5",
                             "source": [
                                 {
                                     "context": "item",
@@ -1370,57 +1392,45 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "final-emcareb22de14",
+                                    "name": "26c2c8c7",
                                     "source": [
                                         {
                                             "context": "a",
                                             "element": "value",
-                                            "variable": "val",
-                                            "condition": "val != 'none'"
+                                            "variable": "val"
                                         }
                                     ],
-                                    "target": [
+                                    "rule": [
                                         {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            "name": "8a65aaa5",
+                                            "source": [
                                                 {
-                                                    "valueId": "val"
+                                                    "context": "val",
+                                                    "condition": "val.code = 'true'"
                                                 }
-                                            ]
-                                        },
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            ],
+                                            "target": [
                                                 {
-                                                    "valueString": "final"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "notfound-emcareb22de14",
-                                    "source": [
-                                        {
-                                            "context": "a",
-                                            "condition": "a.value = 'none'"
-                                        }
-                                    ],
-                                    "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "status",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "final"
+                                                        }
+                                                    ]
+                                                },
                                                 {
-                                                    "valueString": "cancelled"
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueBoolean": true
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
@@ -2052,7 +2062,7 @@
                     ]
                 },
                 {
-                    "name": "2b89bcf0",
+                    "name": "054df1a5",
                     "source": [
                         {
                             "context": "src",
@@ -2064,7 +2074,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "0a27a0eb",
+                            "name": "bdab9370",
                             "source": [
                                 {
                                     "context": "item",
@@ -2079,23 +2089,10 @@
                                     "source": [
                                         {
                                             "context": "a",
-                                            "element": "value",
-                                            "variable": "val",
-                                            "condition": "val != 'none'"
+                                            "condition": "a.value = true"
                                         }
                                     ],
                                     "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "copy",
-                                            "parameter": [
-                                                {
-                                                    "valueId": "val"
-                                                }
-                                            ]
-                                        },
                                         {
                                             "context": "tgt",
                                             "contextType": "variable",
@@ -2106,6 +2103,17 @@
                                                     "valueString": "final"
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueBoolean": true
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
@@ -2114,7 +2122,7 @@
                                     "source": [
                                         {
                                             "context": "a",
-                                            "condition": "a.value = 'none'"
+                                            "condition": "a.value = false"
                                         }
                                     ],
                                     "target": [
@@ -2126,6 +2134,17 @@
                                             "parameter": [
                                                 {
                                                     "valueString": "cancelled"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueBoolean": false
                                                 }
                                             ]
                                         }
@@ -2400,7 +2419,7 @@
                     ]
                 },
                 {
-                    "name": "5128944c",
+                    "name": "38681b4e",
                     "source": [
                         {
                             "context": "src",
@@ -2412,7 +2431,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "0a27a0eb",
+                            "name": "7c587a4b",
                             "source": [
                                 {
                                     "context": "item",
@@ -2423,57 +2442,79 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "final-emcareb22de16",
+                                    "name": "4ca9082e",
                                     "source": [
                                         {
                                             "context": "a",
                                             "element": "value",
-                                            "variable": "val",
-                                            "condition": "val != 'none'"
+                                            "variable": "val"
                                         }
                                     ],
-                                    "target": [
+                                    "rule": [
                                         {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            "name": "8ab1d7a5",
+                                            "source": [
                                                 {
-                                                    "valueId": "val"
+                                                    "context": "val",
+                                                    "condition": "val.code = 'none'"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "status",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "cancelled"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         },
                                         {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            "name": "a1050460",
+                                            "source": [
                                                 {
-                                                    "valueString": "final"
+                                                    "context": "val",
+                                                    "condition": "val.code != 'none'"
                                                 }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "notfound-emcareb22de16",
-                                    "source": [
-                                        {
-                                            "context": "a",
-                                            "condition": "a.value = 'none'"
-                                        }
-                                    ],
-                                    "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            ],
+                                            "target": [
                                                 {
-                                                    "valueString": "cancelled"
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "variable": "cc",
+                                                    "transform": "create",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "CodeableConcept"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "cc",
+                                                    "contextType": "variable",
+                                                    "element": "coding",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "status",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "final"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }

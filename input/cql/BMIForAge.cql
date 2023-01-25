@@ -1,7 +1,7 @@
 
-library BMIForAge version '0.99.99'
+library BMIForAge version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '0.99.99' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
 // Antrho library for BMIForAge  Z-Score from the bmianthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
@@ -3736,20 +3736,23 @@ define function ZscoreBMIForAgetables(sex String, Age Decimal):
 		else First(BMIForAgeMale c where  c.y = Age)
             
 define function generateZScoreBMIForAge(sex System.String, Age System.Decimal, weight  System.Decimal)  : 
-	base.computeZScore(
-		weight,
-		(ZscoreBMIForAgetables(sex,Age).m ), 
-		(ZscoreBMIForAgetables(sex,Age).l ),
-		(ZscoreBMIForAgetables(sex,Age).s )
-	)
+	if ZscoreBMIForAgetables(sex,Age) is not null then 
+        base.computeZScore(
+            weight,
+            (ZscoreBMIForAgetables(sex,Age).m ), 
+            (ZscoreBMIForAgetables(sex,Age).l ),
+            (ZscoreBMIForAgetables(sex,Age).s )
+        )
+    else null
 
 define function generateBMIFromAge(sex System.String, Age System.Decimal, zscore  System.Decimal) : 
-	base.computeReverseZScore(
-		zscore,
-		(ZscoreBMIForAgetables(sex,Age).m ), 
-		(ZscoreBMIForAgetables(sex,Age).l ),
-		(ZscoreBMIForAgetables(sex,Age).s )
-	)
-        
+	if ZscoreBMIForAgetables(sex,Age) is not null then 
+        base.computeReverseZScore(
+            zscore,
+            (ZscoreBMIForAgetables(sex,Age).m ), 
+            (ZscoreBMIForAgetables(sex,Age).l ),
+            (ZscoreBMIForAgetables(sex,Age).s )
+        )
+    else null    
 
     

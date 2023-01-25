@@ -2,235 +2,122 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22assessmentstests version '0.99.99'
+library emcareb22assessmentstests version '1.0.1.rc11.build.71'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include EmCareBase version '0.99.99' called Base
-include EmCareObservation version '0.99.99' called obs
-include EmCareValueSet version '0.99.99' called val
-include emcarecombineddataelements version '0.99.99' called clas
+include emcarebase version '1.0.1.rc11.build.71' called Base
+include emcareobservation version '1.0.1.rc11.build.71' called obs
+include emcarevalueset version '1.0.1.rc11.build.71' called val
+include emcarecombineddataelements version '1.0.1.rc11.build.71' called c
 
 
 
 
-context Patient    
+context Patient
 
-/* ageinmonths : Age*/
+
+/* 
+ageinmonths : nan
+    AgeInMonths()
+*/
 define "ageinmonths":
     AgeInMonths()
 
-/* alias age : ageinmonths*/
-define "age":
-    "ageinmonths"
+/* 
+ageindays : nan
+    AgeInDays()
+*/
+define "ageindays":
+    AgeInDays()
 
-/* has danger signs : nan*/
-define "has danger signs":
-    clas."emcare.b.g.de01"
+/* 
+applicability-breastfeedingtest : nan
+    Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
+*/
+define "applicability-breastfeedingtest":
+    Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
 
-/* emcare.b10s1.de05 : Cough*/
-define "emcare.b10s1.de05":
-    Base.GetObsValue('EmCare.B10S1.DE05')
+/* 
+applicability-respiratoryrate : nan
+    "Cough" = true or "Difficulty Breathing" = true or "AgeInMonths"<2
+*/
+define "applicability-respiratoryrate":
+    Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true or "ageinmonths"<2
 
-/* alias cough : emcare.b10s1.de05*/
-define "cough":
-    "emcare.b10s1.de05"
+/* 
+applicability-bronchodilatortest : nan
+    ("Cough" = true or "Difficulty Breathing" = true) and "Wheezing" = true and (o"Fast Breathing" = true or "Chest Indrawing" = true) and  c."danger signs" = false and "Stridor in a calm child"= false and "Oxygen Saturation" >= 90 '%'
+*/
+define "applicability-bronchodilatortest":
+    (Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true) and Base.GetObsValue('EmCare.B10S2.DE05') = true and (Base.GetObsValue('EmCare.B22.DE07') = true or Base.GetObsValue('EmCare.B10S2.DE03') = true) and  c."danger signs" = false and Base.GetObsValue('EmCare.B10S2.DE04')= false and Base.GetObsValue('EmCare.B10S2.DE07') >= 90 '%'
 
-/* emcare.b10s1.de01 : Difficulty Breathing*/
-define "emcare.b10s1.de01":
-    Base.GetObsValue('EmCare.B10S1.DE01')
+/* 
+applicability-hemoglobin : nan
+    "Palmar pallor" = "Some palmar pallor" or "Palmar Pallor" = "Severe Palmar Pallor" or "Mucous membrane pallor" = "Some mucous membrane pallor" or "Mucous membrane pallor" = "Severe mucous membrane pallor"
+*/
+define "applicability-hemoglobin":
+    Base.HasObsValueCode('EmCare.B15S2.DE01', 'EmCare.B15S2.DE03') or Base.HasObsValueCode('EmCare.B15S2.DE01', 'EmCare.B15S2.DE02') or Base.HasObsValueCode('EmCare.B15S2.DE09', 'EmCare.B15S2.DE11') or Base.HasObsValueCode('EmCare.B15S2.DE09', 'EmCare.B15S2.DE10')
 
-/* alias difficulty breathing : emcare.b10s1.de01*/
-define "difficulty breathing":
-    "emcare.b10s1.de01"
+/* 
+applicability-secondtemperature : nan
+    Coalesce(c."psbi other than temperature", false) = false and AgeInMonths()<2 and "Axillary Temperature" > 38.5 'Cel'
+*/
+define "applicability-secondtemperature":
+    Coalesce(c."psbi other than temperature", false) = false and AgeInMonths()<2 and Base.GetObsValue('EmCare.B6.DE01') > 38.5 'Cel'
 
-/* emcare.b11s1.de01 : Diarrhoea*/
-define "emcare.b11s1.de01":
-    Base.GetObsValue('EmCare.B11S1.DE01')
+/* 
+applicability-fluidtest : nan
+    "Not able to drink or breastfeed" = true or "Vomiting Everything" = true or "Diarrhoea" = true
+*/
+define "applicability-fluidtest":
+    "not able to drink or breastfeed" = true or "vomiting everything" = true or Base.GetObsValue('EmCare.B11S1.DE01') = true
 
-/* alias diarrhoea : emcare.b11s1.de01*/
-define "diarrhoea":
-    "emcare.b11s1.de01"
+/* 
+respiratory rate profile : nan
+    o"Respiratory Rate"
+*/
+define "respiratory rate profile":
+    Base.GetObsValue('EmCare.B22.DE01')
 
-/* emcare.b10s2.de03 : Chest Indrawing*/
-define "emcare.b10s2.de03":
-    Base.GetObsValue('EmCare.B10S2.DE03')
+/* 
+respiratory rate second count profile : nan
+    o"Respiratory Rate Second Count"
+*/
+define "respiratory rate second count profile":
+    Base.GetObsValue('EmCare.B22.DE04')
 
-/* alias chest indrawing : emcare.b10s2.de03*/
-define "chest indrawing":
-    "emcare.b10s2.de03"
+/* 
+test : nan
+    HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04')
+*/
+define "test":
+    Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04')
 
-/* emcare.b10s2.de05 : Wheezing*/
-define "emcare.b10s2.de05":
-    Base.GetObsValue('EmCare.B10S2.DE05')
+/* 
+danger signs : nan
+    Coalesce(c."emcare.b.g.de01", false)
+*/
+define "danger signs":
+    Coalesce(c."emcare.b.g.de01", false)
 
-/* alias wheezing : emcare.b10s2.de05*/
-define "wheezing":
-    "emcare.b10s2.de05"
+/* 
+emcare.b7.de09 : Not able to drink or breastfeed
+    Coalesce(o"Not able to drink or breastfeed",false)
+*/
+define "emcare.b7.de09":
+    Coalesce(Base.GetObsValue('EmCare.B7.DE09'),false)
 
-/* emcare.b10s2.de04 : Stridor in a calm child*/
-define "emcare.b10s2.de04":
-    Base.GetObsValue('EmCare.B10S2.DE04')
+/* alias not able to drink or breastfeed : emcare.b7.de09*/
+define "not able to drink or breastfeed":
+    "emcare.b7.de09"
 
-/* alias stridor in a calm child : emcare.b10s2.de04*/
-define "stridor in a calm child":
-    "emcare.b10s2.de04"
+/* 
+emcare.b7.de10 : Vomiting Everything
+    Coalesce(o"Vomiting Everything",false)
+*/
+define "emcare.b7.de10":
+    Coalesce(Base.GetObsValue('EmCare.B7.DE10'),false)
 
-/* emcare.b10s2.de07 : Oxygen Saturation*/
-define "emcare.b10s2.de07":
-    Base.GetObsValue('EmCare.B10S2.DE07')
-
-/* alias oxygen saturation : emcare.b10s2.de07*/
-define "oxygen saturation":
-    "emcare.b10s2.de07"
-
-/* emcare.a.de24 : Primary Caregiver's Relationship to Client*/
-define "emcare.a.de24":
-    Base.GetObsValue('EmCare.A.DE24')
-
-/* alias primary caregiver's relationship to client : emcare.a.de24*/
-define "primary caregiver's relationship to client":
-    "emcare.a.de24"
-
-/* emcare.b21s1.de01 : Breastfed*/
-define "emcare.b21s1.de01":
-    Base.GetObsValue('EmCare.B21S1.DE01', 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')
-
-/* alias breastfed : emcare.b21s1.de01*/
-define "breastfed":
-    "emcare.b21s1.de01"
-
-/* emcare.b8-b9.de01 : Obstructed or Absent Breathing*/
-define "emcare.b8-b9.de01":
-    Base.GetObsValue('EmCare.B8-B9.DE01')
-
-/* alias obstructed or absent breathing : emcare.b8-b9.de01*/
-define "obstructed or absent breathing":
-    "emcare.b8-b9.de01"
-
-/* emcare.b7.de02 : Convulsing Now*/
-define "emcare.b7.de02":
-    Base.GetObsValue('EmCare.B7.DE02')
-
-/* alias convulsing now : emcare.b7.de02*/
-define "convulsing now":
-    "emcare.b7.de02"
-
-/* emcare.b18s1.de02 : Difficulty with Feeding*/
-define "emcare.b18s1.de02":
-    Base.GetObsValue('EmCare.B18S1.DE02')
-
-/* alias difficulty with feeding : emcare.b18s1.de02*/
-define "difficulty with feeding":
-    "emcare.b18s1.de02"
-
-/* emcare.b18s1.de01 : Convulsions in this Illness*/
-define "emcare.b18s1.de01":
-    Base.GetObsValue('EmCare.B18S1.DE01')
-
-/* alias convulsions in this illness : emcare.b18s1.de01*/
-define "convulsions in this illness":
-    "emcare.b18s1.de01"
-
-/* emcare.b18s2.de07 : Severe Chest Indrawing*/
-define "emcare.b18s2.de07":
-    Base.GetObsValue('EmCare.B18S2.DE07')
-
-/* alias severe chest indrawing : emcare.b18s2.de07*/
-define "severe chest indrawing":
-    "emcare.b18s2.de07"
-
-/* emcare.b18s2.de08 : Movements*/
-define "emcare.b18s2.de08":
-    Base.GetObsValue('EmCare.B18S2.DE08')
-
-/* alias movements : emcare.b18s2.de08*/
-define "movements":
-    "emcare.b18s2.de08"
-
-/* emcare.b18s2.de01 : Measured Temperature*/
-define "emcare.b18s2.de01":
-    Base.GetObsValue('EmCare.B18S2.DE01')
-
-/* alias measured temperature : emcare.b18s2.de01*/
-define "measured temperature":
-    "emcare.b18s2.de01"
-
-/* emcare.b19s2.de01 : Yellow Skin*/
-define "emcare.b19s2.de01":
-    Base.GetObsValue('EmCare.B19S2.DE01')
-
-/* alias yellow skin : emcare.b19s2.de01*/
-define "yellow skin":
-    "emcare.b19s2.de01"
-
-/* emcare.b19s2.de04 : When did the Jaundice first appear?*/
-define "emcare.b19s2.de04":
-    Base.GetObsValue('EmCare.B19S2.DE04')
-
-/* alias when did the jaundice first appear? : emcare.b19s2.de04*/
-define "when did the jaundice first appear?":
-    "emcare.b19s2.de04"
-
-/* emcare.b19s2.de02 : Yellow Palms or Yellow Soles*/
-define "emcare.b19s2.de02":
-    Base.GetObsValue('EmCare.B19S2.DE02')
-
-/* alias yellow palms or yellow soles : emcare.b19s2.de02*/
-define "yellow palms or yellow soles":
-    "emcare.b19s2.de02"
-
-/* emcare.b21s2.de01 : Weight Status*/
-define "emcare.b21s2.de01":
-    Base.GetObsValue('EmCare.B21S2.DE01')
-
-/* alias weight status : emcare.b21s2.de01*/
-define "weight status":
-    "emcare.b21s2.de01"
-
-/* emcare.b12s2.de01 : Stiff neck*/
-define "emcare.b12s2.de01":
-    Base.GetObsValue('EmCare.B12S2.DE01')
-
-/* alias stiff neck : emcare.b12s2.de01*/
-define "stiff neck":
-    "emcare.b12s2.de01"
-
-/* emcare.b12s1.de15 : Malaria Risk*/
-define "emcare.b12s1.de15":
-    Base.GetObsValue('EmCare.B12S1.DE15')
-
-/* alias malaria risk : emcare.b12s1.de15*/
-define "malaria risk":
-    "emcare.b12s1.de15"
-
-/* emcare.b12s1.de19 : Recent Travel to a High Malaria Risk area*/
-define "emcare.b12s1.de19":
-    Base.GetObsValue('EmCare.B12S1.DE19')
-
-/* alias recent travel to a high malaria risk area : emcare.b12s1.de19*/
-define "recent travel to a high malaria risk area":
-    "emcare.b12s1.de19"
-
-/* emcare.b12s2.de04 : Obvious Cause of Fever (to determine if Malaria test required)*/
-define "emcare.b12s2.de04":
-    Base.GetObsValue('EmCare.B12S2.DE04')
-
-/* alias obvious cause of fever (to determine if malaria test required) : emcare.b12s2.de04*/
-define "obvious cause of fever (to determine if malaria test required)":
-    "emcare.b12s2.de04"
-
-/* emcare.b15s2.de02 : Palmar Pallor*/
-define "emcare.b15s2.de02":
-    Base.GetObsValue('EmCare.B15S2.DE02')
-
-/* alias palmar pallor : emcare.b15s2.de02*/
-define "palmar pallor":
-    "emcare.b15s2.de02"
-
-/* emcare.b15s2.de09 : Mucous membrane pallor*/
-define "emcare.b15s2.de09":
-    Base.GetObsValue('EmCare.B15S2.DE09')
-
-/* alias mucous membrane pallor : emcare.b15s2.de09*/
-define "mucous membrane pallor":
-    "emcare.b15s2.de09"
+/* alias vomiting everything : emcare.b7.de10*/
+define "vomiting everything":
+    "emcare.b7.de10"

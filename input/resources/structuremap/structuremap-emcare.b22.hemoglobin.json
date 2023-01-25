@@ -3,7 +3,7 @@
     "id": "emcare.b22.hemoglobin",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.hemoglobin&quot; = &quot;emcare.b22.hemoglobin&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE81' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de81(src, tgt) &quot;f56b8d65&quot;;\r\n      } &quot;42cac8d1&quot;;\r\n    } &quot;00ff1e0b&quot;;\r\n  } &quot;02fe51e1&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE82' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de82(src, tgt) &quot;1118b2e0&quot;;\r\n      } &quot;565f125e&quot;;\r\n    } &quot;cc5012ad&quot;;\r\n  } &quot;e30669ae&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de81(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de81&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE81' &quot;code-emcareb22de81&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE81' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.value = val,  tgt.status = 'final' &quot;val-emcareb22de81&quot;;\r\n    } &quot;d40466ff&quot;;\r\n  } &quot;990f4177&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de82(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de82&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE82' &quot;code-emcareb22de82&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE82' then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-emcareb22de82&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-emcareb22de82&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;588b3b6c&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.hemoglobin&quot; = &quot;emcare.b22.hemoglobin&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE81' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de81(src, tgt) &quot;f56b8d65&quot;;\r\n      } &quot;42cac8d1&quot;;\r\n    } &quot;00ff1e0b&quot;;\r\n  } &quot;02fe51e1&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE82' then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then emcareobservationemcareb22de82(src, tgt) &quot;1118b2e0&quot;;\r\n      } &quot;565f125e&quot;;\r\n    } &quot;cc5012ad&quot;;\r\n  } &quot;e30669ae&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de81(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de81&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE81' &quot;code-emcareb22de81&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE81' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.value = val,  tgt.status = 'final' &quot;afa0ccc0&quot;;\r\n    } &quot;d40466ff&quot;;\r\n  } &quot;990f4177&quot;;\r\n}\r\n\r\ngroup emcareobservationemcareb22de82(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-emcareb22de82&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B22.DE82' &quot;code-emcareb22de82&quot;;\r\n  src.item as item where linkId = 'timestamp' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.issued = val &quot;8945c96b&quot;;\r\n    } &quot;4272fc8b&quot;;\r\n  } &quot;f4472f32&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where linkId = 'EmCare.B22.DE82' then {\r\n    item.answer first as a then {\r\n      a.value as val then {\r\n        val where val.code = 'true' -&gt;  tgt.status = 'final',  tgt.value = true &quot;8a65aaa5&quot;;\r\n      } &quot;26c2c8c7&quot;;\r\n    } &quot;721205d5&quot;;\r\n  } &quot;b86dd6b3&quot;;\r\n}\r\n\r\n</pre></div>"
     },
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.hemoglobin",
     "name": "emcare.b22.hemoglobin",
@@ -632,7 +632,7 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "val-emcareb22de81",
+                                    "name": "afa0ccc0",
                                     "source": [
                                         {
                                             "context": "a",
@@ -934,7 +934,7 @@
                     ]
                 },
                 {
-                    "name": "588b3b6c",
+                    "name": "b86dd6b3",
                     "source": [
                         {
                             "context": "src",
@@ -946,7 +946,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "bdab9370",
+                            "name": "721205d5",
                             "source": [
                                 {
                                     "context": "item",
@@ -957,66 +957,45 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "final-emcareb22de82",
+                                    "name": "26c2c8c7",
                                     "source": [
                                         {
                                             "context": "a",
-                                            "condition": "a.value = true"
+                                            "element": "value",
+                                            "variable": "val"
                                         }
                                     ],
-                                    "target": [
+                                    "rule": [
                                         {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            "name": "8a65aaa5",
+                                            "source": [
                                                 {
-                                                    "valueString": "final"
+                                                    "context": "val",
+                                                    "condition": "val.code = 'true'"
                                                 }
-                                            ]
-                                        },
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "copy",
-                                            "parameter": [
+                                            ],
+                                            "target": [
                                                 {
-                                                    "valueBoolean": true
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "notfound-emcareb22de82",
-                                    "source": [
-                                        {
-                                            "context": "a",
-                                            "condition": "a.value = false"
-                                        }
-                                    ],
-                                    "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "status",
-                                            "transform": "copy",
-                                            "parameter": [
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "status",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "final"
+                                                        }
+                                                    ]
+                                                },
                                                 {
-                                                    "valueString": "cancelled"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "copy",
-                                            "parameter": [
-                                                {
-                                                    "valueBoolean": false
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueBoolean": true
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }

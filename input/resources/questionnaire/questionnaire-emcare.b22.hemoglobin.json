@@ -26,10 +26,6 @@
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
             "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.hemoglobin"
-        },
-        {
-            "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb22hemoglobin"
         }
     ],
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b22.hemoglobin",
@@ -44,28 +40,17 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "ageinmonths"
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE82').answer.first().empty()"
                     }
                 }
             ],
-            "linkId": "AgeInMonths",
-            "text": "Age",
-            "type": "integer",
-            "required": false,
-            "repeats": false
-        },
-        {
             "linkId": "EmCare.B22.DE81",
             "text": "Hemoglobin (Hb) g/dL",
             "type": "quantity",
-            "required": false,
+            "required": true,
             "repeats": false
         },
         {
@@ -82,11 +67,18 @@
                         ],
                         "text": "Check-box"
                     }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE81').answer.first().empty()"
+                    }
                 }
             ],
             "linkId": "EmCare.B22.DE82",
             "type": "choice",
-            "required": false,
+            "required": true,
             "repeats": true,
             "answerOption": [
                 {

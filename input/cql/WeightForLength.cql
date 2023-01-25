@@ -1,7 +1,7 @@
 
-library WeightForLength version '0.99.99'
+library WeightForLength version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '0.99.99' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
 // Antrho library for WeightForLength  Z-Score from the wflanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
@@ -1324,20 +1324,23 @@ define function ZscoreWeightForLengthtables(sex String, Length Decimal):
 		else First(WeightForLengthMale c where  c.y = Length)
             
 define function generateZScoreWeightForLength(sex System.String, Length System.Decimal, weight  System.Decimal)  : 
-	base.computeZScore(
-		weight,
-		(ZscoreWeightForLengthtables(sex,Length).m ), 
-		(ZscoreWeightForLengthtables(sex,Length).l ),
-		(ZscoreWeightForLengthtables(sex,Length).s )
-	)
+	if ZscoreWeightForLengthtables(sex,Length) is not null then 
+        base.computeZScore(
+            weight,
+            (ZscoreWeightForLengthtables(sex,Length).m ), 
+            (ZscoreWeightForLengthtables(sex,Length).l ),
+            (ZscoreWeightForLengthtables(sex,Length).s )
+        )
+    else null
 
 define function generateWeightFromLength(sex System.String, Length System.Decimal, zscore  System.Decimal) : 
-	base.computeReverseZScore(
-		zscore,
-		(ZscoreWeightForLengthtables(sex,Length).m ), 
-		(ZscoreWeightForLengthtables(sex,Length).l ),
-		(ZscoreWeightForLengthtables(sex,Length).s )
-	)
-        
+	if ZscoreWeightForLengthtables(sex,Length) is not null then 
+        base.computeReverseZScore(
+            zscore,
+            (ZscoreWeightForLengthtables(sex,Length).m ), 
+            (ZscoreWeightForLengthtables(sex,Length).l ),
+            (ZscoreWeightForLengthtables(sex,Length).s )
+        )
+    else null    
 
     

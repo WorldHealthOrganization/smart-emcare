@@ -2,10 +2,8 @@ map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registra
 uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
 uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter' alias 'Encounter' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' alias 'RelatedPerson' as target
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter' alias 'EmCare Encounter' as produced
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedpersonaccompanying' alias 'EmCare RelatedPerson Accompanying' as produced
 uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
@@ -19,14 +17,6 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             src.subject as sub -> tgt.subject = sub '23252e10';
         } '8f0160c6';
     } 'put-emcareencounter';
-    src.item first as item  where linkId = 'emcarerelatedpersonaccompanyingid' then {
-        src -> bundle.entry as entry ,entry.request as request, request.method = 'POST' , entry.resource = create('RelatedPerson') as tgt then {
-            src -> tgt then emcarerelatedpersonaccompanying(src, tgt) '6ecfb1de';
-            item.answer first as a then {
-                a.value as val -> request.url = append('/RelatedPerson/', val) '78d8bc69';
-            } 'eec70023';
-        } '86d8aa66';
-    } '7955fd0c';
     src.item first as item  where linkId = 'EmCare.B3.DE05' then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
@@ -38,16 +28,6 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
 }
 
 group emcareencounter(source src : questionnaireResponse,target tgt : Encounter){
-    src.item first as item  where linkId = 'EmCare.A.DE07' then {
-        item.answer first as a then {
-            a.value as val -> tgt.period as period , period.start = val 'aemcareade07';
-        } 'aemcareade07';
-    } '63d9918f';
-    src.item first as item  where linkId = 'EmCare.B2.DE01' then {
-        item.answer first as a then {
-            a.value as val -> tgt.type = create('CodeableConcept')  as CC, CC.text = 'type of visit' ,CC.coding = val 'aemcareb2de01';
-        } 'aemcareb2de01';
-    } 'dd02401f';
     src.item first as item  where linkId = 'EmCare.B3.DE01' then {
         item.answer first as a then {
             a.value as val -> tgt.reasonCode = create('CodeableConcept')  as CC, CC.text = 'new consultation' ,CC.coding = val 'aemcareb3de01';
@@ -58,63 +38,6 @@ group emcareencounter(source src : questionnaireResponse,target tgt : Encounter)
             a.value as val -> tgt.type = create('CodeableConcept')  as CC, CC.text = 'new consultation' ,CC.coding = val 'aemcareb3de06';
         } 'aemcareb3de06';
     } 'a4cd660d';
-    src.item first as item  where linkId = 'EmCare.B3.DE09' then {
-        item.answer first as a then {
-            a.value as val -> tgt.extension  = create('Extension') as ext , ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/refered',  ext.value = val 'aemcareb3de09';
-        } 'aemcareb3de09';
-    } 'bfd6d318';
-}
-
-group emcarerelatedpersonaccompanying(source src : questionnaireResponse,target tgt : RelatedPerson){
-    src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
-        itm1.item first as item  where linkId =  'EmCare.A.DE41' or linkId= 'EmCare.A.DE40' then {
-            src -> tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedpersonaccompanying(src, name) '3810df8b';
-        } 'e7f1578a';
-    } 'd100c750';
-    src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
-        itm1.item first as item  where linkId =  'EmCare.A.DE41' then {
-            item.answer first as a then {
-                a.value as val -> tgt.telecom as tel, tel.system = 'phone', tel.use ='mobile', tel.value = val 'aemcareade41';
-            } 'aemcareade41';
-        } '15fc0694';
-    } 'a5efce09';
-    src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
-        itm1.item first as item  where linkId =  'EmCare.A.DE43' then {
-            item.answer first as a then MapValueSetExtCodeemcareade43(a, tgt) '0118f802';
-        } 'f30fad52';
-    } '47d8f6d5';
-}
-
-group SetOfficalGivenNameemcarerelatedpersonaccompanying(source src,target tgt){
-    src -> tgt.use = 'official' then {
-        src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
-            itm1.item first as item  where linkId =  'EmCare.A.DE41' then {
-                item.answer first as a then {
-                    a.value as val -> tgt.family = val '77d1bd4f';
-                } 'e0827d5d';
-            } 'ff55696b';
-        } 'd7e96bf2';
-        src.item first as itm1  where linkId =  'EmCare.A.DE49.1' then {
-            itm1.item first as item  where linkId =  'EmCare.A.DE40' then {
-                item.answer first as a then {
-                    a.value as val -> tgt.given = val '5d3d44f6';
-                } '18edd234';
-            } 'e84a0f31';
-        } 'f3fd65b0';
-    } '226010d3';
-}
-
-group MapValueSetExtCodeemcareade43(source src,target tgt){
-    src -> tgt then {
-        src -> tgt.relationship= create('CodeableConcept') as cc, cc.coding=create('Coding') as coding   then {
-            src where value.code = 'EmCare.A.DE25'-> coding.code = 'MTH',coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'  'abd34a78';
-            src where value.code = 'EmCare.A.DE26'-> coding.code = 'FTH',coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'  'b53d1d15';
-            src where value.code = 'EmCare.A.DE27'-> coding.code = 'SIB',coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'  '949ee35f';
-            src where value.code = 'EmCare.A.DE28'-> coding.code = 'EXT',coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'  '7c5a4400';
-            src where value.code = 'EmCare.A.DE29'-> coding.code = 'PRNINLAW',coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'  '544df0cc';
-            src where value.code = 'EmCare.A.DE30'-> coding.code = 'U',coding.system = 'http://terminology.hl7.org/CodeSystem/v2-0131'  '8c2d96fc';
-        } '4a251df5';
-    } '1b7b6d7a';
 }
 
 group emcareobservationemcareb3de05(source src,target tgt){

@@ -2,43 +2,60 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb6measurements version '0.99.99'
+library emcareb6measurements version '1.0.1.rc11.build.71'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include EmCareBase version '0.99.99' called Base
-include EmCareObservation version '0.99.99' called obs
-include EmCareValueSet version '0.99.99' called val
-include EmCareZScore version '0.99.99' called Z
+include emcarebase version '1.0.1.rc11.build.71' called Base
+include emcareobservation version '1.0.1.rc11.build.71' called obs
+include emcarevalueset version '1.0.1.rc11.build.71' called val
+include emcarezscore version '1.0.1.rc11.build.71' called Z
 
 
 
 
-context Patient    
+context Patient
 
-/* ageindays.cql : Age in Days*/
-define "ageindays.cql":
+
+/* 
+ageindays : Age in Days
+    AgeInDays()
+*/
+define "ageindays":
     AgeInDays()
 
-/* alias age in days : ageindays.cql*/
+/* alias age in days : ageindays*/
 define "age in days":
-    "ageindays.cql"
+    "ageindays"
 
-/* pastweightactualised : nan*/
+/* 
+pastweightactualised : Weight based on the previous mesurements
+    Z."pastweightactualised"
+*/
 define "pastweightactualised":
     Z."pastweightactualised"
 
-/* ageinmonths.cql : Age in months*/
-define "ageinmonths.cql":
+/* alias weight based on the previous mesurements : pastweightactualised*/
+define "weight based on the previous mesurements":
+    "pastweightactualised"
+
+/* 
+ageinmonths : Age in months
+    AgeInMonths()
+*/
+define "ageinmonths":
     AgeInMonths()
 
-/* alias age in months : ageinmonths.cql*/
+/* alias age in months : ageinmonths*/
 define "age in months":
-    "ageinmonths.cql"
+    "ageinmonths"
 
-/* ageinyears.cql : Age in years*/
-define "ageinyears.cql":
+/* 
+ageinyears : Age in years
+    AgeInYears()
+*/
+define "ageinyears":
     AgeInYears()
 
-/* alias age in years : ageinyears.cql*/
+/* alias age in years : ageinyears*/
 define "age in years":
-    "ageinyears.cql"
+    "ageinyears"

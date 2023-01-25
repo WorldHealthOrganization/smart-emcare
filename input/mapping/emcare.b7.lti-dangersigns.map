@@ -340,10 +340,12 @@ group emcareobservationemcareb7b8b9de01(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B7-B8-B9.DE01' then {
         item.answer first as a then {
-            a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb7b8b9de01';
-             a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb7b8b9de01';
-        } '0a27a0eb';
-    } 'e01327eb';
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } '734e5fd7';
 }
 
 group emcareobservationemcareb22de08(source src,target tgt){
@@ -369,11 +371,13 @@ group emcareobservationemcareb22de08(source src,target tgt){
     src.item first as itm1  where linkId =  'EmCare.B22.FluidTest' then {
         itm1.item first as item  where linkId =  'EmCare.B22.DE08' then {
             item.answer first as a then {
-                a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de08';
-                 a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de08';
-            } '0a27a0eb';
-        } '03279a19';
-    } 'a1be8ebb';
+                a.value as val then {
+                    val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                    val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+                } '4ca9082e';
+            } '7c587a4b';
+        } 'd1e541bc';
+    } '7472bd6b';
 }
 
 group emcareobservationemcareb22de14(source src,target tgt){
@@ -399,11 +403,12 @@ group emcareobservationemcareb22de14(source src,target tgt){
     src.item first as itm1  where linkId =  'EmCare.B22.FluidTest' then {
         itm1.item first as item  where linkId =  'EmCare.B22.DE14' then {
             item.answer first as a then {
-                a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de14';
-                 a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de14';
-            } '0a27a0eb';
-        } '51a524b1';
-    } 'cb295da7';
+                a.value as val then {
+                    val where val.code = 'true' -> tgt.status = 'final',tgt.value = true  '8a65aaa5';
+                } '26c2c8c7';
+            } '721205d5';
+        } '0fb7886d';
+    } 'a2da4910';
 }
 
 group emcareobservationemcareb22de14a(source src,target tgt){
@@ -459,11 +464,11 @@ group emcareobservationemcareb22de15(source src,target tgt){
     src.item first as itm1  where linkId =  'EmCare.B22.FluidTest' then {
         itm1.item first as item  where linkId =  'EmCare.B22.DE15' then {
             item.answer first as a then {
-                a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de15';
-                 a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de15';
-            } '0a27a0eb';
-        } '1eac7948';
-    } '677a4925';
+                a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcareb22de15';
+                a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb22de15';
+            } 'bdab9370';
+        } '6d7a05b3';
+    } 'de79f82e';
 }
 
 group emcareobservationemcareb22de16(source src,target tgt){
@@ -489,10 +494,12 @@ group emcareobservationemcareb22de16(source src,target tgt){
     src.item first as itm1  where linkId =  'EmCare.B22.FluidTest' then {
         itm1.item first as item  where linkId =  'EmCare.B22.DE16' then {
             item.answer first as a then {
-                a.value as val  where val != 'none' -> tgt.value = val, tgt.status = 'final' 'final-emcareb22de16';
-                 a  where a.value = 'none' -> tgt.status = 'cancelled'  'notfound-emcareb22de16';
-            } '0a27a0eb';
-        } 'a4326149';
-    } '56753731';
+                a.value as val then {
+                    val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                    val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+                } '4ca9082e';
+            } '7c587a4b';
+        } '6ec27c8f';
+    } '340ae886';
 }
 

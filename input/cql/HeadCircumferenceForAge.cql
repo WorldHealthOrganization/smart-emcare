@@ -1,7 +1,7 @@
 
-library HeadCircumferenceForAge version '0.99.99'
+library HeadCircumferenceForAge version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '0.99.99' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
 // Antrho library for HeadCircumferenceForAge  Z-Score from the hcanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
@@ -3736,20 +3736,23 @@ define function ZscoreHeadCircumferenceForAgetables(sex String, Age Decimal):
 		else First(HeadCircumferenceForAgeMale c where  c.y = Age)
             
 define function generateZScoreHeadCircumferenceForAge(sex System.String, Age System.Decimal, weight  System.Decimal)  : 
-	base.computeZScore(
-		weight,
-		(ZscoreHeadCircumferenceForAgetables(sex,Age).m ), 
-		(ZscoreHeadCircumferenceForAgetables(sex,Age).l ),
-		(ZscoreHeadCircumferenceForAgetables(sex,Age).s )
-	)
+	if ZscoreHeadCircumferenceForAgetables(sex,Age) is not null then 
+        base.computeZScore(
+            weight,
+            (ZscoreHeadCircumferenceForAgetables(sex,Age).m ), 
+            (ZscoreHeadCircumferenceForAgetables(sex,Age).l ),
+            (ZscoreHeadCircumferenceForAgetables(sex,Age).s )
+        )
+    else null
 
 define function generateHeadCircumferenceFromAge(sex System.String, Age System.Decimal, zscore  System.Decimal) : 
-	base.computeReverseZScore(
-		zscore,
-		(ZscoreHeadCircumferenceForAgetables(sex,Age).m ), 
-		(ZscoreHeadCircumferenceForAgetables(sex,Age).l ),
-		(ZscoreHeadCircumferenceForAgetables(sex,Age).s )
-	)
-        
+	if ZscoreHeadCircumferenceForAgetables(sex,Age) is not null then 
+        base.computeReverseZScore(
+            zscore,
+            (ZscoreHeadCircumferenceForAgetables(sex,Age).m ), 
+            (ZscoreHeadCircumferenceForAgetables(sex,Age).l ),
+            (ZscoreHeadCircumferenceForAgetables(sex,Age).s )
+        )
+    else null    
 
     

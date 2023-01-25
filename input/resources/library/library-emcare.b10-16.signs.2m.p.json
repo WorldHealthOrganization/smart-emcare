@@ -8,7 +8,7 @@
             "value": "emcare.b10-16.signs.2m.p"
         }
     ],
-    "version": "0.99.99",
+    "version": "1.0.1.rc11.build.71",
     "name": "emcareb1016signs2mp",
     "title": "EmCare.B10-16.Signs.2m.p",
     "status": "active",
@@ -20,14 +20,36 @@
             }
         ]
     },
+    "relatedArtifact": [
+        {
+            "type": "depends-on",
+            "resource": "http://fhir.org/guides/who/anc-cds/Library/FHIRHelpers"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcarebase"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareobservation"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcarevalueset"
+        },
+        {
+            "type": "depends-on",
+            "resource": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcarecombineddataelements"
+        }
+    ],
     "parameter": [
         {
-            "name": "has danger signs",
+            "name": "danger signs",
             "use": "out",
             "type": "boolean"
         },
         {
-            "name": "variable to check whether patient has been assessed with danger signs or not",
+            "name": "variable to check whether patient has been assessed with or not",
             "use": "out",
             "type": "boolean"
         },
@@ -62,7 +84,7 @@
             "type": "boolean"
         },
         {
-            "name": "oral fluid test",
+            "name": "oral fluid test failed",
             "use": "out",
             "type": "boolean"
         },
@@ -108,26 +130,6 @@
         },
         {
             "name": "the client is reported to have or has had fever",
-            "use": "out",
-            "type": "boolean"
-        },
-        {
-            "name": "refusal to use a limb",
-            "use": "out",
-            "type": "boolean"
-        },
-        {
-            "name": "the client is reported to be refusing to use a limb",
-            "use": "out",
-            "type": "boolean"
-        },
-        {
-            "name": "emcare.b14s2.de07",
-            "use": "out",
-            "type": "boolean"
-        },
-        {
-            "name": "generalised skin problem",
             "use": "out",
             "type": "boolean"
         },
@@ -190,13 +192,28 @@
             "name": "the client is reported to have itchy skin",
             "use": "out",
             "type": "boolean"
+        },
+        {
+            "name": "respiratory rate profile",
+            "use": "out",
+            "type": "Quantity"
+        },
+        {
+            "name": "respiratory rate second count profile",
+            "use": "out",
+            "type": "Quantity"
+        },
+        {
+            "name": "test",
+            "use": "out",
+            "type": "boolean"
         }
     ],
     "content": [
         {
             "id": "ig-loader-emcareb1016signs2mp.cql",
             "contentType": "text/cql",
-            "data": "LyoKQGF1dGhvcjogUGF0cmljayBEZWxjcm9peApAZGVzY3JpcHRpb246IFRoaXMgbGlicmFyeSBpcyBwYXJ0IG9mIHRoZSBwcm9qZWN0IEVtQ2FyZQoqLwpsaWJyYXJ5IGVtY2FyZWIxMDE2c2lnbnMybXAgdmVyc2lvbiAnMC45OS45OScKdXNpbmcgRkhJUiB2ZXJzaW9uICc0LjAuMScKaW5jbHVkZSBGSElSSGVscGVycyB2ZXJzaW9uICc0LjAuMScgY2FsbGVkIEZISVJIZWxwZXJzIAppbmNsdWRlIEVtQ2FyZUJhc2UgdmVyc2lvbiAnMC45OS45OScgY2FsbGVkIEJhc2UKaW5jbHVkZSBFbUNhcmVPYnNlcnZhdGlvbiB2ZXJzaW9uICcwLjk5Ljk5JyBjYWxsZWQgb2JzCmluY2x1ZGUgRW1DYXJlVmFsdWVTZXQgdmVyc2lvbiAnMC45OS45OScgY2FsbGVkIHZhbAppbmNsdWRlIGVtY2FyZWNvbWJpbmVkZGF0YWVsZW1lbnRzIHZlcnNpb24gJzAuOTkuOTknIGNhbGxlZCBjbGFzCgoKCgpjb250ZXh0IFBhdGllbnQgICAgCgovKiBoYXMgZGFuZ2VyIHNpZ25zIDogbmFuKi8KZGVmaW5lICJoYXMgZGFuZ2VyIHNpZ25zIjoKICAgIGNsYXMuImVtY2FyZS5iLmcuZGUwMSIKCi8qIGFnZWlubW9udGhzIDogQWdlKi8KZGVmaW5lICJhZ2Vpbm1vbnRocyI6CiAgICBBZ2VJbk1vbnRocygpCgovKiBhbGlhcyBhZ2UgOiBhZ2Vpbm1vbnRocyovCmRlZmluZSAiYWdlIjoKICAgICJhZ2Vpbm1vbnRocyIKCi8qIGNvdWdoIDogbmFuKi8KZGVmaW5lICJjb3VnaCI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjEwUzEuREUwNScpCgovKiBkaWZmaWN1bHR5IGJyZWF0aGluZyA6IG5hbiovCmRlZmluZSAiZGlmZmljdWx0eSBicmVhdGhpbmciOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxMFMxLkRFMDEnKQoKLyogb3JhbCBmbHVpZCB0ZXN0IDogbmFuKi8KZGVmaW5lICJvcmFsIGZsdWlkIHRlc3QiOgogICAgb2JzLiJjb21wbGV0ZWx5IHVuYWJsZSB0byBkcmluayBvciB2b21pdHMgaW1tZWRpYXRlbHkgLyBldmVyeXRoaW5nIj10cnVlIG9yICBvYnMuInVuYWJsZSB0byBwZXJmb3JtIG9yYWwgZmx1aWQgdGVzdCI9dHJ1ZQoKLyogZGlhcnJob2VhIDogbmFuKi8KZGVmaW5lICJkaWFycmhvZWEiOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxMVMxLkRFMDEnKQoKLyogbm90IGFibGUgdG8gZHJpbmsgb3IgYnJlYXN0ZmVlZCA6IG5hbiovCmRlZmluZSAibm90IGFibGUgdG8gZHJpbmsgb3IgYnJlYXN0ZmVlZCI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjcuREUwOScpCgovKiB1bmNvbnNjaW91cyBvciBsZXRoYXJnaWMgOiBuYW4qLwpkZWZpbmUgInVuY29uc2Npb3VzIG9yIGxldGhhcmdpYyI6CiAgICBCYXNlLkhhc09icygnRW1DYXJlLkI3LkRFMDgnKSA9IHRydWUgb3IgIEJhc2UuSGFzT2JzKCdFbUNhcmUuQjcuREUwOGEnKSA9IHRydWUKCi8qIGZldmVyIDogbmFuKi8KZGVmaW5lICJmZXZlciI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQi5HLkRFMDYnKQoKLyogcmVmdXNhbCB0byB1c2UgYSBsaW1iIDogbmFuKi8KZGVmaW5lICJyZWZ1c2FsIHRvIHVzZSBhIGxpbWIiOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxMlMxLkRFMDcnKQoKLyogZW1jYXJlLmIxNHMyLmRlMDcgOiBHZW5lcmFsaXNlZCBTa2luIFByb2JsZW0qLwpkZWZpbmUgImVtY2FyZS5iMTRzMi5kZTA3IjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMTRTMi5ERTA3JykKCi8qIGFsaWFzIGdlbmVyYWxpc2VkIHNraW4gcHJvYmxlbSA6IGVtY2FyZS5iMTRzMi5kZTA3Ki8KZGVmaW5lICJnZW5lcmFsaXNlZCBza2luIHByb2JsZW0iOgogICAgImVtY2FyZS5iMTRzMi5kZTA3IgoKLyogZWFyIHByb2JsZW0gOiBuYW4qLwpkZWZpbmUgImVhciBwcm9ibGVtIjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMTNTMS5ERTAxJykKCi8qIGV5ZSBwcm9ibGVtIDogbmFuKi8KZGVmaW5lICJleWUgcHJvYmxlbSI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjE0UzEuREUwMycpCgovKiBza2luIHByb2JsZW0gOiBuYW4qLwpkZWZpbmUgInNraW4gcHJvYmxlbSI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjE0UzEuREUwMScpCgovKiBlYXIgZGlzY2hhcmdlIDogbmFuKi8KZGVmaW5lICJlYXIgZGlzY2hhcmdlIjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMTNTMS5ERTAzJykKCi8qIGVhciBkaXNjaGFyZ2UgZm9yIGhvdyBsb25nPyA6IG5hbiovCmRlZmluZSAiZWFyIGRpc2NoYXJnZSBmb3IgaG93IGxvbmc/IjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMTNTMS5ERTA0JykKCi8qIGl0Y2h5IHNraW4gOiBuYW4qLwpkZWZpbmUgIml0Y2h5IHNraW4iOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxNFMxLkRFMDInKQo="
+            "data": "LyoKQGF1dGhvcjogUGF0cmljayBEZWxjcm9peApAZGVzY3JpcHRpb246IFRoaXMgbGlicmFyeSBpcyBwYXJ0IG9mIHRoZSBwcm9qZWN0IEVtQ2FyZQoqLwpsaWJyYXJ5IGVtY2FyZWIxMDE2c2lnbnMybXAgdmVyc2lvbiAnMS4wLjEucmMxMS5idWlsZC43MScKdXNpbmcgRkhJUiB2ZXJzaW9uICc0LjAuMScKaW5jbHVkZSBGSElSSGVscGVycyB2ZXJzaW9uICc0LjAuMScgY2FsbGVkIEZISVJIZWxwZXJzIAppbmNsdWRlIGVtY2FyZWJhc2UgdmVyc2lvbiAnMS4wLjEucmMxMS5idWlsZC43MScgY2FsbGVkIEJhc2UKaW5jbHVkZSBlbWNhcmVvYnNlcnZhdGlvbiB2ZXJzaW9uICcxLjAuMS5yYzExLmJ1aWxkLjcxJyBjYWxsZWQgb2JzCmluY2x1ZGUgZW1jYXJldmFsdWVzZXQgdmVyc2lvbiAnMS4wLjEucmMxMS5idWlsZC43MScgY2FsbGVkIHZhbAppbmNsdWRlIGVtY2FyZWNvbWJpbmVkZGF0YWVsZW1lbnRzIHZlcnNpb24gJzEuMC4xLnJjMTEuYnVpbGQuNzEnIGNhbGxlZCBjbGFzCgoKCgpjb250ZXh0IFBhdGllbnQKCgovKiAKZGFuZ2VyIHNpZ25zIDogbmFuCiAgICBDb2FsZXNjZShjbGFzLiJlbWNhcmUuYi5nLmRlMDEiLCBmYWxzZSkKKi8KZGVmaW5lICJkYW5nZXIgc2lnbnMiOgogICAgQ29hbGVzY2UoY2xhcy4iZW1jYXJlLmIuZy5kZTAxIiwgZmFsc2UpCgovKiAKYWdlaW5tb250aHMgOiBBZ2UKICAgIEFnZUluTW9udGhzKCkKKi8KZGVmaW5lICJhZ2Vpbm1vbnRocyI6CiAgICBBZ2VJbk1vbnRocygpCgovKiBhbGlhcyBhZ2UgOiBhZ2Vpbm1vbnRocyovCmRlZmluZSAiYWdlIjoKICAgICJhZ2Vpbm1vbnRocyIKCi8qIApjb3VnaCA6IG5hbgogICAgbyJDb3VnaCIKKi8KZGVmaW5lICJjb3VnaCI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjEwUzEuREUwNScpCgovKiAKZGlmZmljdWx0eSBicmVhdGhpbmcgOiBuYW4KICAgIG8iRGlmZmljdWx0eSBCcmVhdGhpbmciCiovCmRlZmluZSAiZGlmZmljdWx0eSBicmVhdGhpbmciOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxMFMxLkRFMDEnKQoKLyogCm9yYWwgZmx1aWQgdGVzdCBmYWlsZWQgOiBuYW4KICAgICJPcmFsIEZsdWlkIFRlc3QgUmVzdWx0cyIgPSAiQ29tcGxldGVseSBVbmFibGUgdG8gRHJpbmsgb3IgVm9taXRzIEltbWVkaWF0ZWx5IC8gRXZlcnl0aGluZyIgb3IgICJVbmFibGUgdG8gUGVyZm9ybSBPcmFsIEZsdWlkIFRlc3QiPXRydWUKKi8KZGVmaW5lICJvcmFsIGZsdWlkIHRlc3QgZmFpbGVkIjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMjIuREUwOCZFbUNhcmUuQjIyLkRFMTRhJykgPSB0cnVlIG9yICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjIyLkRFMTQnKT10cnVlCgovKiAKZGlhcnJob2VhIDogbmFuCiAgICBvIkRpYXJyaG9lYSIKKi8KZGVmaW5lICJkaWFycmhvZWEiOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxMVMxLkRFMDEnKQoKLyogCm5vdCBhYmxlIHRvIGRyaW5rIG9yIGJyZWFzdGZlZWQgOiBuYW4KICAgIG8iTm90IGFibGUgdG8gZHJpbmsgb3IgYnJlYXN0ZmVlZCIKKi8KZGVmaW5lICJub3QgYWJsZSB0byBkcmluayBvciBicmVhc3RmZWVkIjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CNy5ERTA5JykKCi8qIAp1bmNvbnNjaW91cyBvciBsZXRoYXJnaWMgOiBuYW4KICAgIEhhc09icygnRW1DYXJlLkI3LkRFMDgnKSA9IHRydWUgb3IgIEhhc09icygnRW1DYXJlLkI3LkRFMDhhJykgPSB0cnVlCiovCmRlZmluZSAidW5jb25zY2lvdXMgb3IgbGV0aGFyZ2ljIjoKICAgIEJhc2UuSGFzT2JzKCdFbUNhcmUuQjcuREUwOCcpID0gdHJ1ZSBvciAgQmFzZS5IYXNPYnMoJ0VtQ2FyZS5CNy5ERTA4YScpID0gdHJ1ZQoKLyogCmZldmVyIDogbmFuCiAgICBjbGFzLiJmZXZlciIKKi8KZGVmaW5lICJmZXZlciI6CiAgICBjbGFzLiJmZXZlciIKCi8qIAplYXIgcHJvYmxlbSA6IG5hbgogICAgbyJFYXIgUHJvYmxlbSIKKi8KZGVmaW5lICJlYXIgcHJvYmxlbSI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjEzUzEuREUwMScpCgovKiAKZXllIHByb2JsZW0gOiBuYW4KICAgIG8iRXllIFByb2JsZW0iCiovCmRlZmluZSAiZXllIHByb2JsZW0iOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxNFMxLkRFMDMnKQoKLyogCnNraW4gcHJvYmxlbSA6IG5hbgogICAgbyJTa2luIFByb2JsZW0iCiovCmRlZmluZSAic2tpbiBwcm9ibGVtIjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMTRTMS5ERTAxJykKCi8qIAplYXIgZGlzY2hhcmdlIDogbmFuCiAgICBvIkVhciBkaXNjaGFyZ2UiCiovCmRlZmluZSAiZWFyIGRpc2NoYXJnZSI6CiAgICBCYXNlLkdldE9ic1ZhbHVlKCdFbUNhcmUuQjEzUzEuREUwMycpCgovKiAKZWFyIGRpc2NoYXJnZSBmb3IgaG93IGxvbmc/IDogbmFuCiAgICBvIkVhciBkaXNjaGFyZ2UgZm9yIGhvdyBsb25nPyIKKi8KZGVmaW5lICJlYXIgZGlzY2hhcmdlIGZvciBob3cgbG9uZz8iOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIxM1MxLkRFMDQnKQoKLyogCml0Y2h5IHNraW4gOiBuYW4KICAgIG8iSXRjaHkgU2tpbiIKKi8KZGVmaW5lICJpdGNoeSBza2luIjoKICAgIEJhc2UuR2V0T2JzVmFsdWUoJ0VtQ2FyZS5CMTRTMS5ERTAyJykKCi8qIApyZXNwaXJhdG9yeSByYXRlIHByb2ZpbGUgOiBuYW4KICAgIG8iUmVzcGlyYXRvcnkgUmF0ZSIKKi8KZGVmaW5lICJyZXNwaXJhdG9yeSByYXRlIHByb2ZpbGUiOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIyMi5ERTAxJykKCi8qIApyZXNwaXJhdG9yeSByYXRlIHNlY29uZCBjb3VudCBwcm9maWxlIDogbmFuCiAgICBvIlJlc3BpcmF0b3J5IFJhdGUgU2Vjb25kIENvdW50IgoqLwpkZWZpbmUgInJlc3BpcmF0b3J5IHJhdGUgc2Vjb25kIGNvdW50IHByb2ZpbGUiOgogICAgQmFzZS5HZXRPYnNWYWx1ZSgnRW1DYXJlLkIyMi5ERTA0JykKCi8qIAp0ZXN0IDogbmFuCiAgICBIYXNPYnNWYWx1ZUNvZGUoJ0VtQ2FyZS5CMTFTMi5ERTAyJywgJ0VtQ2FyZS5CMjBTMi5ERTA0JykKKi8KZGVmaW5lICJ0ZXN0IjoKICAgIEJhc2UuSGFzT2JzVmFsdWVDb2RlKCdFbUNhcmUuQjExUzIuREUwMicsICdFbUNhcmUuQjIwUzIuREUwNCcpCg=="
         }
     ]
 }

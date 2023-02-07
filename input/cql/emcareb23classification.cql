@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb23classification version '1.0.1.rc11.build.71'
+library emcareb23classification version '1.0.1.rc12.build.12'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc11.build.71' called Base
-include emcareobservation version '1.0.1.rc11.build.71' called obs
-include emcarevalueset version '1.0.1.rc11.build.71' called val
-include emcarezscore version '1.0.1.rc11.build.71' called Z
-include emcarecombineddataelements version '1.0.1.rc11.build.71' called C
+include emcarebase version '1.0.1.rc12.build.12' called Base
+include emcareobservation version '1.0.1.rc12.build.12' called obs
+include emcarevalueset version '1.0.1.rc12.build.12' called val
+include emcarezscore version '1.0.1.rc12.build.12' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.12' called C
 
 
 
@@ -71,10 +71,10 @@ define "estimated weight":
 
 /* 
 dl-g-cl1-07 : Severe Pneumonia or Very Severe Disease
-    C."age >= 2 months to <60 months" and ("Cough" = true  or  "Difficulty Breathing" = true) and (C."danger signs" = true or  "Stridor in a calm child" = true or "Oxygen Saturation" < 90  '%')
+    C."age >= 2 months to <60 months" and ("Cough" = true  or  "Difficulty Breathing" = true) and (C."danger signs" = true or  "Stridor in a calm child" = true or Coalesce("Oxygen Saturation", 95 '%') < 90  '%')
 */
 define "dl-g-cl1-07":
-    C."age >= 2 months to <60 months" and (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and (C."danger signs" = true or  Base.GetObsValue('EmCare.B10S2.DE04') = true or Base.GetObsValue('EmCare.B10S2.DE07') < 90  '%')
+    C."age >= 2 months to <60 months" and (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and (C."danger signs" = true or  Base.GetObsValue('EmCare.B10S2.DE04') = true or Coalesce(Base.GetObsValue('EmCare.B10S2.DE07'), 95 '%') < 90  '%')
 
 /* alias severe pneumonia or very severe disease : dl-g-cl1-07*/
 define "severe pneumonia or very severe disease":
@@ -82,10 +82,10 @@ define "severe pneumonia or very severe disease":
 
 /* 
 emcare.b23.de04 : nan
-    "Oxygen Saturation" < 90  '%'
+    Coalesce("Oxygen Saturation", 95 '%') < 90  '%'
 */
 define "emcare.b23.de04":
-    Base.GetObsValue('EmCare.B10S2.DE07') < 90  '%'
+    Coalesce(Base.GetObsValue('EmCare.B10S2.DE07'), 95 '%') < 90  '%'
 
 /* 
 emcare.b23.de05 : nan
@@ -110,12 +110,12 @@ define "measles in last 3 months":
 
 /* 
 dl-g-cl1-14 : Pneumonia
-    (C."age >= 2 months to <60 months" and ("Cough"= true  or  o"Difficulty Breathing" = true) and (o"Fast breathing" = true or  o"Chest indrawing" = true) and ("Severe Pneumonia or Very Severe Disease" = false ))
+    (C."age >= 2 months to <60 months" and ("Cough"= true  or  o"Difficulty Breathing" = true) and (o"Fast breathing" = true or  o"Chest indrawing" = true) and ("Severe Pneumonia or Very Severe Disease" !=true ))
      and ((    o"Wheezing" = false)
      or (    ( o"Wheezing" = true)  and  (o"Inhaled Bronchodilator Trial Not Feasible or Available"=true or o"Chest Indrawing (post inhaled bronchodilator trial)"=true or   o"Fast Breathing (post inhaled bronchodilator trial)"=true)))
 */
 define "dl-g-cl1-14":
-    (C."age >= 2 months to <60 months" and (Base.GetObsValue('EmCare.B10S1.DE05')= true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and (Base.GetObsValue('EmCare.B22.DE07') = true or  Base.GetObsValue('EmCare.B10S2.DE03') = true) and ("severe pneumonia or very severe disease" = false ))
+    (C."age >= 2 months to <60 months" and (Base.GetObsValue('EmCare.B10S1.DE05')= true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and (Base.GetObsValue('EmCare.B22.DE07') = true or  Base.GetObsValue('EmCare.B10S2.DE03') = true) and (Coalesce("severe pneumonia or very severe disease",false)!=true ))
      and ((    Base.GetObsValue('EmCare.B10S2.DE05') = false)
      or (    ( Base.GetObsValue('EmCare.B10S2.DE05') = true)  and  (Base.GetObsValue('EmCare.B22.DE22')=true or Base.GetObsValue('EmCare.B22.DE18')=true or   Base.GetObsValue('EmCare.B22.DE20')=true)))
 
@@ -125,10 +125,10 @@ define "pneumonia":
 
 /* 
 dl-g-cl1-19 : Cough or Cold
-    C."age >= 2 months to <60 months"  and ("Cough"= true  or  "Difficulty Breathing" = true) and (Coalesce("Severe Pneumonia or Very Severe Disease",false) = false) and (Coalesce("Pneumonia",false) = false)
+    C."age >= 2 months to <60 months"  and ("Cough"= true  or  "Difficulty Breathing" = true) and "Severe Pneumonia or Very Severe Disease"! = true and "Pneumonia"!=true
 */
 define "dl-g-cl1-19":
-    C."age >= 2 months to <60 months"  and (Base.GetObsValue('EmCare.B10S1.DE05')= true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and (Coalesce("severe pneumonia or very severe disease",false) = false) and (Coalesce("pneumonia",false) = false)
+    C."age >= 2 months to <60 months"  and (Base.GetObsValue('EmCare.B10S1.DE05')= true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and "severe pneumonia or very severe disease"! = true and Coalesce("pneumonia",false)!=true
 
 /* alias cough or cold : dl-g-cl1-19*/
 define "cough or cold":
@@ -224,10 +224,10 @@ define "throat abscess or possible diptheria":
 
 /* 
 dl-i-cl1-06 : Streptococcal Sore Throat
-    C."age >= 2 months to <60 months"  and (C."fever" = true or "Ability to swallow" = "Difficulty in swallowing" ) and "Throat problem" = true and ("Not able to drink or breastfeed" = true or "Ability to swallow" = "Unable to swallow" or "Specify Throat problem" = "Membrane on throat") and (ToInteger("Enlarged lymph nodes on front of neck" = true )+ToInteger("Specify Throat problem" = "Red (congested) throat")+ToInteger("Specify Throat problem" = "Exudate on Throat"))>1 and "Throat Abscess or Possible Diptheria"=false
+    C."age >= 2 months to <60 months"  and (C."fever" = true or "Ability to swallow" = "Difficulty in swallowing" ) and "Throat problem" = true and ("Not able to drink or breastfeed" = true or "Ability to swallow" = "Unable to swallow" or "Specify Throat problem" = "Membrane on throat") and (ToInteger("Enlarged lymph nodes on front of neck" = true )+ToInteger("Specify Throat problem" = "Red (congested) throat")+ToInteger("Specify Throat problem" = "Exudate on Throat"))>1 and "Throat Abscess or Possible Diptheria"!=true
 */
 define "dl-i-cl1-06":
-    C."age >= 2 months to <60 months"  and (C."fever" = true or Base.HasObsValueCode('EmCare.B17S1.DE07', 'EmCare.B17S1.DE09') ) and Base.GetObsValue('EmCare.B17S1.DE01') = true and (Base.GetObsValue('EmCare.B7.DE09') = true or Base.HasObsValueCode('EmCare.B17S1.DE07', 'EmCare.B17S1.DE10') or Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE05')) and (ToInteger(Coalesce(Base.GetObsValue('EmCare.B17S1.DE06') = true ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE03'),false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE04'),false)))>1 and "throat abscess or possible diptheria"=false
+    C."age >= 2 months to <60 months"  and (C."fever" = true or Base.HasObsValueCode('EmCare.B17S1.DE07', 'EmCare.B17S1.DE09') ) and Base.GetObsValue('EmCare.B17S1.DE01') = true and (Base.GetObsValue('EmCare.B7.DE09') = true or Base.HasObsValueCode('EmCare.B17S1.DE07', 'EmCare.B17S1.DE10') or Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE05')) and (ToInteger(Coalesce(Base.GetObsValue('EmCare.B17S1.DE06') = true ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE03'),false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE04'),false)))>1 and Coalesce("throat abscess or possible diptheria",false)!=true
 
 /* alias streptococcal sore throat : dl-i-cl1-06*/
 define "streptococcal sore throat":
@@ -235,10 +235,10 @@ define "streptococcal sore throat":
 
 /* 
 dl-i-cl1-07 : Non-Streptococcal Sore Throat
-    C."age >= 2 months to <60 months"  and ("Ability to swallow" = "Difficulty in swallowing" or "Enlarged lymph nodes on front of neck" = true or "Specify Throat problem" = "Red (congested) throat" or "Specify Throat problem" = "Exudate on Throat" ) and "Throat problem" = true and  "Throat Abscess or Possible Diptheria"=false and "Streptococcal Sore Throat"=false
+    C."age >= 2 months to <60 months"  and ("Ability to swallow" = "Difficulty in swallowing" or "Enlarged lymph nodes on front of neck" = true or "Specify Throat problem" = "Red (congested) throat" or "Specify Throat problem" = "Exudate on Throat" ) and "Throat problem" = true and  "Throat Abscess or Possible Diptheria"!=true and "Streptococcal Sore Throat"!=true
 */
 define "dl-i-cl1-07":
-    C."age >= 2 months to <60 months"  and (Base.HasObsValueCode('EmCare.B17S1.DE07', 'EmCare.B17S1.DE09') or Base.GetObsValue('EmCare.B17S1.DE06') = true or Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE03') or Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE04') ) and Base.GetObsValue('EmCare.B17S1.DE01') = true and  "throat abscess or possible diptheria"=false and "streptococcal sore throat"=false
+    C."age >= 2 months to <60 months"  and (Base.HasObsValueCode('EmCare.B17S1.DE07', 'EmCare.B17S1.DE09') or Base.GetObsValue('EmCare.B17S1.DE06') = true or Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE03') or Base.HasObsValueCode('EmCare.B17S1.DE02', 'EmCare.B17S1.DE04') ) and Base.GetObsValue('EmCare.B17S1.DE01') = true and  Coalesce("throat abscess or possible diptheria",false)!=true and Coalesce("streptococcal sore throat",false)!=true
 
 /* alias non-streptococcal sore throat : dl-i-cl1-07*/
 define "non-streptococcal sore throat":
@@ -246,10 +246,10 @@ define "non-streptococcal sore throat":
 
 /* 
 dl-i-cl1-09 : No Throat Problem
-    C."age >= 2 months to <60 months" and "Throat problem" = true and  "Throat Abscess or Possible Diptheria"=false and "Streptococcal Sore Throat"=false and "Non-Streptococcal Sore Throat"=false
+    C."age >= 2 months to <60 months" and "Throat problem" = true and  "Throat Abscess or Possible Diptheria"!=true and "Streptococcal Sore Throat"!=true and "Non-Streptococcal Sore Throat"!=true
 */
 define "dl-i-cl1-09":
-    C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B17S1.DE01') = true and  "throat abscess or possible diptheria"=false and "streptococcal sore throat"=false and "non-streptococcal sore throat"=false
+    C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B17S1.DE01') = true and  Coalesce("throat abscess or possible diptheria",false)!=true and Coalesce("streptococcal sore throat",false)!=true and Coalesce("non-streptococcal sore throat",false)!=true
 
 /* alias no throat problem : dl-i-cl1-09*/
 define "no throat problem":
@@ -268,14 +268,14 @@ define "mastoiditis":
 
 /* 
 dl-g-cl1-74-76 : Acute Ear Infection
-    (C."age >= 2 months to <60 months" and "Ear Problem" = true and   "Tender swelling behind the ear" = true)
-     and ((    "Ear Pain" = true and "Chronic Ear Infection"=false)
+    (C."age >= 2 months to <60 months" and "Ear Problem" = true)
+     and ((    "Ear Pain" = true and "Chronic Ear Infection"!=true)
      or (    "Pus Seen Draining from the Ear" = true  and "Ear Discharge" = true and "Ear Discharge for how long?" = "Less than 14 days")
      or (    "Pus Seen Draining from the Ear" = true  and "Ear Discharge" = false and "Pus Seen Draining from the Ear for how long?" = "Less than 14 days"))
 */
 define "dl-g-cl1-74-76":
-    (C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B13S1.DE01') = true and   Base.GetObsValue('EmCare.B13S2.DE01') = true)
-     and ((    Base.GetObsValue('EmCare.B13S1.DE02') = true and "chronic ear infection"=false)
+    (C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B13S1.DE01') = true)
+     and ((    Base.GetObsValue('EmCare.B13S1.DE02') = true and Coalesce("chronic ear infection",false)!=true)
      or (    Base.GetObsValue('EmCare.B13S2.DE02') = true  and Base.GetObsValue('EmCare.B13S1.DE03') = true and Base.HasObsValueCode('EmCare.B13S1.DE04', 'EmCare.B10S1.DE07'))
      or (    Base.GetObsValue('EmCare.B13S2.DE02') = true  and Base.GetObsValue('EmCare.B13S1.DE03') = false and Base.HasObsValueCode('EmCare.B13S2.DE03', 'EmCare.B10S1.DE07')))
 
@@ -286,13 +286,13 @@ define "acute ear infection":
 /* 
 dl-i-cl1-11-12 : Chronic Ear Infection
     (C."age >= 2 months to <60 months" and "Ear Problem" = true and   "Pus Seen Draining from the Ear" = true)
-     and ((    "Ear Discharge" = true and "Ear Discharge for how long?" = "Less than 14 days")
-     or (    "Ear Discharge" = false and "Pus Seen Draining from the Ear for how long?" = "Less than 14 days"))
+     and ((    "Ear Discharge" = true and "Ear Discharge for how long?" = "14 days or more")
+     or (    "Ear Discharge" = false and "Pus Seen Draining from the Ear for how long?" = "14 days or more"))
 */
 define "dl-i-cl1-11-12":
     (C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B13S1.DE01') = true and   Base.GetObsValue('EmCare.B13S2.DE02') = true)
-     and ((    Base.GetObsValue('EmCare.B13S1.DE03') = true and Base.HasObsValueCode('EmCare.B13S1.DE04', 'EmCare.B10S1.DE07'))
-     or (    Base.GetObsValue('EmCare.B13S1.DE03') = false and Base.HasObsValueCode('EmCare.B13S2.DE03', 'EmCare.B10S1.DE07')))
+     and ((    Base.GetObsValue('EmCare.B13S1.DE03') = true and Base.HasObsValueCode('EmCare.B13S1.DE04', 'EmCare.B10S1.DE08'))
+     or (    Base.GetObsValue('EmCare.B13S1.DE03') = false and Base.HasObsValueCode('EmCare.B13S2.DE03', 'EmCare.B10S1.DE08')))
 
 /* alias chronic ear infection : dl-i-cl1-11-12*/
 define "chronic ear infection":
@@ -307,10 +307,10 @@ define "emcare.b23.de32a":
 
 /* 
 dl-g-cl1-79 : No Ear Infection
-    C."age >= 2 months to <60 months" and "Ear Problem" = true and  "Chronic Ear Infection"=false and "Mastoiditis"=false and "Acute Ear Infection"=false
+    C."age >= 2 months to <60 months" and "Ear Problem" = true and  "Chronic Ear Infection"!=true and "Mastoiditis"!=true and "Acute Ear Infection"!=true
 */
 define "dl-g-cl1-79":
-    C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B13S1.DE01') = true and  "chronic ear infection"=false and "mastoiditis"=false and "acute ear infection"=false
+    C."age >= 2 months to <60 months" and Base.GetObsValue('EmCare.B13S1.DE01') = true and  Coalesce("chronic ear infection",false)!=true and Coalesce("mastoiditis",false)!=true and Coalesce("acute ear infection",false)!=true
 
 /* alias no ear infection : dl-g-cl1-79*/
 define "no ear infection":
@@ -329,10 +329,10 @@ define "very severe febrile disease":
 
 /* 
 dl-i-cl1-03 : Fever: possible bacterial infection
-    C."age >= 2 months to <60 months" and C."fever" = true and ( "Streptococcal Sore Throat"=true  or "Pneumonia"=true or "Acute Ear Infection"=true  or  "Chronic Ear Infection"=true or  "Dysentery"=false) and "Possible Shigella"=false and  "Throat Abscess or Possible Diptheria"=false and "Severe Complicated Measles"=false and "Measles with Eye or Mouth Complication"=false and "Possible Measles"=false and  "Mastoiditis"=false and "Very Severe Febrile Disease"=false and  "Severe Pneumonia or Very Severe Disease"=false
+    C."age >= 2 months to <60 months" and C."fever" = true and ( "Streptococcal Sore Throat"!=true  or "Pneumonia"!=true or "Acute Ear Infection"!=true  or  "Chronic Ear Infection"!=true or  "Dysentery"!=true) and "Possible Shigella"!=true and  "Throat Abscess or Possible Diptheria"!=true and "Severe Complicated Measles"!=true and "Measles with Eye or Mouth Complication"!=true and "Possible Measles"!=true and  "Mastoiditis"!=true and "Very Severe Febrile Disease"!=true and  "Severe Pneumonia or Very Severe Disease"!=true
 */
 define "dl-i-cl1-03":
-    C."age >= 2 months to <60 months" and C."fever" = true and ( "streptococcal sore throat"=true  or "pneumonia"=true or "acute ear infection"=true  or  "chronic ear infection"=true or  "dysentery"=false) and "possible shigella"=false and  "throat abscess or possible diptheria"=false and "severe complicated measles"=false and "measles with eye or mouth complication"=false and "possible measles"=false and  "mastoiditis"=false and "very severe febrile disease"=false and  "severe pneumonia or very severe disease"=false
+    C."age >= 2 months to <60 months" and C."fever" = true and ( Coalesce("streptococcal sore throat",false)!=true  or Coalesce("pneumonia",false)!=true or Coalesce("acute ear infection",false)!=true  or  Coalesce("chronic ear infection",false)!=true or  Coalesce("dysentery",false)!=true) and Coalesce("possible shigella",false)!=true and  Coalesce("throat abscess or possible diptheria",false)!=true and Coalesce("severe complicated measles",false)!=true and Coalesce("measles with eye or mouth complication",false)!=true and Coalesce("possible measles",false)!=true and  Coalesce("mastoiditis",false)!=true and Coalesce("very severe febrile disease",false)!=true and  Coalesce("severe pneumonia or very severe disease",false)!=true
 
 /* alias fever: possible bacterial infection : dl-i-cl1-03*/
 define "fever: possible bacterial infection":
@@ -351,10 +351,10 @@ define "fever present every day for 7 days or more":
 
 /* 
 dl-i-cl1-26 : Fever: bacterial infection unlikely
-    C."age >= 2 months to <60 months" and C."fever" = true and "Possible Shigella"=false and "Fever: possible bacterial infection"=false and "Throat Abscess or Possible Diptheria"=false and "Severe Complicated Measles"=false and "Measles with Eye or Mouth Complication"=false and "Possible Measles"=false and "Mastoiditis"=false and "Very Severe Febrile Disease"=false
+    C."age >= 2 months to <60 months" and C."fever" = true and "Possible Shigella"!=true and "Fever: possible bacterial infection"!=true and "Throat Abscess or Possible Diptheria"!=true and "Severe Complicated Measles"!=true and "Measles with Eye or Mouth Complication"!=true and "Possible Measles"!=true and "Mastoiditis"!=true and "Very Severe Febrile Disease"!=true
 */
 define "dl-i-cl1-26":
-    C."age >= 2 months to <60 months" and C."fever" = true and "possible shigella"=false and "fever: possible bacterial infection"=false and "throat abscess or possible diptheria"=false and "severe complicated measles"=false and "measles with eye or mouth complication"=false and "possible measles"=false and "mastoiditis"=false and "very severe febrile disease"=false
+    C."age >= 2 months to <60 months" and C."fever" = true and Coalesce("possible shigella",false)!=true and Coalesce("fever: possible bacterial infection",false)!=true and Coalesce("throat abscess or possible diptheria",false)!=true and Coalesce("severe complicated measles",false)!=true and Coalesce("measles with eye or mouth complication",false)!=true and Coalesce("possible measles",false)!=true and Coalesce("mastoiditis",false)!=true and Coalesce("very severe febrile disease",false)!=true
 
 /* alias fever: bacterial infection unlikely : dl-i-cl1-26*/
 define "fever: bacterial infection unlikely":
@@ -383,14 +383,14 @@ define "severe complicated measles":
 
 /* 
 dl-g-cl1-68-70 : Measles with Eye or Mouth Complication
-    (C."age >= 2 months to <60 months" and C."fever" = true   and "Severe Complicated Measles"=false)
+    (C."age >= 2 months to <60 months" and C."fever" = true   and "Severe Complicated Measles"!=true)
      and ((    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true) and ("Generalised or Localised Skin Problem" = "Generalised Skin Problem") and ("Pus Draining from Eye" = true  or  "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive"  ) and "Measles Rash" = true)
      or (    "Cough" = false  and "Runny nose" = false and "Red eyes" = false and "Measles in last 3 months" =true and ("Pus Draining from Eye" = true  or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" ))
      or (    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true) and "Generalised or Localised Skin Problem" = "Generalised Skin Problem" and "Measles Rash" = false and "Measles in last 3 months" = true and ("Pus Draining from Eye" = true  or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" ))
      or (    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true)  and "Generalised or Localised Skin Problem" != "Generalised Skin Problem" and "Measles Rash" = true))
 */
 define "dl-g-cl1-68-70":
-    (C."age >= 2 months to <60 months" and C."fever" = true   and "severe complicated measles"=false)
+    (C."age >= 2 months to <60 months" and C."fever" = true   and Coalesce("severe complicated measles",false)!=true)
      and ((    (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true) and (Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true) and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or  Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42')  ) and Base.GetObsValue('EmCare.B14S2.DE10') = true)
      or (    Base.GetObsValue('EmCare.B10S1.DE05') = false  and Base.GetObsValue('EmCare.B12S2.DE05') = false and Base.GetObsValue('EmCare.B14S2.DE01') = false and "measles in last 3 months" =true and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') ))
      or (    (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true) and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true and Base.GetObsValue('EmCare.B14S2.DE10') = false and "measles in last 3 months" = true and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') ))
@@ -402,10 +402,10 @@ define "measles with eye or mouth complication":
 
 /* 
 dl-g-cl1-71 : Possible Measles
-    C."age >= 2 months to <60 months" and C."fever" = true  and ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true)  and "Severe Complicated Measles"=false and "Measles with Eye or Mouth Complication"=false and "Measles Rash" = true  and "Generalised or Localised Skin Problem" = "Generalised Skin Problem"
+    C."age >= 2 months to <60 months" and C."fever" = true  and ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true)  and "Severe Complicated Measles"!=true and "Measles with Eye or Mouth Complication"!=true and "Measles Rash" = true  and "Generalised or Localised Skin Problem" = "Generalised Skin Problem"
 */
 define "dl-g-cl1-71":
-    C."age >= 2 months to <60 months" and C."fever" = true  and (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true)  and "severe complicated measles"=false and "measles with eye or mouth complication"=false and Base.GetObsValue('EmCare.B14S2.DE10') = true  and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true
+    C."age >= 2 months to <60 months" and C."fever" = true  and (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true)  and Coalesce("severe complicated measles",false)!=true and Coalesce("measles with eye or mouth complication",false)!=true and Base.GetObsValue('EmCare.B14S2.DE10') = true  and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true
 
 /* alias possible measles : dl-g-cl1-71*/
 define "possible measles":
@@ -424,10 +424,10 @@ define "severe anaemia":
 
 /* 
 dl-g-cl1-110 : Anaemia
-    C."age >= 2 months to <60 months" and ("Palmar Pallor" = "Some Palmar Pallor" or "Mucous membrane pallor" = "Some mucous membrane pallor" or ("Hemoglobin (Hb) g/dL" >= 7 'g/dL' and "Hemoglobin (Hb) g/dL" < 11 'g/dL' )) and "Severe Anaemia"=false
+    C."age >= 2 months to <60 months" and ("Palmar Pallor" = "Some Palmar Pallor" or "Mucous membrane pallor" = "Some mucous membrane pallor" or ("Hemoglobin (Hb) g/dL" >= 7 'g/dL' and "Hemoglobin (Hb) g/dL" < 11 'g/dL' )) and "Severe Anaemia"!=true
 */
 define "dl-g-cl1-110":
-    C."age >= 2 months to <60 months" and (Base.HasObsValueCode('EmCare.B15S2.DE01', 'EmCare.B15S2.DE03') or Base.HasObsValueCode('EmCare.B15S2.DE09', 'EmCare.B15S2.DE11') or (Base.GetObsValue('EmCare.B22.DE81') >= 7 'g/dL' and Base.GetObsValue('EmCare.B22.DE81') < 11 'g/dL' )) and "severe anaemia"=false
+    C."age >= 2 months to <60 months" and (Base.HasObsValueCode('EmCare.B15S2.DE01', 'EmCare.B15S2.DE03') or Base.HasObsValueCode('EmCare.B15S2.DE09', 'EmCare.B15S2.DE11') or (Base.GetObsValue('EmCare.B22.DE81') >= 7 'g/dL' and Base.GetObsValue('EmCare.B22.DE81') < 11 'g/dL' )) and Coalesce("severe anaemia",false)!=true
 
 /* alias anaemia : dl-g-cl1-110*/
 define "anaemia":
@@ -446,10 +446,10 @@ define "no anaemia":
 
 /* 
 dl-g-cl1-80 : Eye Infection
-    C."age >= 2 months to <60 months"  and "Eye Problem" = true and "Pus Draining from Eye" = true and ("Severe Complicated Measles"=false or "Measles with Eye or Mouth Complication"=false)
+    C."age >= 2 months to <60 months"  and "Eye Problem" = true and "Pus Draining from Eye" = true and ("Severe Complicated Measles"!=true and "Measles with Eye or Mouth Complication"!=true)
 */
 define "dl-g-cl1-80":
-    C."age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B14S1.DE03') = true and Base.GetObsValue('EmCare.B14S2.DE02') = true and ("severe complicated measles"=false or "measles with eye or mouth complication"=false)
+    C."age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B14S1.DE03') = true and Base.GetObsValue('EmCare.B14S2.DE02') = true and (Coalesce("severe complicated measles",false)!=true and Coalesce("measles with eye or mouth complication",false)!=true)
 
 /* alias eye infection : dl-g-cl1-80*/
 define "eye infection":
@@ -457,10 +457,10 @@ define "eye infection":
 
 /* 
 dl-g-cl1-83 : Clouding of the Cornea
-    C."age >= 2 months to <60 months"  and "Eye Problem" = true and  o"Clouding of the Cornea" = true and "Severe Complicated Measles"=false
+    C."age >= 2 months to <60 months"  and "Eye Problem" = true and  o"Clouding of the Cornea" = true and "Severe Complicated Measles"!=true
 */
 define "dl-g-cl1-83":
-    C."age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B14S1.DE03') = true and  Base.GetObsValue('EmCare.B14S2.DE03') = true and "severe complicated measles"=false
+    C."age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B14S1.DE03') = true and  Base.GetObsValue('EmCare.B14S2.DE03') = true and Coalesce("severe complicated measles",false)!=true
 
 /* alias clouding of the cornea : dl-g-cl1-83*/
 define "clouding of the cornea":

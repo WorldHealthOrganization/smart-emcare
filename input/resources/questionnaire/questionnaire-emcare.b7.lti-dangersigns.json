@@ -61,6 +61,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B7.DE02",
             "text": "Convulsing Now",
             "type": "boolean",
@@ -69,6 +75,10 @@
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
@@ -84,6 +94,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B7.DE08b",
             "text": "Unconscious or Lethargic",
             "type": "boolean",
@@ -92,6 +108,10 @@
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
@@ -109,6 +129,10 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
@@ -123,6 +147,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B7.DE09",
             "text": "Not able to drink or breastfeed",
             "type": "boolean",
@@ -130,6 +160,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B7.DE10",
             "text": "Vomiting Everything",
             "type": "boolean",
@@ -161,7 +197,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE14').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE14').answer.first().empty() and ( %resource.repeat(item).where(linkId='oftrp').answer.empty()  or %resource.repeat(item).where(linkId='oftrp').answer.first().value=true )"
                             }
                         }
                     ],
@@ -170,7 +206,43 @@
                     "type": "choice",
                     "required": true,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/oral-fluid-test"
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE09",
+                                "display": "Completely Unable to Drink"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE10",
+                                "display": "Vomits Immediately / Everything"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE11",
+                                "display": "Drinks Poorly"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE12",
+                                "display": "Drinks Eagerly / Thirstily"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE13",
+                                "display": "Drinks Normally"
+                            }
+                        }
+                    ]
                 },
                 {
                     "extension": [
@@ -211,6 +283,10 @@
                 {
                     "extension": [
                         {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        },
+                        {
                             "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                             "valueBoolean": true
                         },
@@ -225,7 +301,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE14').answer.first().value and (%resource.repeat(item).where(linkId='Danger Signs').answer.first().value = true)  or %resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.where(value.code='EmCare.B22.DE09') or %resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.where(value.code='EmCare.B22.DE10')"
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE14').answer.first().exists() and (%resource.repeat(item).where(linkId='DS').answer.first().value = true  or %resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.where(value.code='EmCare.B22.DE09').exists() or %resource.repeat(item).where(linkId='EmCare.B22.FluidTest').repeat(item).where(linkId='EmCare.B22.DE08').answer.where(value.code='EmCare.B22.DE10').exists() )"
                             }
                         }
                     ],
@@ -237,6 +313,10 @@
                 },
                 {
                     "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
@@ -266,7 +346,43 @@
                     "type": "choice",
                     "required": false,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/oral-fluid-test"
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE09",
+                                "display": "Completely Unable to Drink"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE10",
+                                "display": "Vomits Immediately / Everything"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE11",
+                                "display": "Drinks Poorly"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE12",
+                                "display": "Drinks Eagerly / Thirstily"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B22.DE13",
+                                "display": "Drinks Normally"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -285,10 +401,36 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/consultation-status"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B7/B8/B9.DE02",
+                        "display": "Stabilised, continue consultation"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B7/B8/B9.DE03",
+                        "display": "End consultation"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B7/B8/B9.DE04",
+                        "display": "Entered response in error"
+                    }
+                }
+            ]
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
@@ -297,11 +439,12 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "danger signs"
+                        "expression": "ds"
                     }
                 }
             ],
-            "linkId": "Danger Signs",
+            "linkId": "DS",
+            "text": "Danger Signs",
             "type": "boolean",
             "required": false,
             "repeats": false

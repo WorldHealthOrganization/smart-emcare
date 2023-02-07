@@ -103,6 +103,10 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
@@ -202,28 +206,14 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
-                    "valueCoding": {
-                        "system": "http://unitsofmeasure.org",
-                        "code": "kg"
-                    }
-                },
-                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().exists()"
-                    }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='pastWeightActualised').answer.first().exists(), %resource.repeat(item).where(linkId='pastWeightActualised').answer.first().value, {})"
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().exists() and %resource.repeat(item).where(linkId='pastWeightActualised').answer.first().exists(), %resource.repeat(item).where(linkId='pastWeightActualised').answer.first().value, {})"
                     }
                 }
             ],
@@ -272,7 +262,7 @@
             ],
             "linkId": "pastWeightActualised",
             "text": "Weight based on the previous mesurements",
-            "type": "decimal",
+            "type": "quantity",
             "required": false,
             "repeats": false,
             "readOnly": true
@@ -716,7 +706,29 @@
                     "type": "choice",
                     "required": false,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/underweight"
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B6.DE19",
+                                "display": "Does not appear to be Underweight"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B6.DE20",
+                                "display": "Appears to be Underweight"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B6.DE21",
+                                "display": "Appears to be Severely Underweight"
+                            }
+                        }
+                    ]
                 }
             ]
         },

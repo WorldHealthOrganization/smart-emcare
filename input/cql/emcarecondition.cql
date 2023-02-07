@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarecondition version '1.0.1.rc11.build.71'
+library emcarecondition version '1.0.1.rc12.build.12'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -13,16 +13,16 @@ codesystem "EmCare" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/
 
 
 code "possible serious bacterial infection or very severe disease": 'EmCare.B23.DE83' from "EmCare" display 'possible serious bacterial infection or very severe disease'
-code "pneumonia": 'EmCare.B23.DE84' from "EmCare" display 'pneumonia'
+code "pneumonia": 'EmCare.B23.DE06' from "EmCare" display 'pneumonia'
 code "local infection": 'EmCare.B23.DE85' from "EmCare" display 'local infection'
 code "infection unlikely": 'EmCare.B23.DE86' from "EmCare" display 'infection unlikely'
-code "very low weight for age": 'EmCare.B23.DE93' from "EmCare" display 'very low weight for age'
+code "very low weight for age": 'EmCare.B23.DE106' from "EmCare" display 'very low weight for age'
 code "severe jaundice": 'EmCare.B23.DE87' from "EmCare" display 'severe jaundice'
 code "jaundice": 'EmCare.B23.DE88' from "EmCare" display 'jaundice'
 code "no jaundice": 'EmCare.B23.DE89' from "EmCare" display 'no jaundice'
-code "severe dehydration": 'EmCare.B23.DE90' from "EmCare" display 'severe dehydration'
-code "some dehydration": 'EmCare.B23.DE91' from "EmCare" display 'some dehydration'
-code "no dehydration": 'EmCare.B23.DE92' from "EmCare" display 'no dehydration'
+code "severe dehydration": 'EmCare.B23.DE13' from "EmCare" display 'severe dehydration'
+code "some dehydration": 'EmCare.B23.DE14' from "EmCare" display 'some dehydration'
+code "no dehydration": 'EmCare.B23.DE15' from "EmCare" display 'no dehydration'
 code "feeding problem and / or low weight for age": 'EmCare.B23.DE94' from "EmCare" display 'feeding problem and / or low weight for age'
 code "no feeding problem": 'EmCare.B23.DE98' from "EmCare" display 'no feeding problem'
 code "estimated weight": 'EmCare.B6.DE08' from "EmCare" display 'estimated weight'

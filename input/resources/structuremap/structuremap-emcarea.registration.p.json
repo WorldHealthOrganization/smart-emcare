@@ -3,7 +3,7 @@
     "id": "emcarea.registration.p",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p&quot; = &quot;emcarea.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarepatient&quot; alias 'EmCare Patient' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedpersoncaregiver&quot; alias 'EmCare RelatedPerson Caregiver' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarecommunicationrequest&quot; alias 'EmCare CommunicationRequest' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;1153aa45&quot;;\r\n    } &quot;cf5b2513&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then emcarepatient(src, tgt) &quot;77f3ac03&quot;;\r\n    } &quot;75beb242&quot;;\r\n  } &quot;put-emcarepatient&quot;;\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('RelatedPerson') as tgt then {\r\n      src -&gt; tgt then emcarerelatedpersoncaregiver(src, tgt) &quot;ddd4f633&quot;;\r\n      item.answer first as a then {\r\n        a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;78d8bc69&quot;;\r\n      } &quot;eec70023&quot;;\r\n    } &quot;11e383bf&quot;;\r\n  } &quot;8fa591bb&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE38' then {\r\n      src -&gt; bundle.entry as entry then {\r\n        src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/CommunicationRequest/', uuid) &quot;e5343f50&quot;;\r\n        src -&gt; entry.resource = create('CommunicationRequest') as tgt then {\r\n          src -&gt; tgt then emcarecommunicationrequestemcareade38(src, tgt) &quot;25cec0bd&quot;;\r\n        } &quot;56a68de0&quot;;\r\n      } &quot;73900d2c&quot;;\r\n    } &quot;35fcc8a4&quot;;\r\n  } &quot;2aa81a23&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarepatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as item where linkId = 'EmCare.A.DE06' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n      } &quot;e0827d5d&quot;;\r\n    } &quot;f1d9c426&quot;;\r\n    src.item first as item where linkId = 'EmCare.A.DE04' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;ac2302ce&quot;;\r\n    src.item first as item where linkId = 'EmCare.A.DE05' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;5202acf8&quot;;\r\n  } &quot;73a58157&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeemcareade16(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt; tgt then {\r\n      src where value.code = 'EmCare.A.DE17' -&gt; tgt.gender = 'female' &quot;368f2e2a&quot;;\r\n      src where value.code = 'EmCare.A.DE18' -&gt; tgt.gender = 'male' &quot;2ae3beca&quot;;\r\n      src where value.code = 'EmCare.A.DE19' -&gt; tgt.gender = 'unknown' &quot;de22e8b7&quot;;\r\n    } &quot;mapbase&quot;;\r\n  } &quot;57676688&quot;;\r\n}\r\n\r\ngroup emcarepatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item first as item where linkId = 'EmCare.A.DE01' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;aemcareade01&quot;;\r\n    } &quot;aemcareade01&quot;;\r\n  } &quot;dd2d3e8e&quot;;\r\n  src.item first as item where linkId = 'EmCare.A.DE03' then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true &quot;aemcareade03&quot;;\r\n  } &quot;17de7410&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE06') or (linkId = 'EmCare.A.DE04') or (linkId = 'EmCare.A.DE05') then {\r\n    src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarepatient(src, name) &quot;30643049&quot;;\r\n  } &quot;8313c875&quot;;\r\n  src.item first as item where linkId = 'EmCare.A.DE12' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aemcareade12&quot;;\r\n    } &quot;aemcareade12&quot;;\r\n  } &quot;ba59b183&quot;;\r\n  src.item first as item where linkId = 'EmCare.A.DE08' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;aemcareade08&quot;;\r\n    } &quot;aemcareade08&quot;;\r\n  } &quot;a469de70&quot;;\r\n  src.item first as item where linkId = 'EmCare.A.DE16' then {\r\n    item.answer first as a then MapValueSetExtCodeemcareade16(a, tgt) &quot;225baa79&quot;;\r\n  } &quot;8ae2cbb6&quot;;\r\n  src.item first as item where linkId = 'EmCare.A.DE20' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.address as address,  address.text = val &quot;aemcareade20&quot;;\r\n    } &quot;aemcareade20&quot;;\r\n  } &quot;6785d174&quot;;\r\n  src.item first as item where linkId = 'EmCare.A.DE48' then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver',  ext.value = create('Reference') as ref,  ref.reference = 'relatated-person-id' &quot;aemcareade48&quot;;\r\n  } &quot;698e527d&quot;;\r\n  src.item first as item where linkId = 'emcarerelatedpersoncaregiverid' then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver',  ext.value = create('Reference') as ref,  ref.reference = append('/RelatedPerson/', val) &quot;aemcarerelatedpersoncaregiverid&quot;;\r\n    } &quot;aemcarerelatedpersoncaregiverid&quot;;\r\n  } &quot;e327e4cd&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE31' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus',  ext.value = val &quot;aemcareade31&quot;;\r\n      } &quot;aemcareade31&quot;;\r\n    } &quot;1a6bece2&quot;;\r\n  } &quot;f386acef&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE32' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus',  ext.value = val &quot;aemcareade32&quot;;\r\n      } &quot;aemcareade32&quot;;\r\n    } &quot;f5384636&quot;;\r\n  } &quot;df005d66&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where linkId = 'EmCare.A.DE23' then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n        } &quot;e0827d5d&quot;;\r\n      } &quot;81961ab9&quot;;\r\n    } &quot;52b729eb&quot;;\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where linkId = 'EmCare.A.DE21' then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;e7b492a0&quot;;\r\n    } &quot;90bf71c4&quot;;\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where linkId = 'EmCare.A.DE22' then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;4ac5d52d&quot;;\r\n    } &quot;b6b0faa7&quot;;\r\n  } &quot;c5ce602b&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeemcareade24(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt;  tgt.relationship = create('CodeableConcept') as cc,  cc.coding = create('Coding') as coding then {\r\n      src where value.code = 'EmCare.A.DE25' -&gt;  coding.code = 'MTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;abd34a78&quot;;\r\n      src where value.code = 'EmCare.A.DE26' -&gt;  coding.code = 'FTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;b53d1d15&quot;;\r\n      src where value.code = 'EmCare.A.DE27' -&gt;  coding.code = 'SIB',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;949ee35f&quot;;\r\n      src where value.code = 'EmCare.A.DE28' -&gt;  coding.code = 'EXT',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;7c5a4400&quot;;\r\n      src where value.code = 'EmCare.A.DE29' -&gt;  coding.code = 'PRNINLAW',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;544df0cc&quot;;\r\n      src where value.code = 'EmCare.A.DE30' -&gt;  coding.code = 'U',  coding.system = 'http://terminology.hl7.org/CodeSystem/v2-0131' &quot;8c2d96fc&quot;;\r\n    } &quot;4a251df5&quot;;\r\n  } &quot;1b7b6d7a&quot;;\r\n}\r\n\r\ngroup emcarerelatedpersoncaregiver(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE23') or (linkId = 'EmCare.A.DE21') or (linkId = 'EmCare.A.DE22') then {\r\n      src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedpersoncaregiver(src, name) &quot;c93b70d9&quot;;\r\n    } &quot;b1fb485c&quot;;\r\n  } &quot;6c8250ba&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE35' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aemcareade35&quot;;\r\n      } &quot;aemcareade35&quot;;\r\n    } &quot;6c462c10&quot;;\r\n  } &quot;ab31ad7c&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE36' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'home',  tel.value = val &quot;aemcareade36&quot;;\r\n      } &quot;aemcareade36&quot;;\r\n    } &quot;4449b88f&quot;;\r\n  } &quot;5e9df92d&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE37' then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'work',  tel.value = val &quot;aemcareade37&quot;;\r\n      } &quot;aemcareade37&quot;;\r\n    } &quot;93e94c1c&quot;;\r\n  } &quot;bf4335e3&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where linkId = 'EmCare.A.DE24' then {\r\n      item.answer first as a then MapValueSetExtCodeemcareade24(a, tgt) &quot;24e5e488&quot;;\r\n    } &quot;9dc5838c&quot;;\r\n  } &quot;44cc8db0&quot;;\r\n}\r\n\r\ngroup emcarecommunicationrequestemcareade38(source src, target tgt) {\r\n  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;053233cd&quot;;\r\n  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;fe3bec4d&quot;;\r\n  src -&gt; tgt.recipient = create('Reference') as ref then {\r\n    src -&gt; ref.type = 'RelatedPerson' &quot;c26ab31f&quot;;\r\n    src.item first as item where linkId = 'emcarerelatedpersonPrimary Caregiveruuid' -&gt; tgt then {\r\n      item.answer first as a -&gt; tgt then {\r\n        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;25b16148&quot;;\r\n      } &quot;00b2016a&quot;;\r\n    } &quot;3ad22f7e&quot;;\r\n  } &quot;f1bbc2f2&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p&quot; = &quot;emcarea.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarepatient&quot; alias 'EmCare Patient' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarerelatedpersoncaregiver&quot; alias 'EmCare RelatedPerson Caregiver' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarecommunicationrequest&quot; alias 'EmCare CommunicationRequest' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;1153aa45&quot;;\r\n    } &quot;cf5b2513&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then emcarepatient(src, tgt) &quot;77f3ac03&quot;;\r\n    } &quot;75beb242&quot;;\r\n  } &quot;put-emcarepatient&quot;;\r\n  src.item first as item where (linkId = 'emcarerelatedpersoncaregiverid') and answer.exists() then {\r\n    src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('RelatedPerson') as tgt then {\r\n      src -&gt; tgt then emcarerelatedpersoncaregiver(src, tgt) &quot;ddd4f633&quot;;\r\n      item.answer first as a then {\r\n        a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;78d8bc69&quot;;\r\n      } &quot;eec70023&quot;;\r\n    } &quot;11e383bf&quot;;\r\n  } &quot;2c69bcbc&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE38') and answer.exists() then {\r\n      src -&gt; bundle.entry as entry then {\r\n        src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/CommunicationRequest/', uuid) &quot;e5343f50&quot;;\r\n        src -&gt; entry.resource = create('CommunicationRequest') as tgt then {\r\n          src -&gt; tgt then emcarecommunicationrequestemcareade38(src, tgt) &quot;25cec0bd&quot;;\r\n        } &quot;56a68de0&quot;;\r\n      } &quot;73900d2c&quot;;\r\n    } &quot;4a0b9017&quot;;\r\n  } &quot;78cba6e1&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarepatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as item where (linkId = 'EmCare.A.DE06') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n      } &quot;e0827d5d&quot;;\r\n    } &quot;607c4e16&quot;;\r\n    src.item first as item where (linkId = 'EmCare.A.DE04') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;e9deb0f3&quot;;\r\n    src.item first as item where (linkId = 'EmCare.A.DE05') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;d95279c0&quot;;\r\n  } &quot;ef0f6810&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeemcareade16(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt; tgt then {\r\n      src where value.code = 'EmCare.A.DE17' -&gt; tgt.gender = 'female' &quot;368f2e2a&quot;;\r\n      src where value.code = 'EmCare.A.DE18' -&gt; tgt.gender = 'male' &quot;2ae3beca&quot;;\r\n      src where value.code = 'EmCare.A.DE19' -&gt; tgt.gender = 'unknown' &quot;de22e8b7&quot;;\r\n    } &quot;mapbase&quot;;\r\n  } &quot;57676688&quot;;\r\n}\r\n\r\ngroup emcarepatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item first as item where (linkId = 'EmCare.A.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;aemcareade01&quot;;\r\n    } &quot;aemcareade01&quot;;\r\n  } &quot;c243b020&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE03') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true &quot;aemcareade03&quot;;\r\n  } &quot;54d12495&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE06') or (linkId = 'EmCare.A.DE04') or ((linkId = 'EmCare.A.DE05') and answer.exists()) then {\r\n    src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarepatient(src, name) &quot;30643049&quot;;\r\n  } &quot;7483ae2e&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE12') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aemcareade12&quot;;\r\n    } &quot;aemcareade12&quot;;\r\n  } &quot;c05cf203&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE08') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;aemcareade08&quot;;\r\n    } &quot;aemcareade08&quot;;\r\n  } &quot;bded6ae8&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE16') and answer.exists() then {\r\n    item.answer first as a then MapValueSetExtCodeemcareade16(a, tgt) &quot;225baa79&quot;;\r\n  } &quot;bf4b35f0&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE48') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver',  ext.value = create('Reference') as ref,  ref.reference = 'relatated-person-id' &quot;aemcareade48&quot;;\r\n  } &quot;04772b09&quot;;\r\n  src.item first as item where (linkId = 'emcarerelatedpersoncaregiverid') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver',  ext.value = create('Reference') as ref,  ref.reference = append('/RelatedPerson/', val) &quot;aemcarerelatedpersoncaregiverid&quot;;\r\n    } &quot;aemcarerelatedpersoncaregiverid&quot;;\r\n  } &quot;04cd0ec2&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE31') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus',  ext.value = val &quot;aemcareade31&quot;;\r\n      } &quot;aemcareade31&quot;;\r\n    } &quot;7f408694&quot;;\r\n  } &quot;39f45e5d&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE32') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus',  ext.value = val &quot;aemcareade32&quot;;\r\n      } &quot;aemcareade32&quot;;\r\n    } &quot;06ec2524&quot;;\r\n  } &quot;f7424037&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameemcarerelatedpersoncaregiver(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'EmCare.A.DE23') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n        } &quot;e0827d5d&quot;;\r\n      } &quot;8c426238&quot;;\r\n    } &quot;4cc155ee&quot;;\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'EmCare.A.DE21') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;ad3fbc15&quot;;\r\n    } &quot;8bc880ed&quot;;\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'EmCare.A.DE22') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;e9ba83c8&quot;;\r\n    } &quot;17d8d988&quot;;\r\n  } &quot;f41b9847&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeemcareade24(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt;  tgt.relationship = create('CodeableConcept') as cc,  cc.coding = create('Coding') as coding then {\r\n      src where value.code = 'EmCare.A.DE25' -&gt;  coding.code = 'MTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;abd34a78&quot;;\r\n      src where value.code = 'EmCare.A.DE26' -&gt;  coding.code = 'FTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;b53d1d15&quot;;\r\n      src where value.code = 'EmCare.A.DE27' -&gt;  coding.code = 'SIB',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;949ee35f&quot;;\r\n      src where value.code = 'EmCare.A.DE28' -&gt;  coding.code = 'EXT',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;7c5a4400&quot;;\r\n      src where value.code = 'EmCare.A.DE29' -&gt;  coding.code = 'PRNINLAW',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;544df0cc&quot;;\r\n      src where value.code = 'EmCare.A.DE30' -&gt;  coding.code = 'U',  coding.system = 'http://terminology.hl7.org/CodeSystem/v2-0131' &quot;8c2d96fc&quot;;\r\n    } &quot;4a251df5&quot;;\r\n  } &quot;1b7b6d7a&quot;;\r\n}\r\n\r\ngroup emcarerelatedpersoncaregiver(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE23') or (linkId = 'EmCare.A.DE21') or ((linkId = 'EmCare.A.DE22') and answer.exists()) then {\r\n      src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameemcarerelatedpersoncaregiver(src, name) &quot;c93b70d9&quot;;\r\n    } &quot;2bd25829&quot;;\r\n  } &quot;830512aa&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE35') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aemcareade35&quot;;\r\n      } &quot;aemcareade35&quot;;\r\n    } &quot;9731ba92&quot;;\r\n  } &quot;30b90d37&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE24') and answer.exists() then {\r\n      item.answer first as a then MapValueSetExtCodeemcareade24(a, tgt) &quot;24e5e488&quot;;\r\n    } &quot;6adb811a&quot;;\r\n  } &quot;92a0e955&quot;;\r\n}\r\n\r\ngroup emcarecommunicationrequestemcareade38(source src, target tgt) {\r\n  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;053233cd&quot;;\r\n  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;fe3bec4d&quot;;\r\n  src -&gt; tgt.recipient = create('Reference') as ref then {\r\n    src -&gt; ref.type = 'RelatedPerson' &quot;c26ab31f&quot;;\r\n    src.item first as item where linkId = 'emcarerelatedpersonCaregiveruuid' -&gt; tgt then {\r\n      item.answer first as a -&gt; tgt then {\r\n        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;25b16148&quot;;\r\n      } &quot;00b2016a&quot;;\r\n    } &quot;3c6c4c80&quot;;\r\n  } &quot;eaa7d3cf&quot;;\r\n}\r\n\r\n</pre></div>"
     },
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p",
     "name": "emcarea.registration.p",
@@ -230,14 +230,14 @@
                     ]
                 },
                 {
-                    "name": "8fa591bb",
+                    "name": "2c69bcbc",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'emcarerelatedpersoncaregiverid'"
+                            "condition": "(linkId = 'emcarerelatedpersoncaregiverid') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -358,7 +358,7 @@
                     ]
                 },
                 {
-                    "name": "2aa81a23",
+                    "name": "78cba6e1",
                     "source": [
                         {
                             "context": "src",
@@ -370,14 +370,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "35fcc8a4",
+                            "name": "4a0b9017",
                             "source": [
                                 {
                                     "context": "itm1",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE38'"
+                                    "condition": "(linkId = 'EmCare.A.DE38') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -518,7 +518,7 @@
             ],
             "rule": [
                 {
-                    "name": "73a58157",
+                    "name": "ef0f6810",
                     "source": [
                         {
                             "context": "src"
@@ -539,14 +539,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "f1d9c426",
+                            "name": "607c4e16",
                             "source": [
                                 {
                                     "context": "src",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE06'"
+                                    "condition": "(linkId = 'EmCare.A.DE06') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -589,14 +589,14 @@
                             ]
                         },
                         {
-                            "name": "ac2302ce",
+                            "name": "e9deb0f3",
                             "source": [
                                 {
                                     "context": "src",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE04'"
+                                    "condition": "(linkId = 'EmCare.A.DE04') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -639,14 +639,14 @@
                             ]
                         },
                         {
-                            "name": "5202acf8",
+                            "name": "d95279c0",
                             "source": [
                                 {
                                     "context": "src",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE05'"
+                                    "condition": "(linkId = 'EmCare.A.DE05') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -833,14 +833,14 @@
             ],
             "rule": [
                 {
-                    "name": "dd2d3e8e",
+                    "name": "c243b020",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE01'"
+                            "condition": "(linkId = 'EmCare.A.DE01') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -918,14 +918,14 @@
                     ]
                 },
                 {
-                    "name": "17de7410",
+                    "name": "54d12495",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE03'"
+                            "condition": "(linkId = 'EmCare.A.DE03') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -979,14 +979,14 @@
                     ]
                 },
                 {
-                    "name": "8313c875",
+                    "name": "7483ae2e",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE06') or (linkId = 'EmCare.A.DE04') or (linkId = 'EmCare.A.DE05')"
+                            "condition": "(linkId = 'EmCare.A.DE06') or (linkId = 'EmCare.A.DE04') or ((linkId = 'EmCare.A.DE05') and answer.exists())"
                         }
                     ],
                     "rule": [
@@ -1028,14 +1028,14 @@
                     ]
                 },
                 {
-                    "name": "ba59b183",
+                    "name": "c05cf203",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE12'"
+                            "condition": "(linkId = 'EmCare.A.DE12') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1101,14 +1101,14 @@
                     ]
                 },
                 {
-                    "name": "a469de70",
+                    "name": "bded6ae8",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE08'"
+                            "condition": "(linkId = 'EmCare.A.DE08') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1151,14 +1151,14 @@
                     ]
                 },
                 {
-                    "name": "8ae2cbb6",
+                    "name": "bf4b35f0",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE16'"
+                            "condition": "(linkId = 'EmCare.A.DE16') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1185,70 +1185,14 @@
                     ]
                 },
                 {
-                    "name": "6785d174",
+                    "name": "04772b09",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE20'"
-                        }
-                    ],
-                    "rule": [
-                        {
-                            "name": "aemcareade20",
-                            "source": [
-                                {
-                                    "context": "item",
-                                    "element": "answer",
-                                    "listMode": "first",
-                                    "variable": "a"
-                                }
-                            ],
-                            "rule": [
-                                {
-                                    "name": "aemcareade20",
-                                    "source": [
-                                        {
-                                            "context": "a",
-                                            "element": "value",
-                                            "variable": "val"
-                                        }
-                                    ],
-                                    "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "address",
-                                            "variable": "address"
-                                        },
-                                        {
-                                            "context": "address",
-                                            "contextType": "variable",
-                                            "element": "text",
-                                            "transform": "copy",
-                                            "parameter": [
-                                                {
-                                                    "valueId": "val"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "698e527d",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "listMode": "first",
-                            "variable": "item",
-                            "condition": "linkId = 'EmCare.A.DE48'"
+                            "condition": "(linkId = 'EmCare.A.DE48') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1314,14 +1258,14 @@
                     ]
                 },
                 {
-                    "name": "e327e4cd",
+                    "name": "04cd0ec2",
                     "source": [
                         {
                             "context": "src",
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "linkId = 'emcarerelatedpersoncaregiverid'"
+                            "condition": "(linkId = 'emcarerelatedpersoncaregiverid') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1402,7 +1346,7 @@
                     ]
                 },
                 {
-                    "name": "f386acef",
+                    "name": "39f45e5d",
                     "source": [
                         {
                             "context": "src",
@@ -1414,14 +1358,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "1a6bece2",
+                            "name": "7f408694",
                             "source": [
                                 {
                                     "context": "itm1",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE31'"
+                                    "condition": "(linkId = 'EmCare.A.DE31') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -1489,7 +1433,7 @@
                     ]
                 },
                 {
-                    "name": "df005d66",
+                    "name": "f7424037",
                     "source": [
                         {
                             "context": "src",
@@ -1501,14 +1445,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "f5384636",
+                            "name": "06ec2524",
                             "source": [
                                 {
                                     "context": "itm1",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE32'"
+                                    "condition": "(linkId = 'EmCare.A.DE32') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -1592,7 +1536,7 @@
             ],
             "rule": [
                 {
-                    "name": "c5ce602b",
+                    "name": "f41b9847",
                     "source": [
                         {
                             "context": "src"
@@ -1613,7 +1557,7 @@
                     ],
                     "rule": [
                         {
-                            "name": "52b729eb",
+                            "name": "4cc155ee",
                             "source": [
                                 {
                                     "context": "src",
@@ -1625,14 +1569,14 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "81961ab9",
+                                    "name": "8c426238",
                                     "source": [
                                         {
                                             "context": "itm1",
                                             "element": "item",
                                             "listMode": "first",
                                             "variable": "item",
-                                            "condition": "linkId = 'EmCare.A.DE23'"
+                                            "condition": "(linkId = 'EmCare.A.DE23') and answer.exists()"
                                         }
                                     ],
                                     "rule": [
@@ -1677,7 +1621,7 @@
                             ]
                         },
                         {
-                            "name": "90bf71c4",
+                            "name": "8bc880ed",
                             "source": [
                                 {
                                     "context": "src",
@@ -1689,14 +1633,14 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "e7b492a0",
+                                    "name": "ad3fbc15",
                                     "source": [
                                         {
                                             "context": "itm1",
                                             "element": "item",
                                             "listMode": "first",
                                             "variable": "item",
-                                            "condition": "linkId = 'EmCare.A.DE21'"
+                                            "condition": "(linkId = 'EmCare.A.DE21') and answer.exists()"
                                         }
                                     ],
                                     "rule": [
@@ -1741,7 +1685,7 @@
                             ]
                         },
                         {
-                            "name": "b6b0faa7",
+                            "name": "17d8d988",
                             "source": [
                                 {
                                     "context": "src",
@@ -1753,14 +1697,14 @@
                             ],
                             "rule": [
                                 {
-                                    "name": "4ac5d52d",
+                                    "name": "e9ba83c8",
                                     "source": [
                                         {
                                             "context": "itm1",
                                             "element": "item",
                                             "listMode": "first",
                                             "variable": "item",
-                                            "condition": "linkId = 'EmCare.A.DE22'"
+                                            "condition": "(linkId = 'EmCare.A.DE22') and answer.exists()"
                                         }
                                     ],
                                     "rule": [
@@ -2096,7 +2040,7 @@
             ],
             "rule": [
                 {
-                    "name": "6c8250ba",
+                    "name": "830512aa",
                     "source": [
                         {
                             "context": "src",
@@ -2108,14 +2052,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "b1fb485c",
+                            "name": "2bd25829",
                             "source": [
                                 {
                                     "context": "itm1",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE23') or (linkId = 'EmCare.A.DE21') or (linkId = 'EmCare.A.DE22')"
+                                    "condition": "(linkId = 'EmCare.A.DE23') or (linkId = 'EmCare.A.DE21') or ((linkId = 'EmCare.A.DE22') and answer.exists())"
                                 }
                             ],
                             "rule": [
@@ -2159,7 +2103,7 @@
                     ]
                 },
                 {
-                    "name": "ab31ad7c",
+                    "name": "30b90d37",
                     "source": [
                         {
                             "context": "src",
@@ -2171,14 +2115,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "6c462c10",
+                            "name": "9731ba92",
                             "source": [
                                 {
                                     "context": "itm1",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE35'"
+                                    "condition": "(linkId = 'EmCare.A.DE35') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -2251,7 +2195,7 @@
                     ]
                 },
                 {
-                    "name": "5e9df92d",
+                    "name": "92a0e955",
                     "source": [
                         {
                             "context": "src",
@@ -2263,198 +2207,14 @@
                     ],
                     "rule": [
                         {
-                            "name": "4449b88f",
+                            "name": "6adb811a",
                             "source": [
                                 {
                                     "context": "itm1",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE36'"
-                                }
-                            ],
-                            "rule": [
-                                {
-                                    "name": "aemcareade36",
-                                    "source": [
-                                        {
-                                            "context": "item",
-                                            "element": "answer",
-                                            "listMode": "first",
-                                            "variable": "a"
-                                        }
-                                    ],
-                                    "rule": [
-                                        {
-                                            "name": "aemcareade36",
-                                            "source": [
-                                                {
-                                                    "context": "a",
-                                                    "element": "value",
-                                                    "variable": "val"
-                                                }
-                                            ],
-                                            "target": [
-                                                {
-                                                    "context": "tgt",
-                                                    "contextType": "variable",
-                                                    "element": "telecom",
-                                                    "variable": "tel"
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "system",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "phone"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "use",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "home"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "value",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueId": "val"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "bf4335e3",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "listMode": "first",
-                            "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
-                        }
-                    ],
-                    "rule": [
-                        {
-                            "name": "93e94c1c",
-                            "source": [
-                                {
-                                    "context": "itm1",
-                                    "element": "item",
-                                    "listMode": "first",
-                                    "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE37'"
-                                }
-                            ],
-                            "rule": [
-                                {
-                                    "name": "aemcareade37",
-                                    "source": [
-                                        {
-                                            "context": "item",
-                                            "element": "answer",
-                                            "listMode": "first",
-                                            "variable": "a"
-                                        }
-                                    ],
-                                    "rule": [
-                                        {
-                                            "name": "aemcareade37",
-                                            "source": [
-                                                {
-                                                    "context": "a",
-                                                    "element": "value",
-                                                    "variable": "val"
-                                                }
-                                            ],
-                                            "target": [
-                                                {
-                                                    "context": "tgt",
-                                                    "contextType": "variable",
-                                                    "element": "telecom",
-                                                    "variable": "tel"
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "system",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "phone"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "use",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueString": "work"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "context": "tel",
-                                                    "contextType": "variable",
-                                                    "element": "value",
-                                                    "transform": "copy",
-                                                    "parameter": [
-                                                        {
-                                                            "valueId": "val"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "44cc8db0",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "listMode": "first",
-                            "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
-                        }
-                    ],
-                    "rule": [
-                        {
-                            "name": "9dc5838c",
-                            "source": [
-                                {
-                                    "context": "itm1",
-                                    "element": "item",
-                                    "listMode": "first",
-                                    "variable": "item",
-                                    "condition": "linkId = 'EmCare.A.DE24'"
+                                    "condition": "(linkId = 'EmCare.A.DE24') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -2624,7 +2384,7 @@
                     ]
                 },
                 {
-                    "name": "f1bbc2f2",
+                    "name": "eaa7d3cf",
                     "source": [
                         {
                             "context": "src"
@@ -2667,14 +2427,14 @@
                             ]
                         },
                         {
-                            "name": "3ad22f7e",
+                            "name": "3c6c4c80",
                             "source": [
                                 {
                                     "context": "src",
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "linkId = 'emcarerelatedpersonPrimary Caregiveruuid'"
+                                    "condition": "linkId = 'emcarerelatedpersonCaregiveruuid'"
                                 }
                             ],
                             "target": [

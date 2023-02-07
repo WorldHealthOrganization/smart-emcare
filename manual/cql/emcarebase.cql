@@ -213,7 +213,7 @@ define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Inte
 define function GetHistoricObservationDone(id System.Code, nbdays Integer):
       First([Observation: id ] O
         where  O.status in { 'final', 'amended', 'corrected'}
-        and (difference in days between O.issued and Today()) < nbdays 
+        and (difference in days between O.issued.value and Today()) < nbdays 
         sort by issued.value desc )
 
 /*
@@ -224,7 +224,7 @@ define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays 
 define function GetHistoricObservationNotfound(id System.Code, nbdays Integer):
       First([Observation: id] O
         where  O.status in {'cancelled'}
-          and (difference in days between O.issued and Today()) < nbdays 
+          and (difference in days between O.issued.value and Today()) < nbdays 
         sort by issued.value desc)
 // ************************   HasObsHistory ************************/
 

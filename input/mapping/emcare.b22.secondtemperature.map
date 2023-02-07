@@ -6,30 +6,30 @@ uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareob
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
-    src.item first as item  where linkId = 'EmCare.B22.DE47' then {
+    src.item first as item  where linkId = 'EmCare.B22.DE47' and answer.exists() then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
             src -> entry.resource = create('Observation') as tgt then {
                 src -> tgt then emcareobservationemcareb22de47(src, tgt) '27e1ae58';
             } '68ad31bf';
         } '6ac0c1c9';
-    } '97be8a84';
-    src.item first as item  where linkId = 'EmCare.B22.DE46' then {
+    } '921b6c4e';
+    src.item first as item  where linkId = 'EmCare.B22.DE46' and answer.exists() then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
             src -> entry.resource = create('Observation') as tgt then {
                 src -> tgt then emcareobservationemcareb22de46(src, tgt) 'd4ea6333';
             } '1ee0adeb';
         } '9266b262';
-    } 'fea70272';
-    src.item first as item  where linkId = 'EmCare.B22.DE50' then {
+    } '822ffc0d';
+    src.item first as item  where linkId = 'EmCare.B22.DE50' and answer.exists() then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
             src -> entry.resource = create('Observation') as tgt then {
                 src -> tgt then emcareobservationemcareb22de50(src, tgt) 'b5c48578';
             } '1d3deeec';
         } '82120e52';
-    } 'cc6e1649';
+    } '7a077eb8';
 }
 
 group emcareobservationemcareb22de47(source src,target tgt){
@@ -52,11 +52,11 @@ group emcareobservationemcareb22de47(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B22.DE47' then {
+    src.item first as item  where linkId = 'EmCare.B22.DE47' and answer.exists() then {
         item.answer first as a then {
             a.value as val -> tgt.value = val, tgt.status = 'final' 'afa0ccc0';
         } 'd40466ff';
-    } '6ee71ae3';
+    } '48393240';
 }
 
 group emcareobservationemcareb22de46(source src,target tgt){
@@ -79,12 +79,12 @@ group emcareobservationemcareb22de46(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B22.DE46' then {
+    src.item first as item  where linkId = 'EmCare.B22.DE46' and answer.exists() then {
         item.answer first as a then {
             a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcareb22de46';
             a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb22de46';
         } 'bdab9370';
-    } '0ab34745';
+    } 'c1c0adb4';
 }
 
 group emcareobservationemcareb22de50(source src,target tgt){
@@ -107,12 +107,12 @@ group emcareobservationemcareb22de50(source src,target tgt){
         } '4272fc8b';
     } 'f4472f32';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B22.DE50' then {
+    src.item first as item  where linkId = 'EmCare.B22.DE50' and answer.exists() then {
         item.answer first as a then {
             a.value as val then {
                 val -> tgt.value = create('CodeableConcept') as cc, cc.coding = create('Coding') as c, c.code=val, c.system= 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes', tgt.status = 'final' '759a9a54';
             } '1b820ab0';
         } 'd39f9088';
-    } '5b8979c7';
+    } '7972a70f';
 }
 

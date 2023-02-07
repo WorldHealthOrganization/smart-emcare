@@ -44,6 +44,10 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
@@ -109,6 +113,10 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
                 },
@@ -145,10 +153,36 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE33",
+                        "display": "Unknown"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE34",
+                        "display": "Alive"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE46",
+                        "display": "Dead"
+                    }
+                }
+            ]
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
@@ -169,6 +203,10 @@
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
@@ -210,14 +248,23 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "yi severe classification other than severe dehydration"
+                        "expression": "yi_sever_but_dhey"
                     }
                 }
             ],
-            "linkId": "YI severe classification other than severe dehydration",
+            "linkId": "YI_sever_but_dhey",
+            "text": "YI severe classification other than severe dehydration",
             "type": "boolean",
             "required": false,
             "repeats": false
@@ -225,20 +272,33 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "yi severe classification"
+                        "expression": "yi_sever"
                     }
                 }
             ],
-            "linkId": "YI severe classification",
+            "linkId": "YI_sever",
+            "text": "YI severe classification",
             "type": "boolean",
             "required": false,
             "repeats": false
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
@@ -279,6 +339,13 @@
                             "valueExpression": {
                                 "language": "text/fhirpath",
                                 "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "if(%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().exists(), %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value,{})"
                             }
                         }
                     ],
@@ -337,7 +404,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value > 60 '{Counts}/min' and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty() and  %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value > 60 '{Counts}/min' and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty()"
                             }
                         }
                     ],
@@ -386,17 +453,14 @@
                 {
                     "extension": [
                         {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2"
-                            }
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
                         },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false)"
+                                "expression": "if(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value =< 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() ),iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false),{})"
                             }
                         }
                     ],
@@ -410,6 +474,12 @@
             ]
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B18S2.DE07",
             "text": "Severe Chest Indrawing",
             "type": "boolean",
@@ -422,9 +492,37 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/movements"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B18S2.DE09",
+                        "display": "No movement at all"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B18S2.DE10",
+                        "display": "Movement only when stimulated but then stops"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B18S2.DE11",
+                        "display": "Moves on his or her own or moves spontaneously or without stimulation"
+                    }
+                }
+            ]
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B18S2.DE12",
             "text": "Umbilicus Red or Pus Draining",
             "type": "boolean",
@@ -432,6 +530,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B18S2.DE13",
             "text": "Skin Pustules",
             "type": "boolean",
@@ -439,6 +543,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B19S2.DE01",
             "text": "Yellow Skin",
             "type": "boolean",
@@ -446,6 +556,12 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                }
+            ],
             "linkId": "EmCare.B19S2.DE02",
             "text": "Yellow Palms or Yellow Soles",
             "type": "boolean",
@@ -467,10 +583,36 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/jaundice-duration"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B19S2.DE05",
+                        "display": "Within less than 24 hours of birth"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B19S2.DE06",
+                        "display": "24 hours or more after birth"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B19S2.DE07",
+                        "display": "Unknown when Jaundice first appeared"
+                    }
+                }
+            ]
         },
         {
             "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
@@ -500,15 +642,41 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/skin-pinch-abdomen"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B20S2.DE03",
+                        "display": "Skin Pinch goes back very slowly (More than 2 seconds)"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B20S2.DE04",
+                        "display": "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B20S2.DE05",
+                        "display": "Skin Pinch goes back Normally (immediately)"
+                    }
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.first().value  .code= 'EmCare.B18S2.DE11'"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B20S1.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B18S2.DE08').answer.first().value.code  = 'EmCare.B18S2.DE11'"
                     }
                 }
             ],
@@ -524,7 +692,29 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/weight-status"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE02",
+                        "display": "Very Low Weight for Age"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE03",
+                        "display": "Low Weight for Age"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE04",
+                        "display": "Normal Weight for Age"
+                    }
+                }
+            ]
         },
         {
             "extension": [
@@ -532,7 +722,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true and \"YI severe classification other than severe dehydration\" != true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true and ( %resource.repeat(item).where(linkId='YI_sever_but_dhey').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever_but_dhey').answer.first().value=false )"
                     }
                 }
             ],
@@ -571,10 +761,14 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true and \"YI severe classification\" != true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = true and ( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false )"
                     }
                 }
             ],
@@ -603,7 +797,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value= false and \"YI severe classification\" != true and \"YI severe classification\" != true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value= false and ( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false ) and ( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false )"
                     }
                 }
             ],
@@ -612,7 +806,22 @@
             "type": "choice",
             "required": true,
             "repeats": true,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/replacement-milk"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE10",
+                        "display": "Appropriate replacement milk"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE11",
+                        "display": "Inappropriate replacement milk"
+                    }
+                }
+            ]
         },
         {
             "extension": [
@@ -713,7 +922,22 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/milk-preparation"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE19",
+                        "display": "Correct and hygienic feed preparation"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE20",
+                        "display": "Incorrect or unhygienic feed preparation"
+                    }
+                }
+            ]
         },
         {
             "extension": [
@@ -730,7 +954,22 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/milk-given"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE22",
+                        "display": "Cup"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE23",
+                        "display": "Bottle"
+                    }
+                }
+            ]
         },
         {
             "extension": [
@@ -747,7 +986,22 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/utensils-cleaned"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE25",
+                        "display": "Feeding utensils cleaned hygienically"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE26",
+                        "display": "Feeding utensils not cleaned hygienically"
+                    }
+                }
+            ]
         },
         {
             "extension": [
@@ -755,7 +1009,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = false and \"YI severe classification\" != true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S1.DE01').answer.first().value = false and ( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false )"
                     }
                 }
             ],
@@ -764,15 +1018,34 @@
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/feeding-problem"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE28",
+                        "display": "Breastmilk also given"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B21S2.DE29",
+                        "display": "No Breastmilk at all"
+                    }
+                }
+            ]
         },
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "\"YI severe classification\" != true"
+                        "expression": "( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false )"
                     }
                 }
             ],
@@ -785,10 +1058,14 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "\"YI severe classification\" != true and %resource.repeat(item).where(linkId='EmCare.B21S2.DE30').answer.first().value = false"
+                        "expression": "( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false ) and %resource.repeat(item).where(linkId='EmCare.B21S2.DE30').answer.first().value = false"
                     }
                 }
             ],
@@ -839,6 +1116,10 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
                 },
@@ -846,11 +1127,11 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
                     "valueExpression": {
                         "language": "text/cql-identifier",
-                        "expression": "test"
+                        "expression": "fast breathing profile"
                     }
                 }
             ],
-            "linkId": "test",
+            "linkId": "Fast Breathing profile",
             "type": "boolean",
             "required": false,
             "repeats": false

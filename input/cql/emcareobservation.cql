@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareobservation version '1.0.1.rc11.build.71'
+library emcareobservation version '1.0.1.rc12.build.12'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -26,7 +26,6 @@ code "thermometer not available": 'EmCare.B6.DE04' from "EmCare" display 'thermo
 code "hot to touch": 'EmCare.B6.DE05' from "EmCare" display 'hot to touch'
 code "measured temperature": 'EmCare.B6.DE01A' from "EmCare" display 'measured temperature'
 code "weight": 'EmCare.B6.DE06' from "EmCare" display 'weight'
-code "weight cannot be measured": 'EmCare.B6.DE07' from "EmCare" display 'weight cannot be measured'
 code "estimated weight": 'EmCare.B6.DE08' from "EmCare" display 'estimated weight'
 code "height": 'EmCare.B6.DE09' from "EmCare" display 'height'
 code "height cannot be measured": 'EmCare.B6.DE11' from "EmCare" display 'height cannot be measured'
@@ -137,7 +136,7 @@ code "fast breathing": 'EmCare.B22.DE07' from "EmCare" display 'fast breathing'
 code "inhaled bronchodilator trial results": 'EmCare.B22.DE17' from "EmCare" display 'inhaled bronchodilator trial results'
 code "inhaled bronchodilator trial not feasible or available": 'EmCare.B22.DE22' from "EmCare" display 'inhaled bronchodilator trial not feasible or available'
 code "no fast breathing and no chest indrawing (post inhaled bronchodilator trial)": 'EmCare.B22.DE21' from "EmCare" display 'no fast breathing and no chest indrawing (post inhaled bronchodilator trial)'
-code "breastfeeding assessment": 'EmCare.B22.DE27' from "EmCare" display 'breastfeeding assessment'
+code "breastfeeding assessment not possible": 'EmCare.B22.DE41' from "EmCare" display 'breastfeeding assessment not possible'
 code "breastfed in the previous hour": 'EmCare.B22.DE28' from "EmCare" display 'breastfed in the previous hour'
 code "mother able to wait until young infant is willing to breastfeed again": 'EmCare.B22.DE29' from "EmCare" display 'mother able to wait until young infant is willing to breastfeed again'
 code "mother reports difficulty breastfeeding": 'EmCare.B22.DE30' from "EmCare" display 'mother reports difficulty breastfeeding'
@@ -147,7 +146,6 @@ code "lower lip turned outwards": 'EmCare.B22.DE33' from "EmCare" display 'lower
 code "more areola visible above than below the mouth": 'EmCare.B22.DE34' from "EmCare" display 'more areola visible above than below the mouth'
 code "slow deep sucks, sometimes pausing": 'EmCare.B22.DE35' from "EmCare" display 'slow deep sucks, sometimes pausing'
 code "breastfeeding assessment results": 'EmCare.B22.DE36' from "EmCare" display 'breastfeeding assessment results'
-code "breastfeeding assessment not possible": 'EmCare.B22.DE41' from "EmCare" display 'breastfeeding assessment not possible'
 code "difficulty breastfeeding reported": 'EmCare.B22.DE42' from "EmCare" display 'difficulty breastfeeding reported'
 code "no difficulty breastfeeding reported": 'EmCare.B22.DE43' from "EmCare" display 'no difficulty breastfeeding reported'
 code "difficulty breastfeeding observed": 'EmCare.B22.DE44' from "EmCare" display 'difficulty breastfeeding observed'

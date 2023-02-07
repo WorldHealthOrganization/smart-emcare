@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1821signs2mm version '1.0.1.rc11.build.71'
+library emcareb1821signs2mm version '1.0.1.rc12.build.12'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc11.build.71' called Base
-include emcareobservation version '1.0.1.rc11.build.71' called obs
-include emcarevalueset version '1.0.1.rc11.build.71' called val
-include emcarezscore version '1.0.1.rc11.build.71' called Z
-include emcarecombineddataelements version '1.0.1.rc11.build.71' called c
+include emcarebase version '1.0.1.rc12.build.12' called Base
+include emcareobservation version '1.0.1.rc12.build.12' called obs
+include emcarevalueset version '1.0.1.rc12.build.12' called val
+include emcarezscore version '1.0.1.rc12.build.12' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.12' called c
 
 
 
@@ -105,18 +105,26 @@ define "weight":
     "emcare.b6.de06"
 
 /* 
-yi severe classification other than severe dehydration : nan
+yi_sever_but_dhey : YI severe classification other than severe dehydration
     c."yi severe classification other than severe dehydration"
 */
-define "yi severe classification other than severe dehydration":
+define "yi_sever_but_dhey":
     c."yi severe classification other than severe dehydration"
 
+/* alias yi severe classification other than severe dehydration : yi_sever_but_dhey*/
+define "yi severe classification other than severe dehydration":
+    "yi_sever_but_dhey"
+
 /* 
-yi severe classification : nan
+yi_sever : YI severe classification
     c."yi severe classification"
 */
-define "yi severe classification":
+define "yi_sever":
     c."yi severe classification"
+
+/* alias yi severe classification : yi_sever*/
+define "yi severe classification":
+    "yi_sever"
 
 /* 
 emcare.b7.de03 : Convulsion(s) in this Illness
@@ -144,8 +152,8 @@ define "respiratory rate second count profile":
     Base.GetObsValue('EmCare.B22.DE04')
 
 /* 
-test : nan
-    HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04')
+fast breathing profile : nan
+    o"Fast Breathing"
 */
-define "test":
-    Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04')
+define "fast breathing profile":
+    Base.GetObsValue('EmCare.B22.DE07')

@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22assessmentstests version '1.0.1.rc11.build.71'
+library emcareb22assessmentstests version '1.0.1.rc12.build.12'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc11.build.71' called Base
-include emcareobservation version '1.0.1.rc11.build.71' called obs
-include emcarevalueset version '1.0.1.rc11.build.71' called val
-include emcarecombineddataelements version '1.0.1.rc11.build.71' called c
+include emcarebase version '1.0.1.rc12.build.12' called Base
+include emcareobservation version '1.0.1.rc12.build.12' called obs
+include emcarevalueset version '1.0.1.rc12.build.12' called val
+include emcarecombineddataelements version '1.0.1.rc12.build.12' called c
 
 
 
@@ -31,46 +31,70 @@ define "ageindays":
     AgeInDays()
 
 /* 
-applicability-breastfeedingtest : nan
+a-breastfeedingtest : applicability-BreastFeedingTest
     Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
 */
+define "a-breastfeedingtest":
+    Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
+
+/* alias applicability-breastfeedingtest : a-breastfeedingtest*/
 define "applicability-breastfeedingtest":
-    Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
+    "a-breastfeedingtest"
 
 /* 
-applicability-respiratoryrate : nan
-    "Cough" = true or "Difficulty Breathing" = true or "AgeInMonths"<2
+a-respiratoryrate : applicability-RespiratoryRate
+    ("Cough" = true or "Difficulty Breathing" = true or "AgeInMonths"<2) and o"Fast Breathing profile".empty()
 */
+define "a-respiratoryrate":
+    (Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true or "ageinmonths"<2) and o"Fast Breathing profile".empty()
+
+/* alias applicability-respiratoryrate : a-respiratoryrate*/
 define "applicability-respiratoryrate":
-    Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true or "ageinmonths"<2
+    "a-respiratoryrate"
 
 /* 
-applicability-bronchodilatortest : nan
-    ("Cough" = true or "Difficulty Breathing" = true) and "Wheezing" = true and (o"Fast Breathing" = true or "Chest Indrawing" = true) and  c."danger signs" = false and "Stridor in a calm child"= false and "Oxygen Saturation" >= 90 '%'
+a-bronchodilatortest : applicability-BronchodilatorTest
+    ("Cough" = true or "Difficulty Breathing" = true) and "Wheezing" = true and (o"Fast Breathing" = true or "Chest Indrawing" = true) and  c."danger signs" != true and "Stridor in a calm child"= false and "Oxygen Saturation" >= 90 '%'
 */
+define "a-bronchodilatortest":
+    (Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true) and Base.GetObsValue('EmCare.B10S2.DE05') = true and (Base.GetObsValue('EmCare.B22.DE07') = true or Base.GetObsValue('EmCare.B10S2.DE03') = true) and  Coalesce(c."danger signs",false)!=true and Base.GetObsValue('EmCare.B10S2.DE04')= false and Base.GetObsValue('EmCare.B10S2.DE07') >= 90 '%'
+
+/* alias applicability-bronchodilatortest : a-bronchodilatortest*/
 define "applicability-bronchodilatortest":
-    (Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true) and Base.GetObsValue('EmCare.B10S2.DE05') = true and (Base.GetObsValue('EmCare.B22.DE07') = true or Base.GetObsValue('EmCare.B10S2.DE03') = true) and  c."danger signs" = false and Base.GetObsValue('EmCare.B10S2.DE04')= false and Base.GetObsValue('EmCare.B10S2.DE07') >= 90 '%'
+    "a-bronchodilatortest"
 
 /* 
-applicability-hemoglobin : nan
+a-hemoglobin : applicability-Hemoglobin
     "Palmar pallor" = "Some palmar pallor" or "Palmar Pallor" = "Severe Palmar Pallor" or "Mucous membrane pallor" = "Some mucous membrane pallor" or "Mucous membrane pallor" = "Severe mucous membrane pallor"
 */
-define "applicability-hemoglobin":
+define "a-hemoglobin":
     Base.HasObsValueCode('EmCare.B15S2.DE01', 'EmCare.B15S2.DE03') or Base.HasObsValueCode('EmCare.B15S2.DE01', 'EmCare.B15S2.DE02') or Base.HasObsValueCode('EmCare.B15S2.DE09', 'EmCare.B15S2.DE11') or Base.HasObsValueCode('EmCare.B15S2.DE09', 'EmCare.B15S2.DE10')
 
-/* 
-applicability-secondtemperature : nan
-    Coalesce(c."psbi other than temperature", false) = false and AgeInMonths()<2 and "Axillary Temperature" > 38.5 'Cel'
-*/
-define "applicability-secondtemperature":
-    Coalesce(c."psbi other than temperature", false) = false and AgeInMonths()<2 and Base.GetObsValue('EmCare.B6.DE01') > 38.5 'Cel'
+/* alias applicability-hemoglobin : a-hemoglobin*/
+define "applicability-hemoglobin":
+    "a-hemoglobin"
 
 /* 
-applicability-fluidtest : nan
-    "Not able to drink or breastfeed" = true or "Vomiting Everything" = true or "Diarrhoea" = true
+a-secondtemperature : applicability-SecondTemperature
+    c."psbi other than temperature" != true and AgeInMonths()<2 and "Axillary Temperature" > 38.5 'Cel'
 */
+define "a-secondtemperature":
+    Coalesce(c."psbi other than temperature",false)!=true and AgeInMonths()<2 and Base.GetObsValue('EmCare.B6.DE01') > 38.5 'Cel'
+
+/* alias applicability-secondtemperature : a-secondtemperature*/
+define "applicability-secondtemperature":
+    "a-secondtemperature"
+
+/* 
+a-fluidtest : applicability-FluidTest
+    ("Not able to drink or breastfeed" = true or "Vomiting Everything" = true or "Diarrhoea" = true) and o"Oral Fluid Test Results".empty()
+*/
+define "a-fluidtest":
+    ("not able to drink or breastfeed" = true or "vomiting everything" = true or Base.GetObsValue('EmCare.B11S1.DE01') = true) and Base.GetObsValue('EmCare.B22.DE08').empty()
+
+/* alias applicability-fluidtest : a-fluidtest*/
 define "applicability-fluidtest":
-    "not able to drink or breastfeed" = true or "vomiting everything" = true or Base.GetObsValue('EmCare.B11S1.DE01') = true
+    "a-fluidtest"
 
 /* 
 respiratory rate profile : nan
@@ -87,18 +111,33 @@ define "respiratory rate second count profile":
     Base.GetObsValue('EmCare.B22.DE04')
 
 /* 
-test : nan
-    HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04')
+fast breathing profile : nan
+    o"Fast Breathing"
 */
-define "test":
-    Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04')
+define "fast breathing profile":
+    Base.GetObsValue('EmCare.B22.DE07')
 
 /* 
-danger signs : nan
-    Coalesce(c."emcare.b.g.de01", false)
+oftrp : Unable to Perform Oral Fluid Test Profile
+    o"Unable to Perform Oral Fluid Test"
 */
+define "oftrp":
+    Base.GetObsValue('EmCare.B22.DE14')
+
+/* alias unable to perform oral fluid test profile : oftrp*/
+define "unable to perform oral fluid test profile":
+    "oftrp"
+
+/* 
+ds : Danger Signs
+    Coalesce(c."danger signs",false)
+*/
+define "ds":
+    Coalesce(c."danger signs",false)
+
+/* alias danger signs : ds*/
 define "danger signs":
-    Coalesce(c."emcare.b.g.de01", false)
+    "ds"
 
 /* 
 emcare.b7.de09 : Not able to drink or breastfeed

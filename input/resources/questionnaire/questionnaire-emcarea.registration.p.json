@@ -343,7 +343,29 @@
             "type": "choice",
             "required": false,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/dob-estimator",
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE13",
+                        "display": "Estimated age in years/months for child (2 months or older)"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE14",
+                        "display": "Estimated age in weeks/days for young infant (under 2 months old)"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE15",
+                        "display": "Estimated Date of Birth"
+                    }
+                }
+            ],
             "item": [
                 {
                     "extension": [
@@ -360,7 +382,7 @@
                         }
                     ],
                     "linkId": "EmCare.A.DE12-help",
-                    "text": "The client/Primary Caregiver will provide an estimated age or estimated date of birth",
+                    "text": "The client/Caregiver will provide an estimated age or estimated date of birth",
                     "type": "display"
                 }
             ]
@@ -384,28 +406,12 @@
         {
             "extension": [
                 {
-                    "extension": [
-                        {
-                            "url": "key",
-                            "valueId": "EmCare.A.DE14.d"
-                        },
-                        {
-                            "url": "expression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "getValue().empty() or getValue()>=0 and getValue()<8"
-                            }
-                        },
-                        {
-                            "url": "severity",
-                            "valueCode": "error"
-                        },
-                        {
-                            "url": "human",
-                            "valueString": "error"
-                        }
-                    ],
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                    "valueInteger": 1
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                    "valueInteger": 8
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
@@ -431,28 +437,12 @@
         {
             "extension": [
                 {
-                    "extension": [
-                        {
-                            "url": "key",
-                            "valueId": "EmCare.A.DE14.w"
-                        },
-                        {
-                            "url": "expression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "getValue().empty() or getValue()>=0 and getValue()<8"
-                            }
-                        },
-                        {
-                            "url": "severity",
-                            "valueCode": "error"
-                        },
-                        {
-                            "url": "human",
-                            "valueString": "error"
-                        }
-                    ],
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                    "valueInteger": 1
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                    "valueInteger": 8
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
@@ -478,28 +468,12 @@
         {
             "extension": [
                 {
-                    "extension": [
-                        {
-                            "url": "key",
-                            "valueId": "EmCare.A.DE13.mo"
-                        },
-                        {
-                            "url": "expression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "getValue().empty() or getValue()>=0 and getValue()<13"
-                            }
-                        },
-                        {
-                            "url": "severity",
-                            "valueCode": "error"
-                        },
-                        {
-                            "url": "human",
-                            "valueString": "error"
-                        }
-                    ],
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                    "valueInteger": 1
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                    "valueInteger": 12
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
@@ -525,28 +499,12 @@
         {
             "extension": [
                 {
-                    "extension": [
-                        {
-                            "url": "key",
-                            "valueId": "EmCare.A.DE13.a"
-                        },
-                        {
-                            "url": "expression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "getValue().empty() or getValue()>=0 and getValue()<4"
-                            }
-                        },
-                        {
-                            "url": "severity",
-                            "valueCode": "error"
-                        },
-                        {
-                            "url": "human",
-                            "valueString": "error"
-                        }
-                    ],
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                    "valueInteger": 1
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                    "valueInteger": 4
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
@@ -714,38 +672,75 @@
             "repeats": false
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemMedia",
+                    "valueAttachment": {
+                        "contentType": "png",
+                        "url": "https://www.clipartmax.com/png/middle/136-1360801_caillou.png"
+                    }
+                }
+            ],
             "linkId": "EmCare.A.DE16",
             "text": "Sex",
             "type": "choice",
             "required": true,
             "repeats": false,
-            "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/sex-of-the-client"
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE17",
+                        "display": "Female"
+                    }
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemAnswerMedia",
+                            "valueAttachment": {
+                                "contentType": "png",
+                                "url": "https://www.clipartmax.com/png/small/47-470461_man-gender-sex-male-gender-symbol-comments-male-gender-icon-png.png"
+                            }
+                        }
+                    ],
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE18",
+                        "display": "Male"
+                    }
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemAnswerMedia",
+                            "valueAttachment": {
+                                "contentType": "png",
+                                "url": "https://www.clipartmax.com/png/small/193-1937816_clipart-female-symbol-female-gender-icon-png.png"
+                            }
+                        }
+                    ],
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.A.DE19",
+                        "display": "Not Specified"
+                    }
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.A.DE03').answer.first().empty()"
-                    }
-                }
-            ],
-            "linkId": "EmCare.A.DE20",
-            "text": "Address",
-            "type": "text",
-            "required": false,
-            "repeats": false
-        },
-        {
-            "extension": [
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
                 }
             ],
             "linkId": "EmCare.A.DE48",
-            "text": "Primary Caregiver",
+            "text": "Caregiver",
             "type": "boolean",
             "required": false,
             "repeats": false
@@ -781,7 +776,7 @@
                 {
                     "valueCoding": {
                         "code": "newrelatedperson",
-                        "display": "Register a new Primary Caregiver"
+                        "display": "Register a new Caregiver"
                     }
                 }
             ]
@@ -839,21 +834,21 @@
             "item": [
                 {
                     "linkId": "EmCare.A.DE21",
-                    "text": "Primary Caregiver First Name",
+                    "text": "Caregiver First Name",
                     "type": "string",
                     "required": true,
                     "repeats": false
                 },
                 {
                     "linkId": "EmCare.A.DE22",
-                    "text": "Primary Caregiver Middle Name",
+                    "text": "Caregiver Middle Name",
                     "type": "string",
                     "required": false,
                     "repeats": false
                 },
                 {
                     "linkId": "EmCare.A.DE23",
-                    "text": "Primary Caregiver Last Name",
+                    "text": "Caregiver Last Name",
                     "type": "string",
                     "required": true,
                     "repeats": false
@@ -861,20 +856,6 @@
                 {
                     "linkId": "EmCare.A.DE35",
                     "text": "Primary Caregiver&#8217;s Mobile telephone number",
-                    "type": "integer",
-                    "required": false,
-                    "repeats": false
-                },
-                {
-                    "linkId": "EmCare.A.DE36",
-                    "text": "Primary Caregiver&#8217;s Home telephone number",
-                    "type": "integer",
-                    "required": false,
-                    "repeats": false
-                },
-                {
-                    "linkId": "EmCare.A.DE37",
-                    "text": "Primary Caregiver&#8217;s Work telephone number",
                     "type": "integer",
                     "required": false,
                     "repeats": false
@@ -890,27 +871,57 @@
                         }
                     ],
                     "linkId": "EmCare.A.DE24",
-                    "text": "Primary Caregiver&#8217;s Relationship to Client",
+                    "text": "Caregiver&#8217;s Relationship to Client",
                     "type": "choice",
                     "required": true,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/relationship-to-client"
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE25",
+                                "display": "Mother"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE26",
+                                "display": "Father"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE27",
+                                "display": "Sibling"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE28",
+                                "display": "Extended family"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE29",
+                                "display": "Legal Guardian"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE30",
+                                "display": "Not Related"
+                            }
+                        }
+                    ]
                 },
                 {
                     "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "drop-down",
-                                        "display": "Drop down"
-                                    }
-                                ],
-                                "text": "Drop down"
-                            }
-                        },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
@@ -925,23 +936,32 @@
                     "type": "choice",
                     "required": true,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status"
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE33",
+                                "display": "Unknown"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE34",
+                                "display": "Alive"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE46",
+                                "display": "Dead"
+                            }
+                        }
+                    ]
                 },
                 {
                     "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "drop-down",
-                                        "display": "Drop down"
-                                    }
-                                ],
-                                "text": "Drop down"
-                            }
-                        },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
@@ -956,7 +976,29 @@
                     "type": "choice",
                     "required": true,
                     "repeats": false,
-                    "answerValueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status"
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE33",
+                                "display": "Unknown"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE34",
+                                "display": "Alive"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.A.DE46",
+                                "display": "Dead"
+                            }
+                        }
+                    ]
                 },
                 {
                     "extension": [
@@ -977,7 +1019,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='emcarerelatedpersoncaregiverid').answer.first().value.code = 'newPrimary Caregiver' or %resource.repeat(item).where(linkId='EmCare.A.DE48').answer.first().exists()"
+                                "expression": "%resource.repeat(item).where(linkId='emcarerelatedpersoncaregiverid').answer.first().value.code = 'newCaregiver' or %resource.repeat(item).where(linkId='EmCare.A.DE48').answer.first().exists()"
                             }
                         }
                     ],
@@ -989,7 +1031,7 @@
                         {
                             "valueCoding": {
                                 "code": "EmCare.A.DE38",
-                                "display": "Primary Caregiver wants to receive SMS or other messages regarding the child's visits and health status"
+                                "display": "Caregiver wants to receive SMS or other messages regarding the child's visits and health status"
                             }
                         }
                     ]

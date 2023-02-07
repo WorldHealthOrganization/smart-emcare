@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcaretreatment version '1.0.1.rc11.build.71'
+library emcaretreatment version '1.0.1.rc12.build.12'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc11.build.71' called Base
-include emcareobservation version '1.0.1.rc11.build.71' called obs
-include emcarevalueset version '1.0.1.rc11.build.71' called val
-include emcarecondition version '1.0.1.rc11.build.71' called cond
+include emcarebase version '1.0.1.rc12.build.12' called Base
+include emcareobservation version '1.0.1.rc12.build.12' called obs
+include emcarevalueset version '1.0.1.rc12.build.12' called val
+include emcarecondition version '1.0.1.rc12.build.12' called cond
 
 
 
@@ -46,24 +46,24 @@ define "load-emcare.c10.it.de04":
 
 /* 
 load-emcare.c10.it.de05 : nan
-    HasCond(cond."severe dehydration")
+    HasCond(cond."severe dehydration") and AgeInMonths()>=2
 */
 define "load-emcare.c10.it.de05":
-    Base.HasCond(cond."severe dehydration")
+    Base.HasCond(cond."severe dehydration") and AgeInMonths()>=2
 
 /* 
 load-emcare.c10.it.de06 : nan
-    HasCond(cond."some dehydration")
+    HasCond(cond."some dehydration")  and AgeInMonths()>=2
 */
 define "load-emcare.c10.it.de06":
-    Base.HasCond(cond."some dehydration")
+    Base.HasCond(cond."some dehydration")  and AgeInMonths()>=2
 
 /* 
 load-emcare.c10.it.de07 : nan
-    HasCond(cond."no dehydration")
+    HasCond(cond."no dehydration")  and AgeInMonths()>=2
 */
 define "load-emcare.c10.it.de07":
-    Base.HasCond(cond."no dehydration")
+    Base.HasCond(cond."no dehydration")  and AgeInMonths()>=2
 
 /* 
 load-emcare.c10.it.de08 : nan
@@ -326,17 +326,17 @@ define "load-emcare.c10.it.de41":
 
 /* 
 load-emcare.c10.it.de45 : nan
-    HasCond(cond."very low weight for age")  and AgeInDays()>=2
+    HasCond(cond."very low weight for age")  and AgeInMonths()>=2
 */
 define "load-emcare.c10.it.de45":
-    Base.HasCond(cond."very low weight for age")  and AgeInDays()>=2
+    Base.HasCond(cond."very low weight for age")  and AgeInMonths()>=2
 
 /* 
 load-emcare.c10.it.de46 : nan
-    HasCond(cond."low weight for age")  and AgeInDays()>=2
+    HasCond(cond."low weight for age")  and AgeInMonths()>=2
 */
 define "load-emcare.c10.it.de46":
-    Base.HasCond(cond."low weight for age")  and AgeInDays()>=2
+    Base.HasCond(cond."low weight for age")  and AgeInMonths()>=2
 
 /* 
 load-emcare.c10.it.de47 : nan
@@ -347,91 +347,91 @@ define "load-emcare.c10.it.de47":
 
 /* 
 load-emcare.c10.it.de48 : nan
-    HasCond(cond."possible serious bacterial infection or very severe disease") and AgeInDays()<2
+    HasCond(cond."possible serious bacterial infection or very severe disease") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de48":
-    Base.HasCond(cond."possible serious bacterial infection or very severe disease") and AgeInDays()<2
+    Base.HasCond(cond."possible serious bacterial infection or very severe disease") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de49 : nan
-    HasCond(cond."pneumonia") and AgeInDays()<2
+    HasCond(cond."pneumonia") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de49":
-    Base.HasCond(cond."pneumonia") and AgeInDays()<2
+    Base.HasCond(cond."pneumonia") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de50 : nan
-    HasCond(cond."local infection") and AgeInDays()<2
+    HasCond(cond."local infection") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de50":
-    Base.HasCond(cond."local infection") and AgeInDays()<2
+    Base.HasCond(cond."local infection") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de51 : nan
-    HasCond(cond."infection unlikely") and AgeInDays()<2
+    HasCond(cond."infection unlikely") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de51":
-    Base.HasCond(cond."infection unlikely") and AgeInDays()<2
+    Base.HasCond(cond."infection unlikely") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de52 : nan
-    HasCond(cond."severe jaundice") and AgeInDays()<2
+    HasCond(cond."severe jaundice") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de52":
-    Base.HasCond(cond."severe jaundice") and AgeInDays()<2
+    Base.HasCond(cond."severe jaundice") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de53 : nan
-    HasCond(cond."jaundice") and AgeInDays()<2
+    HasCond(cond."jaundice") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de53":
-    Base.HasCond(cond."jaundice") and AgeInDays()<2
+    Base.HasCond(cond."jaundice") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de54 : nan
-    HasCond(cond."no jaundice") and AgeInDays()<2
+    HasCond(cond."no jaundice") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de54":
-    Base.HasCond(cond."no jaundice") and AgeInDays()<2
+    Base.HasCond(cond."no jaundice") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de55 : nan
-    HasCond(cond."severe dehydration") and AgeInDays()<2
+    HasCond(cond."severe dehydration") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de55":
-    Base.HasCond(cond."severe dehydration") and AgeInDays()<2
+    Base.HasCond(cond."severe dehydration") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de56 : nan
-    HasCond(cond."some dehydration") and AgeInDays()<2
+    HasCond(cond."some dehydration") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de56":
-    Base.HasCond(cond."some dehydration") and AgeInDays()<2
+    Base.HasCond(cond."some dehydration") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de57 : nan
-    HasCond(cond."no dehydration") and AgeInDays()<2
+    HasCond(cond."no dehydration") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de57":
-    Base.HasCond(cond."no dehydration") and AgeInDays()<2
+    Base.HasCond(cond."no dehydration") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de58 : nan
-    HasCond(cond."very low weight for age") and AgeInDays()<2
+    HasCond(cond."very low weight for age") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de58":
-    Base.HasCond(cond."very low weight for age") and AgeInDays()<2
+    Base.HasCond(cond."very low weight for age") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de59 : nan
-    HasCond(cond."no feeding problem") and AgeInDays()<2
+    HasCond(cond."no feeding problem") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de59":
-    Base.HasCond(cond."no feeding problem") and AgeInDays()<2
+    Base.HasCond(cond."no feeding problem") and AgeInMonths()<2
 
 /* 
 load-emcare.c10.it.de60 : nan
-    HasCond(cond."feeding problem and / or low weight for age") and AgeInDays()<2
+    HasCond(cond."feeding problem and / or low weight for age") and AgeInMonths()<2
 */
 define "load-emcare.c10.it.de60":
-    Base.HasCond(cond."feeding problem and / or low weight for age") and AgeInDays()<2
+    Base.HasCond(cond."feeding problem and / or low weight for age") and AgeInMonths()<2

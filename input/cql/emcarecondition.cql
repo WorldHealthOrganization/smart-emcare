@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarecondition version '1.0.1.rc12.build.12'
+library emcarecondition version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -25,7 +25,7 @@ code "some dehydration": 'EmCare.B23.DE14' from "EmCare" display 'some dehydrati
 code "no dehydration": 'EmCare.B23.DE15' from "EmCare" display 'no dehydration'
 code "feeding problem and / or low weight for age": 'EmCare.B23.DE94' from "EmCare" display 'feeding problem and / or low weight for age'
 code "no feeding problem": 'EmCare.B23.DE98' from "EmCare" display 'no feeding problem'
-code "estimated weight": 'EmCare.B6.DE08' from "EmCare" display 'estimated weight'
+code "add other classifications": 'collector' from "EmCare" display 'add other classifications'
 code "very severe disease": 'EmCare.B23.DE01' from "EmCare" display 'very severe disease'
 code "severe pneumonia or very severe disease": 'EmCare.B23.DE03' from "EmCare" display 'severe pneumonia or very severe disease'
 code "cough or cold": 'EmCare.B23.DE10' from "EmCare" display 'cough or cold'
@@ -68,4 +68,3 @@ code "mouth sores or ulcer": 'EmCare.B23.DE59' from "EmCare" display 'mouth sore
 code "oral thrush": 'EmCare.B23.DE61' from "EmCare" display 'oral thrush'
 code "low weight for age": 'EmCare.B23.DE107' from "EmCare" display 'low weight for age'
 code "low muac or visual report of wasting": 'EmCare.B23.DE108' from "EmCare" display 'low muac or visual report of wasting'
-code "add other classifications": 'collector' from "EmCare" display 'add other classifications'

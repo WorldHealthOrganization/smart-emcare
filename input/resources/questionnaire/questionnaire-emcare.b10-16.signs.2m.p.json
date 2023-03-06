@@ -396,155 +396,7 @@
             "linkId": "EmCare.B22.RespiratoryRate",
             "type": "group",
             "required": false,
-            "repeats": false,
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
-                            "valueCoding": {
-                                "system": "http://unitsofmeasure.org",
-                                "code": "{Counts}/min"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "if(%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().exists(), %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value,{})"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE01",
-                    "text": "Respiratory Rate",
-                    "type": "quantity",
-                    "required": true,
-                    "repeats": false
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "check-box",
-                                        "display": "Check-box"
-                                    }
-                                ],
-                                "text": "Check-box"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE02",
-                    "type": "choice",
-                    "required": false,
-                    "repeats": true,
-                    "answerOption": [
-                        {
-                            "valueCoding": {
-                                "code": "EmCare.B22.DE02",
-                                "display": "Unable to perform Respiratory Rate at this time"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
-                            "valueCoding": {
-                                "system": "http://unitsofmeasure.org",
-                                "code": "{Counts}/min"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value > 60 '{Counts}/min' and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty()"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE04",
-                    "text": "Respiratory Rate Second Count",
-                    "type": "quantity",
-                    "required": false,
-                    "repeats": false
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "check-box",
-                                        "display": "Check-box"
-                                    }
-                                ],
-                                "text": "Check-box"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE05",
-                    "type": "choice",
-                    "required": false,
-                    "repeats": true,
-                    "answerOption": [
-                        {
-                            "valueCoding": {
-                                "code": "EmCare.B22.DE05",
-                                "display": "Respiratory Rate Second Count Not Possible"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
-                            "valueCode": "horizontal"
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "if(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value =< 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() ),iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false),{})"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE07",
-                    "text": "Fast Breathing",
-                    "type": "boolean",
-                    "required": false,
-                    "repeats": false,
-                    "readOnly": true
-                }
-            ]
+            "repeats": false
         },
         {
             "extension": [
@@ -564,7 +416,27 @@
             "text": "Chest Indrawing",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE03-help",
+                    "text": "<span class=\"caps\">NORMAL</span>: When child breaths IN, chest wall moves OUT<br />\nCHEST <span class=\"caps\">INDRAWING</span>: When child breaths IN, chest wall moves IN</p>\n\n\t<p>Chest indrawing occurs when the child needs to make a greater effort than normal to breathe in. You will look for chest indrawing when the child breathes IN.</p>\n\n\t<p>In normal breathing, the whole chest wall (upper and lower) and the abdomen move <span class=\"caps\">OUT</span> when the child breathes IN. The child has chest indrawing if the lower chest wall (lower ribs) goes IN when the child breathes IN.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -584,7 +456,27 @@
             "text": "Stridor in a calm child",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE04-help",
+                    "text": "The child must be calm in order to assess Stridor.It is a harsh noise caused<br />\nwhen swelling interferes with air entering the lungs.<br />\nTo look and listen for stridor, look to see when the<br />\nchild breathes IN.Put your ear near the child\u2019s mouth because stridor can be difficult to hear. Sometimes you will hear a wet noise if the child\u2019s nose is blocked. Clear the nose, and listen again.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -604,7 +496,27 @@
             "text": "Wheezing",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE05-help",
+                    "text": "Wheeze is a high-pitched whistling or musical sound heard at the end of the breathing <span class=\"caps\">OUT</span>. The child\u2019s small air passages narrow to cause wheezing.<br />\nTo hear wheezing, put your ear near to the child\u2019s mouth when the child is calm. Look at the child\u2019s breathing while you listen to check that the sound mainly occurs when the child breathes out",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -662,7 +574,27 @@
                     "text": "Oxygen Saturation",
                     "type": "quantity",
                     "required": false,
-                    "repeats": false
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                                "code": "security"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B10S2.DE07-unit",
+                            "text": "%",
+                            "type": "display"
+                        }
+                    ]
                 },
                 {
                     "extension": [
@@ -737,7 +669,27 @@
             "text": "Sunken eyes",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S2.DE01-help",
+                    "text": "The eyes of a child who is dehydrated may look sunken. Decide<br />\nif you think the eyes are sunken. Then ask the mother if she thinks her child\u2019s eyes look unusual. Her opinion can help you confirm.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -775,6 +727,26 @@
                         "code": "EmCare.B20S2.DE05",
                         "display": "Skin Pinch goes back Normally (immediately)"
                     }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S2.DE02-help",
+                    "text": "1. <span class=\"caps\">ASK</span> the mother to place the child on the examining table so that the child is flat<br />\non his back with his arms at his sides (not over his head) and his legs straight.<br />\nOr, ask the mother to hold the child so he is lying flat on her lap.<br />\n2. <span class=\"caps\">USE</span> <span class=\"caps\">YOUR</span> <span class=\"caps\">THUMB</span> <span class=\"caps\">AND</span> <span class=\"caps\">FIRST</span> <span class=\"caps\">FINGER</span> to locate the area on the child\u2019s<br />\nabdomen halfway between the umbilicus and the side of the abdomen. Do not<br />\nuse your fingertips because this will cause pain. The fold of the skin should be<br />\nin a line up and down the child\u2019s body.<br />\n3. <span class=\"caps\">PICK</span> UP all the layers of skin and the tissue underneath them.<br />\n4. <span class=\"caps\">HOLD</span> the pinch for one second. Then release it.<br />\n5.. <span class=\"caps\">LOOK</span> to see if the skin pinch goes back very slowly (more than 2 seconds),<br />\nslowly, (less than 2 seconds, but not immediately), or immediately. If the skin<br />\nstays up for even a brief time after you release it, decide that the skin pinch goes<br />\nback slowly",
+                    "type": "display"
                 }
             ]
         },
@@ -975,15 +947,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE07",
-                        "display": "Less than 14 days"
+                        "code": "EmCare.B10S1.DE08",
+                        "display": "14 days or more"
                     }
                 },
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE08",
-                        "display": "14 days or more"
+                        "code": "EmCare.B10S1.DE07",
+                        "display": "Less than 14 days"
                     }
                 }
             ]
@@ -1660,8 +1632,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B14S2.DE39",
-                        "display": "No Oral Sores or Mouth Ulcers"
+                        "code": "EmCare.B14S2.DE41",
+                        "display": "Mouth Sores or Mouth Ulcers - Deep and Extensive"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B14S2.DE42",
+                        "display": "Mouth Sores or Mouth Ulcers - Not Deep and Extensive"
                     }
                 },
                 {
@@ -1674,15 +1653,8 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B14S2.DE41",
-                        "display": "Mouth Sores or Mouth Ulcers - Deep and Extensive"
-                    }
-                },
-                {
-                    "valueCoding": {
-                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B14S2.DE42",
-                        "display": "Mouth Sores or Mouth Ulcers - Not Deep and Extensive"
+                        "code": "EmCare.B14S2.DE39",
+                        "display": "No Oral Sores or Mouth Ulcers"
                     }
                 }
             ]
@@ -1803,6 +1775,254 @@
                         "code": "EmCare.B15S2.DE12",
                         "display": "No mucous membrane pallor"
                     }
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://unitsofmeasure.org",
+                        "code": "{Counts}/min"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().exists(), %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value,{})"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE01",
+            "text": "Respiratory Rate",
+            "type": "quantity",
+            "required": true,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE01-help",
+                    "text": "Count the number of breaths the child takes per minute to determine if fast breathing is present. To count the breaths per minute, use a watch with a second hand or a digital watch (or click here for a 60 second timer).  Look for the breathing movement anywhere on the child\u2019s chest or abdomen.  The number of breaths for \u2018fast breathing\u2019 depends on the child\u2019s age.  &#8211; Under 2 months: More than 60 breaths per minute* &#8211; 2 to 11 months: More than 50 breaths per minute &#8211; 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
+                    "type": "display"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE01-unit",
+                    "text": "{Counts}/min",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE02",
+            "type": "choice",
+            "required": false,
+            "repeats": true,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "code": "EmCare.B22.DE02",
+                        "display": "Unable to perform Respiratory Rate at this time"
+                    }
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Counts}/min' and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "second",
+            "type": "group",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                            "valueCoding": {
+                                "system": "http://unitsofmeasure.org",
+                                "code": "{Counts}/min"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE04",
+                    "text": "Respiratory Rate Second Count",
+                    "type": "quantity",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                                "code": "security"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE04-unit",
+                            "text": "{Counts}/min",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "check-box",
+                                        "display": "Check-box"
+                                    }
+                                ],
+                                "text": "Check-box"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE05",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": true,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "code": "EmCare.B22.DE05",
+                                "display": "Respiratory Rate Second Count Not Possible"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2  and %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().exists()) or (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2  and %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists())"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() ),iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false),{})"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B22.DE07",
+            "text": "Fast Breathing",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "readOnly": true,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE07-help",
+                    "text": "For 12 months to 5 years fast breathing is 40 breaths per minute or more",
+                    "type": "display"
                 }
             ]
         },

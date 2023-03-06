@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22assessmentstests version '1.0.1.rc12.build.12'
+library emcareb22assessmentstests version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.12' called Base
-include emcareobservation version '1.0.1.rc12.build.12' called obs
-include emcarevalueset version '1.0.1.rc12.build.12' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.12' called c
+include emcarebase version '1.0.1.rc12.build.156' called Base
+include emcareobservation version '1.0.1.rc12.build.156' called obs
+include emcarevalueset version '1.0.1.rc12.build.156' called val
+include emcarecombineddataelements version '1.0.1.rc12.build.156' called c
 
 
 
@@ -32,10 +32,12 @@ define "ageindays":
 
 /* 
 a-breastfeedingtest : applicability-BreastFeedingTest
-    Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
+    (    AgeInMonths()>=2 and AgeInMonths()<6 and  c."severe classification up to assessments and tests excluding severe dehydration" !=true)
+     or (    AgeInMonths()<2 and  and  "Breastfed" = true and c."yi severe classification other than severe dehydration" !=true)
 */
 define "a-breastfeedingtest":
-    Base."Person accompanying child today's Relationship to Client".coding.where(code = 'MTH').exists()
+    (    AgeInMonths()>=2 and AgeInMonths()<6 and  Coalesce(c."severe classification up to assessments and tests excluding severe dehydration",false)!=true)
+     or (    AgeInMonths()<2 and  and  Base.GetObsValue('EmCare.B21S1.DE06') = true and Coalesce(c."yi severe classification other than severe dehydration",false)!=true)
 
 /* alias applicability-breastfeedingtest : a-breastfeedingtest*/
 define "applicability-breastfeedingtest":
@@ -43,10 +45,10 @@ define "applicability-breastfeedingtest":
 
 /* 
 a-respiratoryrate : applicability-RespiratoryRate
-    ("Cough" = true or "Difficulty Breathing" = true or "AgeInMonths"<2) and o"Fast Breathing profile".empty()
+    ("Cough" = true or "Difficulty Breathing" = true or "AgeInMonths"<2) and o"Fast Breathing" is null
 */
 define "a-respiratoryrate":
-    (Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true or "ageinmonths"<2) and o"Fast Breathing profile".empty()
+    (Base.GetObsValue('EmCare.B10S1.DE05') = true or Base.GetObsValue('EmCare.B10S1.DE01') = true or "ageinmonths"<2) and Base.GetObsValue('EmCare.B22.DE07') is null
 
 /* alias applicability-respiratoryrate : a-respiratoryrate*/
 define "applicability-respiratoryrate":
@@ -87,10 +89,10 @@ define "applicability-secondtemperature":
 
 /* 
 a-fluidtest : applicability-FluidTest
-    ("Not able to drink or breastfeed" = true or "Vomiting Everything" = true or "Diarrhoea" = true) and o"Oral Fluid Test Results".empty()
+    ("Not able to drink or breastfeed" = true or "Vomiting Everything" = true or "Diarrhoea" = true) and o"Oral Fluid Test Results" is null
 */
 define "a-fluidtest":
-    ("not able to drink or breastfeed" = true or "vomiting everything" = true or Base.GetObsValue('EmCare.B11S1.DE01') = true) and Base.GetObsValue('EmCare.B22.DE08').empty()
+    ("not able to drink or breastfeed" = true or "vomiting everything" = true or Base.GetObsValue('EmCare.B11S1.DE01') = true) and Base.GetObsValue('EmCare.B22.DE08') is null
 
 /* alias applicability-fluidtest : a-fluidtest*/
 define "applicability-fluidtest":

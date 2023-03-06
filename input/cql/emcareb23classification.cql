@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb23classification version '1.0.1.rc12.build.12'
+library emcareb23classification version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.12' called Base
-include emcareobservation version '1.0.1.rc12.build.12' called obs
-include emcarevalueset version '1.0.1.rc12.build.12' called val
-include emcarezscore version '1.0.1.rc12.build.12' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.12' called C
+include emcarebase version '1.0.1.rc12.build.156' called Base
+include emcareobservation version '1.0.1.rc12.build.156' called obs
+include emcarevalueset version '1.0.1.rc12.build.156' called val
+include emcarezscore version '1.0.1.rc12.build.156' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.156' called C
 
 
 
@@ -29,7 +29,7 @@ dl-xxxx : nan
 */
 define "dl-xxxx":
     (C."child")
-     and ((    Base.GetObsValue('EmCare.B7.DE02') = true and  Base.HasObsValueCode('EmCare.B7-B8-B9.DE01', 'EmCare.B7/B8/B9.DE02'))
+     and ((    Base.GetObsValue('EmCare.B7.DE02') = true and  Base.HasObsValueCode('EmCare.B7-B8-B9.DE01', 'EmCare.B7-B8-B9.DE02'))
      or (    Base.GetObsValue('EmCare.B7.DE03') = true)
      or (    Base.GetObsValue('EmCare.B7.DE08') = true)
      or (    Base.GetObsValue('EmCare.B7.DE08a') = true)
@@ -125,10 +125,10 @@ define "pneumonia":
 
 /* 
 dl-g-cl1-19 : Cough or Cold
-    C."age >= 2 months to <60 months"  and ("Cough"= true  or  "Difficulty Breathing" = true) and "Severe Pneumonia or Very Severe Disease"! = true and "Pneumonia"!=true
+    C."age >= 2 months to <60 months"  and ("Cough"= true  or  "Difficulty Breathing" = true) and "Severe Pneumonia or Very Severe Disease"!= true and "Pneumonia"!=true
 */
 define "dl-g-cl1-19":
-    C."age >= 2 months to <60 months"  and (Base.GetObsValue('EmCare.B10S1.DE05')= true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and "severe pneumonia or very severe disease"! = true and Coalesce("pneumonia",false)!=true
+    C."age >= 2 months to <60 months"  and (Base.GetObsValue('EmCare.B10S1.DE05')= true  or  Base.GetObsValue('EmCare.B10S1.DE01') = true) and Coalesce("severe pneumonia or very severe disease",false)!=true and Coalesce("pneumonia",false)!=true
 
 /* alias cough or cold : dl-g-cl1-19*/
 define "cough or cold":
@@ -382,23 +382,23 @@ define "severe complicated measles":
     "dl-i-cl1-16-67a"
 
 /* 
-dl-g-cl1-68-70 : Measles with Eye or Mouth Complication
+dl-g-cl1-69-70 : Measles with Eye or Mouth Complication
     (C."age >= 2 months to <60 months" and C."fever" = true   and "Severe Complicated Measles"!=true)
-     and ((    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true) and ("Generalised or Localised Skin Problem" = "Generalised Skin Problem") and ("Pus Draining from Eye" = true  or  "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive"  ) and "Measles Rash" = true)
-     or (    "Cough" = false  and "Runny nose" = false and "Red eyes" = false and "Measles in last 3 months" =true and ("Pus Draining from Eye" = true  or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" ))
-     or (    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true) and "Generalised or Localised Skin Problem" = "Generalised Skin Problem" and "Measles Rash" = false and "Measles in last 3 months" = true and ("Pus Draining from Eye" = true  or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" ))
-     or (    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true)  and "Generalised or Localised Skin Problem" != "Generalised Skin Problem" and "Measles Rash" = true))
+     and ((    "Cough" = false  and "Runny nose" = false and "Red eyes" = false and "Measles in last 3 months" =true and ("Pus Draining from Eye" = true  or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" ))
+     or (    (("Cough" = true  or  "Runny nose" = true or "Red eyes" = true) and ("Generalised or Localised Skin Problem" = "Generalised Skin Problem"))
+         and ((    "Measles Rash" = true   and ("Pus Draining from Eye" = true  or  "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive"  ))
+         or (    "Measles in last 3 months" = true and ("Pus Draining from Eye" = true  or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" )))))
 */
-define "dl-g-cl1-68-70":
+define "dl-g-cl1-69-70":
     (C."age >= 2 months to <60 months" and C."fever" = true   and Coalesce("severe complicated measles",false)!=true)
-     and ((    (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true) and (Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true) and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or  Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42')  ) and Base.GetObsValue('EmCare.B14S2.DE10') = true)
-     or (    Base.GetObsValue('EmCare.B10S1.DE05') = false  and Base.GetObsValue('EmCare.B12S2.DE05') = false and Base.GetObsValue('EmCare.B14S2.DE01') = false and "measles in last 3 months" =true and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') ))
-     or (    (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true) and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true and Base.GetObsValue('EmCare.B14S2.DE10') = false and "measles in last 3 months" = true and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') ))
-     or (    (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true)  and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = false and Base.GetObsValue('EmCare.B14S2.DE10') = true))
+     and ((    Base.GetObsValue('EmCare.B10S1.DE05') = false  and Base.GetObsValue('EmCare.B12S2.DE05') = false and Base.GetObsValue('EmCare.B14S2.DE01') = false and "measles in last 3 months" =true and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') ))
+     or (    ((Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true) and (Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true))
+         and ((    Base.GetObsValue('EmCare.B14S2.DE10') = true   and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or  Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42')  ))
+         or (    "measles in last 3 months" = true and (Base.GetObsValue('EmCare.B14S2.DE02') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') )))))
 
-/* alias measles with eye or mouth complication : dl-g-cl1-68-70*/
+/* alias measles with eye or mouth complication : dl-g-cl1-69-70*/
 define "measles with eye or mouth complication":
-    "dl-g-cl1-68-70"
+    "dl-g-cl1-69-70"
 
 /* 
 dl-g-cl1-71 : Possible Measles
@@ -700,10 +700,10 @@ define "steven johnson syndrome (sjs)":
 
 /* 
 dl-g-cl1-106 : Mouth Sores or Ulcer
-    C."age >= 2 months to <60 months" and C."fever" = true and ("Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" )
+    C."age >= 2 months to <60 months" and C."fever" = true and ("Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Not Deep and Extensive" or "Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" )
 */
 define "dl-g-cl1-106":
-    C."age >= 2 months to <60 months" and C."fever" = true and (Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') )
+    C."age >= 2 months to <60 months" and C."fever" = true and (Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE42') or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') )
 
 /* alias mouth sores or ulcer : dl-g-cl1-106*/
 define "mouth sores or ulcer":

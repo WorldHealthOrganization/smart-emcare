@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareobservation version '1.0.1.rc12.build.12'
+library emcareobservation version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -14,13 +14,13 @@ codesystem "EmCare" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/
 
 code "is the child sick today?": 'EmCare.B3.DE05' from "EmCare" display 'is the child sick today?'
 code "convulsing now": 'EmCare.B7.DE02' from "EmCare" display 'convulsing now'
+code "continue to assess sick child": 'EmCare.B7-B8-B9.DE01' from "EmCare" display 'continue to assess sick child'
 code "convulsion(s) in this illness": 'EmCare.B7.DE03' from "EmCare" display 'convulsion(s) in this illness'
 code "unconscious or lethargic": 'EmCare.B7.DE08b' from "EmCare" display 'unconscious or lethargic'
 code "unconscious": 'EmCare.B7.DE08' from "EmCare" display 'unconscious'
 code "lethargic": 'EmCare.B7.DE08a' from "EmCare" display 'lethargic'
 code "not able to drink or breastfeed": 'EmCare.B7.DE09' from "EmCare" display 'not able to drink or breastfeed'
 code "vomiting everything": 'EmCare.B7.DE10' from "EmCare" display 'vomiting everything'
-code "continue to assess sick child": 'EmCare.B7-B8-B9.DE01' from "EmCare" display 'continue to assess sick child'
 code "axillary temperature": 'EmCare.B6.DE01' from "EmCare" display 'axillary temperature'
 code "thermometer not available": 'EmCare.B6.DE04' from "EmCare" display 'thermometer not available'
 code "hot to touch": 'EmCare.B6.DE05' from "EmCare" display 'hot to touch'
@@ -50,15 +50,12 @@ code "restless and irritable": 'EmCare.B11S2.DE06' from "EmCare" display 'restle
 code "weight status": 'EmCare.B21S2.DE01' from "EmCare" display 'weight status'
 code "breastfed how many times in 24 hours?": 'EmCare.B21S2.DE05' from "EmCare" display 'breastfed how many times in 24 hours?'
 code "sufficient feeds": 'EmCare.B21S2.DE06' from "EmCare" display 'sufficient feeds'
-code "insufficient feeds": 'EmCare.B21S2.DE07' from "EmCare" display 'insufficient feeds'
 code "young infant receives food or fluids other than breast milk": 'EmCare.B21S2.DE08' from "EmCare" display 'young infant receives food or fluids other than breast milk'
 code "what milk is being given as a replacement feed?": 'EmCare.B21S2.DE09' from "EmCare" display 'what milk is being given as a replacement feed?'
 code "how many replacement feeds during the day and night (24 hours)?": 'EmCare.B21S2.DE12' from "EmCare" display 'how many replacement feeds during the day and night (24 hours)?'
 code "sufficient replacement feeds (in 24 hours)": 'EmCare.B21S2.DE13' from "EmCare" display 'sufficient replacement feeds (in 24 hours)'
-code "insufficient replacement feeds (in 24 hours)": 'EmCare.B21S2.DE14' from "EmCare" display 'insufficient replacement feeds (in 24 hours)'
 code "how much milk is given at each feed?": 'EmCare.B21S2.DE15' from "EmCare" display 'how much milk is given at each feed?'
 code "sufficient replacement feeds": 'EmCare.B21S2.DE16' from "EmCare" display 'sufficient replacement feeds'
-code "insufficient replacement feeds": 'EmCare.B21S2.DE17' from "EmCare" display 'insufficient replacement feeds'
 code "how is the milk prepared?": 'EmCare.B21S2.DE18' from "EmCare" display 'how is the milk prepared?'
 code "how is the milk given?": 'EmCare.B21S2.DE21' from "EmCare" display 'how is the milk given?'
 code "how are the feeding utensils cleaned?": 'EmCare.B21S2.DE24' from "EmCare" display 'how are the feeding utensils cleaned?'
@@ -147,9 +144,7 @@ code "more areola visible above than below the mouth": 'EmCare.B22.DE34' from "E
 code "slow deep sucks, sometimes pausing": 'EmCare.B22.DE35' from "EmCare" display 'slow deep sucks, sometimes pausing'
 code "breastfeeding assessment results": 'EmCare.B22.DE36' from "EmCare" display 'breastfeeding assessment results'
 code "difficulty breastfeeding reported": 'EmCare.B22.DE42' from "EmCare" display 'difficulty breastfeeding reported'
-code "no difficulty breastfeeding reported": 'EmCare.B22.DE43' from "EmCare" display 'no difficulty breastfeeding reported'
 code "difficulty breastfeeding observed": 'EmCare.B22.DE44' from "EmCare" display 'difficulty breastfeeding observed'
-code "no difficulty breastfeeding observed": 'EmCare.B22.DE45' from "EmCare" display 'no difficulty breastfeeding observed'
 code "hemoglobin (hb) g/dl": 'EmCare.B22.DE81' from "EmCare" display 'hemoglobin (hb) g/dl'
 code "hemoglobin test not available": 'EmCare.B22.DE82' from "EmCare" display 'hemoglobin test not available'
 code "axillary temperature (second measurement)": 'EmCare.B22.DE47' from "EmCare" display 'axillary temperature (second measurement)'

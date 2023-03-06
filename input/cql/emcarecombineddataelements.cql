@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarecombineddataelements version '1.0.1.rc12.build.12'
+library emcarecombineddataelements version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.12' called Base
-include emcareobservation version '1.0.1.rc12.build.12' called obs
-include emcarevalueset version '1.0.1.rc12.build.12' called val
+include emcarebase version '1.0.1.rc12.build.156' called Base
+include emcareobservation version '1.0.1.rc12.build.156' called obs
+include emcarevalueset version '1.0.1.rc12.build.156' called val
 
 
 
@@ -122,16 +122,24 @@ define "severe classification up to assessments and tests excluding severe dehyd
 
 /* 
 dl-g-cl1-23-30 : Severe Dehydration
-    ("Age >= 2 months to <60 months"  and "Diarrhoea" = true)
-     and ((    "Unconscious" = true and "Skin pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)")
-     or (    ("Restless and Irritable" = true or "Skin pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)" ) and ("Oral Fluid Test Results" = "Completely Unable to Drink" or "Oral Fluid Test Results" = "Vomits Immediately / Everything" or  "Completely Unable to Drink or Vomits Immediately / Everything"=true))
-     or (    (ToInteger("Unconscious or Lethargic" = true) + ToInteger("Sunken Eyes" = true) +ToInteger("Skin pinch of Abdomen" = "Skin Pinch goes back very slowly (More than 2 seconds)" )+ToInteger( "Oral Fluid Test Results" = "Completely Unable to drink" )+ToInteger(  "Oral Fluid Test Results" = "Vomits Immediately / Everything")  + ToInteger(  "Completely Unable to Drink or Vomits Immediately / Everything"=true )+ToInteger( "Oral Fluid Test Results" = "Drinks Poorly") )>1))
+    ("Diarrhoea" = true)
+     and ((    ("Age >= 2 months to <60 months")
+         and ((    "Unconscious" = true and "Skin pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)")
+         or (    ("Restless and Irritable" = true or "Skin pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)" ) and ("Oral Fluid Test Results" = "Completely Unable to Drink" or "Oral Fluid Test Results" = "Vomits Immediately / Everything" or  "Completely Unable to Drink or Vomits Immediately / Everything"=true))
+         or (    (ToInteger("Unconscious or Lethargic" = true) + ToInteger("Sunken Eyes" = true) +ToInteger("Skin pinch of Abdomen" = "Skin Pinch goes back very slowly (More than 2 seconds)" )+ToInteger( "Oral Fluid Test Results" = "Completely Unable to drink" )+ToInteger(  "Oral Fluid Test Results" = "Vomits Immediately / Everything")  + ToInteger(  "Completely Unable to Drink or Vomits Immediately / Everything"=true )+ToInteger( "Oral Fluid Test Results" = "Drinks Poorly") )>1)))
+     or (    (AgeInMonths()<2)
+         and ((    (ToInteger("Sunken Eyes"=true) +  ToInteger("Skin Pinch of Abdomen" = "Skin Pinch goes back very slowly (More than 2 seconds)") + ToInteger("Movements" = "Movement only when Stimulated but then stops") +ToInteger("Movements" = "No Movement at all"))>1)
+         or (    "Skin Pinch of Abdomen" = "Skin Pinch goes back very slowly (More than 2 seconds)" and ("Movements" = "Movement only when Stimulated but then stops"  or "Movements" = "No Movement at all" )))))
 */
 define "dl-g-cl1-23-30":
-    ("age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B11S1.DE01') = true)
-     and ((    Base.GetObsValue('EmCare.B7.DE08') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04'))
-     or (    (Base.GetObsValue('EmCare.B11S2.DE06') = true or Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04') ) and (Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE09') or Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE10') or  Base.GetObsValue('EmCare.B22.DE14a')=true))
-     or (    (ToInteger(Coalesce(Base.GetObsValue('EmCare.B7.DE08b') = true,false)) + ToInteger(Coalesce(Base.GetObsValue('EmCare.B11S2.DE01') = true,false)) +ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03') ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE09') ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE10'),false))  + ToInteger(Coalesce(Base.GetObsValue('EmCare.B22.DE14a')=true ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE11'),false)) )>1))
+    (Base.GetObsValue('EmCare.B11S1.DE01') = true)
+     and ((    ("age >= 2 months to <60 months")
+         and ((    Base.GetObsValue('EmCare.B7.DE08') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04'))
+         or (    (Base.GetObsValue('EmCare.B11S2.DE06') = true or Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04') ) and (Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE09') or Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE10') or  Base.GetObsValue('EmCare.B22.DE14a')=true))
+         or (    (ToInteger(Coalesce(Base.GetObsValue('EmCare.B7.DE08b') = true,false)) + ToInteger(Coalesce(Base.GetObsValue('EmCare.B11S2.DE01') = true,false)) +ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03') ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE09') ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE10'),false))  + ToInteger(Coalesce(Base.GetObsValue('EmCare.B22.DE14a')=true ,false))+ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE11'),false)) )>1)))
+     or (    (AgeInMonths()<2)
+         and ((    (ToInteger(Coalesce(Base.GetObsValue('EmCare.B11S2.DE01')=true,false)) +  ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03'),false)) + ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE10'),false)) +ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE09'),false)))>1)
+         or (    Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03') and (Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE10')  or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE09') )))))
 
 /* alias severe dehydration : dl-g-cl1-23-30*/
 define "severe dehydration":
@@ -139,29 +147,35 @@ define "severe dehydration":
 
 /* 
 dl-g-cl1-24-32 : Some Dehydration
-    ("Age >= 2 months to <60 months"  and "Diarrhoea" = true and  "Severe Dehydration"!=true)
+    ("Diarrhoea" = true and  "Severe Dehydration"!=true)
      and ((    (ToInteger("Restless and irritable" = true) + ToInteger("Sunken Eyes" = true) + ToInteger("Skin Pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)" ) + ToInteger("Oral Fluid Test Results" = "Drinks Eagerly / Thirstily" ))>1)
-     or (    "Restless and Irritable" = true and ("Oral Fluid Test Results" = "Drinks poorly" or  "Skin Pinch of Abdomen" = "Skin Pinch goes back very slowly (more than 2 seconds)" ))
-     or (    ("Lethargic" = true or "Oral Fluid Test Results" = "Drinks poorly") and ("Skin Pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)" )))
+     or (    ("Age >= 2 months to <60 months")
+         and ((    "Restless and Irritable" = true and ("Oral Fluid Test Results" = "Drinks poorly" or  "Skin Pinch of Abdomen" = "Skin Pinch goes back very slowly (more than 2 seconds)" ))
+         or (    ("Lethargic" = true or "Oral Fluid Test Results" = "Drinks poorly") and ("Skin Pinch of Abdomen" = "Skin Pinch goes back slowly (2 seconds or fewer, but not immediately)" )))))
 */
 define "dl-g-cl1-24-32":
-    ("age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B11S1.DE01') = true and  Coalesce("severe dehydration",false)!=true)
+    (Base.GetObsValue('EmCare.B11S1.DE01') = true and  Coalesce("severe dehydration",false)!=true)
      and ((    (ToInteger(Coalesce(Base.GetObsValue('EmCare.B11S2.DE06') = true,false)) + ToInteger(Coalesce(Base.GetObsValue('EmCare.B11S2.DE01') = true,false)) + ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04') ,false)) + ToInteger(Coalesce(Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE12') ,false)))>1)
-     or (    Base.GetObsValue('EmCare.B11S2.DE06') = true and (Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE11') or  Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03') ))
-     or (    (Base.GetObsValue('EmCare.B7.DE08a') = true or Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE11')) and (Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04') )))
+     or (    ("age >= 2 months to <60 months")
+         and ((    Base.GetObsValue('EmCare.B11S2.DE06') = true and (Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE11') or  Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03') ))
+         or (    (Base.GetObsValue('EmCare.B7.DE08a') = true or Base.HasObsValueCode('EmCare.B22.DE08', 'EmCare.B22.DE11')) and (Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE04') )))))
 
 /* alias some dehydration : dl-g-cl1-24-32*/
 define "some dehydration":
     "dl-g-cl1-24-32"
 
 /* 
-psbi other than temperature : nan
+psbi other than temperature : PSBI other than temperature
     (AgeInMonths()<2)
      and ((    "Difficulty with Feeding" = "Not Able to Feed at all" or "Difficulty with Feeding" = "Not Feeding Well" or "Convulsion(s) in this illness" = true or "Severe Chest Indrawing" = true  or "Movements" = "No movement at all" or "Movements" = "Movement only when stimulated but then stops" or AgeInDays() <= 7  and "Fast breathing" = true))
 */
 define "psbi other than temperature":
     (AgeInMonths()<2)
      and ((    Base.HasObsValueCode('EmCare.B18S1.DE02', 'EmCare.B18S1.DE03') or Base.HasObsValueCode('EmCare.B18S1.DE02', 'EmCare.B18S1.DE04') or Base.GetObsValue('EmCare.B7.DE03') = true or Base.GetObsValue('EmCare.B18S2.DE07') = true  or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE09') or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE10') or AgeInDays() <= 7  and Base.GetObsValue('EmCare.B22.DE07') = true))
+
+/* alias psbi other than temperature : psbi other than temperature*/
+define "psbi other than temperature":
+    "psbi other than temperature"
 
 /* 
 psbi : nan
@@ -177,7 +191,7 @@ define "psbi":
          and ((    Base.HasObsValueCode('EmCare.B22.DE50', 'High') or Base.HasObsValueCode('EmCare.B22.DE50', 'Low') or Base.GetObsValue('EmCare.B22.DE46') = true))))
 
 /* 
-yi severe classification other than severe dehydration : nan
+yi severe classification other than severe dehydration : YI severe classification other than severe dehydration
     (AgeInMonths()<2)
      and ((    "PSBI" = true
         or
@@ -197,8 +211,12 @@ define "yi severe classification other than severe dehydration":
         or
         Base.HasObsValueCode('EmCare.B21S2.DE01', 'EmCare.B21S2.DE02')))
 
+/* alias yi severe classification other than severe dehydration : yi severe classification other than severe dehydration*/
+define "yi severe classification other than severe dehydration":
+    "yi severe classification other than severe dehydration"
+
 /* 
-yi severe classification : nan
+yi severe classification : YI severe classification
     (AgeInMonths()<2)
      and ((    "PSBI" = true
         or
@@ -217,6 +235,10 @@ define "yi severe classification":
         Base.GetObsValue('EmCare.B11S1.DE01') = true and ((Base.GetObsValue('EmCare.B11S2.DE06') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03')) or (Base.GetObsValue('EmCare.B11S2.DE01') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03')))
         or
         Base.HasObsValueCode('EmCare.B21S2.DE01', 'EmCare.B21S2.DE02')))
+
+/* alias yi severe classification : yi severe classification*/
+define "yi severe classification":
+    "yi severe classification"
 
 /* 
 emcare.b12s1.de01 : Fever

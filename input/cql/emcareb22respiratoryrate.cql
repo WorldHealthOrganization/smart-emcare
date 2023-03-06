@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22respiratoryrate version '1.0.1.rc12.build.12'
+library emcareb22respiratoryrate version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.12' called Base
-include emcareobservation version '1.0.1.rc12.build.12' called obs
-include emcarevalueset version '1.0.1.rc12.build.12' called val
+include emcarebase version '1.0.1.rc12.build.156' called Base
+include emcareobservation version '1.0.1.rc12.build.156' called obs
+include emcarevalueset version '1.0.1.rc12.build.156' called val
 
 
 

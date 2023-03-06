@@ -123,7 +123,7 @@ define zscorefromvisual:
     if existingvisual is not null then
       case  
         when existingvisual ~ "Severely Underweight" then -3.0
-        when existingvisual ~ "Severely Underweight" then -2.0
+        when existingvisual ~ "Underweight" then -2.0
         else 0.0
       end
     else  null

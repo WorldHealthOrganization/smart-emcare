@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1821signs2mm version '1.0.1.rc12.build.12'
+library emcareb1821signs2mm version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.12' called Base
-include emcareobservation version '1.0.1.rc12.build.12' called obs
-include emcarevalueset version '1.0.1.rc12.build.12' called val
-include emcarezscore version '1.0.1.rc12.build.12' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.12' called c
+include emcarebase version '1.0.1.rc12.build.156' called Base
+include emcareobservation version '1.0.1.rc12.build.156' called obs
+include emcarevalueset version '1.0.1.rc12.build.156' called val
+include emcarezscore version '1.0.1.rc12.build.156' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.156' called c
 
 
 
@@ -92,17 +92,6 @@ define "emcare.b18s1.de02":
 /* alias difficulty with feeding : emcare.b18s1.de02*/
 define "difficulty with feeding":
     "emcare.b18s1.de02"
-
-/* 
-emcare.b6.de06 : Weight
-    GetObsValue('EmCare.B6.DE06')
-*/
-define "emcare.b6.de06":
-    Base.GetObsValue('EmCare.B6.DE06')
-
-/* alias weight : emcare.b6.de06*/
-define "weight":
-    "emcare.b6.de06"
 
 /* 
 yi_sever_but_dhey : YI severe classification other than severe dehydration

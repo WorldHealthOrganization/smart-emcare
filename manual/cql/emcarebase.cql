@@ -11,7 +11,8 @@ include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
 //parameter "Encounter" Encounter$
-
+codesystem "RoleCodeSystem" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+code "Mother": 'MTH' from "RoleCodeSystem"
 
 context Patient
 
@@ -52,13 +53,24 @@ define function EmCareExtensions(element Patient, id String):
 define function EmCareExtension(element Patient, id String):
   singleton from EmCareExtensions(element, id)
 
+define getPrimaryCareGiverReference:
+  EmCareExtension(Patient, 'primarycaregiver').value
 
 define getPrimaryCareGiver:
-  EmCareExtension(Patient, 'primarycaregiver').value
-    
+  [RelatedPerson] RP where RP.id = Last(Split(getPrimaryCareGiverReference.reference, '/'))
+    return RP
+
+define isMotherPrimaryCareGiver:
+  getPrimaryCareGiver is not null and Exists(getPrimaryCareGiver.relationship r where r ~ "Mother")
+
+define "Biological Mother Vital Status":
+  EmCareExtension(Patient, 'motherVitalStatus').value
+  
+define "Biological Father Vital Status":
+  EmCareExtension(Patient, 'fatherVitalStatus').value
 // person accompanying the child is a participant with a null type
 define getRelatedPersonReferenceAccompanyingTheChild:
-  Coalesce(First(getEncounter.participant P where P.type is null).individual, getPrimaryCareGiver)
+  Coalesce(First(getEncounter.participant P where not exists(P.type) ).individual, getPrimaryCareGiverReference)
 
 define getRelatedPersonsAccompanyingTheChild:
   [RelatedPerson] RP where RP.id = Last(Split(getRelatedPersonReferenceAccompanyingTheChild.reference, '/'))

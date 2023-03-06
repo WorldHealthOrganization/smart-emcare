@@ -139,15 +139,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE07",
-                        "display": "Less than 14 days"
+                        "code": "EmCare.B10S1.DE08",
+                        "display": "14 days or more"
                     }
                 },
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE08",
-                        "display": "14 days or more"
+                        "code": "EmCare.B10S1.DE07",
+                        "display": "Less than 14 days"
                     }
                 }
             ]
@@ -163,7 +163,27 @@
             "text": "Difficulty Breathing",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S1.DE01-help",
+                    "text": "Difficult breathing is any unusual pattern of breathing. Caregivers describe this<br />\nin different ways. They may say that their child\u2019s breathing is \u201cfast\u201d or \u201cnoisy\u201d or \u201cinterrupted.\u201d If a mother answers no, look to see if you think the child has cough or difficult breathing.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -184,15 +204,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE07",
-                        "display": "Less than 14 days"
+                        "code": "EmCare.B10S1.DE08",
+                        "display": "14 days or more"
                     }
                 },
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE08",
-                        "display": "14 days or more"
+                        "code": "EmCare.B10S1.DE07",
+                        "display": "Less than 14 days"
                     }
                 }
             ]
@@ -208,7 +228,27 @@
             "text": "Diarrhoea",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S1.DE01-help",
+                    "text": "Diarrhoea occurs when stools contain more water than normal, and are loose or watery.  Diarrhoea is defined as three or more loose or watery stools in a 24-hour period.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -229,15 +269,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE07",
-                        "display": "Less than 14 days"
+                        "code": "EmCare.B10S1.DE08",
+                        "display": "14 days or more"
                     }
                 },
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE08",
-                        "display": "14 days or more"
+                        "code": "EmCare.B10S1.DE07",
+                        "display": "Less than 14 days"
                     }
                 }
             ]
@@ -281,7 +321,43 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value= true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value= true and %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.first().value=true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B12S1.DE03-l",
+            "text": "Fever for how long?",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B12S1.DE05",
+                        "display": "7 Days or more"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B12S1.DE04",
+                        "display": "Less than 7 days"
+                    }
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value= true and %resource.repeat(item).where(linkId='EmCare.B12S1.DE02').answer.first().value=false,'EmCare.B12S1.DE04',%resource.repeat(item).where(linkId='EmCare.B12S1.DE03-l').answer.first().value)"
                     }
                 }
             ],
@@ -294,15 +370,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B12S1.DE04",
-                        "display": "Less than 7 days"
+                        "code": "EmCare.B12S1.DE05",
+                        "display": "7 Days or more"
                     }
                 },
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B12S1.DE05",
-                        "display": "7 Days or more"
+                        "code": "EmCare.B12S1.DE04",
+                        "display": "Less than 7 days"
                     }
                 }
             ]
@@ -341,7 +417,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B12S1.DE03').answer.first().value.code= 'EmCare.B12S1.DE05'  and %resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value =  true"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B12S1.DE03-l').answer.first().value.code = 'EmCare.B12S1.DE05'  and %resource.repeat(item).where(linkId='EmCare.B.G.DE06').answer.first().value =  true"
                     }
                 }
             ],
@@ -382,7 +458,27 @@
             "text": "Ear pain",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B13S1.DE02-help",
+                    "text": "If the caregiver is not sure that the child has ear pain, ask if the child has been irritable and rubbing his ear.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -423,15 +519,15 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE07",
-                        "display": "Less than 14 days"
+                        "code": "EmCare.B10S1.DE08",
+                        "display": "14 days or more"
                     }
                 },
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B10S1.DE08",
-                        "display": "14 days or more"
+                        "code": "EmCare.B10S1.DE07",
+                        "display": "Less than 14 days"
                     }
                 }
             ]

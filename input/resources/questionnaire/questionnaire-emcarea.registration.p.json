@@ -106,27 +106,7 @@
             "text": "National Unique identification",
             "type": "string",
             "required": false,
-            "repeats": false,
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "help"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.A.DE01-help",
-                    "text": "Unique identifier provided or a universal ID, if used in the country",
-                    "type": "display"
-                }
-            ]
+            "repeats": false
         },
         {
             "extension": [
@@ -154,44 +134,6 @@
                         "code": "EmCare.A.DE03",
                         "display": "Child's Identity unknown/prefer to remain anonymous"
                     }
-                }
-            ],
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "help"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.A.DE03-help",
-                    "text": "The client's identity is unknown or the client's prefers to remain anonymous",
-                    "type": "display"
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                        "code": "instructions"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.A.DE03-instruction",
-                    "text": "help",
-                    "type": "display"
                 }
             ]
         },
@@ -257,27 +199,7 @@
             "text": "Date of Birth",
             "type": "date",
             "required": false,
-            "repeats": false,
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "help"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "dob-help",
-                    "text": "The client's date of birth (DOB), if known",
-                    "type": "display"
-                }
-            ]
+            "repeats": false
         },
         {
             "extension": [
@@ -365,26 +287,6 @@
                         "display": "Estimated Date of Birth"
                     }
                 }
-            ],
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "help"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.A.DE12-help",
-                    "text": "The client/Caregiver will provide an estimated age or estimated date of birth",
-                    "type": "display"
-                }
             ]
         },
         {
@@ -406,12 +308,28 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 8
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE14.d"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue() >= 1 and getValue() <= 8"
+                            }
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "Seven day maximum"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
@@ -432,17 +350,53 @@
             "text": "Age in days",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE14.d-unit",
+                    "text": "d",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 8
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE14.w"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue() >= 1 and getValue() <= 8"
+                            }
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "Eight weeks maximum"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
@@ -463,22 +417,58 @@
             "text": "Age in weeks",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE14.w-unit",
+                    "text": "wk",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 12
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE13.mo"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue() >= 1 and getValue() <= 12"
+                            }
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "Twelve months maximum"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
-                        "system": "http://unitsofmeasure.org",
+                        "system": "http://hl7.org/fhirpath/CodeSystem/calendar-units",
                         "code": "month"
                     }
                 },
@@ -494,22 +484,58 @@
             "text": "Age in months",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE13.mo-unit",
+                    "text": "month",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-                    "valueInteger": 1
-                },
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-                    "valueInteger": 4
+                    "extension": [
+                        {
+                            "url": "key",
+                            "valueId": "EmCare.A.DE13.a"
+                        },
+                        {
+                            "url": "expression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "getValue() >= 1 and getValue() <= 4"
+                            }
+                        },
+                        {
+                            "url": "severity",
+                            "valueCode": "error"
+                        },
+                        {
+                            "url": "human",
+                            "valueString": "Four years maximum"
+                        }
+                    ],
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
                 },
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
-                        "system": "http://unitsofmeasure.org",
+                        "system": "http://hl7.org/fhirpath/CodeSystem/calendar-units",
                         "code": "year"
                     }
                 },
@@ -525,7 +551,27 @@
             "text": "Age in years",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE13.a-unit",
+                    "text": "year",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -544,7 +590,27 @@
             "linkId": "eweek",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "eweek-unit",
+                    "text": "wk",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -571,15 +637,35 @@
             "text": "Estimated age in days",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE13.2.d-unit",
+                    "text": "d",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
-                        "system": "http://unitsofmeasure.org",
-                        "code": "mo"
+                        "system": "http://hl7.org/fhirpath/CodeSystem/calendar-units",
+                        "code": "month"
                     }
                 },
                 {
@@ -598,15 +684,35 @@
             "text": "Estimated age in months",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE13.2.mo-unit",
+                    "text": "month",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
                     "valueCoding": {
-                        "system": "http://unitsofmeasure.org",
-                        "code": "a"
+                        "system": "http://hl7.org/fhirpath/CodeSystem/calendar-units",
+                        "code": "year"
                     }
                 },
                 {
@@ -625,7 +731,27 @@
             "text": "Estimated age in year",
             "type": "quantity",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "security"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.A.DE13.2.a-unit",
+                    "text": "year",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -940,8 +1066,8 @@
                         {
                             "valueCoding": {
                                 "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                                "code": "EmCare.A.DE33",
-                                "display": "Unknown"
+                                "code": "EmCare.A.DE46",
+                                "display": "Dead"
                             }
                         },
                         {
@@ -954,9 +1080,29 @@
                         {
                             "valueCoding": {
                                 "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                                "code": "EmCare.A.DE46",
-                                "display": "Dead"
+                                "code": "EmCare.A.DE33",
+                                "display": "Unknown"
                             }
+                        }
+                    ],
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.A.DE31-help",
+                            "text": "The client&#8217;s mother and/or father&#8217;s vital status.",
+                            "type": "display"
                         }
                     ]
                 },
@@ -980,8 +1126,8 @@
                         {
                             "valueCoding": {
                                 "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                                "code": "EmCare.A.DE33",
-                                "display": "Unknown"
+                                "code": "EmCare.A.DE46",
+                                "display": "Dead"
                             }
                         },
                         {
@@ -994,9 +1140,29 @@
                         {
                             "valueCoding": {
                                 "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                                "code": "EmCare.A.DE46",
-                                "display": "Dead"
+                                "code": "EmCare.A.DE33",
+                                "display": "Unknown"
                             }
+                        }
+                    ],
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.A.DE32-help",
+                            "text": "The client&#8217;s mother and/or father&#8217;s vital status.",
+                            "type": "display"
                         }
                     ]
                 },

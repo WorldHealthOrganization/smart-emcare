@@ -1,0 +1,70 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcareb.registration.e' = 'emcareb.registration.e'
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter' alias 'Encounter' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareencounter' alias 'EmCare Encounter' as produced
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
+group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+    src -> bundle.entry as entry then {
+        src.encounter as encounter then {
+            encounter.id as idval  -> entry.request as request, request.method = 'PUT', request.url = append('/Encounter/',idval) 'f7ed42d5';
+        } '49f4ed45';
+        src ->  entry.resource = create("Encounter") as tgt then {
+            src -> tgt then emcareencounter(src, tgt) 'fd415ba8';
+            src.subject as sub -> tgt.subject = sub '23252e10';
+        } '8f0160c6';
+    } 'put-emcareencounter';
+    src.item first as item  where linkId = 'EmCare.B3.DE05' and answer.exists() then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then emcareobservationemcareb3de05(src, tgt) '918130f9';
+            } '172606cb';
+        } 'a322e7db';
+    } '1af195c5';
+}
+
+group emcareencounter(source src : questionnaireResponse,target tgt : Encounter){
+    src.item first as item  where linkId = 'EmCare.B3.DE01' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.reasonCode = create('CodeableConcept')  as CC, CC.text = 'new consultation' ,CC.coding = val 'aemcareb3de01';
+        } 'aemcareb3de01';
+    } '5ea28a7f';
+    src.item first as item  where linkId = 'EmCare.B3.DE06' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.type = create('CodeableConcept')  as CC, CC.text = 'new consultation' ,CC.coding = val 'aemcareb3de06';
+        } 'aemcareb3de06';
+    } '58ee7f8b';
+}
+
+group emcareobservationemcareb3de05(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-emcareb3de05';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.code = 'EmCare.B3.DE05'
+         'code-emcareb3de05';
+    src.item as item where linkId  =  'timestamp' then {
+        item.answer first as a then {
+            a.value as val -> tgt.issued = val  '8945c96b';
+        } '4272fc8b';
+    } 'f4472f32';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    src.item first as item  where linkId = 'EmCare.B3.DE05' and answer.exists() then {
+        item.answer first as a then {
+            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcareb3de05';
+            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb3de05';
+        } 'bdab9370';
+    } '5cf8dcb4';
+}
+

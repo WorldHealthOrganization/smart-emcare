@@ -1,0 +1,342 @@
+{
+    "resourceType": "PlanDefinition",
+    "id": "emcaredt01",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/PlanDefinition/emcaredt01",
+    "identifier": [
+        {
+            "use": "official",
+            "value": "emcaredt01"
+        }
+    ],
+    "version": "1.0.1.rc12.build.156",
+    "name": "emcaredt01",
+    "title": "emcaredt01",
+    "type": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/plan-definition-type",
+                "code": "eca-rule"
+            }
+        ]
+    },
+    "status": "active",
+    "experimental": false,
+    "date": "2023-03-06T15:41:42+00:00",
+    "library": [
+        "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcaredt01"
+    ],
+    "action": [
+        {
+            "id": "emcaredt01",
+            "description": "Register a child < 5 years",
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "registration"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcarea.registration.p"
+        },
+        {
+            "id": "emcaredt02",
+            "description": "Register the child in the encounter",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt02"
+                    }
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "history-and-physical"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcareb.registration.e"
+        },
+        {
+            "id": "emcaredt04",
+            "description": "Evaluate DangerSigns",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt04"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT0",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "triage"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b7.lti-dangersigns"
+        },
+        {
+            "id": "emcaredt03",
+            "description": "Determine Basic Anthropometric and others measurement",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt03"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT04",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "record-and-report"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b6.measurements"
+        },
+        {
+            "id": "emcaredt05",
+            "description": "Assess sick child for Symptoms 2 m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt05"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT03",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b18-21.symptoms.2m.m"
+        },
+        {
+            "id": "emcaredt06",
+            "description": "Assess sick child for Symptoms 2p",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "clas.\"age >= 2 months to <60 months\"",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt06"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT03",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b10-14.symptoms.2m.p"
+        },
+        {
+            "id": "emcaredt07",
+            "description": "Assess sick child for Signs 2 m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt07"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT05",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b18-21.signs.2m.m"
+        },
+        {
+            "id": "emcaredt08",
+            "description": "Assess sick child for Signs 2p",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "clas.\"age >= 2 months to <60 months\"",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt08"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT06",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b10-16.signs.2m.p"
+        },
+        {
+            "id": "emcaredt09",
+            "description": "Propose classification",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "clas.\"age >= 2 months to <60 months\"",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt09"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT10",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "determine-diagnosis"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b23.classification"
+        },
+        {
+            "id": "emcaredt10",
+            "description": "Do Test",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt10"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT07",
+                    "relationship": "after"
+                },
+                {
+                    "actionId": "EmCareDT08",
+                    "relationship": "after"
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b22.assessmentstests"
+        },
+        {
+            "id": "emcaredt11",
+            "description": "Provide treatment",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt11"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "EmCareDT12",
+                    "relationship": "after"
+                },
+                {
+                    "actionId": "EmCareDT09",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "provide-counseling"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.treatment"
+        },
+        {
+            "id": "emcaredt12",
+            "description": "Propose classification 2m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "emcaredt12"
+                    }
+                }
+            ],
+            "definitionCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ActivityDefinition/emcare.b23.classification.2m"
+        }
+    ]
+}

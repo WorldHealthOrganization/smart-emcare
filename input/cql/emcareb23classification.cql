@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb23classification version '1.0.1.rc12.build.158'
+library emcareb23classification version '1.0.1.rc12.build.176'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.158' called Base
-include emcareobservation version '1.0.1.rc12.build.158' called obs
-include emcarevalueset version '1.0.1.rc12.build.158' called val
-include emcarezscore version '1.0.1.rc12.build.158' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.158' called C
+include emcarebase version '1.0.1.rc12.build.176' called Base
+include emcareobservation version '1.0.1.rc12.build.176' called obs
+include emcarevalueset version '1.0.1.rc12.build.176' called val
+include emcarezscore version '1.0.1.rc12.build.176' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.176' called C
 
 
 
@@ -361,25 +361,27 @@ define "fever: bacterial infection unlikely":
     "dl-i-cl1-26"
 
 /* 
-dl-i-cl1-16-67a : Severe Complicated Measles
+dl-i-cl1-16-66 : Severe Complicated Measles
     (C."age >= 2 months to <60 months" and C."fever" = true)
-     and ((    ("Cough" = true  or  "Runny nose" = true or "Red eyes" = true)  and (C."danger signs" = true or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" or  "Pneumonia"=true  or o"Diarrhoea" = true) and "Measles Rash" = true)
-     or (    (("Cough" = true  or  "Runny nose" = true or "Red eyes" = true) and ("Generalised or Localised Skin Problem" = "Generalised Skin Problem") and (C."danger signs" = true  or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" ) and "Measles Rash" = true)
-         and ((    "Measles in last 3 months" =true and "Generalised or Localised Skin Problem" != "Generalised Skin Problem")
-         or (    "Measles Rash" = false and "Measles in last 3 months" = true and "Generalised or Localised Skin Problem" = "Generalised Skin Problem")))
-     or (    "Cough" = false  and "Runny nose" = false and "Red eyes" = false and "Measles in last 3 months" = true and (C."danger signs" = true or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive")))
+     and ((    (("Cough" = true  or  "Runny nose" = true or "Red eyes" = true))
+         and ((    "Generalised or Localised Skin Problem"  != "Generalised Skin Problem"  and "Measles in last 3 months" = true and (C."danger signs" = true or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" ))
+         or (    ("Generalised or Localised Skin Problem" = "Generalised Skin Problem")
+             and ((    "Measles Rash" = false and "Measles in last 3 months" = true and (C."danger signs" = true or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" ))
+             or (    (C."danger signs" = true or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" or  "Pneumonia"=true  or o"Diarrhoea" = true) and "Measles Rash" = true)))))
+     or (    "Cough" = false  and  "Runny nose" = false and "Red eyes" = false and "Measles in last 3 months" = true and  (C."danger signs" = true or  o"Clouding of the Cornea" = true  or o"Oral Sores or Mouth Ulcers" = "Mouth Sores or Mouth Ulcers - Deep and Extensive" )))
 */
-define "dl-i-cl1-16-67a":
+define "dl-i-cl1-16-66":
     (C."age >= 2 months to <60 months" and C."fever" = true)
-     and ((    (Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true)  and (C."danger signs" = true or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') or  "pneumonia"=true  or Base.GetObsValue('EmCare.B11S1.DE01') = true) and Base.GetObsValue('EmCare.B14S2.DE10') = true)
-     or (    ((Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true) and (Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true) and (C."danger signs" = true  or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') ) and Base.GetObsValue('EmCare.B14S2.DE10') = true)
-         and ((    "measles in last 3 months" =true and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = false)
-         or (    Base.GetObsValue('EmCare.B14S2.DE10') = false and "measles in last 3 months" = true and Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true)))
-     or (    Base.GetObsValue('EmCare.B10S1.DE05') = false  and Base.GetObsValue('EmCare.B12S2.DE05') = false and Base.GetObsValue('EmCare.B14S2.DE01') = false and "measles in last 3 months" = true and (C."danger signs" = true or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41'))))
+     and ((    ((Base.GetObsValue('EmCare.B10S1.DE05') = true  or  Base.GetObsValue('EmCare.B12S2.DE05') = true or Base.GetObsValue('EmCare.B14S2.DE01') = true))
+         and ((    Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = false  and "measles in last 3 months" = true and (C."danger signs" = true or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') ))
+         or (    (Base.GetObsValue('EmCare.B14S2.DE06&EmCare.B14S2.DE07') = true)
+             and ((    Base.GetObsValue('EmCare.B14S2.DE10') = false and "measles in last 3 months" = true and (C."danger signs" = true or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') ))
+             or (    (C."danger signs" = true or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') or  "pneumonia"=true  or Base.GetObsValue('EmCare.B11S1.DE01') = true) and Base.GetObsValue('EmCare.B14S2.DE10') = true)))))
+     or (    Base.GetObsValue('EmCare.B10S1.DE05') = false  and  Base.GetObsValue('EmCare.B12S2.DE05') = false and Base.GetObsValue('EmCare.B14S2.DE01') = false and "measles in last 3 months" = true and  (C."danger signs" = true or  Base.GetObsValue('EmCare.B14S2.DE03') = true  or Base.HasObsValueCode('EmCare.B14S2.DE38', 'EmCare.B14S2.DE41') )))
 
-/* alias severe complicated measles : dl-i-cl1-16-67a*/
+/* alias severe complicated measles : dl-i-cl1-16-66*/
 define "severe complicated measles":
-    "dl-i-cl1-16-67a"
+    "dl-i-cl1-16-66"
 
 /* 
 dl-g-cl1-69-70 : Measles with Eye or Mouth Complication

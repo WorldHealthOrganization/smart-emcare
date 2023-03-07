@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1821signs2mm version '1.0.1.rc12.build.158'
+library emcareb1821signs2mm version '1.0.1.rc12.build.176'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.158' called Base
-include emcareobservation version '1.0.1.rc12.build.158' called obs
-include emcarevalueset version '1.0.1.rc12.build.158' called val
-include emcarezscore version '1.0.1.rc12.build.158' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.158' called c
+include emcarebase version '1.0.1.rc12.build.176' called Base
+include emcareobservation version '1.0.1.rc12.build.176' called obs
+include emcarevalueset version '1.0.1.rc12.build.176' called val
+include emcarezscore version '1.0.1.rc12.build.176' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.176' called c
 
 
 
@@ -51,10 +51,10 @@ define "ageindays":
 
 /* 
 emcare.b20s1.de01 : Diarrhoea
-    GetObsValue('EmCare.B20S1.DE01')
+    o"Diarrhoea"
 */
 define "emcare.b20s1.de01":
-    Base.GetObsValue('EmCare.B20S1.DE01')
+    Base.GetObsValue('EmCare.B11S1.DE01')
 
 /* alias diarrhoea : emcare.b20s1.de01*/
 define "diarrhoea":
@@ -62,10 +62,10 @@ define "diarrhoea":
 
 /* 
 emcare.a.de31 : Biological Mother Vital Status
-    GetObsValue('EmCare.A.DE31')
+    Base."Biological Mother Vital Status"
 */
 define "emcare.a.de31":
-    Base.GetObsValue('EmCare.A.DE31')
+    Base."Biological Mother Vital Status"
 
 /* alias biological mother vital status : emcare.a.de31*/
 define "biological mother vital status":
@@ -73,10 +73,10 @@ define "biological mother vital status":
 
 /* 
 emcare.b21s1.de01 : Breastfed
-    GetObsValue('EmCare.B21S1.DE01')
+    o"Breastfed"
 */
 define "emcare.b21s1.de01":
-    Base.GetObsValue('EmCare.B21S1.DE01')
+    Base.GetObsValue('EmCare.B21S1.DE06')
 
 /* alias breastfed : emcare.b21s1.de01*/
 define "breastfed":
@@ -84,7 +84,7 @@ define "breastfed":
 
 /* 
 emcare.b18s1.de02 : Difficulty with Feeding
-    GetObsValue('EmCare.B18S1.DE02')
+    o"Difficulty with Feeding"
 */
 define "emcare.b18s1.de02":
     Base.GetObsValue('EmCare.B18S1.DE02')

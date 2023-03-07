@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarecombineddataelements version '1.0.1.rc12.build.156'
+library emcarecombineddataelements version '1.0.1.rc12.build.158'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.156' called Base
-include emcareobservation version '1.0.1.rc12.build.156' called obs
-include emcarevalueset version '1.0.1.rc12.build.156' called val
+include emcarebase version '1.0.1.rc12.build.158' called Base
+include emcareobservation version '1.0.1.rc12.build.158' called obs
+include emcarevalueset version '1.0.1.rc12.build.158' called val
 
 
 
@@ -165,17 +165,13 @@ define "some dehydration":
     "dl-g-cl1-24-32"
 
 /* 
-psbi other than temperature : PSBI other than temperature
+psbi other than temperature : nan
     (AgeInMonths()<2)
      and ((    "Difficulty with Feeding" = "Not Able to Feed at all" or "Difficulty with Feeding" = "Not Feeding Well" or "Convulsion(s) in this illness" = true or "Severe Chest Indrawing" = true  or "Movements" = "No movement at all" or "Movements" = "Movement only when stimulated but then stops" or AgeInDays() <= 7  and "Fast breathing" = true))
 */
 define "psbi other than temperature":
     (AgeInMonths()<2)
      and ((    Base.HasObsValueCode('EmCare.B18S1.DE02', 'EmCare.B18S1.DE03') or Base.HasObsValueCode('EmCare.B18S1.DE02', 'EmCare.B18S1.DE04') or Base.GetObsValue('EmCare.B7.DE03') = true or Base.GetObsValue('EmCare.B18S2.DE07') = true  or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE09') or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE10') or AgeInDays() <= 7  and Base.GetObsValue('EmCare.B22.DE07') = true))
-
-/* alias psbi other than temperature : psbi other than temperature*/
-define "psbi other than temperature":
-    "psbi other than temperature"
 
 /* 
 psbi : nan
@@ -191,7 +187,7 @@ define "psbi":
          and ((    Base.HasObsValueCode('EmCare.B22.DE50', 'High') or Base.HasObsValueCode('EmCare.B22.DE50', 'Low') or Base.GetObsValue('EmCare.B22.DE46') = true))))
 
 /* 
-yi severe classification other than severe dehydration : YI severe classification other than severe dehydration
+yi severe classification other than severe dehydration : nan
     (AgeInMonths()<2)
      and ((    "PSBI" = true
         or
@@ -210,13 +206,9 @@ define "yi severe classification other than severe dehydration":
         Base.GetObsValue('EmCare.B11S1.DE01') = true and ((Base.GetObsValue('EmCare.B11S2.DE06') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03')) or (Base.GetObsValue('EmCare.B11S2.DE01') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03')))
         or
         Base.HasObsValueCode('EmCare.B21S2.DE01', 'EmCare.B21S2.DE02')))
-
-/* alias yi severe classification other than severe dehydration : yi severe classification other than severe dehydration*/
-define "yi severe classification other than severe dehydration":
-    "yi severe classification other than severe dehydration"
 
 /* 
-yi severe classification : YI severe classification
+yi severe classification : nan
     (AgeInMonths()<2)
      and ((    "PSBI" = true
         or
@@ -235,10 +227,6 @@ define "yi severe classification":
         Base.GetObsValue('EmCare.B11S1.DE01') = true and ((Base.GetObsValue('EmCare.B11S2.DE06') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03')) or (Base.GetObsValue('EmCare.B11S2.DE01') = true and Base.HasObsValueCode('EmCare.B11S2.DE02', 'EmCare.B20S2.DE03')))
         or
         Base.HasObsValueCode('EmCare.B21S2.DE01', 'EmCare.B21S2.DE02')))
-
-/* alias yi severe classification : yi severe classification*/
-define "yi severe classification":
-    "yi severe classification"
 
 /* 
 emcare.b12s1.de01 : Fever

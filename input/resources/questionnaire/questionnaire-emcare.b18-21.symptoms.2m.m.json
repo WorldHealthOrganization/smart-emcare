@@ -26,6 +26,10 @@
         {
             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
             "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b18-21.symptoms.2m.m"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb1821symptoms2mm"
         }
     ],
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b18-21.symptoms.2m.m",
@@ -37,6 +41,69 @@
         "Patient"
     ],
     "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "convulsing now"
+                    }
+                }
+            ],
+            "linkId": "Convulsing Now",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='Convulsing Now').answer.first().value = false"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B7.DE03",
+            "text": "Convulsion(s) in this Illness",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE03-help",
+                    "text": "During a convulsion, the child\u2019s arms and legs stiffen because the muscles are contracting. The child may lose consciousness or not be able to respond to spoken directions. Use words the caregiver understands. For example, the caregiver may call convulsions \u201cfits\u201d or \u201cspasms.\u201d",
+                    "type": "display"
+                }
+            ]
+        },
         {
             "extension": [
                 {

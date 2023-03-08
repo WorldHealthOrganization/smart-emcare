@@ -603,11 +603,10 @@ group emcareobservationemcareb21s2de01(source src,target tgt){
     src.item first as item  where linkId = 'EmCare.B21S2.DE01' and answer.exists() then {
         item.answer first as a then {
             a.value as val then {
-                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
-                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
-            } '4ca9082e';
-        } '7c587a4b';
-    } '26d90937';
+                val -> tgt.value = create('CodeableConcept') as cc, cc.coding = create('Coding') as c, c.code=val, c.system= 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes', tgt.status = 'final' '759a9a54';
+            } '1b820ab0';
+        } 'd39f9088';
+    } '75d5dd53';
 }
 
 group emcareobservationemcareb21s2de05(source src,target tgt){

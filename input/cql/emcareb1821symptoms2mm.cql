@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22breastfeeding version '1.0.1.rc12.build.185'
+library emcareb1821symptoms2mm version '1.0.1.rc12.build.185'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 include emcarebase version '1.0.1.rc12.build.185' called Base
@@ -16,12 +16,8 @@ context Patient
 
 
 /* 
-ageinmonths : Age
-    AgeInMonths()
+convulsing now : nan
+    o"Convulsing Now"
 */
-define "ageinmonths":
-    AgeInMonths()
-
-/* alias age : ageinmonths*/
-define "age":
-    "ageinmonths"
+define "convulsing now":
+    Base.GetObsValue('EmCare.B7.DE02')

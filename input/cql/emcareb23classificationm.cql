@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb23classificationm version '1.0.1.rc12.build.176'
+library emcareb23classificationm version '1.0.1.rc12.build.185'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.176' called Base
-include emcareobservation version '1.0.1.rc12.build.176' called obs
-include emcarevalueset version '1.0.1.rc12.build.176' called val
-include emcarezscore version '1.0.1.rc12.build.176' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.176' called C
+include emcarebase version '1.0.1.rc12.build.185' called Base
+include emcareobservation version '1.0.1.rc12.build.185' called obs
+include emcarevalueset version '1.0.1.rc12.build.185' called val
+include emcarezscore version '1.0.1.rc12.build.185' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.185' called C
 
 
 
@@ -97,13 +97,11 @@ define "dl-g-cl2-26":
 dl-g-cl2-13-14 : Severe Jaundice
     ("Yellow Skin" = true)
      and ((    "ageindays" < 21  and  "When did the Jaundice first appear?" = "Within less than 24 hours of birth")
-     or (    "ageindays" < 1)
      or (    "ageinmonths"<2 and  "Yellow Palms or Yellow Soles" = true))
 */
 define "dl-g-cl2-13-14":
     (Base.GetObsValue('EmCare.B19S2.DE01') = true)
      and ((    "ageindays" < 21  and  Base.HasObsValueCode('EmCare.B19S2.DE04', 'EmCare.B19S2.DE05'))
-     or (    "ageindays" < 1)
      or (    "ageinmonths"<2 and  Base.GetObsValue('EmCare.B19S2.DE02') = true))
 
 /* alias severe jaundice : dl-g-cl2-13-14*/
@@ -111,11 +109,22 @@ define "severe jaundice":
     "dl-g-cl2-13-14"
 
 /* 
+dl-g-cl2-13a : nan
+    "ageindays" < 1
+*/
+define "dl-g-cl2-13a":
+    "ageindays" < 1
+
+/* 
 dl-g-cl2-15-43 : nan
-    "Yellow Skin" = true and "Severe Jaundice" != true
+    ("Yellow Palms or Yellow Soles" = false)
+     and ((    "ageindays" > 1 and "ageindays" < 21 and "Yellow Skin" = true and ("When did the Jaundice first appear?" = "24 hours or more after birth"  or "When did the Jaundice first appear?" = "Unknown when Jaundice first appeared"))
+     or (    "ageindays" < 21  and "Yellow Skin" = true))
 */
 define "dl-g-cl2-15-43":
-    Base.GetObsValue('EmCare.B19S2.DE01') = true and Coalesce("severe jaundice",false)!=true
+    (Base.GetObsValue('EmCare.B19S2.DE02') = false)
+     and ((    "ageindays" > 1 and "ageindays" < 21 and Base.GetObsValue('EmCare.B19S2.DE01') = true and (Base.HasObsValueCode('EmCare.B19S2.DE04', 'EmCare.B19S2.DE06')  or Base.HasObsValueCode('EmCare.B19S2.DE04', 'EmCare.B19S2.DE07')))
+     or (    "ageindays" < 21  and Base.GetObsValue('EmCare.B19S2.DE01') = true))
 
 /* 
 dl-g-cl2-17 : nan

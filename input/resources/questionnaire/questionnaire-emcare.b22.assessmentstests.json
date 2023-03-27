@@ -44,6 +44,29 @@
         {
             "extension": [
                 {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "force-collection"
+                    }
+                }
+            ],
+            "linkId": "force-collection",
+            "type": "boolean",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
                 },
@@ -267,7 +290,7 @@
                         }
                     ],
                     "linkId": "EmCare.B22.DE01",
-                    "text": "Respiratory Rate",
+                    "text": "Respiratory Rate (breaths per minute)",
                     "type": "quantity",
                     "required": true,
                     "repeats": false,
@@ -287,25 +310,7 @@
                                 }
                             ],
                             "linkId": "EmCare.B22.DE01-help",
-                            "text": "Count the number of breaths the child takes per minute to determine if fast breathing is present. To count the breaths per minute, use a watch with a second hand or a digital watch (or click here for a 60 second timer).  Look for the breathing movement anywhere on the child\u2019s chest or abdomen.  The number of breaths for \u2018fast breathing\u2019 depends on the child\u2019s age.  &#8211; Under 2 months: More than 60 breaths per minute* &#8211; 2 to 11 months: More than 50 breaths per minute &#8211; 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
-                            "type": "display"
-                        },
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "EmCare.B22.DE01-unit",
-                            "text": "{Breaths}/min",
+                            "text": "<b>Count the number of breaths the child takes per minute</b> to determine if fast breathing is present.<br />\nIt is <b>very important that the child is calm</b> and still. If the child is moving or crying, you will not be able to get an accurate count of breaths. <br />\n<b>To count the breaths per minute,</b> use a watch with a second hand or a digital watch. Look for the breathing movement anywhere on the child\u2019s chest or abdomen. <br />\nThe number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b></p>\n\n\t<ul>\n\t\t<li>Under 2 months: More than 60 breaths per minute*</li>\n\t\t<li>2 to 11 months: More than 50 breaths per minute</li>\n\t\t<li>12 to 59 months: More than 40 breaths per minute</li>\n\t</ul>\n\n\t<p>*In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
                             "type": "display"
                         }
                     ]
@@ -329,7 +334,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty() and %resource.repeat(item).where(linkId='force-collection').answer.first().value = false"
                             }
                         }
                     ],
@@ -352,7 +357,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Breaths}/min' and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and (%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 60 '{Breaths}/min') and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
                             }
                         }
                     ],
@@ -379,7 +384,7 @@
                                 }
                             ],
                             "linkId": "EmCare.B22.DE04",
-                            "text": "Respiratory Rate Second Count",
+                            "text": "Respiratory Rate Second Count (breaths per minute)",
                             "type": "quantity",
                             "required": false,
                             "repeats": false,
@@ -387,19 +392,19 @@
                                 {
                                     "extension": [
                                         {
-                                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                                             "valueCodeableConcept": {
                                                 "coding": [
                                                     {
-                                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                        "code": "security"
+                                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                        "code": "help"
                                                     }
                                                 ]
                                             }
                                         }
                                     ],
-                                    "linkId": "EmCare.B22.DE04-unit",
-                                    "text": "{Breaths}/min",
+                                    "linkId": "EmCare.B22.DE04-help",
+                                    "text": "<b>Count the number of breaths the child takes per minute</b> to determine if fast breathing is present.<br />\nIt is <b>very important that the child is calm</b> and still. If the child is moving or crying, you will not be able to get an accurate count of breaths. <br />\n<b>To count the breaths per minute,</b> use a watch with a second hand or a digital watch. Look for the breathing movement anywhere on the child\u2019s chest or abdomen. <br />\nThe number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b></p>\n\n\t<ul>\n\t\t<li>Under 2 months: More than 60 breaths per minute*</li>\n\t\t<li>2 to 11 months: More than 50 breaths per minute</li>\n\t\t<li>12 to 59 months: More than 40 breaths per minute</li>\n\t</ul>\n\n\t<p>*In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
                                     "type": "display"
                                 }
                             ]
@@ -452,14 +457,14 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2  and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().exists()) or (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2  and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists())"
+                                "expression": "%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value < 60 '{Breaths}/min')"
                             }
                         },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() ),iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false),{})"
+                                "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value < 60 '{Breaths}/min'),iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Breaths}/min' or (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists()  and ( %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value  >= 60 '{Breaths}/min'  or %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value  >= 60 '{Breaths}/min' ) ) ) or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60, true, false),{})"
                             }
                         }
                     ],
@@ -485,7 +490,7 @@
                                 }
                             ],
                             "linkId": "EmCare.B22.DE07-help",
-                            "text": "For 12 months to 5 years fast breathing is 40 breaths per minute or more",
+                            "text": "The number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b>   * Under 2 months: More than 60 breaths per minute* * 2 to 11 months: More than 50 breaths per minute * 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
                             "type": "display"
                         }
                     ]
@@ -561,6 +566,26 @@
                                 "code": "EmCare.B22.DE13",
                                 "display": "Drinks Normally"
                             }
+                        }
+                    ],
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE08-help",
+                            "text": "If a child is unconscious do not try to carry out an oral fluid test (Exact wording <span class=\"caps\">TBC</span>) &#8211; Pop Up</p>\n\n\t<p>If a breastfeeding assessment and an Oral Fluid test is recommended for a child that is only breastfed then a pop up is required to ensure that the health care worker observes the signs for both and provides results for both tests. </p>\n\n\t<p>Oral Fluid Test<br />\nIf it is not possible to perform an oral fluid test, the health care worker should assume that the child is vomiting everything<br />\nFor a child under 6 months the health care worker can offer for the mother to breastfeed instead of receiving fluids</p>\n\n\t<p>Caution: Do not force fluids into an unconscious child , it can be dangerous. The fluid can cause them to choke or the fluid can go into their lungs. </p>\n\n\t<p>Pop up box to be made available with instructions on how to carry out an oral fluid test.<br />\nAdditional information <span class=\"caps\">TBC</span>",
+                            "type": "display"
                         }
                     ]
                 },
@@ -776,6 +801,26 @@
                                 "display": "Inhaled Bronchodilator Trial Not Feasible or Available"
                             }
                         }
+                    ],
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE17-help",
+                            "text": "Provide information on how to conduct an Inhaled Bronchodilator Trial as per <span class=\"caps\">IMCI</span> training &#8211; <span class=\"caps\">TBC</span>",
+                            "type": "display"
+                        }
                     ]
                 },
                 {
@@ -853,7 +898,27 @@
                     "text": "Breastfeeding Assessment",
                     "type": "display",
                     "required": false,
-                    "repeats": false
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE27-help",
+                            "text": "If a breastfeeding assessment and an Oral Fluid test is recommended for a child that is only breastfed then a pop up is required to ensure that the health care worker observes the signs for both and provides results for both tests.",
+                            "type": "display"
+                        }
+                    ]
                 },
                 {
                     "extension": [
@@ -919,7 +984,27 @@
                     "text": "Mother reports difficulty breastfeeding",
                     "type": "boolean",
                     "required": true,
-                    "repeats": false
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE30-help",
+                            "text": "Provide information on what difficulty breastfeeding may include, such as: the infant feeds too often, doesn&#8217;t feed often enough, she does not have enough milk, her nipples are sore, or she has flat or inverted nipples. After feeds, the infant may be restless, cry or try to suckle again, or continue to breastfeed for a long time.",
+                            "type": "display"
+                        }
+                    ]
                 },
                 {
                     "extension": [
@@ -1303,19 +1388,19 @@
                         {
                             "extension": [
                                 {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                                     "valueCodeableConcept": {
                                         "coding": [
                                             {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
                                             }
                                         ]
                                     }
                                 }
                             ],
-                            "linkId": "EmCare.B22.DE47-unit",
-                            "text": "Cel",
+                            "linkId": "EmCare.B22.DE47-help",
+                            "text": "The client&#8217;s axillary temperature in degrees Celcius (temperature taken under the armpit)<br />\nWarning/error if above 45 and below 32 degrees Celcius.",
                             "type": "display"
                         }
                     ]
@@ -1369,7 +1454,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'Very High',iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'High',iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value < 35.5 'Cel' , 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value.exists(), 'Normal',{}))))"
+                                "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, '2',iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'High',iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value < 35.5 'Cel' , 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B22.SecondTemperature').repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value.exists(), 'Normal',{}))))"
                             }
                         }
                     ],

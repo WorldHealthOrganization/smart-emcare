@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarevalueset version '1.0.1.rc12.build.185'
+library emcarevalueset version '1.0.1.rc12.build.284'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -33,6 +33,8 @@ code "routine visit (well child/infant)": 'EmCare.B3.DE04' from "EmCare" display
 code "yes": 'yes' from "EmCare" display 'yes'
 code "no": 'no' from "EmCare" display 'no'
 code "unknown": 'EmCare.A.DE33' from "EmCare" display 'unknown'
+code "agree": 'agree' from "EmCare" display 'agree'
+code "disagree": 'disagree' from "EmCare" display 'disagree'
 code "initial visit": 'EmCare.B3.DE07' from "EmCare" display 'initial visit'
 code "follow up": 'EmCare.B3.DE08' from "EmCare" display 'follow up'
 code "7 days or more": 'EmCare.B12S1.DE05' from "EmCare" display '7 days or more'
@@ -45,7 +47,7 @@ code "one convulsion": 'EmCare.B7.DE05' from "EmCare" display 'one convulsion'
 code "low": 'Low' from "EmCare" display 'low'
 code "normal": 'Normal' from "EmCare" display 'normal'
 code "high": 'High' from "EmCare" display 'high'
-code "very high": 'Very High' from "EmCare" display 'very high'
+code "very high": '2' from "EmCare" display 'very high'
 code "skin pinch goes back very slowly (more than 2 seconds)": 'EmCare.B20S2.DE03' from "EmCare" display 'skin pinch goes back very slowly (more than 2 seconds)'
 code "skin pinch goes back slowly (2 seconds or fewer, but not immediately)": 'EmCare.B20S2.DE04' from "EmCare" display 'skin pinch goes back slowly (2 seconds or fewer, but not immediately)'
 code "skin pinch goes back normally (immediately)": 'EmCare.B20S2.DE05' from "EmCare" display 'skin pinch goes back normally (immediately)'
@@ -59,9 +61,9 @@ code "no palmar pallor": 'EmCare.B15S2.DE04' from "EmCare" display 'no palmar pa
 code "feeding well": 'EmCare.B18S1.DE05' from "EmCare" display 'feeding well'
 code "not feeding well": 'EmCare.B18S1.DE04' from "EmCare" display 'not feeding well'
 code "not able to feed at all": 'EmCare.B18S1.DE03' from "EmCare" display 'not able to feed at all'
-code "no movement at all": 'EmCare.B18S2.DE09' from "EmCare" display 'no movement at all'
-code "movement only when stimulated but then stops": 'EmCare.B18S2.DE10' from "EmCare" display 'movement only when stimulated but then stops'
 code "moves on his or her own or moves spontaneously or without stimulation": 'EmCare.B18S2.DE11' from "EmCare" display 'moves on his or her own or moves spontaneously or without stimulation'
+code "movement only when stimulated but then stops": 'EmCare.B18S2.DE10' from "EmCare" display 'movement only when stimulated but then stops'
+code "no movement at all": 'EmCare.B18S2.DE09' from "EmCare" display 'no movement at all'
 code "within less than 24 hours of birth": 'EmCare.B19S2.DE05' from "EmCare" display 'within less than 24 hours of birth'
 code "24 hours or more after birth": 'EmCare.B19S2.DE06' from "EmCare" display '24 hours or more after birth'
 code "unknown when jaundice first appeared": 'EmCare.B19S2.DE07' from "EmCare" display 'unknown when jaundice first appeared'

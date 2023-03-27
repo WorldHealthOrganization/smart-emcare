@@ -2,19 +2,26 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22assessmentstests version '1.0.1.rc12.build.185'
+library emcareb22assessmentstests version '1.0.1.rc12.build.284'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.185' called Base
-include emcareobservation version '1.0.1.rc12.build.185' called obs
-include emcarevalueset version '1.0.1.rc12.build.185' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.185' called c
+include emcarebase version '1.0.1.rc12.build.284' called Base
+include emcareobservation version '1.0.1.rc12.build.284' called obs
+include emcarevalueset version '1.0.1.rc12.build.284' called val
+include emcarecombineddataelements version '1.0.1.rc12.build.284' called c
 
 
 
 
 context Patient
 
+
+/* 
+force-collection : nan
+    true
+*/
+define "force-collection":
+    true
 
 /* 
 ageinmonths : nan
@@ -78,7 +85,7 @@ define "applicability-hemoglobin":
 
 /* 
 a-secondtemperature : applicability-SecondTemperature
-    c."psbi other than temperature" != true and AgeInMonths()<2 and "Axillary Temperature" > 38.5 'Cel'
+    c."psbi other than temperature" != true and AgeInMonths()<2 and "Axillary Temperature  (degrees Celcius)" > 38.5 'Cel'
 */
 define "a-secondtemperature":
     Coalesce(c."psbi other than temperature",false)!=true and AgeInMonths()<2 and Base.GetObsValue('EmCare.B6.DE01') > 38.5 'Cel'
@@ -100,14 +107,14 @@ define "applicability-fluidtest":
 
 /* 
 respiratory rate profile : nan
-    o"Respiratory Rate"
+    o"Respiratory Rate (breaths per minute)"
 */
 define "respiratory rate profile":
     Base.GetObsValue('EmCare.B22.DE01')
 
 /* 
 respiratory rate second count profile : nan
-    o"Respiratory Rate Second Count"
+    o"Respiratory Rate Second Count (breaths per minute)"
 */
 define "respiratory rate second count profile":
     Base.GetObsValue('EmCare.B22.DE04')

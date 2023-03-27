@@ -423,7 +423,7 @@
                         }
                     ],
                     "linkId": "EmCare.B22.DE01",
-                    "text": "Respiratory Rate",
+                    "text": "Respiratory Rate (breaths per minute)",
                     "type": "quantity",
                     "required": true,
                     "repeats": false,
@@ -443,25 +443,7 @@
                                 }
                             ],
                             "linkId": "EmCare.B22.DE01-help",
-                            "text": "Count the number of breaths the child takes per minute to determine if fast breathing is present. To count the breaths per minute, use a watch with a second hand or a digital watch (or click here for a 60 second timer).  Look for the breathing movement anywhere on the child\u2019s chest or abdomen.  The number of breaths for \u2018fast breathing\u2019 depends on the child\u2019s age.  &#8211; Under 2 months: More than 60 breaths per minute* &#8211; 2 to 11 months: More than 50 breaths per minute &#8211; 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
-                            "type": "display"
-                        },
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "EmCare.B22.DE01-unit",
-                            "text": "{Breaths}/min",
+                            "text": "<b>Count the number of breaths the child takes per minute</b> to determine if fast breathing is present.<br />\nIt is <b>very important that the child is calm</b> and still. If the child is moving or crying, you will not be able to get an accurate count of breaths. <br />\n<b>To count the breaths per minute,</b> use a watch with a second hand or a digital watch. Look for the breathing movement anywhere on the child\u2019s chest or abdomen. <br />\nThe number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b></p>\n\n\t<ul>\n\t\t<li>Under 2 months: More than 60 breaths per minute*</li>\n\t\t<li>2 to 11 months: More than 50 breaths per minute</li>\n\t\t<li>12 to 59 months: More than 40 breaths per minute</li>\n\t</ul>\n\n\t<p>*In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
                             "type": "display"
                         }
                     ]
@@ -485,7 +467,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty() and %resource.repeat(item).where(linkId='force-collection').answer.first().value = false"
                             }
                         }
                     ],
@@ -508,7 +490,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Breaths}/min' and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and (%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 60 '{Breaths}/min') and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
                             }
                         }
                     ],
@@ -535,7 +517,7 @@
                                 }
                             ],
                             "linkId": "EmCare.B22.DE04",
-                            "text": "Respiratory Rate Second Count",
+                            "text": "Respiratory Rate Second Count (breaths per minute)",
                             "type": "quantity",
                             "required": false,
                             "repeats": false,
@@ -543,19 +525,19 @@
                                 {
                                     "extension": [
                                         {
-                                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                                             "valueCodeableConcept": {
                                                 "coding": [
                                                     {
-                                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                        "code": "security"
+                                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                        "code": "help"
                                                     }
                                                 ]
                                             }
                                         }
                                     ],
-                                    "linkId": "EmCare.B22.DE04-unit",
-                                    "text": "{Breaths}/min",
+                                    "linkId": "EmCare.B22.DE04-help",
+                                    "text": "<b>Count the number of breaths the child takes per minute</b> to determine if fast breathing is present.<br />\nIt is <b>very important that the child is calm</b> and still. If the child is moving or crying, you will not be able to get an accurate count of breaths. <br />\n<b>To count the breaths per minute,</b> use a watch with a second hand or a digital watch. Look for the breathing movement anywhere on the child\u2019s chest or abdomen. <br />\nThe number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b></p>\n\n\t<ul>\n\t\t<li>Under 2 months: More than 60 breaths per minute*</li>\n\t\t<li>2 to 11 months: More than 50 breaths per minute</li>\n\t\t<li>12 to 59 months: More than 40 breaths per minute</li>\n\t</ul>\n\n\t<p>*In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
                                     "type": "display"
                                 }
                             ]
@@ -608,14 +590,14 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2  and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().exists()) or (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2  and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists())"
+                                "expression": "%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value < 60 '{Breaths}/min')"
                             }
                         },
                         {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() ),iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false),{})"
+                                "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value < 60 '{Breaths}/min'),iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Breaths}/min' or (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists()  and ( %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value  >= 60 '{Breaths}/min'  or %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value  >= 60 '{Breaths}/min' ) ) ) or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60, true, false),{})"
                             }
                         }
                     ],
@@ -641,7 +623,7 @@
                                 }
                             ],
                             "linkId": "EmCare.B22.DE07-help",
-                            "text": "For 12 months to 5 years fast breathing is 40 breaths per minute or more",
+                            "text": "The number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b>   * Under 2 months: More than 60 breaths per minute* * 2 to 11 months: More than 50 breaths per minute * 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
                             "type": "display"
                         }
                     ]
@@ -683,7 +665,7 @@
                         }
                     ],
                     "linkId": "EmCare.B10S2.DE03-help",
-                    "text": "<span class=\"caps\">NORMAL</span>: When child breaths IN, chest wall moves OUT<br />\nCHEST <span class=\"caps\">INDRAWING</span>: When child breaths IN, chest wall moves IN</p>\n\n\t<p>Chest indrawing occurs when the child needs to make a greater effort than normal to breathe in. You will look for chest indrawing when the child breathes IN.</p>\n\n\t<p>In normal breathing, the whole chest wall (upper and lower) and the abdomen move <span class=\"caps\">OUT</span> when the child breathes IN. The child has chest indrawing if the lower chest wall (lower ribs) goes IN when the child breathes IN.",
+                    "text": "<b><span class=\"caps\">NORMAL</span>:</b> When child breaths <b>IN,</b> chest wall moves <b><span class=\"caps\">OUT</span></b><br />\n<b><span class=\"caps\">CHEST</span> <span class=\"caps\">INDRAWING</span>:</b> When child breaths <b>IN,</b> chest wall moves <b>IN</b></p>\n\n\t<p>Chest indrawing occurs when the child needs to make a greater effort than normal to breathe in. <b>You will look for chest indrawing when the child breathes IN.</b></p>\n\n\t<p>In normal breathing, the whole chest wall (upper and lower) and the abdomen move <span class=\"caps\">OUT</span> when the child breathes IN. <b>The child has chest indrawing if the lower chest wall (lower ribs) goes IN when the child breathes IN.</b>",
                     "type": "display"
                 }
             ]
@@ -723,7 +705,7 @@
                         }
                     ],
                     "linkId": "EmCare.B10S2.DE04-help",
-                    "text": "The child must be calm in order to assess Stridor.It is a harsh noise caused<br />\nwhen swelling interferes with air entering the lungs.<br />\nTo look and listen for stridor, look to see when the<br />\nchild breathes IN.Put your ear near the child\u2019s mouth because stridor can be difficult to hear. Sometimes you will hear a wet noise if the child\u2019s nose is blocked. Clear the nose, and listen again.",
+                    "text": "<b>Stridor is a harsh noise made when a child breathes IN.</b><br />\nPut your ear near the child\u2019s mouth because stridor can be difficult to hear. Sometimes you will hear a wet noise if the child\u2019s nose is blocked. Clear the nose, and listen again.</p>\n\n\t<p><b>Be sure to look and listen for stridor when the child is calm.</b><br />\nA child who is not very ill may have stridor only when he is crying or upset. However, a child who is calm and also has stridor has a dangerous situation.",
                     "type": "display"
                 }
             ]
@@ -763,7 +745,7 @@
                         }
                     ],
                     "linkId": "EmCare.B10S2.DE05-help",
-                    "text": "Wheeze is a high-pitched whistling or musical sound heard at the end of the breathing <span class=\"caps\">OUT</span>. The child\u2019s small air passages narrow to cause wheezing.<br />\nTo hear wheezing, put your ear near to the child\u2019s mouth when the child is calm. Look at the child\u2019s breathing while you listen to check that the sound mainly occurs when the child breathes out",
+                    "text": "<b>Wheeze is a high-pitched whistling or musical sound heard at the end of the breathing <span class=\"caps\">OUT</span>.</b> The child\u2019s small air passages narrow to cause wheezing.<br />\n<b>To hear wheezing,</b> put your ear near to the child\u2019s mouth when the child is calm. Look at the child\u2019s breathing while you listen to check that the sound mainly occurs when the child breathes out",
                     "type": "display"
                 }
             ]
@@ -786,7 +768,27 @@
             "text": "Recurrent Wheeze",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B10S2.DE06-help",
+                    "text": "Recurrent wheezing can be a sign of asthma, tuberculosis or other important health problems which require further assessment",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -829,19 +831,19 @@
                         {
                             "extension": [
                                 {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                                     "valueCodeableConcept": {
                                         "coding": [
                                             {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
                                             }
                                         ]
                                     }
                                 }
                             ],
-                            "linkId": "EmCare.B10S2.DE07-unit",
-                            "text": "%",
+                            "linkId": "EmCare.B10S2.DE07-help",
+                            "text": "If pulse oximeter is available, determine oxygen saturation (SpO2). <br />\nAfter turning on, position the appropriate probe based on the child&#8217;s size. If using on a finger or toe, make sure the area is clean and without nail varnish. <b>Ensure that a good (even) pulse signal (waveform) is displayed before taking the reading.</b> If uncertain that the probe is working, check by testing on your own finger. <br />\n<b>Normal oxygen saturation at sea level is 95 &#8211; 100%. Oxygen should be given if saturation drops to less than 90%,</b> and may be needed for children with severe illness if SpO2 less than 94%. Different cut-offs may be used at high altitude.",
                             "type": "display"
                         }
                     ]
@@ -861,7 +863,27 @@
                     "type": "display",
                     "required": false,
                     "repeats": false,
-                    "readOnly": true
+                    "readOnly": true,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B10S2.DE08-help",
+                            "text": "Check that the value you have entered is correct. Children with oxygen saturation less than 90% need oxygen if available and urgent referral.",
+                            "type": "display"
+                        }
+                    ]
                 },
                 {
                     "extension": [
@@ -936,7 +958,7 @@
                         }
                     ],
                     "linkId": "EmCare.B11S2.DE01-help",
-                    "text": "The eyes of a child who is dehydrated may look sunken. Decide<br />\nif you think the eyes are sunken. Then ask the mother if she thinks her child\u2019s eyes look unusual. Her opinion can help you confirm.",
+                    "text": "<b>The eyes of a child who is dehydrated may look sunken.</b> Decide if you think the eyes are sunken. Then ask the mother if she thinks her child\u2019s eyes look unusual. Her opinion can help<br />\nyou confirm.<br />\nNOTE: In a severely malnourished child who is wasted, the eyes may always look sunken, even if the child is not dehydrated. Still use the sign to classify dehydration.",
                     "type": "display"
                 }
             ]
@@ -995,7 +1017,7 @@
                         }
                     ],
                     "linkId": "EmCare.B11S2.DE02-help",
-                    "text": "1. <span class=\"caps\">ASK</span> the mother to place the child on the examining table so that the child is flat<br />\non his back with his arms at his sides (not over his head) and his legs straight.<br />\nOr, ask the mother to hold the child so he is lying flat on her lap.<br />\n2. <span class=\"caps\">USE</span> <span class=\"caps\">YOUR</span> <span class=\"caps\">THUMB</span> <span class=\"caps\">AND</span> <span class=\"caps\">FIRST</span> <span class=\"caps\">FINGER</span> to locate the area on the child\u2019s<br />\nabdomen halfway between the umbilicus and the side of the abdomen. Do not<br />\nuse your fingertips because this will cause pain. The fold of the skin should be<br />\nin a line up and down the child\u2019s body.<br />\n3. <span class=\"caps\">PICK</span> UP all the layers of skin and the tissue underneath them.<br />\n4. <span class=\"caps\">HOLD</span> the pinch for one second. Then release it.<br />\n5.. <span class=\"caps\">LOOK</span> to see if the skin pinch goes back very slowly (more than 2 seconds),<br />\nslowly, (less than 2 seconds, but not immediately), or immediately. If the skin<br />\nstays up for even a brief time after you release it, decide that the skin pinch goes<br />\nback slowly",
+                    "text": "To assess dehydration using the skin pinch<br />\n1. <b><span class=\"caps\">ASK</span></b> the mother to place the child on the examining table so that the child is flat on his back with his arms at his sides (not over his head) and his legs straight. Or, ask the mother to hold the child so he is lying flat on her lap.<br />\n2. <b><span class=\"caps\">USE</span> <span class=\"caps\">YOUR</span> <span class=\"caps\">THUMB</span> <span class=\"caps\">AND</span> <span class=\"caps\">FIRST</span> <span class=\"caps\">FINGER</span></b> to locate the area on the child\u2019s abdomen halfway between the umbilicus and the side of the abdomen. Do not use your fingertips because this will cause pain. The fold of the skin should be in a line up and down the child\u2019s body.<br />\n3. <b><span class=\"caps\">PICK</span> UP</b> all the layers of skin and the tissue underneath them.<br />\n4. <b><span class=\"caps\">HOLD</span></b> the pinch for one second. Then release it.<br />\n5.. <b><span class=\"caps\">LOOK</span></b> to see if the skin pinch goes back <b>very slowly</b> (more than 2 seconds), <b>slowly,</b> (less than 2 seconds, but not immediately), or <b>immediately.</b> If the skin stays up for even a brief time after you release it, decide that the skin pinch goes back slowly.",
                     "type": "display"
                 }
             ]
@@ -1018,7 +1040,27 @@
             "text": "Restless and Irritable",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S2.DE06-help",
+                    "text": "A child is classified as restless and irritable if s/he is restless and irritable all the time or every time s/he is touched and handled. If an infant or child is calm when breastfeeding but again restless and irritable when he stops breastfeeding, s/he has the sign restless and irritable. Many children are upset just because they are in the clinic. Usually these children can be consoled and calmed, and do not have this sign.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1031,7 +1073,27 @@
             "text": "Throat problem",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B17S1.DE01-help",
+                    "text": "Look to see if the child has a throat problem. <br />\n- Red (congested) throat indicates inflammation and may be sign of infection<br />\n- Exudate may be seen as white / yellow mucus on the tonsils or throat<br />\n- A membrane is a thick grey coating on the throat is a sign of diptheria, requiring urgent referral",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1077,6 +1139,26 @@
                         "display": "None of the listed throat problems observed"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B17S1.DE02-help",
+                    "text": "Look to see if the child has a throat problem. <br />\n- Red (congested) throat indicates inflammation and may be sign of infection<br />\n- Exudate may be seen as white / yellow mucus on the tonsils or throat<br />\n- A membrane is a thick grey coating on the throat is a sign of diptheria, requiring urgent referral",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -1097,7 +1179,27 @@
             "text": "Enlarged lymph nodes on front of neck",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B17S1.DE06-help",
+                    "text": "Lymph nodes can be considered enlarged if 1cm or more in diameter (about the width of the tip of an adult index finger)",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1156,7 +1258,27 @@
             "text": "Tender swelling behind the ear",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B13S2.DE01-help",
+                    "text": "<b>If both tenderness and swelling are present, the child may have mastoiditis, a deep infection in the mastoid bone.</b> Feel behind both ears. Compare them and decide if there is tender swelling of the mastoid bone. In infants, the swelling may be above the ear. Do not confuse this swelling of the bone with swollen lymph nodes.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1176,7 +1298,27 @@
             "text": "Pus Seen Draining from the Ear",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B13S2.DE02-help",
+                    "text": "Look inside the child\u2019s ear to see if pus is draining. That is a sign of infection, even if the child is not feeling any pain. Draining pus is a sign of infection",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1228,7 +1370,27 @@
             "text": "Stiff neck",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B12S2.DE01-help",
+                    "text": "<b>A stiff neck may be a sign of meningitis, cerebral malaria or another very severe febrile disease. It requires urgent treatment with injectable antibiotics and referral to a hospital.</b><br />\n<b><span class=\"caps\">WATCH</span> <span class=\"caps\">THE</span> <span class=\"caps\">CHILD</span>:</b> While you talk with the caregiver during the assessment, look to see if the child moves and bends his or her neck easily when looking around. If the child is moving and bending his or her neck, the child does not have a stiff neck.<br />\n<b><span class=\"caps\">TEST</span> <span class=\"caps\">THE</span> <span class=\"caps\">CHILD</span>:</b> If you did not see any movement, or if you are not sure, draw the child\u2019s attention to his or her umbilicus or toes. For example, you can shine a flashlight on the toes or umbilicus or tickle the toes to encourage the child to look down. Look to see if the child can bend his or her neck when looking down at his or her umbilicus or toe<br />\n<b><span class=\"caps\">FEEL</span> <span class=\"caps\">FOR</span> <span class=\"caps\">STIFF</span> <span class=\"caps\">NECK</span>:</b> If you still have not seen the child bend his or her neck himself, ask the caregiver to help you lay the child on his or her back. Lean over the child, gently support the child\u2019s back and shoulders with one hand. With the other hand, hold the child\u2019s head. Then carefully bend the head forward towards the child\u2019s chest. If the neck bends easily, the child does not have stiff neck. If the neck feels stiff and there is resistance to bending, the child has a stiff neck. Often a child with a stiff neck will cry when you try to bend the neck.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1268,7 +1430,27 @@
             "text": "Red eyes",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE01-help",
+                    "text": "The child has \u201cred eyes\u201d if there is redness in the white part of the eye. In a healthy eye, the white part of the eye is clearly white and not discoloured.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1288,7 +1470,27 @@
             "text": "Pus Draining from Eye",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE02-help",
+                    "text": "Pus draining from the eye is a sign of conjunctivitis. Conjunctivitis is an infection of the conjunctiva, the inside surface of the eyelid and the white part of the eye.<br />\n<b>If you do not see pus draining from the eye, look for pus on the conjunctiva or on the eyelids.</b> Often the pus forms a crust when the child is sleeping and seals the eye shut. You can gently open the eye, making sure that your hands are clean.<br />\nWash your hands after examining the eye of any child with pus draining from the eye.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1308,7 +1510,27 @@
             "text": "Clouding of the Cornea",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE03-help",
+                    "text": "The cornea is usually clear. When clouding of the cornea is present, the cornea <b>may appear clouded or hazy.</b> The cornea may look the way a glass of water looks when you add a small amount of milk. <b>The clouding may occur in one or both eyes.</b><br />\nA child with corneal clouding may keep his or her eyes tightly shut when exposed to light. The light may cause irritation and pain to the child\u2019s eyes. To check the child\u2019s eye, wait for the child to open his or her eye. Or gently pull down the lower eyelid to look for clouding.<br />\n<b>Corneal clouding is a dangerous condition.</b> It may be the result of vitamin A deficiency that has been made worse by measles. If the corneal clouding is not treated, the cornea can ulcerate and cause blindness. A child with clouding of the cornea needs urgent treatment with vitamin A.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1328,7 +1550,27 @@
             "text": "Is Clouding of the Cornea a new problem",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE04-help",
+                    "text": "If there is clouding of the cornea, ask the caregiver how long the cloudinghas been present. If the caregiver is certain that clouding has been there for some time, ask if the clouding has already been assessed and treated at the hospital. If it has, you do not need to refer this child again for corneal clouding.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1420,7 +1662,27 @@
             "text": "Measles Rash",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE10-help",
+                    "text": "In measles, <b>a rash begins behind the ears and on the neck. It spreads to the face.</b> During the next day, the rash spreads to the rest of the body, arms and legs. After 4 to 5 days, the rash starts to fade and the skin may peel.</p>\n\n\t<p>Some children with severe infection may have more rash spread over more of the body. The rash becomes more discoloured (dark brown or blackish), and there is more peeling of the skin. A measles rash does not have vesicles (blisters) or pustules. The rash does not itch.</p>\n\n\t<p>Do not confuse measles with other common childhood rashes such as chicken pox, scabies, or heat rash. Chicken pox rash is a generalized rash with vesicles. Scabies occurs on the hands, feet, ankles, elbows, buttocks and axilla (underarm). It also itches. Heat rash can be a generalized rash with small bumps and vesicles, which itch. A child with heat rash is not sick.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1440,7 +1702,27 @@
             "text": "Measles within the last 3 months",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE11-help",
+                    "text": "Ask the caregiver or check the child&#8217;s health record to see if they have had measles in the last 3 months. If the caregiver is not sure, explain the symptoms (a generalised rash all over the body, starting from behind the ears and on the neck, spreading to the face, then the body, arms and legs, accompanied by runny nose, red eyes or cough).",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1608,7 +1890,27 @@
             "text": "Scalp Infection (tinea capitis)",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE19a-help",
+                    "text": "Scalp lesions may result in loss of hair",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1628,7 +1930,27 @@
             "text": "Severe rash",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE22A-help",
+                    "text": "Severe rash indicates that the child needs referral due to risk of complications.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1648,7 +1970,27 @@
             "text": "Disseminated Herpes Zoster",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE23a-help",
+                    "text": "Disseminated herpes zoster means that the rash is affecting more than one area of the body",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1708,7 +2050,27 @@
             "text": "Extensive impetigo lesions",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE30b-help",
+                    "text": "Impetigo can be considered as extensive if it is greater than 4cm in diameter",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1728,7 +2090,27 @@
             "text": "Extensive molluscum lesions",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE31a-help",
+                    "text": "Molluscum Contagiosum &#8211; Skin coloured pearly white papules with central umbilication. Most commonly seen on face and trunk in children.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -1907,6 +2289,26 @@
                         "display": "No Oral Sores or Mouth Ulcers"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B14S2.DE38-help",
+                    "text": "Ulcers are painful open sores on the inside of the mouth and lips or the tongue. They may be red or have white coating.",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -1996,6 +2398,26 @@
                         "display": "No Palmar Pallor"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B15S2.DE01-help",
+                    "text": "<span class=\"caps\">LOOK</span> at the skin of the child\u2019s palm. Hold the child\u2019s palm open by grasping it gently from the side. Do not stretch the fingers backwards. This may cause pallor by blocking the blood supply. Compare the colour of the child\u2019s palm with your own palm and with the palms of other children. The child has some palmar pallor if the skin of the child\u2019s palm is pale. The child has severe palmar pallor if the skin of the palm is very pale or so pale that it looks white.",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -2044,6 +2466,29 @@
             ],
             "linkId": "Respiratory Rate profile",
             "type": "quantity",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "force-collection"
+                    }
+                }
+            ],
+            "linkId": "force-collection",
+            "type": "boolean",
             "required": false,
             "repeats": false
         },

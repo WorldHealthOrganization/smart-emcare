@@ -59,7 +59,7 @@
                 }
             ],
             "linkId": "EmCare.B6.DE01",
-            "text": "Axillary Temperature",
+            "text": "Axillary Temperature  (degrees Celcius)",
             "type": "quantity",
             "required": true,
             "repeats": false,
@@ -80,24 +80,6 @@
                     ],
                     "linkId": "EmCare.B6.DE01-help",
                     "text": "The client&#8217;s axillary temperature in degrees Celcius (temperature taken under the armpit)<br />\nWarning/error if above 45 and below 32 degrees Celcius.",
-                    "type": "display"
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                        "code": "security"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B6.DE01-unit",
-                    "text": "Cel",
                     "type": "display"
                 }
             ]
@@ -171,7 +153,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'Very High',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2,'High',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value < 35.5 'Cel', 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value.exists(), 'Normal',{}))))"
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, '2',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2,'High',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value < 35.5 'Cel', 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value.exists(), 'Normal',{}))))"
                     }
                 }
             ],
@@ -197,7 +179,7 @@
                         }
                     ],
                     "linkId": "EmCare.B6.DE01A-help",
-                    "text": "The client&#8217;s axillary temperature in degrees Celcius (temperature taken under the armpit) Warning/error if above 45 and below 32 degrees Celcius.",
+                    "text": "The client&#8217;s axillary temperature in degrees Celcius (temperature taken under the armpit)",
                     "type": "display"
                 }
             ]
@@ -220,30 +202,10 @@
                 }
             ],
             "linkId": "EmCare.B6.DE06",
-            "text": "Weight",
+            "text": "Weight (Kg)",
             "type": "quantity",
             "required": true,
-            "repeats": false,
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                        "code": "security"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B6.DE06-unit",
-                    "text": "kg",
-                    "type": "display"
-                }
-            ]
+            "repeats": false
         },
         {
             "extension": [
@@ -441,30 +403,10 @@
                         }
                     ],
                     "linkId": "Height Q",
-                    "text": "Height",
+                    "text": "Height (cm)",
                     "type": "quantity",
                     "required": true,
-                    "repeats": false,
-                    "item": [
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "Height Q-unit",
-                            "text": "cm",
-                            "type": "display"
-                        }
-                    ]
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -516,13 +458,6 @@
                             "valueBoolean": true
                         },
                         {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=24 and  %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE11').answer.first().empty()  and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().empty()) or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().exists()"
-                            }
-                        },
-                        {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
@@ -534,27 +469,7 @@
                     "text": "Height",
                     "type": "quantity",
                     "required": false,
-                    "repeats": false,
-                    "item": [
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "EmCare.B6.DE09-unit",
-                            "text": "cm",
-                            "type": "display"
-                        }
-                    ]
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -605,35 +520,15 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<24 or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().exists()) and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().empty()"
+                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<24 or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().exists()) and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().empty() and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE13').answer.first().empty()"
                             }
                         }
                     ],
                     "linkId": "Length Q",
-                    "text": "Length",
+                    "text": "Length (cm)",
                     "type": "quantity",
                     "required": true,
-                    "repeats": false,
-                    "item": [
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "Length Q-unit",
-                            "text": "cm",
-                            "type": "display"
-                        }
-                    ]
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -649,13 +544,6 @@
                             "valueBoolean": true
                         },
                         {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<24 or %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE10').answer.first().exists()) and %resource.repeat(item).where(linkId='HeightOrLength').repeat(item).where(linkId='EmCare.B6.DE12a').answer.first().empty()"
-                            }
-                        },
-                        {
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
@@ -667,27 +555,7 @@
                     "text": "Length",
                     "type": "quantity",
                     "required": false,
-                    "repeats": false,
-                    "item": [
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "EmCare.B6.DE12-unit",
-                            "text": "cm",
-                            "type": "display"
-                        }
-                    ]
+                    "repeats": false
                 },
                 {
                     "extension": [
@@ -799,7 +667,7 @@
                         }
                     ],
                     "linkId": "EmCare.B6.DE17",
-                    "text": "<span class=\"caps\">MUAC</span> (Mid Upper Arm Circumference)",
+                    "text": "<span class=\"caps\">MUAC</span> (mm)",
                     "type": "quantity",
                     "required": true,
                     "repeats": false,
@@ -807,19 +675,19 @@
                         {
                             "extension": [
                                 {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                                     "valueCodeableConcept": {
                                         "coding": [
                                             {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
                                             }
                                         ]
                                     }
                                 }
                             ],
-                            "linkId": "EmCare.B6.DE17-unit",
-                            "text": "mm",
+                            "linkId": "EmCare.B6.DE17-help",
+                            "text": "Mid Upper Arm Circumference",
                             "type": "display"
                         }
                     ]

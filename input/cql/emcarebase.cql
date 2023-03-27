@@ -3,7 +3,7 @@
 @description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
 */
 
-library emcarebase version '1.0.1.rc12.build.185'
+library emcarebase version '1.0.1.rc12.build.284'
 
 using FHIR version '4.0.1'
 
@@ -32,8 +32,8 @@ define "No":
 define function IsInEncounter(ref FHIR.Reference):
     case
     when encounterid = ref.id then true
+    when ref.identifier is not null and encounterid = ref.identifier.value then true
     when encounterid = Last(Split(ref.reference, '/')) then true
-   // when ref.identifier is not null and id = ref.identifier.id then true
     else false
 end
 
@@ -225,7 +225,7 @@ define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Inte
 define function GetHistoricObservationDone(id System.Code, nbdays Integer):
       First([Observation: id ] O
         where  O.status in { 'final', 'amended', 'corrected'}
-        and (difference in days between O.issued.value and Today()) < nbdays 
+        and (difference in days between O.issued and Today()) < nbdays 
         sort by issued.value desc )
 
 /*
@@ -236,7 +236,7 @@ define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays 
 define function GetHistoricObservationNotfound(id System.Code, nbdays Integer):
       First([Observation: id] O
         where  O.status in {'cancelled'}
-          and (difference in days between O.issued.value and Today()) < nbdays 
+          and (difference in days between O.issued and Today()) < nbdays 
         sort by issued.value desc)
 // ************************   HasObsHistory ************************/
 

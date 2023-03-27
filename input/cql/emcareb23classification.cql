@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb23classification version '1.0.1.rc12.build.185'
+library emcareb23classification version '1.0.1.rc12.build.284'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.185' called Base
-include emcareobservation version '1.0.1.rc12.build.185' called obs
-include emcarevalueset version '1.0.1.rc12.build.185' called val
-include emcarezscore version '1.0.1.rc12.build.185' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.185' called C
+include emcarebase version '1.0.1.rc12.build.284' called Base
+include emcareobservation version '1.0.1.rc12.build.284' called obs
+include emcarevalueset version '1.0.1.rc12.build.284' called val
+include emcarezscore version '1.0.1.rc12.build.284' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.284' called C
 
 
 
@@ -38,7 +38,7 @@ define "dl-xxxx":
 
 /* 
 emcare.b6.de06 : Weight
-    o"Weight"
+    o"Weight (Kg)"
 */
 define "emcare.b6.de06":
     Base.GetObsValue('EmCare.B6.DE06')
@@ -49,7 +49,7 @@ define "weight":
 
 /* 
 emcare.b6.de08-old : Profile Weight
-    o"Weight"
+    o"Weight (Kg)"
 */
 define "emcare.b6.de08-old":
     Base.GetObsValue('EmCare.B6.DE06')
@@ -60,7 +60,7 @@ define "profile weight":
 
 /* 
 emcare.b6.de08 : Estimated Weight
-    o"Weight"
+    o"Weight (Kg)"
 */
 define "emcare.b6.de08":
     Base.GetObsValue('EmCare.B6.DE06')
@@ -191,7 +191,7 @@ define "persistent diarrhoea":
 
 /* 
 dl-g-cl1-33 : Dysentery
-    C."age >= 2 months to <60 months"  and "Diarrhoea" = true and "Blood in the stool in this Illness" = true and "Axillary Temperature" < 38.5 'Cel'
+    C."age >= 2 months to <60 months"  and "Diarrhoea" = true and "Blood in the stool in this Illness" = true and "Axillary Temperature  (degrees Celcius)" < 38.5 'Cel'
 */
 define "dl-g-cl1-33":
     C."age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B11S1.DE01') = true and Base.GetObsValue('EmCare.B11S1.DE05') = true and Base.GetObsValue('EmCare.B6.DE01') < 38.5 'Cel'
@@ -202,7 +202,7 @@ define "dysentery":
 
 /* 
 dl-i-cl1-01 : Possible Shigella
-    C."age >= 2 months to <60 months"  and "Diarrhoea" = true and "Blood in the stool in this Illness" = true and "Axillary Temperature" >= 38.5 'Cel'
+    C."age >= 2 months to <60 months"  and "Diarrhoea" = true and "Blood in the stool in this Illness" = true and "Axillary Temperature  (degrees Celcius)" >= 38.5 'Cel'
 */
 define "dl-i-cl1-01":
     C."age >= 2 months to <60 months"  and Base.GetObsValue('EmCare.B11S1.DE01') = true and Base.GetObsValue('EmCare.B11S1.DE05') = true and Base.GetObsValue('EmCare.B6.DE01') >= 38.5 'Cel'
@@ -753,7 +753,7 @@ define "low weight for age":
 
 /* 
 dl-i-cl1-34 : Low MUAC or visual report of wasting
-    o"Weight" is null and ((AgeInMonths()> 6 and  "MUAC (Mid Upper Arm Circumference)" < 12.5 'cm' ) or (AgeInMonths()<= 6 and "MUAC cannot be measured"=true))
+    o"Weight (Kg)" is null and ((AgeInMonths()> 6 and  "MUAC (mm)" < 12.5 'cm' ) or (AgeInMonths()<= 6 and "MUAC cannot be measured"=true))
 */
 define "dl-i-cl1-34":
     Base.GetObsValue('EmCare.B6.DE06') is null and ((AgeInMonths()> 6 and  Base.GetObsValue('EmCare.B6.DE17') < 12.5 'cm' ) or (AgeInMonths()<= 6 and Base.GetObsValue('EmCare.B6.DE17a')=true))

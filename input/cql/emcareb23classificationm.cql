@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb23classificationm version '1.0.1.rc12.build.185'
+library emcareb23classificationm version '1.0.1.rc12.build.284'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.185' called Base
-include emcareobservation version '1.0.1.rc12.build.185' called obs
-include emcarevalueset version '1.0.1.rc12.build.185' called val
-include emcarezscore version '1.0.1.rc12.build.185' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.185' called C
+include emcarebase version '1.0.1.rc12.build.284' called Base
+include emcareobservation version '1.0.1.rc12.build.284' called obs
+include emcarevalueset version '1.0.1.rc12.build.284' called val
+include emcarezscore version '1.0.1.rc12.build.284' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.284' called C
 
 
 
@@ -49,7 +49,7 @@ dl-g-cl2-04-08 : Possible Serious Bacterial Infection OR Very Severe Disease
 define "dl-g-cl2-04-08":
     (    ("ageinmonths"<2)
          and ((    Base.GetObsValue('EmCare.B7.DE03')  or Base.GetObsValue('EmCare.B18S2.DE07')  or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE10') or Base.HasObsValueCode('EmCare.B18S2.DE08', 'EmCare.B18S2.DE09')  or Base.HasObsValueCode('EmCare.B18S1.DE02', 'EmCare.B18S1.DE03') or Base.HasObsValueCode('EmCare.B18S1.DE02', 'EmCare.B18S1.DE04'))
-         or (    (Base.HasObsValueCode('EmCare.B6.DE01A', 'High') or  Base.HasObsValueCode('EmCare.B6.DE01A', 'Very High') or Base.HasObsValueCode('EmCare.B6.DE01A', 'Low')) and  ( Base.GetObsValue('EmCare.B22.DE46') = true or "measured temperature (second measurement)" != val."normal" ))
+         or (    (Base.HasObsValueCode('EmCare.B6.DE01A', 'High') or  Base.HasObsValueCode('EmCare.B6.DE01A', '2') or Base.HasObsValueCode('EmCare.B6.DE01A', 'Low')) and  ( Base.GetObsValue('EmCare.B22.DE46') = true or "measured temperature (second measurement)" != val."normal" ))
          or (    Base.HasObsValueCode('EmCare.B6.DE01A', 'Low') and( Base.GetObsValue('EmCare.B22.DE46') = true or "measured temperature (second measurement)" != val."normal" ))))
      or (    "ageindays"<7 and Base.GetObsValue('EmCare.B22.DE07'))
 

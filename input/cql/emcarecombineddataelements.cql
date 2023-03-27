@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarecombineddataelements version '1.0.1.rc12.build.185'
+library emcarecombineddataelements version '1.0.1.rc12.build.284'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.185' called Base
-include emcareobservation version '1.0.1.rc12.build.185' called obs
-include emcarevalueset version '1.0.1.rc12.build.185' called val
+include emcarebase version '1.0.1.rc12.build.284' called Base
+include emcareobservation version '1.0.1.rc12.build.284' called obs
+include emcarevalueset version '1.0.1.rc12.build.284' called val
 
 
 
@@ -233,7 +233,7 @@ emcare.b12s1.de01 : Fever
     "Measured temperature" = "High" or "Measured temperature" = "Very High" or  "Hot to Touch" = true or  "Fever Reported" = true
 */
 define "emcare.b12s1.de01":
-    Base.HasObsValueCode('EmCare.B6.DE01A', 'High') or Base.HasObsValueCode('EmCare.B6.DE01A', 'Very High') or  Base.GetObsValue('EmCare.B6.DE05') = true or  Base.GetObsValue('EmCare.B12S1.DE02') = true
+    Base.HasObsValueCode('EmCare.B6.DE01A', 'High') or Base.HasObsValueCode('EmCare.B6.DE01A', '2') or  Base.GetObsValue('EmCare.B6.DE05') = true or  Base.GetObsValue('EmCare.B12S1.DE02') = true
 
 /* alias fever : emcare.b12s1.de01*/
 define "fever":

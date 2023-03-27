@@ -172,6 +172,11 @@ group emcarerelatedpersoncaregiver(source src : questionnaireResponse,target tgt
         } '9731ba92';
     } '30b90d37';
     src.item first as itm1  where linkId =  'EmCare.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'rppatientid' and answer.exists() then {
+            item.answer first as a -> tgt then {src.subject as subject -> tgt.patient = subject  'patient';} 'arppatientid';
+        } '8f06e4ac';
+    } 'e0682acf';
+    src.item first as itm1  where linkId =  'EmCare.A.DE21.1' then {
         itm1.item first as item  where linkId =  'EmCare.A.DE24' and answer.exists() then {
             item.answer first as a then MapValueSetExtCodeemcareade24(a, tgt) '24e5e488';
         } '6adb811a';

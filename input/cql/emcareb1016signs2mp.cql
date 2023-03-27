@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1016signs2mp version '1.0.1.rc12.build.185'
+library emcareb1016signs2mp version '1.0.1.rc12.build.284'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.185' called Base
-include emcareobservation version '1.0.1.rc12.build.185' called obs
-include emcarevalueset version '1.0.1.rc12.build.185' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.185' called clas
+include emcarebase version '1.0.1.rc12.build.284' called Base
+include emcareobservation version '1.0.1.rc12.build.284' called obs
+include emcarevalueset version '1.0.1.rc12.build.284' called val
+include emcarecombineddataelements version '1.0.1.rc12.build.284' called clas
 
 
 
@@ -127,14 +127,21 @@ define "itchy skin":
 
 /* 
 respiratory rate profile : nan
-    o"Respiratory Rate"
+    o"Respiratory Rate (breaths per minute)"
 */
 define "respiratory rate profile":
     Base.GetObsValue('EmCare.B22.DE01')
 
 /* 
+force-collection : nan
+    false
+*/
+define "force-collection":
+    false
+
+/* 
 respiratory rate second count profile : nan
-    o"Respiratory Rate Second Count"
+    o"Respiratory Rate Second Count (breaths per minute)"
 */
 define "respiratory rate second count profile":
     Base.GetObsValue('EmCare.B22.DE04')

@@ -126,10 +126,11 @@ group emcareobservationemcareb22de41(source src,target tgt){
     src.subject as subject -> tgt.subject = subject  'patient';
     src.item first as item  where linkId = 'EmCare.B22.DE41' and answer.exists() then {
         item.answer first as a then {
-            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcareb22de41';
-            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb22de41';
-        } 'bdab9370';
-    } '02a9f007';
+            a.value as val then {
+                val where val.code = 'true' -> tgt.status = 'final',tgt.value = true  '8a65aaa5';
+            } '26c2c8c7';
+        } '721205d5';
+    } '24def288';
 }
 
 group emcareobservationemcareb22de28(source src,target tgt){

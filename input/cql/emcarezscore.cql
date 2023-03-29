@@ -2,10 +2,10 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarezscore version '1.0.1.rc12.build.284'
+library emcarezscore version '1.0.1.rc12.build.308'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.284' called Base
+include emcarebase version '1.0.1.rc12.build.308' called Base
 include WeightForAge version '1.0.0' called wfa
 include WeightForLength version '1.0.0' called wfl
 include WeightForHeight version '1.0.0' called wfh

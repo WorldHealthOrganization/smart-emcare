@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarevalueset version '1.0.1.rc12.build.284'
+library emcarevalueset version '1.0.1.rc12.build.308'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -58,9 +58,9 @@ code "no oral sores or mouth ulcers": 'EmCare.B14S2.DE39' from "EmCare" display 
 code "severe palmar pallor": 'EmCare.B15S2.DE02' from "EmCare" display 'severe palmar pallor'
 code "some palmar pallor": 'EmCare.B15S2.DE03' from "EmCare" display 'some palmar pallor'
 code "no palmar pallor": 'EmCare.B15S2.DE04' from "EmCare" display 'no palmar pallor'
-code "feeding well": 'EmCare.B18S1.DE05' from "EmCare" display 'feeding well'
-code "not feeding well": 'EmCare.B18S1.DE04' from "EmCare" display 'not feeding well'
 code "not able to feed at all": 'EmCare.B18S1.DE03' from "EmCare" display 'not able to feed at all'
+code "not feeding well": 'EmCare.B18S1.DE04' from "EmCare" display 'not feeding well'
+code "feeding well": 'EmCare.B18S1.DE05' from "EmCare" display 'feeding well'
 code "moves on his or her own or moves spontaneously or without stimulation": 'EmCare.B18S2.DE11' from "EmCare" display 'moves on his or her own or moves spontaneously or without stimulation'
 code "movement only when stimulated but then stops": 'EmCare.B18S2.DE10' from "EmCare" display 'movement only when stimulated but then stops'
 code "no movement at all": 'EmCare.B18S2.DE09' from "EmCare" display 'no movement at all'

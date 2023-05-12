@@ -111,7 +111,15 @@ define function GetObservationDuringEncounter(idlist List<System.Code>):
 */
 
 define function GetObservationDuringEncounter(id System.Code):
+      First([Observation: id ] O
+        where   IsInEncounter(O.encounter) 
+        and O.status in { 'final', 'amended', 'corrected','cancelled'} 
+        sort by issued.value desc) 
+
+  /*
+  this is commented for performance improvement, even if it hides a valid observation if there is an more recent unvalid one
   Coalesce(GetObservationDuringEncounterDone(id ), GetObservationDuringEncounterNotFound(id ))
+  */
 /*
 define function GetObservationDuringEncounterDone(idlist List<System.Code>):
       Last([Observation: idlist ] O

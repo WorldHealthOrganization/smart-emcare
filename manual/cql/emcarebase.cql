@@ -47,10 +47,18 @@ define getEncounter:
 
 define function EmCareExtensions(element Patient, id String):
   element.extension E
-      where E.url = ('{{canonical_base}}/StructureDefinition/' + id)
+      where E.url = ('{{canonical_base}}StructureDefinition/' + id)
       return E
 
 define function EmCareExtension(element Patient, id String):
+  singleton from EmCareExtensions(element, id)
+
+define function EmCareExtensions(element Encounter, id String):
+  element.extension E
+      where E.url = ('{{canonical_base}}StructureDefinition/' + id)
+      return E
+
+define function EmCareExtension(element Encounter, id String):
   singleton from EmCareExtensions(element, id)
 
 define getPrimaryCareGiverReference:
@@ -82,7 +90,9 @@ define getRelatedPersonAccompanyingTheChild:
 
 
 define "Person accompanying child today's Relationship to Client":
-  getRelatedPersonAccompanyingTheChild.relationship
+//WORKARROUND   getRelatedPersonAccompanyingTheChild.relationship
+  EmCareExtension(getEncounter, 'motherpresent').value
+
 
 
 

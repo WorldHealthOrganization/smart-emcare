@@ -62,7 +62,45 @@
             "linkId": "Fever",
             "type": "boolean",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "Fever-help",
+                    "text": "The client is reported to have or has had fever",
+                    "type": "display"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
+                                        "code": "instructions"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "Fever-instruction",
+                    "text": "help",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -338,7 +376,239 @@
             "linkId": "EmCare.B22.RespiratoryRate",
             "type": "group",
             "required": false,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                            "valueCoding": {
+                                "system": "http://unitsofmeasure.org",
+                                "code": "{Breaths}/min"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "iif(%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().exists(), %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value,{})"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE01",
+                    "text": "Respiratory Rate (breaths per minute)",
+                    "type": "quantity",
+                    "required": true,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE01-help",
+                            "text": "<b>Count the number of breaths the child takes per minute</b> to determine if fast breathing is present.<br />\nIt is <b>very important that the child is calm</b> and still. If the child is moving or crying, you will not be able to get an accurate count of breaths. <br />\n<b>To count the breaths per minute,</b> use a watch with a second hand or a digital watch. Look for the breathing movement anywhere on the child\u2019s chest or abdomen. <br />\nThe number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b></p>\n\n\t<ul>\n\t\t<li>Under 2 months: More than 60 breaths per minute*</li>\n\t\t<li>2 to 11 months: More than 50 breaths per minute</li>\n\t\t<li>12 to 59 months: More than 40 breaths per minute</li>\n\t</ul>\n\n\t<p>*In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "check-box",
+                                        "display": "Check-box"
+                                    }
+                                ],
+                                "text": "Check-box"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty() and %resource.repeat(item).where(linkId='force-collection').answer.first().value = false"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE02",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": true,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "code": "EmCare.B22.DE02",
+                                "display": "Unable to perform Respiratory Rate at this time"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and (%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 60 '{Breaths}/min') and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
+                            }
+                        }
+                    ],
+                    "linkId": "second",
+                    "type": "group",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                                    "valueCoding": {
+                                        "system": "http://unitsofmeasure.org",
+                                        "code": "{Breaths}/min"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty()"
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE04",
+                            "text": "Respiratory Rate Second Count (breaths per minute)",
+                            "type": "quantity",
+                            "required": false,
+                            "repeats": false,
+                            "item": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                            "valueCodeableConcept": {
+                                                "coding": [
+                                                    {
+                                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                        "code": "help"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "linkId": "EmCare.B22.DE04-help",
+                                    "text": "<b>Count the number of breaths the child takes per minute</b> to determine if fast breathing is present.<br />\nIt is <b>very important that the child is calm</b> and still. If the child is moving or crying, you will not be able to get an accurate count of breaths. <br />\n<b>To count the breaths per minute,</b> use a watch with a second hand or a digital watch. Look for the breathing movement anywhere on the child\u2019s chest or abdomen. <br />\nThe number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b></p>\n\n\t<ul>\n\t\t<li>Under 2 months: More than 60 breaths per minute*</li>\n\t\t<li>2 to 11 months: More than 50 breaths per minute</li>\n\t\t<li>12 to 59 months: More than 40 breaths per minute</li>\n\t</ul>\n\n\t<p>*In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
+                                    "type": "display"
+                                }
+                            ]
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "check-box",
+                                                "display": "Check-box"
+                                            }
+                                        ],
+                                        "text": "Check-box"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty()"
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE05",
+                            "type": "choice",
+                            "required": false,
+                            "repeats": true,
+                            "answerOption": [
+                                {
+                                    "valueCoding": {
+                                        "code": "EmCare.B22.DE05",
+                                        "display": "Respiratory Rate Second Count Not Possible"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value < 60 '{Breaths}/min')"
+                            }
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value < 60 '{Breaths}/min'),iif(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Breaths}/min' or (%resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().exists()  and ( %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value  >= 60 '{Breaths}/min'  or %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value  >= 60 '{Breaths}/min' ) ) ) or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2or %resource.repeat(item).where(linkId='EmCare.B22.RespiratoryRate').repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60, true, false),{})"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B22.DE07",
+                    "text": "Fast Breathing",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "readOnly": true,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B22.DE07-help",
+                            "text": "The number of breaths for <b>\u2018fast breathing\u2019 depends on the child\u2019s age.</b>   * Under 2 months: More than 60 breaths per minute* * 2 to 11 months: More than 50 breaths per minute * 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
+                            "type": "display"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "extension": [
@@ -351,7 +621,27 @@
             "text": "Severe Chest Indrawing",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B18S2.DE07-help",
+                    "text": "The young infant must be calm while you assess for severe chest indrawing.\u00a0 Lift the young infant\u2019s shirt. </p>\n\n\t<p>Look for chest indrawing when the young infant breathes in. Lower chest wall indrawing is the inward movement of the bony structure of the chest wall <br />\nwhen the child breathes in. Look at the lower chest wall (lower ribs). The child has chest indrawing if the lower chest wall goes IN when the child breathes IN.<br />\nIn normal breathing, the whole chest wall (upper and lower) and the abdomen move <span class=\"caps\">OUT</span> when the child breathes IN. </p>\n\n\t<p>Mild chest indrawing is normal in a young infant because the chest wall is soft. Severe chest indrawing is very deep and easy to see.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "linkId": "EmCare.B18S2.DE08",
@@ -363,8 +653,8 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B18S2.DE09",
-                        "display": "No movement at all"
+                        "code": "EmCare.B18S2.DE11",
+                        "display": "Moves on his or her own or moves spontaneously or without stimulation"
                     }
                 },
                 {
@@ -377,9 +667,29 @@
                 {
                     "valueCoding": {
                         "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B18S2.DE11",
-                        "display": "Moves on his or her own or moves spontaneously or without stimulation"
+                        "code": "EmCare.B18S2.DE09",
+                        "display": "No movement at all"
                     }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B18S2.DE08-help",
+                    "text": "Look at the young infant\u2019s movements. Does the young infant move on his/her own? Does the infant move only when stimulated but then stops? Does the infant not move at all?<br />\nYoung infants often sleep most of the time, and this is not a sign of illness. It is not necessary for the infant to be awake if he/she is moving spontaneously. <br />\nIf a young infant is not moving spontaneously and does not wake up during the assessment, ask the mother to wake him. An awake young infant will normally move his arms or legs or turn his head several times in a\u00a0 minute if you watch him closely. If the infant is awake but has no spontaneous movements, gently stimulate the young infant. Stimulation\u00a0 is a gentle, painless touching of the baby with enough pressure that would evoke movements, sound making and eye opening. The presence of any movement such as a grimace of the face, eye-opening or movement of a limb will qualify &#8220;Movement only when stimulated but then stops&#8221;.\u00a0 An infant who cannot be woken up even after stimulation is considered to have the sign &#8220;Does not move even with stimulation. &#8220; ",
+                    "type": "display"
                 }
             ]
         },
@@ -394,7 +704,27 @@
             "text": "Umbilicus Red or Pus Draining",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B18S2.DE12-help",
+                    "text": "&#8220;The umbilical cord usually separates one week after birth and the wound heals within 15 days.  Redness of the end of the umbilicus or pus draining from the umbilicus are signs of umbilical  infection.&#8221; ",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -407,7 +737,27 @@
             "text": "Skin Pustules",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B18S2.DE13-help",
+                    "text": "Examine the skin on the entire body. Skin pustules are red spots or blisters which contain pus.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -420,7 +770,27 @@
             "text": "Yellow Skin",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B19S2.DE01-help",
+                    "text": "Jaundice is a yellow discoloration of skin and mucus membranes. It is important to look for jaundice in natural light. To look for jaundice, press the  infant\u2019s skin over the forehead with your fingers to blanch, remove your fingers and look for yellow discolouration. If there is yellow discoloration, the infant has jaundice",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -433,7 +803,27 @@
             "text": "Yellow Palms or Yellow Soles",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B19S2.DE02-help",
+                    "text": "Jaundice is a yellow discoloration of skin and mucus membranes. Jaundice in the palms of hands or soles of feet is a sign of Severe Jaundice.\u00a0 It is important to look for jaundice in natural light. To assess for severe jaundice, press the infant&#8217;s skin in the palm of there hand and then in the sole of their feet with your fingers to blanch, remove your finders and look for yellow dicoulouration in the palm or the sole. If there is yellow discoloration of the palm or sole, the infant has severe jaundice.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -441,7 +831,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInDays').answer.first().value >1 and  (%resource.repeat(item).where(linkId='EmCare.B19S2.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.first().value = false) and  %resource.repeat(item).where(linkId='AgeInDays').answer.first().value < 21"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInDays').answer.first().value >1 and  %resource.repeat(item).where(linkId='EmCare.B19S2.DE01').answer.first().value = true and %resource.repeat(item).where(linkId='EmCare.B19S2.DE02').answer.first().value = false and  %resource.repeat(item).where(linkId='AgeInDays').answer.first().value < 21"
                     }
                 }
             ],
@@ -472,6 +862,26 @@
                         "display": "Unknown when Jaundice first appeared"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B19S2.DE04-help",
+                    "text": "Ask the caregiver when the baby&#8217;s skin first turned yellowish. If the caregiver didn&#8217;t notice the yellow discolouration or can&#8217;t remember when it started, select &#8220;don&#8217;t know&#8221;. <br />\nJaundice that appears in less than 24 hours after birth is always due to an underlying disease. These babies should be referred urgently. <br />\nMany normal babies, particularly small babies, may have jaundice during the first week of life. This jaundice usually appears on the third or fourth day of life and is mild and disappears before the age of two to\u00a0 three weeks. It does not need any treatment.",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -492,7 +902,27 @@
             "text": "Sunken Eyes",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S2.DE01-help",
+                    "text": "The eyes of a dehydrated infant may look sunken. In a low-weight infant, the eyes may always look sunken, even if the young infant is not dehydrated. Even though the sign \u201csunken eyes\u201d is less reliable in a low-weight infant, it can still be used to classify the young infant\u2018s dehydration. </p>\n\n\t<p>Decide if you think the eyes are sunken. Then ask the mother if she thinks her child\u2019s eyes look unusual. Her opinion can help you confirm.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -531,6 +961,26 @@
                         "display": "Skin Pinch goes back Normally (immediately)"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S2.DE02-help",
+                    "text": "Locate the area on the infant\u2019s abdomen halfway between the umbilicus and the side of the abdomen. To do the skin pinch, use your thumb and first finger. Do not use your fingertips because this will cause pain. Place <br />\nyour hand so that when you pinch the skin, the fold of skin will be in a line up and down the child\u2019s body and not across the child\u2019s <br />\nbody. Firmly pick up all of the layers of skin and the tissue under them. Pinch the skin for <br />\none second and then release it. When you release the skin, look to see if the skin pinch <br />\ngoes back:</p>\n\n\t<p>\u2022 very slowly (longer than 2 seconds)<br />\n\u2022 slowly<br />\n\u2022 immediately<br />\nIf the skin stays up for even a brief time after you release it, decide that the skin pinch goes back slowly",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -551,35 +1001,69 @@
             "text": "Restless and Irritable",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B11S2.DE06-help",
+                    "text": "Look at the young infant&#8217;s general condition Is the infant restles and irritable? <br />\nAn infant has teh sign &#8220;restless and irritable&#8221; if the infant is restless and irritable all the time or every time he is touched and handled. If an infant is calm when breastfeeding but again <br />\nrestless and irritable when he stops breastfeeding, he has the sign \u201crestless and irritable\u201d. A healthy infant will be consoled when put on the breast.",
+                    "type": "display"
+                }
+            ]
         },
         {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='zscore').answer.first().exists()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='zscore').answer.first().exists(), iif( %resource.repeat(item).where(linkId='zscore').answer.first().value >= (-2.0), 'Normal Weight for Age', iif( %resource.repeat(item).where(linkId='zscore').answer.first().value < (-3.0), 'Very Low Weight for Age','Low Weight for Age')), {})"
+                    }
+                }
+            ],
             "linkId": "EmCare.B21S2.DE01",
             "text": "Weight Status",
-            "type": "choice",
-            "required": true,
+            "type": "string",
+            "required": false,
             "repeats": false,
-            "answerOption": [
+            "readOnly": true,
+            "item": [
                 {
-                    "valueCoding": {
-                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B21S2.DE02",
-                        "display": "Very Low Weight for Age"
-                    }
-                },
-                {
-                    "valueCoding": {
-                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B21S2.DE03",
-                        "display": "Low Weight for Age"
-                    }
-                },
-                {
-                    "valueCoding": {
-                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
-                        "code": "EmCare.B21S2.DE04",
-                        "display": "Normal Weight for Age"
-                    }
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE01-help",
+                    "text": "Weight status is calculated based on the young infant&#8217;s weight for age Z-score, which is determined from a standardized chart for weight -for-age for the infant&#8217;s sex. <br />\nA young infant is low weight for age if the z-score is below -2. <br />\nA young infant who is less than 7 days old and weighs less than 2 kg is considered very low weight.<br />\nSome young infants who are low weight for age were born with low birth weight. Some did not gain weight well after birth.",
+                    "type": "display"
                 }
             ]
         },
@@ -597,13 +1081,40 @@
             "text": "Breastfed how many times in 24 hours?",
             "type": "integer",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE05-help",
+                    "text": "Ask the caregiver how many times in 24 hours (one day and one night) they usually breastfeed the young infant. The recommendation is that the young infant be breastfed as often and for as long as the <br />\ninfant wants, day and night. This should be 8 or more times in 24 hours.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S2.DE05').answer.first().value>= 8"
+                    }
                 }
             ],
             "linkId": "EmCare.B21S2.DE06",
@@ -630,7 +1141,27 @@
             "text": "Young Infant receives food or fluids other than breast milk",
             "type": "boolean",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE08-help",
+                    "text": "Find out if the young infant is receiving any other foods or drinks such as other milk, juice, tea, thin porridge, dilute cereal, or even water. Ask how often he receives it and the amount. You need to know if the infant is mostly breastfed, or mostly fed on other foods",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -675,6 +1206,26 @@
                         "display": "Appropriate replacement milk"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE09-help",
+                    "text": "Ask the mother questions to determine what replacement milk or milks are used. It may be a breastmilk replacement, animal milk or some other fluid or some combination. Determine if this type of replacement feed is appropriate or not appropriate in your setting.",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -691,7 +1242,27 @@
             "text": "How many replacement feeds during the day and night (24 hours)?",
             "type": "integer",
             "required": true,
-            "repeats": false
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE12-help",
+                    "text": "A young infant up to one month of age should be fed 8 times and a young infant between 1 <br />\nand 2 months of age should be fed 7 times in 24 hours.",
+                    "type": "display"
+                }
+            ]
         },
         {
             "extension": [
@@ -702,6 +1273,13 @@
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B21S2.DE12').answer.first().value>=8"
+                    }
                 }
             ],
             "linkId": "EmCare.B21S2.DE13",
@@ -728,7 +1306,7 @@
                 }
             ],
             "linkId": "EmCare.B21S2.DE15",
-            "text": "How much milk is given at each feed?",
+            "text": "How much milk is given at each feed (ml)?",
             "type": "quantity",
             "required": true,
             "repeats": false,
@@ -736,19 +1314,19 @@
                 {
                     "extension": [
                         {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                             "valueCodeableConcept": {
                                 "coding": [
                                     {
-                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                        "code": "security"
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
                                     }
                                 ]
                             }
                         }
                     ],
-                    "linkId": "EmCare.B21S2.DE15-unit",
-                    "text": "ml",
+                    "linkId": "EmCare.B21S2.DE15-help",
+                    "text": "A young infant up to one month of age should be given approximately 60 ml per feed, 8 times per day, and a young infant between 1 and 2 months of age approximately 90 ml at each feed, 7 times per day. It is helpful to have common bottles or cups available so that a mother can show you the amount that she gives.",
                     "type": "display"
                 }
             ]
@@ -762,6 +1340,13 @@
                 {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
                     "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='AgeInDays').answer.first().value < 29, %resource.repeat(item).where(linkId='EmCare.B21S2.DE15').answer.first().value>=60 'ml', %resource.repeat(item).where(linkId='EmCare.B21S2.DE15').answer.first().value>=90 'ml' )"
+                    }
                 }
             ],
             "linkId": "EmCare.B21S2.DE16",
@@ -799,6 +1384,26 @@
                         "code": "EmCare.B21S2.DE20",
                         "display": "Incorrect or unhygienic feed preparation"
                     }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE18-help",
+                    "text": "Let mother demonstrate or explain how a feed is prepared and how she gives it to the infant. Determine if the breastmilk substitute is being prepared correctly and hygienically.",
+                    "type": "display"
                 }
             ]
         },
@@ -864,6 +1469,26 @@
                         "display": "Feeding utensils cleaned hygienically"
                     }
                 }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B21S2.DE24-help",
+                    "text": "Ask the caregiver how they clear the feeding utensils. Determine if this is a safe and hygienic cleaning method.",
+                    "type": "display"
+                }
             ]
         },
         {
@@ -908,63 +1533,13 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false )"
+                        "expression": "( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false ) and %resource.repeat(item).where(linkId='EmCare.B21S2.DE31').answer.first().empty()"
                     }
                 }
             ],
             "linkId": "EmCare.B21S2.DE30",
             "text": "Ulcers or White Patches in Mouth",
             "type": "boolean",
-            "required": true,
-            "repeats": false
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
-                    "valueCode": "horizontal"
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false ) and %resource.repeat(item).where(linkId='EmCare.B21S2.DE30').answer.first().value = false"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B21S2.DE31",
-            "text": "Unable to check if Ulcers or White Patches in Mouth",
-            "type": "boolean",
-            "required": false,
-            "repeats": false
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
-                    "valueCoding": {
-                        "system": "http://unitsofmeasure.org",
-                        "code": "{Counts}/min"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().exists(), %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value,{})"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B22.DE01",
-            "text": "Respiratory Rate",
-            "type": "quantity",
             "required": true,
             "repeats": false,
             "item": [
@@ -982,26 +1557,8 @@
                             }
                         }
                     ],
-                    "linkId": "EmCare.B22.DE01-help",
-                    "text": "Count the number of breaths the child takes per minute to determine if fast breathing is present. To count the breaths per minute, use a watch with a second hand or a digital watch (or click here for a 60 second timer).  Look for the breathing movement anywhere on the child\u2019s chest or abdomen.  The number of breaths for \u2018fast breathing\u2019 depends on the child\u2019s age.  &#8211; Under 2 months: More than 60 breaths per minute* &#8211; 2 to 11 months: More than 50 breaths per minute &#8211; 12 to 59 months: More than 40 breaths per minute  *In young infants, a second measurement should be taken to confirm, unless there is already another sign of possible serious bacterial infection",
-                    "type": "display"
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                        "code": "security"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE01-unit",
-                    "text": "{Counts}/min",
+                    "linkId": "EmCare.B21S2.DE30-help",
+                    "text": "Look inside the mouth at the tongue and inside of the cheek. Thrush looks like milk curds on the inside of the cheek, or a thick white coating of the tongue. Try to wipe the white off. The white patches of thrush will remain.",
                     "type": "display"
                 }
             ]
@@ -1025,164 +1582,20 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                        "expression": "( %resource.repeat(item).where(linkId='YI_sever').answer.empty()  or %resource.repeat(item).where(linkId='YI_sever').answer.first().value=false ) and %resource.repeat(item).where(linkId='EmCare.B21S2.DE30').answer.first().empty()"
                     }
                 }
             ],
-            "linkId": "EmCare.B22.DE02",
+            "linkId": "EmCare.B21S2.DE31",
             "type": "choice",
             "required": false,
             "repeats": true,
             "answerOption": [
                 {
                     "valueCoding": {
-                        "code": "EmCare.B22.DE02",
-                        "display": "Unable to perform Respiratory Rate at this time"
+                        "code": "EmCare.B21S2.DE31",
+                        "display": "Unable to check if Ulcers or White Patches in Mouth"
                     }
-                }
-            ]
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value > 60 '{Counts}/min' and   %resource.repeat(item).where(linkId='Respiratory Rate Second Count Profile').answer.first().empty()"
-                    }
-                }
-            ],
-            "linkId": "second",
-            "type": "group",
-            "required": false,
-            "repeats": false,
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
-                            "valueCoding": {
-                                "system": "http://unitsofmeasure.org",
-                                "code": "{Counts}/min"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE05').answer.first().empty()"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE04",
-                    "text": "Respiratory Rate Second Count",
-                    "type": "quantity",
-                    "required": false,
-                    "repeats": false,
-                    "item": [
-                        {
-                            "extension": [
-                                {
-                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
-                                    "valueCodeableConcept": {
-                                        "coding": [
-                                            {
-                                                "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                                "code": "security"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ],
-                            "linkId": "EmCare.B22.DE04-unit",
-                            "text": "{Counts}/min",
-                            "type": "display"
-                        }
-                    ]
-                },
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "check-box",
-                                        "display": "Check-box"
-                                    }
-                                ],
-                                "text": "Check-box"
-                            }
-                        },
-                        {
-                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                            "valueExpression": {
-                                "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().empty()"
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE05",
-                    "type": "choice",
-                    "required": false,
-                    "repeats": true,
-                    "answerOption": [
-                        {
-                            "valueCoding": {
-                                "code": "EmCare.B22.DE05",
-                                "display": "Respiratory Rate Second Count Not Possible"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
-                    "valueCode": "horizontal"
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "(%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2  and %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().exists()) or (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2  and %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists())"
-                    }
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
-                    "valueExpression": {
-                        "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().exists() ),iif((%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B22.DE04').answer.first().value >= 60 '{Counts}/min'or%resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 50 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12or %resource.repeat(item).where(linkId='EmCare.B22.DE01').answer.first().value >= 40 '{Counts}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60), true, false),{})"
-                    }
-                }
-            ],
-            "linkId": "EmCare.B22.DE07",
-            "text": "Fast Breathing",
-            "type": "boolean",
-            "required": false,
-            "repeats": false,
-            "readOnly": true,
-            "item": [
-                {
-                    "extension": [
-                        {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-                            "valueCodeableConcept": {
-                                "coding": [
-                                    {
-                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
-                                        "code": "help"
-                                    }
-                                ]
-                            }
-                        }
-                    ],
-                    "linkId": "EmCare.B22.DE07-help",
-                    "text": "For 12 months to 5 years fast breathing is 40 breaths per minute or more",
-                    "type": "display"
                 }
             ]
         },
@@ -1202,6 +1615,29 @@
             ],
             "linkId": "Respiratory Rate profile",
             "type": "quantity",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "force-collection"
+                    }
+                }
+            ],
+            "linkId": "force-collection",
+            "type": "boolean",
             "required": false,
             "repeats": false
         },

@@ -87,19 +87,19 @@
                 {
                     "extension": [
                         {
-                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory",
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
                             "valueCodeableConcept": {
                                 "coding": [
                                     {
-                                        "system": "http://hl7.org/fhir/questionnaire-display-category",
-                                        "code": "security"
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
                                     }
                                 ]
                             }
                         }
                     ],
-                    "linkId": "EmCare.B22.DE47-unit",
-                    "text": "Cel",
+                    "linkId": "EmCare.B22.DE47-help",
+                    "text": "The client&#8217;s axillary temperature in degrees Celcius (temperature taken under the armpit)<br />\nWarning/error if above 45 and below 32 degrees Celcius.",
                     "type": "display"
                 }
             ]
@@ -146,14 +146,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().exists()"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'Very High',iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'High',iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value < 35.5 'Cel' , 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value.exists(), 'Normal',{}))))"
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, '2',iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2, 'High',iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value < 35.5 'Cel' , 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B22.DE47').answer.first().value.exists(), 'Normal',{}))))"
                     }
                 }
             ],

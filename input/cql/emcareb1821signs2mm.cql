@@ -2,14 +2,14 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1821signs2mm version '1.0.1.rc12.build.156'
+library emcareb1821signs2mm version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.156' called Base
-include emcareobservation version '1.0.1.rc12.build.156' called obs
-include emcarevalueset version '1.0.1.rc12.build.156' called val
-include emcarezscore version '1.0.1.rc12.build.156' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.156' called c
+include emcarebase version '1.0.1.rc12.build.457' called Base
+include emcareobservation version '1.0.1.rc12.build.457' called obs
+include emcarevalueset version '1.0.1.rc12.build.457' called val
+include emcarezscore version '1.0.1.rc12.build.457' called Z
+include emcarecombineddataelements version '1.0.1.rc12.build.457' called c
 
 
 
@@ -18,24 +18,24 @@ context Patient
 
 
 /* 
-fever : nan
+none : Fever
     c."fever"
 */
-define "fever":
+define "none":
     c."fever"
 
 /* 
-zscore : nan
+none : zscore
     Z."WAZ"
 */
-define "zscore":
+define "none":
     Z."WAZ"
 
 /* 
-ageinmonths : Age in Month
+none : AgeInMonths
     AgeInMonths()
 */
-define "ageinmonths":
+define "none":
     AgeInMonths()
 
 /* alias age in month : ageinmonths*/
@@ -43,50 +43,50 @@ define "age in month":
     "ageinmonths"
 
 /* 
-ageindays : nan
+none : AgeInDays
     AgeInDays()
 */
-define "ageindays":
+define "none":
     AgeInDays()
 
 /* 
-emcare.b20s1.de01 : Diarrhoea
-    GetObsValue('EmCare.B20S1.DE01')
+none : EmCare.B20S1.DE01
+    o"Diarrhoea"
 */
-define "emcare.b20s1.de01":
-    Base.GetObsValue('EmCare.B20S1.DE01')
+define "none":
+    Base.GetObsValue('EmCare.B11S1.DE01')
 
 /* alias diarrhoea : emcare.b20s1.de01*/
 define "diarrhoea":
     "emcare.b20s1.de01"
 
 /* 
-emcare.a.de31 : Biological Mother Vital Status
-    GetObsValue('EmCare.A.DE31')
+none : EmCare.A.DE31
+    Base."Biological Mother Vital Status"
 */
-define "emcare.a.de31":
-    Base.GetObsValue('EmCare.A.DE31')
+define "none":
+    Base."Biological Mother Vital Status"
 
 /* alias biological mother vital status : emcare.a.de31*/
 define "biological mother vital status":
     "emcare.a.de31"
 
 /* 
-emcare.b21s1.de01 : Breastfed
-    GetObsValue('EmCare.B21S1.DE01')
+none : EmCare.B21S1.DE01
+    o"Breastfed"
 */
-define "emcare.b21s1.de01":
-    Base.GetObsValue('EmCare.B21S1.DE01')
+define "none":
+    Base.GetObsValue('EmCare.B21S1.DE06')
 
 /* alias breastfed : emcare.b21s1.de01*/
 define "breastfed":
     "emcare.b21s1.de01"
 
 /* 
-emcare.b18s1.de02 : Difficulty with Feeding
-    GetObsValue('EmCare.B18S1.DE02')
+none : EmCare.B18S1.DE02
+    o"Difficulty with Feeding"
 */
-define "emcare.b18s1.de02":
+define "none":
     Base.GetObsValue('EmCare.B18S1.DE02')
 
 /* alias difficulty with feeding : emcare.b18s1.de02*/
@@ -94,10 +94,10 @@ define "difficulty with feeding":
     "emcare.b18s1.de02"
 
 /* 
-yi_sever_but_dhey : YI severe classification other than severe dehydration
+none : YI_sever_but_dhey
     c."yi severe classification other than severe dehydration"
 */
-define "yi_sever_but_dhey":
+define "none":
     c."yi severe classification other than severe dehydration"
 
 /* alias yi severe classification other than severe dehydration : yi_sever_but_dhey*/
@@ -105,10 +105,10 @@ define "yi severe classification other than severe dehydration":
     "yi_sever_but_dhey"
 
 /* 
-yi_sever : YI severe classification
+none : YI_sever
     c."yi severe classification"
 */
-define "yi_sever":
+define "none":
     c."yi severe classification"
 
 /* alias yi severe classification : yi_sever*/
@@ -116,10 +116,10 @@ define "yi severe classification":
     "yi_sever"
 
 /* 
-emcare.b7.de03 : Convulsion(s) in this Illness
+none : EmCare.B7.DE03
     o"Convulsion(s) in this Illness"
 */
-define "emcare.b7.de03":
+define "none":
     Base.GetObsValue('EmCare.B7.DE03')
 
 /* alias convulsion(s) in this illness : emcare.b7.de03*/
@@ -127,22 +127,29 @@ define "convulsion(s) in this illness":
     "emcare.b7.de03"
 
 /* 
-respiratory rate profile : nan
-    o"Respiratory Rate"
+none : Respiratory Rate profile
+    o"Respiratory Rate (breaths per minute)"
 */
-define "respiratory rate profile":
+define "none":
     Base.GetObsValue('EmCare.B22.DE01')
 
 /* 
-respiratory rate second count profile : nan
-    o"Respiratory Rate Second Count"
+none : force-collection
+    false
 */
-define "respiratory rate second count profile":
+define "none":
+    false
+
+/* 
+none : Respiratory Rate Second Count Profile
+    o"Respiratory Rate Second Count (breaths per minute)"
+*/
+define "none":
     Base.GetObsValue('EmCare.B22.DE04')
 
 /* 
-fast breathing profile : nan
+none : Fast Breathing profile
     o"Fast Breathing"
 */
-define "fast breathing profile":
+define "none":
     Base.GetObsValue('EmCare.B22.DE07')

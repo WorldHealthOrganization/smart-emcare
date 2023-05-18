@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb6measurements version '1.0.1.rc12.build.156'
+library emcareb6measurements version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.156' called Base
-include emcareobservation version '1.0.1.rc12.build.156' called obs
-include emcarevalueset version '1.0.1.rc12.build.156' called val
-include emcarezscore version '1.0.1.rc12.build.156' called Z
+include emcarebase version '1.0.1.rc12.build.457' called Base
+include emcareobservation version '1.0.1.rc12.build.457' called obs
+include emcarevalueset version '1.0.1.rc12.build.457' called val
+include emcarezscore version '1.0.1.rc12.build.457' called Z
 
 
 
@@ -17,10 +17,10 @@ context Patient
 
 
 /* 
-ageindays : Age in Days
+none : AgeInDays
     AgeInDays()
 */
-define "ageindays":
+define "none":
     AgeInDays()
 
 /* alias age in days : ageindays*/
@@ -28,10 +28,10 @@ define "age in days":
     "ageindays"
 
 /* 
-pastweightactualised : Weight based on the previous mesurements
+none : pastWeightActualised
     Z."pastweightactualised"
 */
-define "pastweightactualised":
+define "none":
     Z."pastweightactualised"
 
 /* alias weight based on the previous mesurements : pastweightactualised*/
@@ -39,10 +39,10 @@ define "weight based on the previous mesurements":
     "pastweightactualised"
 
 /* 
-ageinmonths : Age in months
+none : AgeInMonths
     AgeInMonths()
 */
-define "ageinmonths":
+define "none":
     AgeInMonths()
 
 /* alias age in months : ageinmonths*/
@@ -50,10 +50,10 @@ define "age in months":
     "ageinmonths"
 
 /* 
-ageinyears : Age in years
+none : AgeInYears
     AgeInYears()
 */
-define "ageinyears":
+define "none":
     AgeInYears()
 
 /* alias age in years : ageinyears*/

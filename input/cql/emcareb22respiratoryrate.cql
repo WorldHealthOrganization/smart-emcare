@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb22respiratoryrate version '1.0.1.rc12.build.156'
+library emcareb22respiratoryrate version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.156' called Base
-include emcareobservation version '1.0.1.rc12.build.156' called obs
-include emcarevalueset version '1.0.1.rc12.build.156' called val
+include emcarebase version '1.0.1.rc12.build.457' called Base
+include emcareobservation version '1.0.1.rc12.build.457' called obs
+include emcarevalueset version '1.0.1.rc12.build.457' called val
 
 
 
@@ -16,10 +16,10 @@ context Patient
 
 
 /* 
-ageinmonths : Age
+none : AgeInMonths
     AgeInMonths()
 */
-define "ageinmonths":
+define "none":
     AgeInMonths()
 
 /* alias age : ageinmonths*/
@@ -27,22 +27,29 @@ define "age":
     "ageinmonths"
 
 /* 
-respiratory rate profile : nan
-    o"Respiratory Rate"
+none : Respiratory Rate profile
+    o"Respiratory Rate (breaths per minute)"
 */
-define "respiratory rate profile":
+define "none":
     Base.GetObsValue('EmCare.B22.DE01')
 
 /* 
-respiratory rate second count profile : nan
-    o"Respiratory Rate Second Count"
+none : force-collection
+    false
 */
-define "respiratory rate second count profile":
+define "none":
+    false
+
+/* 
+none : Respiratory Rate Second Count Profile
+    o"Respiratory Rate Second Count (breaths per minute)"
+*/
+define "none":
     Base.GetObsValue('EmCare.B22.DE04')
 
 /* 
-fast breathing profile : nan
+none : Fast Breathing profile
     o"Fast Breathing"
 */
-define "fast breathing profile":
+define "none":
     Base.GetObsValue('EmCare.B22.DE07')

@@ -303,6 +303,12 @@ define function coding(s System.String):
 define function ToUrl(s System.String):
   url {value:s}
 
+define function ToIntC(b System.Boolean):
+  case
+  when b is null then 0
+  when b = true then 1
+  else 0
+  end
 
 
 // ************************   GetCond ************************/

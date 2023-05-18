@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1014symptoms2mp version '1.0.1.rc12.build.156'
+library emcareb1014symptoms2mp version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.156' called Base
-include emcareobservation version '1.0.1.rc12.build.156' called obs
-include emcarevalueset version '1.0.1.rc12.build.156' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.156' called c
+include emcarebase version '1.0.1.rc12.build.457' called Base
+include emcareobservation version '1.0.1.rc12.build.457' called obs
+include emcarevalueset version '1.0.1.rc12.build.457' called val
+include emcarecombineddataelements version '1.0.1.rc12.build.457' called c
 
 
 
@@ -17,24 +17,24 @@ context Patient
 
 
 /* 
-danger signs : nan
+none : Danger Signs
     c."emcare.b.g.de01"
 */
-define "danger signs":
+define "none":
     c."emcare.b.g.de01"
 
 /* 
-emcare.b12s1.de01 : nan
+none : EmCare.B12S1.DE01
     c."fever"
 */
-define "emcare.b12s1.de01":
+define "none":
     c."fever"
 
 /* 
-ageinmonths : Age
+none : AgeInMonths
     AgeInMonths()
 */
-define "ageinmonths":
+define "none":
     AgeInMonths()
 
 /* alias age : ageinmonths*/

@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb7ltidangersigns version '1.0.1.rc12.build.156'
+library emcareb7ltidangersigns version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.156' called Base
-include emcareobservation version '1.0.1.rc12.build.156' called obs
-include emcarevalueset version '1.0.1.rc12.build.156' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.156' called c
+include emcarebase version '1.0.1.rc12.build.457' called Base
+include emcareobservation version '1.0.1.rc12.build.457' called obs
+include emcarevalueset version '1.0.1.rc12.build.457' called val
+include emcarecombineddataelements version '1.0.1.rc12.build.457' called c
 
 
 
@@ -17,17 +17,17 @@ context Patient
 
 
 /* 
-ageinmonth.cql : nan
+none : AgeInMonth.cql
     AgeInMonths()
 */
-define "ageinmonth.cql":
+define "none":
     AgeInMonths()
 
 /* 
-oftrp : Unable to Perform Oral Fluid Test Profile
+none : oftrp
     o"Unable to Perform Oral Fluid Test"
 */
-define "oftrp":
+define "none":
     Base.GetObsValue('EmCare.B22.DE14')
 
 /* alias unable to perform oral fluid test profile : oftrp*/
@@ -35,10 +35,10 @@ define "unable to perform oral fluid test profile":
     "oftrp"
 
 /* 
-ds : Danger Signs
+none : DS
     Coalesce(c."danger signs",false)
 */
-define "ds":
+define "none":
     Coalesce(c."danger signs",false)
 
 /* alias danger signs : ds*/

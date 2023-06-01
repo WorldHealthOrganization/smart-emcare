@@ -64,7 +64,7 @@ define "patientsex":
 /* ageatpastweight : Age at Previous Weight*/
 define "ageatpastweight":
     if "pastweight" is not null  then
-      (difference in days between Patient.birthDate and ToDate(Last([Observation:"Weight" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued) ) * ( 1.0 as System.Decimal )
+      (difference in days between ToDate(Patient.birthDate) and ToDate(Last([Observation:"Weight" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued)) * ( 1.0 as System.Decimal )
     else
      null
 
@@ -142,7 +142,7 @@ define weightfromage:
 */
 define "WAZ":
     if existingweight is not null then
-         wfa.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ( Base.HasObs("Weight").value * ( 1.0 as System.Decimal )))
+         wfa.generateZScoreWeightForAge("patientsex", AgeInDays() * ( 1.0 as System.Decimal ) , ((convert "existingweight" to 'kg').value  * ( 1.0 as System.Decimal )))
     else if existingmuac is not null then
         zscorefrommuac
     else if existingvisual then

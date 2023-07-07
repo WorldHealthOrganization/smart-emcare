@@ -144,20 +144,3 @@ define "WAZ":
         zscorefromvisual
     else null
 
-define "WLZ":
-    if existingweight is not null then
-         wfl.generateZScoreWeightForLength("patientsex", existinglength.value * ( 1.0 as System.Decimal ) ,  (convert existingweight to 'kg').value * ( 1.0 as System.Decimal ))
-    else if existingmuac is not null then
-        zscorefrommuac
-    else if existingvisual then
-        zscorefromvisual
-    else null
-
-define "WHZ":
-    if existingweight is not null then
-         wfh.generateZScoreWeightForHeight("patientsex", existingheight.value * ( 1.0 as System.Decimal ) ,  (convert existingweight to 'kg').value * ( 1.0 as System.Decimal ))
-    else if existingmuac is not null then
-        zscorefrommuac
-    else if existingvisual then
-        zscorefromvisual
-    else null

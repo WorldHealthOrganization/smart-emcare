@@ -3,8 +3,8 @@
   
 
 ![QA errors](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdigitalsqr.github.io%2Fsmart-ig-empty%2Fqa.json&query=%24.errs&logoColor=red&label=QA%20errors)
-![QA warnings](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdigitalsqr.github.io%2Fsmart-ig-empty%2Fqa.json&query=%24.errs&logoColor=orange&label=QA%20warnings)
-![QA hints](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdigitalsqr.github.io%2Fsmart-ig-empty%2Fqa.json&query=%24.errs&logoColor=yellow&label=QA%20hints)
+![QA warnings](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdigitalsqr.github.io%2Fsmart-ig-empty%2Fqa.json&query=%24.warnings&logoColor=orange&label=QA%20warnings)
+![QA hints](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdigitalsqr.github.io%2Fsmart-ig-empty%2Fqa.json&query=%24.hints&logoColor=yellow&label=QA%20hints)
 
 
 # WHO SMART GUIDELINES - EMPTY IG

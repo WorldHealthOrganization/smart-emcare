@@ -1,5 +1,5 @@
 [![License: CC BY-IGO 3.0](https://licensebuttons.net/l/by-nc/3.0/igo/80x15.png)](https://creativecommons.org/licenses/by/3.0/igo)
-![CI Build Status](https://github.com/DigitalSQR/smart-ig.empty/actions/workflows/ghbuild.yml/badge.svg)
+![CI Build Status](https://img.shields.io/github/actions/workflow/status/DigitalSQR/smart-ig-empty/ghbuild)
 
 # WHO SMART GUIDELINES - EMPTY IG
 

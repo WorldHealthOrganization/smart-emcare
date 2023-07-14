@@ -29,18 +29,57 @@
         },
         {
             "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb6measurements|1.0.3.build.169"
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb6measurements|1.0.3.build.228"
         }
     ],
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b6.measurements",
     "name": "EmCare.B6.Measurements",
-    "title": "EmCare.B6.Measurements",
+    "title": "Measurements",
     "status": "active",
     "experimental": false,
     "subjectType": [
         "Patient"
     ],
     "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "pastWeightActualised"
+                    }
+                }
+            ],
+            "linkId": "pastWeightActualised",
+            "type": "quantity",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "ageinmonths"
+                    }
+                }
+            ],
+            "linkId": "ageinmonths",
+            "text": "AgeInMonths",
+            "type": "integer",
+            "required": false,
+            "repeats": false
+        },
         {
             "extension": [
                 {
@@ -64,6 +103,20 @@
                     "valueCoding": {
                         "system": "http://unitsofmeasure.org",
                         "code": "Cel"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.first().empty()  and %resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.first().empty()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.first().exists(),%resource.repeat(item).where(linkId='EmCare.B6.DE03').answer.first().value - 0.5 'Cel',answer)"
                     }
                 }
             ],
@@ -89,6 +142,566 @@
                     ],
                     "linkId": "EmCare.B6.DE01-help",
                     "text": "<p>The child&#8217;s axillary temperature (temperature taken under the armpit), measured in degrees Celcius.</p>\n\n\t<p><strong>Temperature ranges for children 2 &#8211; 59 months:</strong><br />\n- Under 35.5 : hypothermia (low body temperature)<br />\n- 35.5 to 37.4 : normal <br />\n- 37.5 to 38.4 : fever<br />\n- 38.5 and over : high fever <br />\nIf hypothermia, keep the child warm. If high fever, give paracetamol</p>\n\n\t<p><strong>Temperature ranges for young infants under 2 months:</strong><br />\n- Under 35.5 : hypothermia (low body temperature)<br />\n- 35.5 to 37.9 : normal <br />\n- 38.0 : fever<br />\nIf the high or low temperature is the only severe sign, repeat the measurement after 30 minutes. In the meantime, remove clothing and let the baby who has fever cool. If the baby has hypothermia in winter, wrap the baby to warm her. Use the second reading to decide if the infant has fever or low temperature.</p>",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE02",
+            "text": " ",
+            "type": "choice",
+            "required": false,
+            "repeats": true,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "code": "EmCare.B6.DE02",
+                        "display": "Prefer to take Rectal Temperature"
+                    }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE02-help",
+                    "text": "The health care worker prefers to take the child&#8217;s rectal temperature",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                    "valueQuantity": {
+                        "value": 32,
+                        "system": "http://unitsofmeasure.org",
+                        "code": "Cel"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                    "valueQuantity": {
+                        "value": 35,
+                        "system": "http://unitsofmeasure.org",
+                        "code": "Cel"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://unitsofmeasure.org",
+                        "code": "Cel"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.first().value = true"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE03",
+            "text": "Rectal Temperature (degree Celcius)",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE03-help",
+                    "text": "<p>The child&#8217;s rectal temperature (temperature taken in the rectum), measured in degrees Celcius. Only consider taking rectal temperature if trained.</p>\n\n\t<p><b>Temperature ranges for children 2 &#8211; 59 months:</b><br />\n- Under 36.0 : hypothermia (low body temperature)<br />\n- 36.0 to 38.0 : normal <br />\n- 38.0 to 39.0 : fever<br />\n- 39.0 and over : high fever <br />\nIf hypothermia, keep the child warm. If high fever, give paracetamol</p>\n\n\t<p><b>Temperature ranges for young infants under 2 months:</b><br />\n- Under 36.0 : hypothermia (low body temperature)<br />\n- 36.0 to 38.5 : normal <br />\n- 38.5 : fever<br />\nIf the high or low temperature is the only severe sign, repeat the measurement after 30 minutes. In the meantime, remove clothing and let the baby who has fever cool. If the baby has hypothermia in winter, wrap the baby to warm her. Use the second reading to decide if the infant has fever or low temperature.</p>",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 38.5 'Cel' and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value >= 2, 'Very High',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 38 'Cel' and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value< 2 or %resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value >= 37.5 'Cel' and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value >= 2,'High',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value < 35.5 'Cel', 'Low',iif(%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().value.exists(), 'Normal',{}))))"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE03A",
+            "text": "Measured Temperature",
+            "type": "string",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE03A-help",
+                    "text": "<p>Autocalculated temperature range based on axillary temperature in degrees Celcius (add 0.5 for rectal temperature)</p>\n\n\t<p>For children 2 &#8211; 59 months:<br />\n- Under 35.5 : low<br />\n- 35.5 to 37.4 : normal <br />\n- 37.5 to 38.4 : high<br />\n- 38.5 and over : very high</p>\n\n\t<p>For young infants under 2 months:<br />\n- Under 35.5 : low<br />\n- 35.5 to 37.9 : normal <br />\n- 38.0 : high</p>",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE02').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE04",
+            "text": " ",
+            "type": "choice",
+            "required": false,
+            "repeats": true,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "code": "EmCare.B6.DE04",
+                        "display": "Thermometer not available"
+                    }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE04-help",
+                    "text": "A thermometer is not available to measure the child&#8217;s temperature",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE04').answer.first().exists()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE05",
+            "text": "Hot to Touch",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE05-help",
+                    "text": "The child is hot to touch",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                    "valueQuantity": {
+                        "value": 500,
+                        "system": "http://unitsofmeasure.org",
+                        "code": "g"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                    "valueQuantity": {
+                        "value": 40.0,
+                        "system": "http://unitsofmeasure.org",
+                        "code": "kg"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://unitsofmeasure.org",
+                        "code": "kg"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE06",
+            "text": "Weight (kilograms)",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE06-help",
+                    "text": "The child&#8217;s weight in Kilograms, to one decimal place",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "check-box",
+                                "display": "Check-box"
+                            }
+                        ],
+                        "text": "Check-box"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE07",
+            "text": " ",
+            "type": "choice",
+            "required": false,
+            "repeats": true,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "code": "EmCare.B6.DE07",
+                        "display": "Weight cannot be measured"
+                    }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE07-help",
+                    "text": "The child&#8217;s weight cannot be measured today. This should only be selected if there are no scales available to properly weight the child. An estimated weight will be calculated for the purposes of medication dosing.",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "iif(%resource.repeat(item).where(linkId='EmCare.B6.DE07').answer.first().exists() and %resource.repeat(item).where(linkId='pastWeightActualised').answer.first().exists(), %resource.repeat(item).where(linkId='pastWeightActualised').answer.first().value, {})"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE08",
+            "text": "Estimated Weight",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE08-help",
+                    "text": "<p>Estimated weight is calculated for the purposes of medication dosing only, based on the following order <br />\n1. If a recent* weight available, the weight for age z-score at the time of the measurement is used today, to estimate the weight based on the age today.<br />\n2. If no recent* weight is available, for a child 2 months of age or older, weight is estimated based on height/length, using weight for height/length z-score, and for young infants or if no height / length available, based on age, using weight for age z-score. <br />\n- In this case, the z-score is adjusted down the child has wasting, based on <span class=\"caps\">MUAC</span> (for children 6 months and older) or visual assessment (for children under 6 months old, or when <span class=\"caps\">MUAC</span> is not available)</p>\n\n\t<p>*Recent weight is considered to be within the last 2 months for infants under the age of 4 months, within the last 3 months for infants under 6 months, within the last 4 months for infants under 12 months, and within the last 6 months for children 12 to 59 monhts of age.</p>",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B6.DE08').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B6.DE06').answer.first().empty() and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value>=2"
+                    }
+                }
+            ],
+            "linkId": "nan",
+            "text": "weight-proxy-lh",
+            "type": "group",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+                    "valueCoding": {
+                        "system": "http://unitsofmeasure.org",
+                        "code": "mm"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='ageinmonths').answer.first().value>= 6 'month' and %resource.repeat(item).where(linkId='EmCare.B6.DE17a').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE17",
+            "text": "<span class=\"caps\">MUAC</span> (mm)",
+            "type": "quantity",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE17-help",
+                    "text": "Mid-upper arm circumference (<span class=\"caps\">MUAC</span>) is an important indicator of acute malnutrition in a child for children 6\u201359 months.<br />\nTo measure:<br />\n- Find the mid-point of the child\u2019s upper arm between the shoulder and elbow.<br />\n- Use <span class=\"caps\">MUAC</span> tape to mark the midpoint on the child\u2019s arm.<br />\n- Hold the large end of the strap against the arm at the midpoint of the arm.<br />\n- Put the other end of the strap around the child\u2019s arm. Thread the end up through the second small slit in the strap. The end will come from behind.<br />\n- Pull both ends until the strap fits closely. It should not be so tight that it makes<br />\nfolds in the skin. It should also not be too loose.<br />\n- Gently press the window. At the marks note the measurement and colour",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                    "valueCode": "horizontal"
+                },
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='ageinmonths').answer.first().value>= 6 'month' and %resource.repeat(item).where(linkId='EmCare.B6.DE17').answer.first().empty()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE17a",
+            "text": "<span class=\"caps\">MUAC</span> cannot be measured",
+            "type": "boolean",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE17a-help",
+                    "text": "The child&#8217;s Mid Upper Arm Circumference cannot be measured",
+                    "type": "display"
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='ageinmonths').answer.first().value>= 6 'month' and %resource.repeat(item).where(linkId='EmCare.B6.DE17a').answer.first().exists()"
+                    }
+                }
+            ],
+            "linkId": "EmCare.B6.DE18",
+            "text": "Visually assess for whether underweight (for drug dose calculation)",
+            "type": "choice",
+            "required": false,
+            "repeats": false,
+            "answerOption": [
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B6.DE19",
+                        "display": "Does not appear to be Underweight"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B6.DE20",
+                        "display": "Appears to be Underweight"
+                    }
+                },
+                {
+                    "valueCoding": {
+                        "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                        "code": "EmCare.B6.DE21",
+                        "display": "Appears to be Severely Underweight"
+                    }
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                            "valueCodeableConcept": {
+                                "coding": [
+                                    {
+                                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                        "code": "help"
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B6.DE18-help",
+                    "text": "The health care worker visually assesses for whether underweight (to help estimate weight for medication dosing)",
                     "type": "display"
                 }
             ]

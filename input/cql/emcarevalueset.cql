@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarevalueset version '1.0.3.build.169'
+library emcarevalueset version '1.0.3.build.228'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -45,3 +45,22 @@ code "Vomits Immediately / Everything": 'EmCare.B24.G.DE09' from "EmCare" displa
 code "Drinks Poorly": 'EmCare.B24.G.DE10' from "EmCare" display 'Drinks Poorly'
 code "Drinks Eagerly / Thirstily": 'EmCare.B24.G.DE11' from "EmCare" display 'Drinks Eagerly / Thirstily'
 code "Drinks Normally": 'EmCare.B24.G.DE12' from "EmCare" display 'Drinks Normally'
+code "Low": 'Low' from "EmCare" display 'Low'
+code "Normal": 'Normal' from "EmCare" display 'Normal'
+code "High": 'High' from "EmCare" display 'High'
+code "Very High": 'Very High' from "EmCare" display 'Very High'
+code "Does not appear to be Underweight": 'EmCare.B6.DE19' from "EmCare" display 'Does not appear to be Underweight'
+code "Appears to be Underweight": 'EmCare.B6.DE20' from "EmCare" display 'Appears to be Underweight'
+code "Appears to be Severely Underweight": 'EmCare.B6.DE21' from "EmCare" display 'Appears to be Severely Underweight'
+code "Symptoms": 'EmCare.B10S1.DE07' from "EmCare" display 'Symptoms'
+code "7 Days or less": 'EmCare.B12S1.DE04' from "EmCare" display '7 Days or less'
+code "More than 7 days": 'EmCare.B12S1.DE05' from "EmCare" display 'More than 7 days'
+code "No Pain": 'EmCare.B12S1.DE09' from "EmCare" display 'No Pain'
+code "Joint or Bone Pain": 'EmCare.B12S1.DE10' from "EmCare" display 'Joint or Bone Pain'
+code "Pain or Difficulty Passing Urine or Crying when Passing Urine": 'EmCare.B12S1.DE11' from "EmCare" display 'Pain or Difficulty Passing Urine or Crying when Passing Urine'
+code "Skin Pain": 'EmCare.B12S1.DE12' from "EmCare" display 'Skin Pain'
+code "Ear Pain": 'EmCare.B12S1.DE13' from "EmCare" display 'Ear Pain'
+code "Other": 'EmCare.B12S1.DE14' from "EmCare" display 'Other'
+code "High Malaria Risk": 'EmCare.B12S1.DE16' from "EmCare" display 'High Malaria Risk'
+code "Low Malaria Risk": 'EmCare.B12S1.DE17' from "EmCare" display 'Low Malaria Risk'
+code "No Malaria Risk": 'EmCare.B12S1.DE18' from "EmCare" display 'No Malaria Risk'

@@ -2,17 +2,39 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb6measurements version '1.0.3.build.169'
+library emcareb6measurements version '1.0.3.build.228'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.3.build.169' called Base
-include emcarevalueset version '1.0.3.build.169' called val
+include emcarebase version '1.0.3.build.228' called Base
+include emcarevalueset version '1.0.3.build.228' called val
+include emcarezscore version '1.0.3.build.228' called Z
 
 
 
 
 context Patient
 
+
+/* 
+pastWeightActualised : 
+Z."pastweightactualised"
+*/
+define "pastWeightActualised":
+    Z."pastweightactualised"
+
+/* 
+ageinmonths : 
+AgeInMonths()
+*/
+define "ageinmonths":
+    AgeInMonths()
+
+/* 
+AgeInMonths : ageinmonths
+Alias
+*/
+define "AgeInMonths":
+    "ageinmonths"
 
 /* 
 BackReference : 

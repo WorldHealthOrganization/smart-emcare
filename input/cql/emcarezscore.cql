@@ -2,52 +2,62 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarezscore version '1.0.3.build.169'
+library emcarezscore version '1.0.3.build.228'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.3.build.169' called Base
-include WeightForAge version '1.0.0' called wfa
-include WeightForLength version '1.0.0' called wfl
-include WeightForHeight version '1.0.0' called wfh
+include emcarebase version '1.0.3.build.228' called Base
+include WeightForAge version '1.0.4' called wfa
+include WeightForLength version '1.0.4' called wfl
+include WeightForHeight version '1.0.4' called wfh
 
-codesystem "EmCare" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
 
-code "Weight": 'EmCare.B6.DE06' from "EmCare" display 'Weight'
-code "Estimated Weight": 'EmCare.B6.DE08' from "EmCare" display 'Estimated Weight'
-code "MUAC": 'EmCare.B6.DE17' from "EmCare" display 'MUAC'
-code "Length": 'EmCare.B6.DE12' from "EmCare" display 'Length'
-code "Height": 'EmCare.B6.DE09' from "EmCare" display 'Height'
-code "Visually assess": 'EmCare.B6.DE18' from "EmCare" display 'Visually assess'
-code "Underweight": 'EmCare.B6.DE20' from "EmCare" display 'Underweight' 
-code "Severely Underweight": 'EmCare.B6.DE21' from "EmCare" display 'Severely Underweight' 
+
+//codesystem "EmCare" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+
+
+
+//code "Weight": 'EmCare.B6.DE06' from "EmCare" display 'Weight'
+//code "Estimated Weight": 'EmCare.B6.DE08' from "EmCare" display 'Estimated Weight'
+//code "MUAC": 'EmCare.B6.DE17' from "EmCare" display 'MUAC'
+//code "Length": 'EmCare.B6.DE12' from "EmCare" display 'Length'
+//code "Height": 'EmCare.B6.DE09' from "EmCare" display 'Height'
 
 parameter "encounterid" String
 
 context Patient
 
-
-
-
+define "Weight":
+  Base.coding('EmCare.B6.DE06')
+define "Estimated Weight":
+  Base.coding('EmCare.B6.DE08')
+define "MUAC":
+  Base.coding('EmCare.B6.DE17')
+define "Length":
+  Base.coding('EmCare.B6.DE12')
+define "Height":
+  Base.coding('EmCare.B6.DE09')
+define "Visually assess":
+  Base.coding('EmCare.B6.DE18')
+define "Underweight":
+  Base.coding('EmCare.B6.DE20') 
+define "Severely Underweight":
+  Base.coding('EmCare.B6.DE21') 
 
 /* pastweight : Previous Weight*/
 define "pastweightobs":
-    if AgeInMonths()< 4 and Base.GetHistoricObservation("Weight", 63) is not null then
-      Base.GetHistoricObservation("Weight", 63)  as FHIR.Observation
-    else  if AgeInMonths()< 6 and Base.GetHistoricObservation("Weight", 94)   is not null then
-      Base.GetHistoricObservation("Weight", 94)  as  FHIR.Observation
-    else if AgeInMonths()< 6 and Base.GetHistoricObservation("Weight", 126)   is not null then
-       Base.GetHistoricObservation("Weight", 126)  as FHIR.Observation
-    else if Base.GetHistoricObservation("Weight", 201)  is not null then
-       Base.GetHistoricObservation("Weight", 201)  as FHIR.Observation
-    else
-      null
+    if AgeInMonths()< 4  then
+      Base.GetHistoricObservation("Weight", 60)
+    else if AgeInMonths()< 6  then
+      Base.GetHistoricObservation("Weight", 91)
+    else if AgeInMonths()< 12  then
+      Base.GetHistoricObservation("Weight", 121)
+    else 
+      Base.GetHistoricObservation("Weight", 180)
 
 define "pastweight":
     if "pastweightobs" is not null then
       "pastweightobs".value
-    else
-      null
-
+    else null
 
 /* patientsex : Patient sex*/
 define "patientsex":
@@ -56,14 +66,14 @@ define "patientsex":
 /* ageatpastweight : Age at Previous Weight*/
 define "ageatpastweight":
     if "pastweight" is not null  then
-      (difference in days between Patient.birthDate and ToDate("pastweightobs".issued) ) * ( 1.0 as System.Decimal )
+        (difference in days between Patient.birthDate and ToDate(pastweightobs.issued)) * ( 1.0 as System.Decimal )
     else
      null
 
 /* pastweightzscore : Z-Score at Previous Weight*/
 define "pastweightzscore":
     if "pastweight" is not null  then
-      wfa.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'kg').value * ( 1.0 as System.Decimal)))
+      wfa.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ("pastweight".value * ( 1.0 as System.Decimal)))
     else
       null
 
@@ -73,6 +83,8 @@ define "pastweightactualised":
       System.Quantity { value: Round(wfa.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ),  "pastweightzscore" ),2), unit: 'kg'} 
     else 
        null
+
+
 
 define existingweight:
   Base.GetObsValue("Weight")
@@ -89,17 +101,14 @@ define existingheight:
 define existinglength:
   Base.GetObsValue("Length")
 
-define existingvisual:
-  Base.GetObsValue("Visually assess")
-
 define existingmuac:
   Base.GetObsValue("MUAC")
 
-
-
-
+define existingvisual:
+  Base.GetObsValue("Visually assess")
+//
 define zscorefrommuac:
-  if existingmuac is null then 0.0
+  if existingmuac is null then null
   else if existingmuac < 115 'mnm' then -3.0
   else if existingmuac < 125 'mnm' then -2.0
   else 0.0
@@ -137,10 +146,27 @@ define weightfromage:
 */
 define "WAZ":
     if existingweight is not null then
-         wfa.generateZScoreWeightForAge("patientsex", AgeInDays() * ( 1.0 as System.Decimal ) ,  (convert existingweight to 'kg').value * ( 1.0 as System.Decimal ))
+         wfa.generateZScoreWeightForAge("patientsex", AgeInDays() , (existingweight.value * ( 1.0 as System.Decimal )))
     else if existingmuac is not null then
         zscorefrommuac
     else if existingvisual then
         zscorefromvisual
     else null
 
+define "WLZ":
+    if existingweight is not null then
+         wfl.generateZScoreWeightForLength("patientsex", (existinglength.value * ( 1.0 as System.Decimal )) ,  (existingweight.value * ( 1.0 as System.Decimal )))
+    else if existingmuac is not null then
+        zscorefrommuac
+    else if existingvisual then
+        zscorefromvisual
+    else null
+
+define "WHZ":
+    if existingweight is not null then
+         wfh.generateZScoreWeightForHeight("patientsex", (existingheight.value * ( 1.0 as System.Decimal )) ,  (existingweight.value * ( 1.0 as System.Decimal )))
+    else if existingmuac is not null then
+        zscorefrommuac
+    else if existingvisual then
+        zscorefromvisual
+    else null

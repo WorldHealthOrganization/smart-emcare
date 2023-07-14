@@ -6,3 +6,7 @@
 
 {% include ActivityEmcare.b6.measurements.md %}
 
+{% include ActivityEmcare.b10-14.symptoms.2mp.md %}
+
+{% include ActivityEmcare.b24.de06.second.temper.md %}
+

@@ -1,23 +1,91 @@
-# This workflow reuses the openHIE GitHub action for building IGs
-# Initial idea by Carl Leitner, developed by Elliot Silver, available from: https://www.argentixinfo.com/archives/156
+# This is a simple workflow that runs the publisher and copies the output to https://<owner>.github.io/<repo>/index.html
+# Based on the idea from Carl Leitner
 # Change log:
-# v0.1.0
-# 2021-06-18: publish default branches to / , other branches branches/<branch>
-# 2021-11-26: reusable workflow
+# 2021-06-18: (JCT): publish default branches to / , other branches branches/<branch>
+# 2021-11-26: (JCT): Reusable workflow
+# 2022-01-28: (JCT): add auto-create gh-pages if it doesn't exist
+# 2023-01-22: (JCT): use checkout action v3, and JamesIves/github-pages-deploy-action@v4
 
-name: ghbuild
+
+# Make sure your repo has a branch called gh-pages
+
+name: CI
 
 # Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events for any main branch
+on: 
+  workflow_call: # Reusable by other workflows
+  # Triggers the workflow on push or pull request events for any branch
   push:
     branches-ignore:    
       - 'gh-pages'
   pull_request:
 
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  call_build: 
-    uses: openhie/empty-fhir-ig/.github/workflows/main.yml@master
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+   
+      - name: Get branch name
+        run: echo ${GITHUB_REF##*/}
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+#      - name: Create gh-pages branch if it doesn't exist
+#        run: |
+#          git fetch origin
+#          exists=`git show-ref refs/heads/gh-pages`
+#          if [ -n "$exists" ]; then
+#            echo 'gh-pages branch exists';
+#          else
+#            echo 'gh-pages branch does not exist, creating it';
+#            git checkout --orphan gh-pages
+#            git reset --hard
+#            git commit --allow-empty -m "Initializing gh-pages branch"
+#            git push origin gh-pages
+#            git checkout ${GITHUB_REF##*/}
+#          fi
+      - name: Update the image to the latest publisher
+        uses: docker://hl7fhir/ig-publisher-base:latest
+        with:
+          # Get the latest publisher - don't run the batch script but run the line directly
+          args: curl -L https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar -o ./input-cache/publisher.jar --create-dirs
+
+      - name: Run the IG publisher
+        uses: docker://hl7fhir/ig-publisher-base:latest
+        with:
+          # Run the publisher - don't run the batch script but run the line directly
+          args: java -Xmx4g -jar ./input-cache/publisher.jar publisher -ig . -auto-ig-build -repo https://github.com/${{github.repository}}
+
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v4.3
+
+      - name: Deploy candidate
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        if: ${{ steps.branch-name.outputs.is_default }} == 'false'
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./output # The folder the action should deploy.
+          commit-message: Deploy candidate branch
+          target-folder: branches/${{ steps.branch-name.outputs.current_branch }}
+          single-commit: true
+          clean: false 
+
+      - name: Deploy main
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        if: ${{ steps.branch-name.outputs.is_default }} == 'true'
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./output # The folder the action should deploy.
+          commit-message: Deploy main branch
+          single-commit: true
+          clean-exclude: branches

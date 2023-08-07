@@ -1,0 +1,119 @@
+{
+    "resourceType": "StructureDefinition",
+    "id": "emcare-patient",
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-patient",
+    "name": "EmCare Patient",
+    "title": "EmCare Patient",
+    "status": "active",
+    "experimental": false,
+    "description": "EmCare Patient",
+    "fhirVersion": "4.0.1",
+    "kind": "resource",
+    "abstract": false,
+    "type": "Patient",
+    "baseDefinition": "http://fhir.org/guides/who/core/StructureDefinition/who-patient",
+    "derivation": "specialization",
+    "differential": {
+        "element": [
+            {
+                "id": "Patient:anonymous",
+                "path": "Patient",
+                "short": "anonymous",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Boolean"
+                    }
+                ]
+            },
+            {
+                "id": "Patient:birthDateEstimator",
+                "path": "Patient",
+                "short": "birthDateEstimator",
+                "min": 1,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "CodeableConcept"
+                    }
+                ],
+                "binding": {
+                    "strength": "required",
+                    "valueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/dob-estimator"
+                }
+            },
+            {
+                "id": "Patient:primarycaregiver",
+                "path": "Patient",
+                "short": "primarycaregiver",
+                "min": 1,
+                "max": "*",
+                "type": [
+                    {
+                        "code": "Reference",
+                        "profile": [
+                            "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcare-relatedperson"
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "Patient:motherVitalStatus",
+                "path": "Patient",
+                "short": "motherVitalStatus",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "CodeableConcept"
+                    }
+                ],
+                "binding": {
+                    "strength": "required",
+                    "valueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status"
+                }
+            },
+            {
+                "id": "Patient:fatherVitalStatus",
+                "path": "Patient",
+                "short": "fatherVitalStatus",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "CodeableConcept"
+                    }
+                ],
+                "binding": {
+                    "strength": "required",
+                    "valueSet": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/vital-status"
+                }
+            },
+            {
+                "id": "Patient.contact:smsNotifications",
+                "path": "Patient.contact",
+                "short": "smsNotifications",
+                "min": 1,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "Boolean"
+                    }
+                ]
+            },
+            {
+                "id": "Patient:birthTime",
+                "path": "Patient",
+                "short": "birthTime",
+                "min": 0,
+                "max": "1",
+                "type": [
+                    {
+                        "code": "time"
+                    }
+                ]
+            }
+        ]
+    }
+}

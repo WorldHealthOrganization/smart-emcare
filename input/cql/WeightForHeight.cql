@@ -1,9 +1,8 @@
 
-library WeightForHeight version '1.0.4'
+library WeightForHeight version '1.0.0'
 using FHIR version '4.0.1'
-include anthrobase version '1.0.4' called base
+include anthrobase version '1.0.0' called base
 include FHIRHelpers version '4.0.1' called FHIRHelpers
-
 // Antrho library for WeightForHeight  Z-Score from the wfhanthro files
 codesystem "administrative-gender": 'http://hl7.org/fhir/administrative-gender'
 //code "Female" : 'female' from "administrative-gender"  display 'Female'
@@ -1120,38 +1119,27 @@ define WeightForHeightMale:
 }
 
 
-
-
-define function ZscoreWeightForHeighttables(sex String, height Decimal):
-	if sex = 'female' then  
-        First(WeightForHeightFemale c where c.y = height )
-	else 
-        First(WeightForHeightMale c where  c.y = height)
+define function ZscoreWeightForHeighttables(sex String, Height Decimal):
+		if sex = 'female' then  First(WeightForHeightFemale c where c.y = Height )
+		else First(WeightForHeightMale c where  c.y = Height)
             
-define function generateZScoreWeightForHeight(sex System.String, height System.Decimal, weight  System.Decimal)  : 
-	 generateZScoreWeightForHeightdet(ZscoreWeightForHeighttables(sex,height), weight )
-
-define function generateZScoreWeightForHeightdet(row Tuple {y System.Decimal,l System.Decimal,s System.Decimal,m System.Decimal}, weight  System.Decimal):
-    if row is not null then 
+define function generateZScoreWeightForHeight(sex System.String, Height System.Decimal, weight  System.Decimal)  : 
+	if ZscoreWeightForHeighttables(sex,Height) is not null then 
         base.computeZScore(
             weight,
-            row.m , 
-            row.l ,
-            row.s 
+            (ZscoreWeightForHeighttables(sex,Height).m ), 
+            (ZscoreWeightForHeighttables(sex,Height).l ),
+            (ZscoreWeightForHeighttables(sex,Height).s )
         )
     else null
 
-
-define function generateWeightFromHeight(sex System.String, height System.Decimal, zscore  System.Decimal) : 
-	 generateWeightFromHeightdet(ZscoreWeightForHeighttables(sex,height),zscore  )
-
-define function generateWeightFromHeightdet(row Tuple {y System.Decimal,l System.Decimal,s System.Decimal,m System.Decimal},zscore  System.Decimal) : 
-    if row is not null then 
+define function generateWeightFromHeight(sex System.String, Height System.Decimal, zscore  System.Decimal) : 
+	if ZscoreWeightForHeighttables(sex,Height) is not null then 
         base.computeReverseZScore(
             zscore,
-            row.m , 
-            row.l ,
-            row.s 
+            (ZscoreWeightForHeighttables(sex,Height).m ), 
+            (ZscoreWeightForHeighttables(sex,Height).l ),
+            (ZscoreWeightForHeighttables(sex,Height).s )
         )
     else null    
 

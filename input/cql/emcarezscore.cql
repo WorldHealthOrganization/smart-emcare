@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarezscore version '1.0.3.build.228'
+library emcarezscore version '1.0.1.rc12.build.156'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.3.build.228' called Base
-include WeightForAge version '1.0.4' called wfa
-include WeightForLength version '1.0.4' called wfl
-include WeightForHeight version '1.0.4' called wfh
+include emcarebase version '1.0.1.rc12.build.156' called Base
+include WeightForAge version '1.0.0' called wfa
+include WeightForLength version '1.0.0' called wfl
+include WeightForHeight version '1.0.0' called wfh
 
 
 
@@ -44,20 +44,18 @@ define "Severely Underweight":
   Base.coding('EmCare.B6.DE21') 
 
 /* pastweight : Previous Weight*/
-define "pastweightobs":
-    if AgeInMonths()< 4  then
-      Base.GetHistoricObservation("Weight", 60)
-    else if AgeInMonths()< 6  then
-      Base.GetHistoricObservation("Weight", 91)
-    else if AgeInMonths()< 12  then
-      Base.GetHistoricObservation("Weight", 121)
-    else 
-      Base.GetHistoricObservation("Weight", 180)
-
 define "pastweight":
-    if "pastweightobs" is not null then
-      "pastweightobs".value
-    else null
+    if AgeInMonths()< 4 and Base.HasObsHistory("Weight", 63) is not null then
+      Base.HasObsHistory("Weight", 63)  as FHIR.Quantity
+    else  if AgeInMonths()< 6 and Base.HasObsHistory("Weight", 94)   is not null then
+      Base.HasObsHistory("Weight", 94)  as  FHIR.Quantity
+    else if AgeInMonths()< 6 and Base.HasObsHistory("Weight", 126)   is not null then
+       Base.HasObsHistory("Weight", 126)  as FHIR.Quantity
+    else if Base.HasObsHistory("Weight", 201)  is not null then
+       Base.HasObsHistory("Weight", 201)  as FHIR.Quantity
+    else
+      null
+
 
 /* patientsex : Patient sex*/
 define "patientsex":
@@ -66,25 +64,23 @@ define "patientsex":
 /* ageatpastweight : Age at Previous Weight*/
 define "ageatpastweight":
     if "pastweight" is not null  then
-        (difference in days between Patient.birthDate and ToDate(pastweightobs.issued)) * ( 1.0 as System.Decimal )
+      (difference in days between ToDate(Patient.birthDate) and ToDate(Last([Observation:"Weight" ] O where  O.status in { 'final', 'amended', 'corrected'}).issued)) * ( 1.0 as System.Decimal )
     else
      null
 
 /* pastweightzscore : Z-Score at Previous Weight*/
 define "pastweightzscore":
     if "pastweight" is not null  then
-      wfa.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ("pastweight".value * ( 1.0 as System.Decimal)))
+      wfa.generateZScoreWeightForAge("patientsex", "ageatpastweight" , ((convert "pastweight" to 'kg').value * ( 1.0 as System.Decimal)))
     else
       null
 
 /* pastweightactualised : Weight from  at Previous Weight*/
 define "pastweightactualised":
     if "pastweightzscore" is not null then
-      System.Quantity { value: Round(wfa.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ),  "pastweightzscore" ),2), unit: 'kg'} 
+      System.Quantity { value: Round(wfa.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ),  "pastweightzscore" ),2), unit: 'Kg'} 
     else 
        null
-
-
 
 define existingweight:
   Base.GetObsValue("Weight")
@@ -106,9 +102,9 @@ define existingmuac:
 
 define existingvisual:
   Base.GetObsValue("Visually assess")
-//
+
 define zscorefrommuac:
-  if existingmuac is null then null
+  if existingmuac is null then 0.0
   else if existingmuac < 115 'mnm' then -3.0
   else if existingmuac < 125 'mnm' then -2.0
   else 0.0
@@ -134,39 +130,22 @@ define zscorefromvisual:
 
 
 define weightfromlength:
-    System.Quantity { value: Round(wfl.generateWeightFromLength("patientsex",(convert existinglength to 'cm').value * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'kg'}
+    System.Quantity { value: Round(wfl.generateWeightFromLength("patientsex",(convert existinglength to 'cm').value * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'Kg'}
 
 define weightfromheight:
-    System.Quantity { value:Round(wfh.generateWeightFromHeight("patientsex",(convert existingheight to 'cm').value * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'kg'}
+    System.Quantity { value:Round(wfh.generateWeightFromHeight("patientsex",(convert existingheight to 'cm').value * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'Kg'}
 
 define weightfromage:
-    System.Quantity { value:Round(wfa.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'kg'}
+    System.Quantity { value:Round(wfa.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'Kg'}
 /*
 (convert Base.HasObs("Weight") to 'Kg') does not work, so let's assume the weight is in Kg
 */
 define "WAZ":
     if existingweight is not null then
-         wfa.generateZScoreWeightForAge("patientsex", AgeInDays() , (existingweight.value * ( 1.0 as System.Decimal )))
+         wfa.generateZScoreWeightForAge("patientsex", AgeInDays() * ( 1.0 as System.Decimal ) , ((convert "existingweight" to 'kg').value  * ( 1.0 as System.Decimal )))
     else if existingmuac is not null then
         zscorefrommuac
     else if existingvisual then
         zscorefromvisual
     else null
 
-define "WLZ":
-    if existingweight is not null then
-         wfl.generateZScoreWeightForLength("patientsex", (existinglength.value * ( 1.0 as System.Decimal )) ,  (existingweight.value * ( 1.0 as System.Decimal )))
-    else if existingmuac is not null then
-        zscorefrommuac
-    else if existingvisual then
-        zscorefromvisual
-    else null
-
-define "WHZ":
-    if existingweight is not null then
-         wfh.generateZScoreWeightForHeight("patientsex", (existingheight.value * ( 1.0 as System.Decimal )) ,  (existingweight.value * ( 1.0 as System.Decimal )))
-    else if existingmuac is not null then
-        zscorefrommuac
-    else if existingvisual then
-        zscorefromvisual
-    else null

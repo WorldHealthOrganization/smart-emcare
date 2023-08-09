@@ -11,15 +11,18 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main or master branch
+  # Triggers the workflow on push or pull request events but only for the main branch and any other indicated branches
   push:
     branches: 
-      - '*'
+      - main
+      - master
+      - smart-ig-starter-kit
   pull_request:
     branches: 
-      - '*'
+      - main
+      - master
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tabs
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -34,28 +37,38 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Update the image to the latest publisher
-        uses: WorldHealthOrganization/smart-emcare/ig-publisher-base@develop
+        uses: docker://hl7fhir/ig-publisher-base:latest
         with:
           # Get the latest publisher - don't run the batch script but run the line directly
           args: curl -L https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar -o ./input-cache/publisher.jar --create-dirs
 
       - name: Run the IG publisher
-        uses: WorldHealthOrganization/smart-emcare/ig-publisher-base@develop
+        uses: docker://hl7fhir/ig-publisher-base:latest
         with:
           # Run the publisher - don't run the batch script but run the line directly
-          args: java -Xms1g -Xmx8g -jar ./input-cache/publisher.jar publisher -ig .
+          args: java -jar ./input-cache/publisher.jar publisher -ig .
 
+      - run: sed -i 's/\(<!--ReleaseHeader--><p id="publish-box">\).*v\([0-9]*\.[0-9]*\.[0-9]*\).*\(<\/p><!--EndReleaseHeader-->\)/\1This is the continuous build for version \2. This version is expected to change regularly.\3/' ./output/*.html
+
+      # deploy with output directory indicated by the tag or branch that triggered this workflow
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./output
+          destination_dir: ${{ github.ref }}
+          keep_files: true
 
-#      - name: Sync files
-#        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-#        with:
-#          server: ftp.dlptest.com
-#          username: dlpuser
-#          password: ${{ secrets.ftp_password }}          
-#          local-dir: output/
-#          server-dir: fhir/ig_name/
+      # if it is the main branch, deploy to main directory
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' || github.ref =='refs/heads/master' }} 
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          keep_files: true
+
+
+#      - name: 🚚 Get latest code
+#        uses: actions/checkout@v2.3.2
+    

@@ -1,0 +1,76 @@
+# This is a simple workflow that runs the publisher and copies the output to https://<owner>.github.io/<repo>/index.html
+# Based on the instructions from Elliot Silver, available from: https://www.argentixinfo.com/archives/156
+# Make sure your repo has a branch called gh-pages
+
+
+# Update 15-Jan-2021: This now adds a FTP upload feature. This uses a repository secret.
+# Action documentation
+# https://github.com/marketplace/actions/ftp-deploy
+
+name: Build IG and deploy on GH pages
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main or master branch
+  push:
+    branches: 
+      - main
+      - smart-ig-starter-kit
+  pull_request:
+    branches: 
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Update the image to the latest publisher
+        uses: docker://hl7fhir/ig-publisher-base:latest
+        with:
+          # Get the latest publisher - don't run the batch script but run the line directly
+          args: curl -L https://github.com/HL7/fhir-ig-publisher/releases/latest/download/publisher.jar -o ./input-cache/publisher.jar --create-dirs
+
+      - name: Run the IG publisher
+        uses: docker://hl7fhir/ig-publisher-base:latest
+        with:
+          # Run the publisher - don't run the batch script but run the line directly
+          args: java -Xms1g -Xmx8g -jar ./input-cache/publisher.jar publisher -ig .
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: './output'
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+

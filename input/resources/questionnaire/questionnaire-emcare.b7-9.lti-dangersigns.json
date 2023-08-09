@@ -1,0 +1,535 @@
+{
+    "resourceType": "Questionnaire",
+    "id": "emcare.b7-9.lti-dangersigns",
+    "meta": {
+        "profile": [
+            "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"
+        ]
+    },
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "shareable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "computable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+            "valueCode": "publishable"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+            "valueCode": "structured"
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b7-9.lti-dangersigns"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb79ltidangersigns|1.0.1.rc12.build.144"
+        }
+    ],
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b7-9.lti-dangersigns",
+    "name": "EmCare.B7-9.LTI-DangerSigns",
+    "title": "nan",
+    "status": "active",
+    "experimental": false,
+    "subjectType": [
+        "Patient"
+    ],
+    "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                    "valueExpression": {
+                        "language": "text/cql-identifier",
+                        "expression": "ageinmonths"
+                    }
+                }
+            ],
+            "linkId": "ageinmonths",
+            "type": "integer",
+            "required": false,
+            "repeats": false
+        },
+        {
+            "linkId": "LTI",
+            "text": "Life threatening illness",
+            "type": "group",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE01",
+                    "text": "Obstructed or Absent Breathing",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='LTI').repeat(item).where(linkId='EmCare.B7.DE01').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE01-tt",
+                    "text": "<h1>Obstructed or absent breathing\n<strong>If foreign body aspirated</strong>\n    \u2022 Manage airway in choking infant (under 12 months) Figure 1\n    \u2022 Manage airway in choking child (12 months and older) Figure 2\n<strong>If no foreign body aspirated</strong>\n    \u2022 Manage airway Figure 3\n    \u2022 Give oxygen Figure 4\n    \u2022 Make sure the child is warm\nManage airway in choking infant (under 12 months)</h1>",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemMedia",
+                                    "valueAttachment": {
+                                        "contentType": "image/png",
+                                        "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Binary/chocking.tt.1y.m"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "%resource.repeat(item).where(linkId='ageinmonths').answer.first().value< 12"
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE01-tt-1m",
+                            "type": "display",
+                            "required": false,
+                            "repeats": false
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemMedia",
+                                    "valueAttachment": {
+                                        "contentType": "image/png",
+                                        "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Binary/chocking.tt.1p.m"
+                                    }
+                                },
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "%resource.repeat(item).where(linkId='ageinmonths').answer.first().value>= 12"
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE01-tt-1p",
+                            "type": "display",
+                            "required": false,
+                            "repeats": false
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemMedia",
+                                    "valueAttachment": {
+                                        "contentType": "image/png",
+                                        "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Binary/obstructed-tt"
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE01-tt-ob",
+                            "type": "display",
+                            "required": false,
+                            "repeats": false
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemMedia",
+                                    "valueAttachment": {
+                                        "contentType": "image/png",
+                                        "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Binary/oxygen-tt"
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE01-tt-o2",
+                            "type": "display",
+                            "required": false,
+                            "repeats": false
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE02",
+                    "text": "Convulsing Now",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE02-help",
+                            "text": "<p>The child is convulsing now &#8212;> Treat immediately</p>\n\n\t<p>During a convulsion, the child\u2019s arms and legs stiffen because the muscles are contracting. The child may lose consciousness or not be able to respond to spoken directions.</p>\n\n\t<p>If the child is convulsing now:<br />\n- Turn the child to his/her side and clear the airway. Avoid putting things in the mouth.<br />\n- Give 0.5mg/kg diazepam rectally<br />\n- Check for low blood sugar, then treat or prevent.<br />\n- Give oxygen and REFER<br />\n- If convulsions have not stopped after 10 minutes repeat diazepam dose</p>",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='LTI').repeat(item).where(linkId='EmCare.B7.DE02').answer.first().value = true and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value>=2"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE02-tt-c",
+                    "text": "<p><font size=\"4\" style=\"font-size: 16pt\"><b>Convulsing now</b></font></p> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"> <span class=\"caps\">CHILDREN</span> 2 \u2013 59 <span class=\"caps\">MONTHS</span> OF <span class=\"caps\">AGE</span></p> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"> <i><b>Give Diazepam to Stop Convulsions</b></i></p> <ul>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Turn the child to his/her side and clear the airway. Avoid putting  things in the mouth.</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Give 0.5mg/kg diazepam solution per rectum using a small syringe  without a needle (like a tuberculin syringe) or using a catheter.</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Check for low blood sugar, then treat or prevent.</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Give oxygen if available and <span class=\"caps\">REFER</span></p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  If convulsions have not stopped after 10 minutes repeat diazepam  dose</p> </ul> <table width=\"601\" cellpadding=\"7\" cellspacing=\"0\">  <col width=\"286\"/>   <col width=\"286\"/>   <tr>   <td width=\"286\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Age    / weight</font></font></p>   </td>   <td width=\"286\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Diazepam    given rectally </font></font>    </p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">(10mg    / 2ml solution)</font></font></p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Dose    0.1 ml / kg</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr valign=\"top\">   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">2    to &lt; 4 months (4 to &lt; 6kg)</font></font></p>   </td>   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.5ml    (2.5mg)</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr valign=\"top\">   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">4    to &lt; 12 months (6 to &lt; 10 kg)</font></font></p>   </td>   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">1.0ml    (5.5mg)</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr valign=\"top\">   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">1    to &lt; 3 years (10 to &lt; 14kg)</font></font></p>   </td>   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">1.25ml    (6.25mg)</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr valign=\"top\">   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">3    to &lt; 5 years (14 to &lt; 19kg)</font></font></p>   </td>   <td width=\"286\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">1.5ml    (7.5mg)</font></font></p>   </td>  </tr> </table> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"> <br/> <br/>  </p> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"> <br/> <br/>  </p></p>",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='LTI').repeat(item).where(linkId='EmCare.B7.DE02').answer.first().value = true and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value<2"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE02-tt-yi",
+                    "text": "<p><font size=\"4\" style=\"font-size: 16pt\"><b>Convulsing now</b></font></p> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"> <span class=\"caps\">YOUNG</span> <span class=\"caps\">INFANTS</span> <span class=\"caps\">UNDER</span> 2 <span class=\"caps\">MONTHS</span> OF <span class=\"caps\">AGE</span></p> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"> <i><b>Treat to Stop Convulsions</b></i></p> <ul>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Clear the airway. Avoid putting things in the mouth</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  For young infants <u><b>under</b></u> <u><b>2 weeks</b></u> of age,  give 20 mg/kg phenobarbital IM or IV</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  For young infants <u><b>2 weeks to 2 months</b></u> of age, give  0.5mg/kg diazepam solution per rectum using a small syringe without  a needle (like a tuberculin syringe) or using a catheter.</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Treat or prevent low blood sugar</p>  <li><p lang=\"en-GB\" style=\"line-height: 108%; margin-bottom: 0.11in\">  Give oxygen and <span class=\"caps\">REFER</span></p> </ul> <table width=\"609\" cellpadding=\"7\" cellspacing=\"0\">  <col width=\"144\"/>   <col width=\"211\"/>   <col width=\"210\"/>   <tr>   <td width=\"144\" height=\"40\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <br/>     </p>   </td>   <td colspan=\"2\" width=\"435\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\"><b>Phenobarbital</b>    given IM / IV</font></font></p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">(200    mg/ml solution)</font></font></p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Dose    20 mg / kg</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr>   <td width=\"144\" height=\"24\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\"><b>Age    / weight</b></font></font></p>   </td>   <td width=\"211\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\"><b>Initial    dose</b></font></font></p>   </td>   <td width=\"210\" valign=\"top\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">If    convulsions have not stopped</font></font></p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">     <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">after    <b>30 min</b></font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr>   <td width=\"144\" height=\"15\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Under    2 weeks, 2kg</font></font></p>   </td>   <td width=\"211\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.2    ml (40mg)</font></font></p>   </td>   <td width=\"210\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.1    ml (20mg)</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr>   <td width=\"144\" height=\"14\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Under    2 weeks, 3kg</font></font></p>   </td>   <td width=\"211\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.3    ml (60mg)</font></font></p>   </td>   <td width=\"210\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.15    ml (30mg)</font></font></p>   </td>  </tr> </table> <p lang=\"en-GB\" class=\"western\" style=\"line-height: 108%; margin-bottom: 0.11in\"><a name=\"_GoBack\"></a> <br/> <br/>  </p> <table width=\"601\" cellpadding=\"7\" cellspacing=\"0\">  <col width=\"164\"/>   <col width=\"197\"/>   <col width=\"196\"/>   <tr>   <td width=\"164\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <br/>     </p>   </td>   <td colspan=\"2\" width=\"407\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\"><b>Diazepam</b>    given rectally </font></font>    </p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">(10mg    / 2ml solution)</font></font></p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">Dose    0.1 ml / kg</font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr>   <td width=\"164\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\"><b>Age    / weight</b></font></font></p>   </td>   <td width=\"197\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\"><b>Initial    dose</b></font></font></p>   </td>   <td width=\"196\" valign=\"top\" bgcolor=\"#d9d9d9\" style=\"background: #d9d9d9; border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2; margin-bottom: 0in\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">If    convulsions have not stopped</font></font></p>    <p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">     <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">after    <b>10 min</b></font></font></p>   </td>  </tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr></tr>  <tr>   <td width=\"164\" height=\"23\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">2    weeks to 2 months, &lt; 4kg</font></font></p>   </td>   <td width=\"197\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.3    ml (1.5mg)</font></font></p>   </td>   <td width=\"196\" style=\"border: 1px solid #000000; padding: 0in 0.08in\"><p lang=\"en-GB\" class=\"western\" align=\"center\" style=\"orphans: 2; widows: 2\">    <font face=\"Calibri, serif\"><font size=\"2\" style=\"font-size: 11pt\">0.3    ml (1.5mg)</font></font></p>   </td>  </tr> </table></p>",
+                    "type": "display",
+                    "required": false,
+                    "repeats": false
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='LTI').repeat(item).where(linkId='EmCare.B7.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='LTI').repeat(item).where(linkId='EmCare.B7.DE02').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.B8.B9.DE01",
+                    "text": "Continue to Assess Sick Child",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": false,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.B8.B9.DE02",
+                                "display": "Stabilised, continue consultation"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.B8.B9.DE03",
+                                "display": "End consultation"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.B8.B9.DE04",
+                                "display": "Entered response in error"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.repeat(item).where(linkId='ageinmonths').answer.first().value>=2 and %resource.repeat(item).where(linkId='ageinmonths').answer.first().value< 60 and %resource.repeat(item).where(linkId='LTI').repeat(item).where(linkId='EmCare.B7.B8.B9.DE01').answer.where(value.code = 'EmCare.B7.B8.B9.DE03').empty()"
+                    }
+                }
+            ],
+            "linkId": "ds",
+            "text": "General Danger Signs &#8211; <br />\nAge \u22652 months &#8211; <5 years",
+            "type": "group",
+            "required": false,
+            "repeats": false,
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE03",
+                    "text": "Convulsion(s) in this Illness",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE03-help",
+                            "text": "The child has had one or more convulsions.\n During a convulsion, the child\u2019s arms and legs stiffen because the muscles are contracting. The child may lose consciousness or not be able to respond to spoken directions. Use words the caregiver understands. For example, the caregiver may call convulsions \u201cfits\u201d or \u201cspasms.\u201d",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='ds').repeat(item).where(linkId='EmCare.B7.DE03').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE04",
+                    "text": "Number of convulsions in this Illness",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": false,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.DE05",
+                                "display": "One Convulsion"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.DE06",
+                                "display": "Two or more convulsions"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        },
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%resource.repeat(item).where(linkId='ds').repeat(item).where(linkId='EmCare.B7.DE03').answer.first().value = true"
+                            }
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE07",
+                    "text": "Convulsion(s) last 15 minutes or more",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE07-help",
+                            "text": "The child has had two or more convulsions in this illness",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE08",
+                    "text": "Unconscious or Lethargic",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE08-help",
+                            "text": "<strong>A lethargic child is not awake and alert when she should be.</strong> The child is drowsy and does not show interest in what is happening around her.",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                            "valueCode": "horizontal"
+                        }
+                    ],
+                    "linkId": "EmCare.B7.DE09",
+                    "text": "Not able to drink or breastfeed",
+                    "type": "boolean",
+                    "required": false,
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE09-help",
+                            "text": "<p>A child has the sign not able to drink or breastfeed <strong>if the child is not able to suck or swallow when offered a drink or breast milk.</strong></p>\n\n\t<p><strong>When you ask the caregiver if the child is able to drink, make sure that she understands the question.</strong> If she says that her child is not able to drink or breastfeed, ask her to describe what happens when she offers the child something to drink. For example, is the child able to take fluid into his mouth and swallow it?<br />\nIf you are not sure about the caregiver\u2019s answer, <strong>ask her to offer the child a drink of clean water or breast milk. Look to see if the child is swallowing the water or breast milk.</strong></p>\n\n\t<p>A child who is breastfed may have difficulty sucking when his nose is blocked. <strong>If the child\u2019s nose is blocked, clear it.</strong> If the child can breastfeed after the nose is cleared, the child does not have the danger sign, \u201cnot able to drink or breastfeed.\u201d</p>",
+                            "type": "display"
+                        }
+                    ]
+                },
+                {
+                    "linkId": "EmCare.B7.DE10",
+                    "text": "Vomiting",
+                    "type": "choice",
+                    "required": false,
+                    "repeats": false,
+                    "answerOption": [
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.DE11",
+                                "display": "Vomiting Everything"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.DE12",
+                                "display": "Vomiting but Not Everything"
+                            }
+                        },
+                        {
+                            "valueCoding": {
+                                "system": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes",
+                                "code": "EmCare.B7.DE13",
+                                "display": "No Vomiting"
+                            }
+                        }
+                    ],
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                                    "valueCodeableConcept": {
+                                        "coding": [
+                                            {
+                                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                                "code": "help"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ],
+                            "linkId": "EmCare.B7.DE10-help",
+                            "text": "<p>The child is reported to have vomiting</p>\n\n\t<p>A child who is <strong>not able to hold anything down at all has the sign \u201cvomits everything\u201d</strong> \u2013 everything that goes down comes back up. A child who vomits everything will not be able to hold down food, fluids, or oral drugs. <strong>A child who vomits several times but can hold down some fluids has &#8220;vomiting, but not everything&#8221;.</strong></p>\n\n\t<p>When you ask the question, use words that the caregiver understands. Give her time to answer. If the caregiver is not sure if the child is vomiting everything, help her to make her answer clear. For example, ask the caregiver how often the child vomits. Also ask if each time the child swallows food or fluids, does the child vomit? If you are not sure of the caregiver\u2019s answers, <strong>ask her to offer the child a drink. See if the child vomits.</strong></p>",
+                            "type": "display"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                    "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "now()"
+                    }
+                },
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                    "valueBoolean": true
+                }
+            ],
+            "linkId": "timestamp",
+            "type": "dateTime",
+            "required": false
+        }
+    ]
+}

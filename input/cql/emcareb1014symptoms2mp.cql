@@ -2,13 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1014symptoms2mp version '1.0.1.rc12.build.457'
+library emcareb1014symptoms2mp version '1.0.1.rc12.build.144'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.457' called Base
-include emcareobservation version '1.0.1.rc12.build.457' called obs
-include emcarevalueset version '1.0.1.rc12.build.457' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.457' called c
+include emcarebase version '1.0.1.rc12.build.144' called Base
+include emcarevalueset version '1.0.1.rc12.build.144' called val
+include b24combineddataelement version '1.0.1.rc12.build.144' called C
 
 
 
@@ -17,26 +16,22 @@ context Patient
 
 
 /* 
-none : Danger Signs
-    c."emcare.b.g.de01"
+Fever : 
+C."Fever"
 */
-define "none":
-    c."emcare.b.g.de01"
+define "Fever":
+    C."Fever"
 
 /* 
-none : EmCare.B12S1.DE01
-    c."fever"
+Danger Signs : 
+C."Danger Signs"
 */
-define "none":
-    c."fever"
+define "Danger Signs":
+    C."Danger Signs"
 
 /* 
-none : AgeInMonths
-    AgeInMonths()
+BackReference : 
+back reference to resource
 */
-define "none":
-    AgeInMonths()
-
-/* alias age : ageinmonths*/
-define "age":
-    "ageinmonths"
+define "BackReference":
+    Reference {reference: string { value: 'Questionnaire/emcare.b10-14.symptoms.2m.p'}}

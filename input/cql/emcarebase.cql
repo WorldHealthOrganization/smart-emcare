@@ -3,7 +3,7 @@
 @description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
 */
 
-library emcarebase version '1.0.1.rc12.build.156'
+library emcarebase version '1.0.1.rc12.build.144'
 
 using FHIR version '4.0.1'
 
@@ -47,10 +47,18 @@ define getEncounter:
 
 define function EmCareExtensions(element Patient, id String):
   element.extension E
-      where E.url = ('https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/' + id)
+      where E.url = ('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/' + id)
       return E
 
 define function EmCareExtension(element Patient, id String):
+  singleton from EmCareExtensions(element, id)
+
+define function EmCareExtensions(element Encounter, id String):
+  element.extension E
+      where E.url = ('https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/' + id)
+      return E
+
+define function EmCareExtension(element Encounter, id String):
   singleton from EmCareExtensions(element, id)
 
 define getPrimaryCareGiverReference:
@@ -82,7 +90,9 @@ define getRelatedPersonAccompanyingTheChild:
 
 
 define "Person accompanying child today's Relationship to Client":
-  getRelatedPersonAccompanyingTheChild.relationship
+//WORKARROUND   getRelatedPersonAccompanyingTheChild.relationship
+  EmCareExtension(getEncounter, 'motherpresent').value
+
 
 
 
@@ -111,7 +121,15 @@ define function GetObservationDuringEncounter(idlist List<System.Code>):
 */
 
 define function GetObservationDuringEncounter(id System.Code):
+      First([Observation: id ] O
+        where   IsInEncounter(O.encounter) 
+        and O.status in { 'final', 'amended', 'corrected','cancelled'} 
+        sort by issued.value desc) 
+
+  /*
+  this is commented for performance improvement, even if it hides a valid observation if there is an more recent unvalid one
   Coalesce(GetObservationDuringEncounterDone(id ), GetObservationDuringEncounterNotFound(id ))
+  */
 /*
 define function GetObservationDuringEncounterDone(idlist List<System.Code>):
       Last([Observation: idlist ] O
@@ -215,7 +233,12 @@ define function GetHistoricObservation(idlist List<System.Code>, nbdays Integer)
 */
 
 define function GetHistoricObservation(id System.Code, nbdays Integer):
-  Coalesce(GetHistoricObservationDone(id ,  nbdays ),  GetHistoricObservationNotfound(id  , nbdays ))
+      First([Observation: id ] O
+        where O.status in { 'final', 'amended', 'corrected','cancelled'} 
+        and (difference in days between O.issued and Today()) < nbdays 
+        sort by issued.value desc )
+
+  //Coalesce(GetHistoricObservationDone(id ,  nbdays ),  GetHistoricObservationNotfound(id  , nbdays ))
 /*
 define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Integer):
       Last([Observation: idlist ] O
@@ -225,7 +248,7 @@ define function GetHistoricObservationDone(idlist List<System.Code>, nbdays Inte
 define function GetHistoricObservationDone(id System.Code, nbdays Integer):
       First([Observation: id ] O
         where  O.status in { 'final', 'amended', 'corrected'}
-        and (difference in days between O.issued.value and Today()) < nbdays 
+        and (difference in days between O.issued and Today()) < nbdays 
         sort by issued.value desc )
 
 /*
@@ -236,7 +259,7 @@ define function GetHistoricObservationNotfound(idlist List<System.Code>, nbdays 
 define function GetHistoricObservationNotfound(id System.Code, nbdays Integer):
       First([Observation: id] O
         where  O.status in {'cancelled'}
-          and (difference in days between O.issued.value and Today()) < nbdays 
+          and (difference in days between O.issued and Today()) < nbdays 
         sort by issued.value desc)
 // ************************   HasObsHistory ************************/
 
@@ -285,6 +308,12 @@ define function coding(s System.String):
 define function ToUrl(s System.String):
   url {value:s}
 
+define function ToIntC(b System.Boolean):
+  case
+  when b is null then 0
+  when b = true then 1
+  else 0
+  end
 
 
 // ************************   GetCond ************************/

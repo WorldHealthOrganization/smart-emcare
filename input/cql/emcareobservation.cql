@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareobservation version '1.0.1.rc12.build.144'
+library emcareobservation version '1.0.40+build.183'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -93,34 +93,27 @@ code "Refusal to use a limb": 'EmCare.B12S2.DE02' from "EmCare" display 'Refusal
 code "Warm Tender or Swollen Joint or Bone": 'EmCare.B12S2.DE03' from "EmCare" display 'Warm Tender or Swollen Joint or Bone'
 code "Runny nose": 'EmCare.B12S2.DE05' from "EmCare" display 'Runny nose'
 code "Tender swelling behind the ear": 'EmCare.B13S2.DE01' from "EmCare" display 'Tender swelling behind the ear'
-code "Pus Seen Draining from the Ear": 'EmCare.B13S2.DE02' from "EmCare" display 'Pus Seen Draining from the Ear'
+code "Pus seen draining from the ear": 'EmCare.B13S2.DE02' from "EmCare" display 'Pus seen draining from the ear'
 code "Pus Seen Draining from the Ear for how long?": 'EmCare.B13S2.DE03' from "EmCare" display 'Pus Seen Draining from the Ear for how long?'
 code "Red Eyes": 'EmCare.B14S2.DE01' from "EmCare" display 'Red Eyes'
 code "Pus Draining from Eye": 'EmCare.B14S2.DE02' from "EmCare" display 'Pus Draining from Eye'
 code "Clouding of the Cornea": 'EmCare.B14S2.DE03' from "EmCare" display 'Clouding of the Cornea'
-code "Is Clouding of the Cornea a new problem": 'EmCare.B14S2.DE04' from "EmCare" display 'Is Clouding of the Cornea a new problem'
+code "Is clouding of the cornea a new problem": 'EmCare.B14S2.DE04' from "EmCare" display 'Is clouding of the cornea a new problem'
 code "Has Clouding of the Cornea previously been treated": 'EmCare.B14S2.DE05' from "EmCare" display 'Has Clouding of the Cornea previously been treated'
 code "Generalised or Localised Skin Problem": 'EmCare.B14S2.DE06' from "EmCare" display 'Generalised or Localised Skin Problem'
 code "Measles rash": 'EmCare.B14S2.DE10' from "EmCare" display 'Measles rash'
 code "Measles within the last 3 months": 'EmCare.B14S2.DE11' from "EmCare" display 'Measles within the last 3 months'
-code "Itchy skin": 'EmCare.B14S2.DE11A' from "EmCare" display 'Itchy skin'
+code "Itchy Skin": 'Emcare.B14S2.DE11A' from "EmCare" display 'Itchy Skin'
 code "Blisters, Sores or Pustules": 'EmCare.B14S2.DE012' from "EmCare" display 'Blisters, Sores or Pustules'
 code "Abscess - Hot Tender Swelling": 'EmCare.B14S2.DE14' from "EmCare" display 'Abscess - Hot Tender Swelling'
 code "Deep or extends to muscle": 'EmCare.B14S2.DE15' from "EmCare" display 'Deep or extends to muscle'
 code "Cellulitis - Hot Tender Skin": 'EmCare.B14S2.DE16' from "EmCare" display 'Cellulitis - Hot Tender Skin'
 code "Rapidly spreading, extensive, or not responding to oral antibiotics": 'EmCare.B14S2.DE17' from "EmCare" display 'Rapidly spreading, extensive, or not responding to oral antibiotics'
-code "Papular Itching Rash
-(Prurigo) - Itching rash with small papules and scratch marks. Dark spots with pale centre": 'EmCare.B14S2.DE18' from "EmCare" display 'Papular Itching Rash
-(Prurigo) - Itching rash with small papules and scratch marks. Dark spots with pale centre'
-code "Ringworm (Tinea) - An itchy circular lesion with a raised edge and fine scaly area in the centre with loss of hair.  May also be found on body or web on feet": 'EmCare.B14S2.DE19' from "EmCare" display 'Ringworm (Tinea) - An itchy circular lesion with a raised edge and fine scaly area in the centre with loss of hair.  May also be found on body or web on feet'
+code "Ringworm (Tinea)": 'Emcare.B14S2.DE19' from "EmCare" display 'Ringworm (Tinea)'
 code "Extensive Ringworm (Tinea)": 'EmCare.B14S2.DE20' from "EmCare" display 'Extensive Ringworm (Tinea)'
-code "Scabies - Rash and excoriations on torso; burrows in web space and wrists, face spared": 'EmCare.B14S2.DE21' from "EmCare" display 'Scabies - Rash and excoriations on torso; burrows in web space and wrists, face spared'
-code "Chickenpox - Vesicles over body.  Vesicles appear progressively over days and form scabs after they rupture": 'EmCare.B14S2.DE22' from "EmCare" display 'Chickenpox - Vesicles over body.  Vesicles appear progressively over days and form scabs after they rupture'
-code "Herpes Zoster -  Vesicles in one area on one side of body with intense pain or scars plus shooting pain.  
-Uncommon in children except where they are immuno-compromised (e.g. if infected with HIV)": 'EmCare.B14S2.DE23' from "EmCare" display 'Herpes Zoster -  Vesicles in one area on one side of body with intense pain or scars plus shooting pain.  
-Uncommon in children except where they are immuno-compromised (e.g. if infected with HIV)'
+code "Herpes Zoster": 'EmCare.B14S2.DE23' from "EmCare" display 'Herpes Zoster'
 code "Eye Involvement": 'EmCare.B14S2.DE24' from "EmCare" display 'Eye Involvement'
-code "Impetigo or Folliculitis - Red, Tender, Warm Crusts or Small lesions": 'EmCare.B14S2.DE25' from "EmCare" display 'Impetigo or Folliculitis - Red, Tender, Warm Crusts or Small lesions'
+code "Impetigo or Folliculitis": 'EmCare.B14S2.DE25' from "EmCare" display 'Impetigo or Folliculitis'
 code "Signs of Severe Impetigo / Folliculitis": 'EmCare.B14S2.DE26' from "EmCare" display 'Signs of Severe Impetigo / Folliculitis'
 code "Molluscum Contagiosum - Skin coloured pearly white papules with central umbilication. Most commonly seen on face and trunk in children.": 'EmCare.B14S2.DE31' from "EmCare" display 'Molluscum Contagiosum - Skin coloured pearly white papules with central umbilication. Most commonly seen on face and trunk in children.'
 code "Warts - Papules or nodules with a rough (Verrucous) surface": 'EmCare.B14S2.DE32' from "EmCare" display 'Warts - Papules or nodules with a rough (Verrucous) surface'

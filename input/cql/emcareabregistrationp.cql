@@ -2,11 +2,11 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareabregistrationp version '1.0.1.rc12.build.144'
+library emcareabregistrationp version '1.0.40+build.183'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.144' called Base
-include emcarevalueset version '1.0.1.rc12.build.144' called val
+include emcarebase version '1.0.40+build.183' called Base
+include emcarevalueset version '1.0.40+build.183' called val
 
 
 

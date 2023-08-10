@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1016signs2mp version '1.0.1.rc12.build.144'
+library emcareb1016signs2mp version '1.0.40+build.183'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.144' called Base
-include emcarevalueset version '1.0.1.rc12.build.144' called val
-include emcareobservation version '1.0.1.rc12.build.144' called obs
+include emcarebase version '1.0.40+build.183' called Base
+include emcarevalueset version '1.0.40+build.183' called val
+include emcareobservation version '1.0.40+build.183' called obs
 
 
 
@@ -49,6 +49,13 @@ OBSdefine.EmCare.B13S1.DE03 : Ear discharge
 */
 define "OBSdefine.EmCare.B13S1.DE03":
     Base.GetObsValue('EmCare.B13S1.DE03')
+
+/* 
+OBSdefine.EmCare.B14S1.DE02 : Skin Problem
+
+*/
+define "OBSdefine.EmCare.B14S1.DE02":
+    Base.GetObsValue('EmCare.B14S1.DE02')
 
 /* 
 Cough : 
@@ -93,13 +100,6 @@ define "Ear Problem":
     "OBSdefine.EmCare.B13S1.DE01"
 
 /* 
-Pus seen draining from the ear : 
-o"Pus seen draining from the ear"
-*/
-define "Pus seen draining from the ear":
-    o"Pus seen draining from the ear"
-
-/* 
 Ear discharge : 
 o"Ear discharge"
 */
@@ -107,81 +107,11 @@ define "Ear discharge":
     "OBSdefine.EmCare.B13S1.DE03"
 
 /* 
-Eye problem : 
-o"Eye problem"
-*/
-define "Eye problem":
-    o"Eye problem"
-
-/* 
-Clouding of the cornea : 
-o"Clouding of the cornea"
-*/
-define "Clouding of the cornea":
-    o"Clouding of the cornea"
-
-/* 
-Is clouding of the cornea a new problem : 
-o"Is clouding of the cornea a new problem"
-*/
-define "Is clouding of the cornea a new problem":
-    o"Is clouding of the cornea a new problem"
-
-/* 
-Runny Nose : 
-o"Runny Nose"
-*/
-define "Runny Nose":
-    o"Runny Nose"
-
-/* 
 Skin problem : 
-o"Skin problem"
+o"Skin Problem"
 */
 define "Skin problem":
-    o"Skin problem"
-
-/* 
-Itchy Skin : 
-o"Itchy Skin"
-*/
-define "Itchy Skin":
-    o"Itchy Skin"
-
-/* 
-Generalised skin problem/Localised skin problem : 
-o"Generalised skin problem/Localised skin problem"
-*/
-define "Generalised skin problem/Localised skin problem":
-    o"Generalised skin problem/Localised skin problem"
-
-/* 
-Ringworm (Tinea) : 
-o"Ringworm (Tinea)"
-*/
-define "Ringworm (Tinea)":
-    o"Ringworm (Tinea)"
-
-/* 
-Herpes Zoster : 
-o"Herpes Zoster"
-*/
-define "Herpes Zoster":
-    o"Herpes Zoster"
-
-/* 
-Impetigo or Folliculitis : 
-o"Impetigo or Folliculitis"
-*/
-define "Impetigo or Folliculitis":
-    o"Impetigo or Folliculitis"
-
-/* 
-Types of Skin Problem : 
-o"Types of Skin Problem"
-*/
-define "Types of Skin Problem":
-    o"Types of Skin Problem"
+    "OBSdefine.EmCare.B14S1.DE02"
 
 /* 
 BackReference : 

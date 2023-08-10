@@ -29,7 +29,7 @@
         },
         {
             "url": "http://hl7.org/fhir/StructureDefinition/cqf-library",
-            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb24de01respiratoryr|1.0.1.rc12.build.144"
+            "valueCanonical": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Library/emcareb24de01respiratoryr|1.0.40+build.183"
         }
     ],
     "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Questionnaire/emcare.b24.de01.respiratory.r",
@@ -41,25 +41,6 @@
         "Patient"
     ],
     "item": [
-        {
-            "extension": [
-                {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "Respiratory Rate profile"
-                    }
-                }
-            ],
-            "linkId": "Respiratory Rate profile",
-            "type": "quantity",
-            "required": false,
-            "repeats": false
-        },
         {
             "extension": [
                 {
@@ -86,25 +67,6 @@
         {
             "extension": [
                 {
-                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                    "valueBoolean": true
-                },
-                {
-                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
-                    "valueExpression": {
-                        "language": "text/cql-identifier",
-                        "expression": "Respiratory Rate (Second Count) (breaths per minute)"
-                    }
-                }
-            ],
-            "linkId": "Respiratory Rate (Second Count) (breaths per minute)",
-            "type": "quantity",
-            "required": false,
-            "repeats": false
-        },
-        {
-            "extension": [
-                {
                     "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
                     "valueCode": "horizontal"
                 },
@@ -116,7 +78,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Respiratory Rate (Second Count) (breaths per minute)').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B24.G.DE03').answer.first().empty()"
                     }
                 },
                 {
@@ -187,7 +149,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B24.G.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B24.G.DE02').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().empty()"
                     }
                 }
             ],
@@ -236,7 +198,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().empty() and %resource.repeat(item).where(linkId='force-collection').answer.first().value = false"
+                        "expression": "%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().empty() and %resource.repeat(item).where(linkId='force-collection').answer.first().value = false"
                     }
                 }
             ],
@@ -280,7 +242,7 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and (%resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value >= 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 60 '{Breaths}/min') and %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) (breaths per minute)').answer.first().empty()"
+                        "expression": "%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 2 and (%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 60 '{Breaths}/min' or %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 60 '{Breaths}/min') and %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B24.G.DE03').answer.first().empty()"
                     }
                 }
             ],
@@ -344,7 +306,7 @@
                             "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                             "valueExpression": {
                                 "language": "text/fhirpath",
-                                "expression": "%resource.repeat(item).where(linkId='Respiratory Rate (Second Count) (breaths per minute)').answer.first().empty()"
+                                "expression": "%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B24.G.DE03').answer.first().empty()"
                             }
                         }
                     ],
@@ -394,14 +356,14 @@
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) (breaths per minute)').answer.first().exists() or  %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) Not Possible').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value < 60 '{Breaths}/min')"
+                        "expression": "%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B24.G.DE03').answer.first().exists() or  %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) Not Possible').answer.first().exists() or  %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value < 60 '{Breaths}/min')"
                     }
                 },
                 {
                     "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
                     "valueExpression": {
                         "language": "text/fhirpath",
-                        "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) (breaths per minute)').answer.first().exists() or %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value < 60 '{Breaths}/min' or ( %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) Not Possible').answer.first().exists() and  ( %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value  >= 60 '{Breaths}/min'  ) and %resource.repeat(item).where(linkId='force-collection').answer.first().value=true )), iif( (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='Respiratory Rate (Second Count) (breaths per minute)').answer.first().value >= 60 '{Breaths}/min' or (%resource.repeat(item).where(linkId='Respiratory Rate (Second Count) Not Possible').answer.first().exists()  and ( %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value  >= 60 '{Breaths}/min'  or %resource.repeat(item).where(linkId='Respiratory Rate profile').answer.first().value  >= 60 '{Breaths}/min' ) ) ) ) or  (%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2) or  (%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60) , true, false),{})"
+                        "expression": "iif(%resource.repeat(item).where(linkId='Fast Breathing profile').answer.first().empty() and (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2 or %resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B24.G.DE03').answer.first().exists() or %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value < 60 '{Breaths}/min' or ( %resource.repeat(item).where(linkId='Respiratory Rate (Second Count) Not Possible').answer.first().exists() and  ( %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value  >= 60 '{Breaths}/min'  ) and %resource.repeat(item).where(linkId='force-collection').answer.first().value=true )), iif( (%resource.repeat(item).where(linkId='AgeInMonths').answer.first().value<2 and (%resource.repeat(item).where(linkId='second').repeat(item).where(linkId='EmCare.B24.G.DE03').answer.first().value >= 60 '{Breaths}/min' or (%resource.repeat(item).where(linkId='Respiratory Rate (Second Count) Not Possible').answer.first().exists()  and ( %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value  >= 60 '{Breaths}/min'  or %resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value  >= 60 '{Breaths}/min' ) ) ) ) or  (%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 50 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value >= 2) or  (%resource.repeat(item).where(linkId='EmCare.B24.G.DE01').answer.first().value >= 40 '{Breaths}/min' and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value>=12 and %resource.repeat(item).where(linkId='AgeInMonths').answer.first().value < 60) , true, false),{})"
                     }
                 }
             ],

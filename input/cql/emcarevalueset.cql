@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcarevalueset version '1.0.1.rc12.build.144'
+library emcarevalueset version '1.0.40+build.183'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -62,12 +62,6 @@ code "No Malaria Risk": 'EmCare.B12S1.DE18' from "EmCare" display 'No Malaria Ri
 code "Goes back Normally (immediately)": 'EmCare.B11S2.DE05' from "EmCare" display 'Goes back Normally (immediately)'
 code "Skin Pinch Goes back Slowly (2 seconds or fewer, but not immediately)": 'EmCare.B11S2.DE04' from "EmCare" display 'Skin Pinch Goes back Slowly (2 seconds or fewer, but not immediately)'
 code "Skin Pinch Goes back Very slowly (More than 2 seconds)": 'EmCare.B11S2.DE03' from "EmCare" display 'Skin Pinch Goes back Very slowly (More than 2 seconds)'
-code "No Problem": 'EmCare.B14S2.DE09' from "EmCare" display 'No Problem'
-code "No signs of severe Impetigo / Folliculitis": 'EmCare.B14S2.DE30a' from "EmCare" display 'No signs of severe Impetigo / Folliculitis'
-code "No Oral Sores or Mouth Ulcers": 'EmCare.B14S2.DE39' from "EmCare" display 'No Oral Sores or Mouth Ulcers'
-code "Oral Thrush": 'EmCare.B14S2.DE40' from "EmCare" display 'Oral Thrush'
-code "Mouth Sores or Mouth Ulcers - Deep and Extensive": 'EmCare.B14S2.DE41' from "EmCare" display 'Mouth Sores or Mouth Ulcers - Deep and Extensive'
-code "Mouth Sores or Mouth Ulcers - Not Deep and Extensive": 'EmCare.B14S2.DE42' from "EmCare" display 'Mouth Sores or Mouth Ulcers - Not Deep and Extensive'
 code "Severe Palmar Pallor": 'EmCare.B15S2.DE02' from "EmCare" display 'Severe Palmar Pallor'
 code "Some Palmar Pallor": 'EmCare.B15S2.DE03' from "EmCare" display 'Some Palmar Pallor'
 code "No Palmar Pallor": 'EmCare.B15S2.DE04' from "EmCare" display 'No Palmar Pallor'

@@ -2,12 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb24de01respiratoryr version '1.0.62+build.205'
+library emcareb24de01respiratoryr version '1.0.71+build.214'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.62+build.205' called Base
-include emcarevalueset version '1.0.62+build.205' called val
-include emcareobservation version '1.0.62+build.205' called obs
+include emcarebase version '1.0.71+build.214' called Base
+include emcarevalueset version '1.0.71+build.214' called val
+include b24combineddataelement version '1.0.71+build.214' called C
+include emcareobservation version '1.0.71+build.214' called obs
 
 
 
@@ -21,6 +22,13 @@ OBSdefine.EmCare.B24.G.DE05 : Fast Breathing
 */
 define "OBSdefine.EmCare.B24.G.DE05":
     Base.GetObsValue('EmCare.B24.G.DE05')
+
+/* 
+OBSdefine.EmCare.B24.G.DE04 : Respiratory Rate Second Count Not Possible
+
+*/
+define "OBSdefine.EmCare.B24.G.DE04":
+    Base.GetObsValue('EmCare.B24.G.DE04')
 
 /* 
 force-collection : 
@@ -38,17 +46,17 @@ define "Fast Breathing profile":
 
 /* 
 AgeInMonths : 
-o”AgeInMonths”
+AgeInMonths()
 */
 define "AgeInMonths":
-    o”AgeInMonths”
+    AgeInMonths()
 
 /* 
 Respiratory Rate (Second Count) Not Possible : 
-o”Respiratory Rate (Second Count) Not Possible”
+o"Respiratory Rate Second Count Not Possible"
 */
 define "Respiratory Rate (Second Count) Not Possible":
-    o”Respiratory Rate (Second Count) Not Possible”
+    "OBSdefine.EmCare.B24.G.DE04"
 
 /* 
 BackReference : 

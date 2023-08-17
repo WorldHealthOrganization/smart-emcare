@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library b24combineddataelement version '1.0.73+build.216'
+library b24combineddataelement version '1.0.77+build.220'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.73+build.216' called Base
-include emcarevalueset version '1.0.73+build.216' called val
-include emcarezscore version '1.0.73+build.216' called Z
-include emcareobservation version '1.0.73+build.216' called obs
+include emcarebase version '1.0.77+build.220' called Base
+include emcarevalueset version '1.0.77+build.220' called val
+include emcarezscore version '1.0.77+build.220' called Z
+include emcareobservation version '1.0.77+build.220' called obs
 
 
 

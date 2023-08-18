@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb1014symptoms2mp version '1.0.147+build.290'
+library emcareb1014symptoms2mp version '1.0.149+build.292'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.147+build.290' called Base
-include emcarevalueset version '1.0.147+build.290' called val
-include b24combineddataelement version '1.0.147+build.290' called C
+include emcarebase version '1.0.149+build.292' called Base
+include emcarevalueset version '1.0.149+build.292' called val
+include b24combineddataelement version '1.0.149+build.292' called C
 
 
 

@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareobservation version '1.0.77+build.220'
+library emcareobservation version '1.0.174+build.317'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 

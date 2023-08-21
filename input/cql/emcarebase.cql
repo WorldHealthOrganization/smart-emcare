@@ -3,7 +3,7 @@
 @description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
 */
 
-library emcarebase version '1.0.77+build.220'
+library emcarebase version '1.0.174+build.317'
 
 using FHIR version '4.0.1'
 

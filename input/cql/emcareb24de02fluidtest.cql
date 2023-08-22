@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project EmCare
 */
-library emcareb24de02fluidtest version '1.0.174+build.317'
+library emcareb24de02fluidtest version '1.0.210+build.353'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.174+build.317' called Base
-include emcarevalueset version '1.0.174+build.317' called val
-include emcareobservation version '1.0.174+build.317' called obs
+include emcarebase version '1.0.210+build.353' called Base
+include emcarevalueset version '1.0.210+build.353' called val
+include emcareobservation version '1.0.210+build.353' called obs
 
 
 

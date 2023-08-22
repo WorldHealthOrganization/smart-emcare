@@ -1,47 +1,47 @@
 /*
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare
+@description: This library is part of the project CHE
 */
-library emcarezscore version '{{LIB_VERSION}}'
+library chezscore version '{{LIB_VERSION}}'
 using FHIR version '{{FHIR_VERSION}}'
 include FHIRHelpers version '{{FHIR_VERSION}}' called FHIRHelpers 
-include emcarebase version '{{LIB_VERSION}}' called Base
+include chebase version '{{LIB_VERSION}}' called Base
 include WeightForAge version '1.0.4' called wfa
 include WeightForLength version '1.0.4' called wfl
 include WeightForHeight version '1.0.4' called wfh
 
 
 
-//codesystem "EmCare" : '{{cs_url}}'
+//codesystem "CHE" : '{{cs_url}}'
 
 
 
-//code "Weight": 'EmCare.B6.DE06' from "EmCare" display 'Weight'
-//code "Estimated Weight": 'EmCare.B6.DE08' from "EmCare" display 'Estimated Weight'
-//code "MUAC": 'EmCare.B6.DE17' from "EmCare" display 'MUAC'
-//code "Length": 'EmCare.B6.DE12' from "EmCare" display 'Length'
-//code "Height": 'EmCare.B6.DE09' from "EmCare" display 'Height'
+//code "Weight": 'CHE.B6.DE06' from "CHE" display 'Weight'
+//code "Estimated Weight": 'CHE.B6.DE08' from "CHE" display 'Estimated Weight'
+//code "MUAC": 'CHE.B6.DE17' from "CHE" display 'MUAC'
+//code "Length": 'CHE.B6.DE12' from "CHE" display 'Length'
+//code "Height": 'CHE.B6.DE09' from "CHE" display 'Height'
 
 parameter "encounterid" String
 
 context Patient
 
 define "Weight":
-  Base.coding('EmCare.B6.DE06')
+  Base.coding('CHE.B6.DE06')
 define "Estimated Weight":
-  Base.coding('EmCare.B6.DE08')
+  Base.coding('CHE.B6.DE08')
 define "MUAC":
-  Base.coding('EmCare.B6.DE17')
+  Base.coding('CHE.B6.DE17')
 define "Length":
-  Base.coding('EmCare.B6.DE12')
+  Base.coding('CHE.B6.DE12')
 define "Height":
-  Base.coding('EmCare.B6.DE09')
+  Base.coding('CHE.B6.DE09')
 define "Visually assess":
-  Base.coding('EmCare.B6.DE18')
+  Base.coding('CHE.B6.DE18')
 define "Underweight":
-  Base.coding('EmCare.B6.DE20') 
+  Base.coding('CHE.B6.DE20') 
 define "Severely Underweight":
-  Base.coding('EmCare.B6.DE21') 
+  Base.coding('CHE.B6.DE21') 
 
 /* pastweight : Previous Weight*/
 define "pastweightobs":

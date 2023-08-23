@@ -2,10 +2,10 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library chezscore version '1.0.235+build.378'
+library chezscore version '1.0.239+build.382'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include chebase version '1.0.235+build.378' called Base
+include chebase version '1.0.239+build.382' called Base
 include WeightForAge version '1.0.4' called wfa
 include WeightForLength version '1.0.4' called wfl
 include WeightForHeight version '1.0.4' called wfh

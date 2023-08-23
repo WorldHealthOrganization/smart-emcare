@@ -1,0 +1,166 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/che.ab.registration.p' = 'che.ab.registration.p'
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient' alias 'Patient' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' alias 'RelatedPerson' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/chepatient' alias 'CHE Patient' as produced
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' alias 'RelatedPerson' as produced
+group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+    src -> bundle.entry as entry then {
+        src.subject as subject then {
+            subject.id as idval -> entry.request as request, request.method = 'PUT', request.url = append('/Patient/',idval) '1153aa45';
+        } 'cf5b2513';
+        src ->  entry.resource = create("Patient") as tgt then {
+            src -> tgt then chepatient(src, tgt) 'aeaea6b3';
+        } '650d46f5';
+    } 'put-chepatient';
+    src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'relatedpersonid' and answer.exists() then {
+            src -> bundle.entry as entry ,entry.request as request, request.method = 'POST' , entry.resource = create('RelatedPerson') as tgt then {
+                src -> tgt then relatedperson(src, tgt) '8f0b9602';
+                item.answer first as a then {
+                    a.value as val -> request.url = append('/RelatedPerson/', val) '78d8bc69';
+                } 'eec70023';
+            } '00574b8e';
+        } '74cc3511';
+    } '8d1e77b2';
+}
+
+group SetOfficalGivenNamechepatient(source src,target tgt){
+    src -> tgt.use = 'official' then {
+        src.item first as item  where linkId = 'CHE.A.DE06' and answer.exists() then {
+            item.answer first as a then {
+                a.value as val -> tgt.family = val '77d1bd4f';
+            } 'e0827d5d';
+        } '05f39f04';
+        src.item first as item  where linkId = 'CHE.A.DE04' and answer.exists() then {
+            item.answer first as a then {
+                a.value as val -> tgt.given = val '5d3d44f6';
+            } '18edd234';
+        } '56b027a8';
+        src.item first as item  where linkId = 'CHE.A.DE05' and answer.exists() then {
+            item.answer first as a then {
+                a.value as val -> tgt.given = val '5d3d44f6';
+            } '18edd234';
+        } 'c5614af6';
+    } '58cbfc0e';
+}
+
+group chepatient(source src : questionnaireResponse,target tgt : Patient){
+    src.item first as item  where linkId = 'CHE.A.DE01' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.identifier = create('Identifier' ) as identifier then {
+                    val -> identifier.value = val,  identifier.use = 'official'    "id";
+                } 'acheade01';
+        } 'acheade01';
+    } '902cc63a';
+    src.item first as item  where linkId = 'CHE.A.DE03' and answer.exists() then {
+        item.answer first as a -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true 'acheade03';
+    } 'b340c8a7';
+    src.item first as item  where linkId = 'CHE.A.DE06' or linkId= 'CHE.A.DE04' or linkId= 'CHE.A.DE05' and answer.exists() then {
+        src -> tgt as target,  target.name as name then SetOfficalGivenNamechepatient(src, name) '0417ff44';
+    } '8f5be461';
+    src.item first as item  where linkId = 'CHE.A.DE12' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val 'acheade12';
+        } 'acheade12';
+    } '25a5a38f';
+    src.item first as item  where linkId = 'CHE.A.DE08' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.birthDate = val 'acheade08';
+        } 'acheade08';
+    } '0906a0f7';
+    src.item first as item  where linkId = 'CHE.A.DE09' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/hourofbirth', ext.value= val 'acheade09';
+        } 'acheade09';
+    } '7c2b1795';
+    src.item first as item  where linkId = 'CHE.A.DE16' and answer.exists() then {
+        item.answer first as a then MapValueSetExtCodecheade16(a, tgt) 'e48fa315';
+    } '842c1fa2';
+    src.item first as item  where linkId = 'CHE.A.DE48' and answer.exists() then {
+        item.answer first as a -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver', ext.value= create('Reference') as ref, ref.reference = 'relatated-person-id' 'acheade48';
+    } '50e8f3b4';
+    src.item first as item  where linkId = 'CHE.A.DE31' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus', ext.value= val 'acheade31';
+        } 'acheade31';
+    } '29bdd7f8';
+}
+
+group SetOfficalGivenNamerelatedperson(source src,target tgt){
+    src -> tgt.use = 'official' then {
+        src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+            itm1.item first as item  where linkId =  'CHE.A.DE23' and answer.exists() then {
+                item.answer first as a then {
+                    a.value as val -> tgt.family = val '77d1bd4f';
+                } 'e0827d5d';
+            } '96a1f6a1';
+        } 'c5b295d3';
+        src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+            itm1.item first as item  where linkId =  'CHE.A.DE21' and answer.exists() then {
+                item.answer first as a then {
+                    a.value as val -> tgt.given = val '5d3d44f6';
+                } '18edd234';
+            } 'beeb4341';
+        } '61b58988';
+        src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+            itm1.item first as item  where linkId =  'CHE.A.DE22' and answer.exists() then {
+                item.answer first as a then {
+                    a.value as val -> tgt.given = val '5d3d44f6';
+                } '18edd234';
+            } '5f1009c5';
+        } '0600eedb';
+    } 'bf3c2d7c';
+}
+
+group MapValueSetExtCodecheade24(source src,target tgt){
+    src -> tgt then {
+        src -> tgt.relationship= create('CodeableConcept') as cc, cc.coding=create('Coding') as coding   'f8b67f8d';
+    } '8ba0311a';
+}
+
+group relatedperson(source src : questionnaireResponse,target tgt : RelatedPerson){
+    src.item first as item  where linkId = 'CHErelatedpersoncaregiverid' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver', ext.value= create('Reference') as ref, ref.reference = append('/RelatedPerson/',val) 'acherelatedpersoncaregiverid';
+        } 'acherelatedpersoncaregiverid';
+    } '8162f965';
+    src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'CHE.A.DE23' or linkId= 'CHE.A.DE21' or linkId= 'CHE.A.DE22' and answer.exists() then {
+            src -> tgt as target,  target.name as name then SetOfficalGivenNamerelatedperson(src, name) '8e1455ea';
+        } 'dddc7053';
+    } 'a89a14fb';
+    src.item first as item  where linkId = 'CHE.A.DE24' and answer.exists() then {
+        item.answer first as a then MapValueSetExtCodecheade24(a, tgt) 'ede36463';
+    } '387fd192';
+    src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'relatedpersonid' and answer.exists() then {
+            item.answer first as a -> tgt then {src.subject as subject -> tgt.patient = subject  'patient';} 'arelatedpersonid';
+        } 'd79d72db';
+    } '88cbce55';
+    src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'CHE.A.DE35' and answer.exists() then {
+            item.answer first as a then {
+                a.value as val -> tgt.telecom =  create('ContactPoint')  as tel , tel.system = 'phone', tel.use ='mobile', tel.value = val, tel.rank=1 'acheade35';
+            } 'acheade35';
+        } '3c5d318c';
+    } '9b9bbd1a';
+    src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'CHE.A.DE36' and answer.exists() then {
+            item.answer first as a then {
+                a.value as val -> tgt.telecom =  create('ContactPoint')  as tel , tel.system = 'phone', tel.use ='mobile', tel.value = val, tel.rank=2 'acheade36';
+            } 'acheade36';
+        } '17b42518';
+    } '15079f58';
+    src.item first as itm1  where linkId =  'CHE.A.DE21.1' then {
+        itm1.item first as item  where linkId =  'CHE.A.DE37' and answer.exists() then {
+            item.answer first as a then {
+                a.value as val -> tgt.telecom =  create('ContactPoint')  as tel , tel.system = 'phone', tel.use ='mobile', tel.value = val, tel.rank=3 'acheade37';
+            } 'acheade37';
+        } '8395c849';
+    } '36230b88';
+}
+

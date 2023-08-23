@@ -1,0 +1,2052 @@
+{
+    "resourceType": "StructureMap",
+    "id": "che.ab.registration.p",
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/che.ab.registration.p&quot; = &quot;che.ab.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/chepatient&quot; alias 'CHE Patient' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;1153aa45&quot;;\r\n    } &quot;cf5b2513&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then chepatient(src, tgt) &quot;aeaea6b3&quot;;\r\n    } &quot;650d46f5&quot;;\r\n  } &quot;put-chepatient&quot;;\r\n  src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {\r\n      src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('RelatedPerson') as tgt then {\r\n        src -&gt; tgt then relatedperson(src, tgt) &quot;8f0b9602&quot;;\r\n        item.answer first as a then {\r\n          a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;78d8bc69&quot;;\r\n        } &quot;eec70023&quot;;\r\n      } &quot;00574b8e&quot;;\r\n    } &quot;74cc3511&quot;;\r\n  } &quot;8d1e77b2&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNamechepatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as item where (linkId = 'CHE.A.DE06') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n      } &quot;e0827d5d&quot;;\r\n    } &quot;05f39f04&quot;;\r\n    src.item first as item where (linkId = 'CHE.A.DE04') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;56b027a8&quot;;\r\n    src.item first as item where (linkId = 'CHE.A.DE05') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;c5614af6&quot;;\r\n  } &quot;58cbfc0e&quot;;\r\n}\r\n\r\ngroup chepatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item first as item where (linkId = 'CHE.A.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;acheade01&quot;;\r\n    } &quot;acheade01&quot;;\r\n  } &quot;902cc63a&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE03') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true &quot;acheade03&quot;;\r\n  } &quot;b340c8a7&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE06') or (linkId = 'CHE.A.DE04') or ((linkId = 'CHE.A.DE05') and answer.exists()) then {\r\n    src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNamechepatient(src, name) &quot;0417ff44&quot;;\r\n  } &quot;8f5be461&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE12') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val &quot;acheade12&quot;;\r\n    } &quot;acheade12&quot;;\r\n  } &quot;25a5a38f&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE08') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;acheade08&quot;;\r\n    } &quot;acheade08&quot;;\r\n  } &quot;0906a0f7&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE09') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/hourofbirth',  ext.value = val &quot;acheade09&quot;;\r\n    } &quot;acheade09&quot;;\r\n  } &quot;7c2b1795&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE16') and answer.exists() then {\r\n    item.answer first as a then MapValueSetExtCodecheade16(a, tgt) &quot;e48fa315&quot;;\r\n  } &quot;842c1fa2&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE48') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver',  ext.value = create('Reference') as ref,  ref.reference = 'relatated-person-id' &quot;acheade48&quot;;\r\n  } &quot;50e8f3b4&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE31') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus',  ext.value = val &quot;acheade31&quot;;\r\n    } &quot;acheade31&quot;;\r\n  } &quot;29bdd7f8&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNamerelatedperson(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'CHE.A.DE23') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n        } &quot;e0827d5d&quot;;\r\n      } &quot;96a1f6a1&quot;;\r\n    } &quot;c5b295d3&quot;;\r\n    src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'CHE.A.DE21') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;beeb4341&quot;;\r\n    } &quot;61b58988&quot;;\r\n    src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'CHE.A.DE22') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;5f1009c5&quot;;\r\n    } &quot;0600eedb&quot;;\r\n  } &quot;bf3c2d7c&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodecheade24(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt;  tgt.relationship = create('CodeableConcept') as cc,  cc.coding = create('Coding') as coding &quot;f8b67f8d&quot;;\r\n  } &quot;8ba0311a&quot;;\r\n}\r\n\r\ngroup relatedperson(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'CHErelatedpersoncaregiverid') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver',  ext.value = create('Reference') as ref,  ref.reference = append('/RelatedPerson/', val) &quot;acherelatedpersoncaregiverid&quot;;\r\n    } &quot;acherelatedpersoncaregiverid&quot;;\r\n  } &quot;8162f965&quot;;\r\n  src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'CHE.A.DE23') or (linkId = 'CHE.A.DE21') or ((linkId = 'CHE.A.DE22') and answer.exists()) then {\r\n      src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNamerelatedperson(src, name) &quot;8e1455ea&quot;;\r\n    } &quot;dddc7053&quot;;\r\n  } &quot;a89a14fb&quot;;\r\n  src.item first as item where (linkId = 'CHE.A.DE24') and answer.exists() then {\r\n    item.answer first as a then MapValueSetExtCodecheade24(a, tgt) &quot;ede36463&quot;;\r\n  } &quot;387fd192&quot;;\r\n  src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {\r\n      item.answer first as a -&gt; tgt then {\r\n        src.subject as subject -&gt; tgt.patient = subject &quot;patient&quot;;\r\n      } &quot;arelatedpersonid&quot;;\r\n    } &quot;d79d72db&quot;;\r\n  } &quot;88cbce55&quot;;\r\n  src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'CHE.A.DE35') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom = create('ContactPoint') as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val,  tel.rank = 1 &quot;acheade35&quot;;\r\n      } &quot;acheade35&quot;;\r\n    } &quot;3c5d318c&quot;;\r\n  } &quot;9b9bbd1a&quot;;\r\n  src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'CHE.A.DE36') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom = create('ContactPoint') as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val,  tel.rank = 2 &quot;acheade36&quot;;\r\n      } &quot;acheade36&quot;;\r\n    } &quot;17b42518&quot;;\r\n  } &quot;15079f58&quot;;\r\n  src.item first as itm1 where linkId = 'CHE.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'CHE.A.DE37') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom = create('ContactPoint') as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val,  tel.rank = 3 &quot;acheade37&quot;;\r\n      } &quot;acheade37&quot;;\r\n    } &quot;8395c849&quot;;\r\n  } &quot;36230b88&quot;;\r\n}\r\n\r\n</pre></div>"
+    },
+    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/che.ab.registration.p",
+    "name": "che.ab.registration.p",
+    "status": "active",
+    "structure": [
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse",
+            "mode": "source",
+            "alias": "'questionnaireResponse'"
+        },
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+            "mode": "target",
+            "alias": "'Bundle'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient",
+            "mode": "target",
+            "alias": "'Patient'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson",
+            "mode": "target",
+            "alias": "'RelatedPerson'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/chepatient",
+            "mode": "produced",
+            "alias": "'CHE Patient'"
+        },
+        {
+            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson",
+            "mode": "produced",
+            "alias": "'RelatedPerson'"
+        }
+    ],
+    "group": [
+        {
+            "name": "bundletrans",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
+                },
+                {
+                    "name": "bundle",
+                    "type": "Bundle",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "id",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "id",
+                            "transform": "uuid"
+                        }
+                    ]
+                },
+                {
+                    "name": "type",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "type",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "batch"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "put-chepatient",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "bundle",
+                            "contextType": "variable",
+                            "element": "entry",
+                            "variable": "entry"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "cf5b2513",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "subject",
+                                    "variable": "subject"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "1153aa45",
+                                    "source": [
+                                        {
+                                            "context": "subject",
+                                            "element": "id",
+                                            "variable": "idval"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "entry",
+                                            "contextType": "variable",
+                                            "element": "request",
+                                            "variable": "request"
+                                        },
+                                        {
+                                            "context": "request",
+                                            "contextType": "variable",
+                                            "element": "method",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "PUT"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "request",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "/Patient/"
+                                                },
+                                                {
+                                                    "valueId": "idval"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "650d46f5",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "entry",
+                                    "contextType": "variable",
+                                    "element": "resource",
+                                    "variable": "tgt",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Patient"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "aeaea6b3",
+                                    "source": [
+                                        {
+                                            "context": "src"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "tgt"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "chepatient",
+                                            "variable": [
+                                                "src",
+                                                "tgt"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "8d1e77b2",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "itm1",
+                            "condition": "linkId = 'CHE.A.DE21.1'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "74cc3511",
+                            "source": [
+                                {
+                                    "context": "itm1",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'relatedpersonid') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "00574b8e",
+                                    "source": [
+                                        {
+                                            "context": "src"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "bundle",
+                                            "contextType": "variable",
+                                            "element": "entry",
+                                            "variable": "entry"
+                                        },
+                                        {
+                                            "context": "entry",
+                                            "contextType": "variable",
+                                            "element": "request",
+                                            "variable": "request"
+                                        },
+                                        {
+                                            "context": "request",
+                                            "contextType": "variable",
+                                            "element": "method",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "POST"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "entry",
+                                            "contextType": "variable",
+                                            "element": "resource",
+                                            "variable": "tgt",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "RelatedPerson"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "8f0b9602",
+                                            "source": [
+                                                {
+                                                    "context": "src"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "contextType": "variable",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "tgt"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "dependent": [
+                                                {
+                                                    "name": "relatedperson",
+                                                    "variable": [
+                                                        "src",
+                                                        "tgt"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "name": "eec70023",
+                                            "source": [
+                                                {
+                                                    "context": "item",
+                                                    "element": "answer",
+                                                    "listMode": "first",
+                                                    "variable": "a"
+                                                }
+                                            ],
+                                            "rule": [
+                                                {
+                                                    "name": "78d8bc69",
+                                                    "source": [
+                                                        {
+                                                            "context": "a",
+                                                            "element": "value",
+                                                            "variable": "val"
+                                                        }
+                                                    ],
+                                                    "target": [
+                                                        {
+                                                            "context": "request",
+                                                            "contextType": "variable",
+                                                            "element": "url",
+                                                            "transform": "append",
+                                                            "parameter": [
+                                                                {
+                                                                    "valueString": "/RelatedPerson/"
+                                                                },
+                                                                {
+                                                                    "valueId": "val"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SetOfficalGivenNamechepatient",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "58cbfc0e",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "use",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "official"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "05f39f04",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE06') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "e0827d5d",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "77d1bd4f",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "family",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "56b027a8",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE04') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "18edd234",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "5d3d44f6",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "given",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "c5614af6",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE05') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "18edd234",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "5d3d44f6",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "given",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "chepatient",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "Patient",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "902cc63a",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE01') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade01",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade01",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "identifier",
+                                            "variable": "identifier",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Identifier"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "id",
+                                            "source": [
+                                                {
+                                                    "context": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "identifier",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "identifier",
+                                                    "contextType": "variable",
+                                                    "element": "use",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "official"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "b340c8a7",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE03') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade03",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "tgt",
+                                    "contextType": "variable",
+                                    "element": "extension",
+                                    "variable": "ext",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Extension"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "ext",
+                                    "contextType": "variable",
+                                    "element": "url",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "ext",
+                                    "contextType": "variable",
+                                    "element": "value",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueBoolean": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "8f5be461",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE06') or (linkId = 'CHE.A.DE04') or ((linkId = 'CHE.A.DE05') and answer.exists())"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "0417ff44",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "contextType": "variable",
+                                    "variable": "target",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueId": "tgt"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "target",
+                                    "contextType": "variable",
+                                    "element": "name",
+                                    "variable": "name"
+                                }
+                            ],
+                            "dependent": [
+                                {
+                                    "name": "SetOfficalGivenNamechepatient",
+                                    "variable": [
+                                        "src",
+                                        "name"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "25a5a38f",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE12') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade12",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade12",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Extension"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "0906a0f7",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE08') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade08",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade08",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "birthDate",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "7c2b1795",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE09') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade09",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade09",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Extension"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/hourofbirth"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "842c1fa2",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE16') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "e48fa315",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "dependent": [
+                                {
+                                    "name": "MapValueSetExtCodecheade16",
+                                    "variable": [
+                                        "a",
+                                        "tgt"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "50e8f3b4",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE48') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade48",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "tgt",
+                                    "contextType": "variable",
+                                    "element": "extension",
+                                    "variable": "ext",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Extension"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "ext",
+                                    "contextType": "variable",
+                                    "element": "url",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "ext",
+                                    "contextType": "variable",
+                                    "element": "value",
+                                    "variable": "ref",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Reference"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "ref",
+                                    "contextType": "variable",
+                                    "element": "reference",
+                                    "transform": "copy",
+                                    "parameter": [
+                                        {
+                                            "valueString": "relatated-person-id"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "29bdd7f8",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE31') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acheade31",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade31",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Extension"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "SetOfficalGivenNamerelatedperson",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "bf3c2d7c",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "context": "tgt",
+                            "contextType": "variable",
+                            "element": "use",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueString": "official"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "c5b295d3",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "itm1",
+                                    "condition": "linkId = 'CHE.A.DE21.1'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "96a1f6a1",
+                                    "source": [
+                                        {
+                                            "context": "itm1",
+                                            "element": "item",
+                                            "listMode": "first",
+                                            "variable": "item",
+                                            "condition": "(linkId = 'CHE.A.DE23') and answer.exists()"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "e0827d5d",
+                                            "source": [
+                                                {
+                                                    "context": "item",
+                                                    "element": "answer",
+                                                    "listMode": "first",
+                                                    "variable": "a"
+                                                }
+                                            ],
+                                            "rule": [
+                                                {
+                                                    "name": "77d1bd4f",
+                                                    "source": [
+                                                        {
+                                                            "context": "a",
+                                                            "element": "value",
+                                                            "variable": "val"
+                                                        }
+                                                    ],
+                                                    "target": [
+                                                        {
+                                                            "context": "tgt",
+                                                            "contextType": "variable",
+                                                            "element": "family",
+                                                            "transform": "copy",
+                                                            "parameter": [
+                                                                {
+                                                                    "valueId": "val"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "61b58988",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "itm1",
+                                    "condition": "linkId = 'CHE.A.DE21.1'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "beeb4341",
+                                    "source": [
+                                        {
+                                            "context": "itm1",
+                                            "element": "item",
+                                            "listMode": "first",
+                                            "variable": "item",
+                                            "condition": "(linkId = 'CHE.A.DE21') and answer.exists()"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "18edd234",
+                                            "source": [
+                                                {
+                                                    "context": "item",
+                                                    "element": "answer",
+                                                    "listMode": "first",
+                                                    "variable": "a"
+                                                }
+                                            ],
+                                            "rule": [
+                                                {
+                                                    "name": "5d3d44f6",
+                                                    "source": [
+                                                        {
+                                                            "context": "a",
+                                                            "element": "value",
+                                                            "variable": "val"
+                                                        }
+                                                    ],
+                                                    "target": [
+                                                        {
+                                                            "context": "tgt",
+                                                            "contextType": "variable",
+                                                            "element": "given",
+                                                            "transform": "copy",
+                                                            "parameter": [
+                                                                {
+                                                                    "valueId": "val"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "0600eedb",
+                            "source": [
+                                {
+                                    "context": "src",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "itm1",
+                                    "condition": "linkId = 'CHE.A.DE21.1'"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "5f1009c5",
+                                    "source": [
+                                        {
+                                            "context": "itm1",
+                                            "element": "item",
+                                            "listMode": "first",
+                                            "variable": "item",
+                                            "condition": "(linkId = 'CHE.A.DE22') and answer.exists()"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "18edd234",
+                                            "source": [
+                                                {
+                                                    "context": "item",
+                                                    "element": "answer",
+                                                    "listMode": "first",
+                                                    "variable": "a"
+                                                }
+                                            ],
+                                            "rule": [
+                                                {
+                                                    "name": "5d3d44f6",
+                                                    "source": [
+                                                        {
+                                                            "context": "a",
+                                                            "element": "value",
+                                                            "variable": "val"
+                                                        }
+                                                    ],
+                                                    "target": [
+                                                        {
+                                                            "context": "tgt",
+                                                            "contextType": "variable",
+                                                            "element": "given",
+                                                            "transform": "copy",
+                                                            "parameter": [
+                                                                {
+                                                                    "valueId": "val"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "MapValueSetExtCodecheade24",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "8ba0311a",
+                    "source": [
+                        {
+                            "context": "src"
+                        }
+                    ],
+                    "target": [
+                        {
+                            "contextType": "variable",
+                            "transform": "copy",
+                            "parameter": [
+                                {
+                                    "valueId": "tgt"
+                                }
+                            ]
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "f8b67f8d",
+                            "source": [
+                                {
+                                    "context": "src"
+                                }
+                            ],
+                            "target": [
+                                {
+                                    "context": "tgt",
+                                    "contextType": "variable",
+                                    "element": "relationship",
+                                    "variable": "cc",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "CodeableConcept"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "context": "cc",
+                                    "contextType": "variable",
+                                    "element": "coding",
+                                    "variable": "coding",
+                                    "transform": "create",
+                                    "parameter": [
+                                        {
+                                            "valueString": "Coding"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "relatedperson",
+            "typeMode": "none",
+            "input": [
+                {
+                    "name": "src",
+                    "type": "questionnaireResponse",
+                    "mode": "source"
+                },
+                {
+                    "name": "tgt",
+                    "type": "RelatedPerson",
+                    "mode": "target"
+                }
+            ],
+            "rule": [
+                {
+                    "name": "8162f965",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHErelatedpersoncaregiverid') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "acherelatedpersoncaregiverid",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acherelatedpersoncaregiverid",
+                                    "source": [
+                                        {
+                                            "context": "a",
+                                            "element": "value",
+                                            "variable": "val"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "context": "tgt",
+                                            "contextType": "variable",
+                                            "element": "extension",
+                                            "variable": "ext",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Extension"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "url",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ext",
+                                            "contextType": "variable",
+                                            "element": "value",
+                                            "variable": "ref",
+                                            "transform": "create",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "Reference"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "ref",
+                                            "contextType": "variable",
+                                            "element": "reference",
+                                            "transform": "append",
+                                            "parameter": [
+                                                {
+                                                    "valueString": "/RelatedPerson/"
+                                                },
+                                                {
+                                                    "valueId": "val"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "a89a14fb",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "itm1",
+                            "condition": "linkId = 'CHE.A.DE21.1'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "dddc7053",
+                            "source": [
+                                {
+                                    "context": "itm1",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE23') or (linkId = 'CHE.A.DE21') or ((linkId = 'CHE.A.DE22') and answer.exists())"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "8e1455ea",
+                                    "source": [
+                                        {
+                                            "context": "src"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "variable": "target",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "tgt"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "context": "target",
+                                            "contextType": "variable",
+                                            "element": "name",
+                                            "variable": "name"
+                                        }
+                                    ],
+                                    "dependent": [
+                                        {
+                                            "name": "SetOfficalGivenNamerelatedperson",
+                                            "variable": [
+                                                "src",
+                                                "name"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "387fd192",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "item",
+                            "condition": "(linkId = 'CHE.A.DE24') and answer.exists()"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "ede36463",
+                            "source": [
+                                {
+                                    "context": "item",
+                                    "element": "answer",
+                                    "listMode": "first",
+                                    "variable": "a"
+                                }
+                            ],
+                            "dependent": [
+                                {
+                                    "name": "MapValueSetExtCodecheade24",
+                                    "variable": [
+                                        "a",
+                                        "tgt"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "88cbce55",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "itm1",
+                            "condition": "linkId = 'CHE.A.DE21.1'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "d79d72db",
+                            "source": [
+                                {
+                                    "context": "itm1",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'relatedpersonid') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "arelatedpersonid",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "target": [
+                                        {
+                                            "contextType": "variable",
+                                            "transform": "copy",
+                                            "parameter": [
+                                                {
+                                                    "valueId": "tgt"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "patient",
+                                            "source": [
+                                                {
+                                                    "context": "src",
+                                                    "element": "subject",
+                                                    "variable": "subject"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "patient",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "subject"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "9b9bbd1a",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "itm1",
+                            "condition": "linkId = 'CHE.A.DE21.1'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "3c5d318c",
+                            "source": [
+                                {
+                                    "context": "itm1",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE35') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade35",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "acheade35",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "telecom",
+                                                    "variable": "tel",
+                                                    "transform": "create",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "ContactPoint"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "system",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "phone"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "use",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "mobile"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "rank",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueInteger": 1
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "15079f58",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "itm1",
+                            "condition": "linkId = 'CHE.A.DE21.1'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "17b42518",
+                            "source": [
+                                {
+                                    "context": "itm1",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE36') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade36",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "acheade36",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "telecom",
+                                                    "variable": "tel",
+                                                    "transform": "create",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "ContactPoint"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "system",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "phone"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "use",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "mobile"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "rank",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueInteger": 2
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "36230b88",
+                    "source": [
+                        {
+                            "context": "src",
+                            "element": "item",
+                            "listMode": "first",
+                            "variable": "itm1",
+                            "condition": "linkId = 'CHE.A.DE21.1'"
+                        }
+                    ],
+                    "rule": [
+                        {
+                            "name": "8395c849",
+                            "source": [
+                                {
+                                    "context": "itm1",
+                                    "element": "item",
+                                    "listMode": "first",
+                                    "variable": "item",
+                                    "condition": "(linkId = 'CHE.A.DE37') and answer.exists()"
+                                }
+                            ],
+                            "rule": [
+                                {
+                                    "name": "acheade37",
+                                    "source": [
+                                        {
+                                            "context": "item",
+                                            "element": "answer",
+                                            "listMode": "first",
+                                            "variable": "a"
+                                        }
+                                    ],
+                                    "rule": [
+                                        {
+                                            "name": "acheade37",
+                                            "source": [
+                                                {
+                                                    "context": "a",
+                                                    "element": "value",
+                                                    "variable": "val"
+                                                }
+                                            ],
+                                            "target": [
+                                                {
+                                                    "context": "tgt",
+                                                    "contextType": "variable",
+                                                    "element": "telecom",
+                                                    "variable": "tel",
+                                                    "transform": "create",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "ContactPoint"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "system",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "phone"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "use",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueString": "mobile"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "value",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueId": "val"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "context": "tel",
+                                                    "contextType": "variable",
+                                                    "element": "rank",
+                                                    "transform": "copy",
+                                                    "parameter": [
+                                                        {
+                                                            "valueInteger": 3
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

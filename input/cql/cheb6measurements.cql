@@ -2,12 +2,12 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library cheb6measurements version '1.0.240+build.383'
+library cheb6measurements version '1.0.241+build.384'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include chebase version '1.0.240+build.383' called Base
-include chevalueset version '1.0.240+build.383' called val
-include chezscore version '1.0.240+build.383' called Z
+include chebase version '1.0.241+build.384' called Base
+include chevalueset version '1.0.241+build.384' called val
+include chezscore version '1.0.241+build.384' called Z
 
 
 

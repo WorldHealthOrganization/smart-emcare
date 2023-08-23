@@ -3,7 +3,7 @@
 @description: This library is part of the project CHE Project, its allows standardisation for the observation processing
 */
 
-library chebase version '1.0.230+build.373'
+library chebase version '1.0.235+build.378'
 
 using FHIR version '4.0.1'
 

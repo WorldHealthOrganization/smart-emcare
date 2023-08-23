@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library cheobservation version '1.0.230+build.373'
+library cheobservation version '1.0.235+build.378'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 
@@ -125,7 +125,7 @@ code "Steven Johnson Syndrome": 'CHE.B14S2.DE37' from "CHE" display 'Steven John
 code "The child has Oral Sores or Mouth Ulcers": 'CHE.B14S2.DE45' from "CHE" display 'The child has Oral Sores or Mouth Ulcers'
 code "Oral Sores or Mouth Ulcers": 'CHE.B14S2.DE38' from "CHE" display 'Oral Sores or Mouth Ulcers'
 code "Palmar Pallor": 'CHE.B15S2.DE01' from "CHE" display 'Palmar Pallor'
-code "Oedema of both feet": 'EmCare.B16S2.DE01' from "CHE" display 'Oedema of both feet'
+code "Oedema of both feet": 'CHE.B16S2.DE01' from "CHE" display 'Oedema of both feet'
 code "Convulsions in this Illness": 'CHE.B18S1.DE01' from "CHE" display 'Convulsions in this Illness'
 code "Difficulty with Feeding": 'CHE.B18S1.DE02' from "CHE" display 'Difficulty with Feeding'
 code "Breastfed": 'CHE.B21S1.DE06' from "CHE" display 'Breastfed'

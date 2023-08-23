@@ -694,14 +694,14 @@ group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
             } '03f0b26d';
         } 'efc29f91';
     } '22a2462d';
-    src.item first as item  where linkId = 'EmCare.B16S2.DE01' and answer.exists() then {
+    src.item first as item  where linkId = 'CHE.B16S2.DE01' and answer.exists() then {
         src -> bundle.entry as entry  then {
             src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
             src -> entry.resource = create('Observation') as tgt then {
-                src -> tgt then cheobservationemcareb16s2de01(src, tgt) 'f87b238d';
-            } '1643f72f';
-        } '68523306';
-    } '0a14d20c';
+                src -> tgt then cheobservationcheb16s2de01(src, tgt) 'dc9976f9';
+            } 'c972eb7c';
+        } 'eb6fab32';
+    } '82d4f193';
 }
 
 group cheobservationcheb10s2de03(source src,target tgt){
@@ -2635,31 +2635,31 @@ group cheobservationcheb15s2de05(source src,target tgt){
     } '6f2995df';
 }
 
-group cheobservationemcareb16s2de01(source src,target tgt){
+group cheobservationcheb16s2de01(source src,target tgt){
         src -> tgt.identifier = create('Identifier') as CodeID,
             CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
             CodeID.use =  'official',
             CodeID.value = 'uuid',
             CodeID.id = uuid()
-         'id-emcareb16s2de01';
+         'id-cheb16s2de01';
     src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
         src.subject as subject -> tgt.subject = subject,
             tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/cheobservation',
             tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
                 coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/che-custom-codes',
-                coding.code = 'EmCare.B16S2.DE01'
-         'code-emcareb16s2de01';
+                coding.code = 'CHE.B16S2.DE01'
+         'code-cheb16s2de01';
     src.item as itemtimestamp where linkId  =  'timestamp' then {
         itemtimestamp.answer first as atimestamp then {
             atimestamp.value as val -> tgt.issued = val  '5af77f2c';
         } '7f22f29f';
     } 'aae7a11d';
     src.subject as subject -> tgt.subject = subject  'patient';
-    src.item first as item  where linkId = 'EmCare.B16S2.DE01' and answer.exists() then {
+    src.item first as item  where linkId = 'CHE.B16S2.DE01' and answer.exists() then {
         item.answer first as a then {
-            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-emcareb16s2de01';
-            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-emcareb16s2de01';
+            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-cheb16s2de01';
+            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-cheb16s2de01';
         } 'bdab9370';
-    } '39a0d3d2';
+    } '864949e9';
 }
 

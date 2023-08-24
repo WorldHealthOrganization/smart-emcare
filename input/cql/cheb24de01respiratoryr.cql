@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library cheb24de01respiratoryr version '1.0.252+build.395'
+library cheb24de01respiratoryr version '1.0.255+build.398'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include chebase version '1.0.252+build.395' called Base
-include chevalueset version '1.0.252+build.395' called val
-include b24combineddataelement version '1.0.252+build.395' called C
-include cheobservation version '1.0.252+build.395' called obs
+include chebase version '1.0.255+build.398' called Base
+include chevalueset version '1.0.255+build.398' called val
+include b24combineddataelement version '1.0.255+build.398' called C
+include cheobservation version '1.0.255+build.398' called obs
 
 
 

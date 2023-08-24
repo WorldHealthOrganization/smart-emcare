@@ -1,0 +1,156 @@
+map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/che.b18-21.symptoms.2.m.m' = 'che.b18-21.symptoms.2.m.m'
+uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
+uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
+uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/cheobservation' alias 'CHE Observation' as produced
+group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
+    src -> bundle.id = uuid() 'id';
+    src -> bundle.type = 'batch' 'type';
+    src.item first as item  where linkId = 'CHE.B18S1.DE01' and answer.exists() then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then cheobservationcheb18s1de01(src, tgt) '5e49130c';
+            } 'eea1a6cc';
+        } '7f0a73b3';
+    } '01ea87d4';
+    src.item first as item  where linkId = 'CHE.B18S1.DE02' and answer.exists() then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then cheobservationcheb18s1de02(src, tgt) '20dbebf1';
+            } '2d4075a6';
+        } '7352763e';
+    } 'c5a4deac';
+    src.item first as item  where linkId = 'CHE.B20S1.DE01' and answer.exists() then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then cheobservationcheb20s1de01(src, tgt) '05e882b8';
+            } '36be9489';
+        } 'e25ec330';
+    } 'cb79e0f5';
+    src.item first as item  where linkId = 'CHE.B21S1.DE06' and answer.exists() then {
+        src -> bundle.entry as entry  then {
+            src -> entry.request as request, request.method = 'POST' , uuid() as uuid, request.url = append('/Observation/', uuid) 'b50ac4c5';
+            src -> entry.resource = create('Observation') as tgt then {
+                src -> tgt then cheobservationcheb21s1de06(src, tgt) 'a66e1c8d';
+            } '4e2a4718';
+        } '6ff871d2';
+    } '1f7a68c1';
+}
+
+group cheobservationcheb18s1de01(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-cheb18s1de01';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/cheobservation',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/che-custom-codes',
+                coding.code = 'CHE.B18S1.DE01'
+         'code-cheb18s1de01';
+    src.item as itemtimestamp where linkId  =  'timestamp' then {
+        itemtimestamp.answer first as atimestamp then {
+            atimestamp.value as val -> tgt.issued = val  '5af77f2c';
+        } '7f22f29f';
+    } 'aae7a11d';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    src.item first as item  where linkId = 'CHE.B18S1.DE01' and answer.exists() then {
+        item.answer first as a then {
+            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-cheb18s1de01';
+            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-cheb18s1de01';
+        } 'bdab9370';
+    } '8dd08e5d';
+}
+
+group cheobservationcheb18s1de02(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-cheb18s1de02';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/cheobservation',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/che-custom-codes',
+                coding.code = 'CHE.B18S1.DE02'
+         'code-cheb18s1de02';
+    src.item as itemtimestamp where linkId  =  'timestamp' then {
+        itemtimestamp.answer first as atimestamp then {
+            atimestamp.value as val -> tgt.issued = val  '5af77f2c';
+        } '7f22f29f';
+    } 'aae7a11d';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    src.item first as item  where linkId = 'CHE.B18S1.DE02' and answer.exists() then {
+        item.answer first as a then {
+            a.value as val then {
+                val where val.code = 'none' -> tgt.status = 'cancelled' '8ab1d7a5';
+                val where val.code != 'none' -> tgt.value = create('CodeableConcept') as cc, cc.coding = val, tgt.status = 'final' 'a1050460';
+            } '4ca9082e';
+        } '7c587a4b';
+    } 'f6147731';
+}
+
+group cheobservationcheb20s1de01(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-cheb20s1de01';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/cheobservation',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/che-custom-codes',
+                coding.code = 'CHE.B20S1.DE01'
+         'code-cheb20s1de01';
+    src.item as itemtimestamp where linkId  =  'timestamp' then {
+        itemtimestamp.answer first as atimestamp then {
+            atimestamp.value as val -> tgt.issued = val  '5af77f2c';
+        } '7f22f29f';
+    } 'aae7a11d';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    src.item first as item  where linkId = 'CHE.B20S1.DE01' and answer.exists() then {
+        item.answer first as a then {
+            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-cheb20s1de01';
+            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-cheb20s1de01';
+        } 'bdab9370';
+    } 'fea7dc7e';
+}
+
+group cheobservationcheb21s1de06(source src,target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-cheb21s1de06';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/cheobservation',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/che-custom-codes',
+                coding.code = 'CHE.B21S1.DE06'
+         'code-cheb21s1de06';
+    src.item as itemtimestamp where linkId  =  'timestamp' then {
+        itemtimestamp.answer first as atimestamp then {
+            atimestamp.value as val -> tgt.issued = val  '5af77f2c';
+        } '7f22f29f';
+    } 'aae7a11d';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    src.item first as item  where linkId = 'CHE.B21S1.DE06' and answer.exists() then {
+        item.answer first as a then {
+            a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-cheb21s1de06';
+            a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-cheb21s1de06';
+        } 'bdab9370';
+    } '7b9a75da';
+}
+

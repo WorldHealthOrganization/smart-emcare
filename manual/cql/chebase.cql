@@ -11,22 +11,14 @@ include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
 //parameter "Encounter" Encounter$
-codesystem "RoleCodeSystem" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+codesystem "RoleCodeSystem" : 'http://terminology.hl7.org/CodeSystem/v3-RoleCode'
 code "Mother": 'MTH' from "RoleCodeSystem"
-
+code "ExtendedFamily": 'EXT' from "RoleCodeSystem"
 context Patient
 
 //define encounterid:
 //  "Encounter".id
 
-
-
-
-define "Yes":
-  true
-
-define "No":
-  false 
 
 
 define function IsInEncounter(ref FHIR.Reference):
@@ -96,9 +88,11 @@ define getRelatedPersonAccompanyingTheChild:
   singleton from getRelatedPersonsAccompanyingTheChild
 
 
+define "Proxy Person accompanying child today's Relationship to Client":
+  if CHEExtension(getEncounter, 'motherpresent').value = true then "Mother" else "ExtendedFamily"
+
 define "Person accompanying child today's Relationship to Client":
-//WORKARROUND   getRelatedPersonAccompanyingTheChild.relationship
-  CHEExtension(getEncounter, 'motherpresent').value
+  Coalesce( First(getRelatedPersonsAccompanyingTheChild.relationship.coding) ,"Proxy Person accompanying child today's Relationship to Client")
 
 
 
@@ -335,7 +329,7 @@ define function GetConditions(id System.Code):
 
 
 define function GetStemCode(id System.String):
-  coding(Split( id, '&')[0])
+  coding(First(Split( id, '&')))
 
 define function GetPostcoordinationCode(id System.String):
   Tail(Split(id, '&'))

@@ -162,6 +162,7 @@ define "WLZ":
         zscorefromvisual
     else null
 
+
 define "WHZ":
     if existingweight is not null then
          wfh.generateZScoreWeightForHeight("patientsex", (existingheight.value * ( 1.0 as System.Decimal )) ,  (existingweight.value * ( 1.0 as System.Decimal )))
@@ -170,3 +171,13 @@ define "WHZ":
     else if existingvisual then
         zscorefromvisual
     else null
+
+
+define "WFH z-score":
+    "WHZ"
+
+define "WFA z-score":
+    "WAZ"
+
+define "WFL z-score":
+    "WLZ"

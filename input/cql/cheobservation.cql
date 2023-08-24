@@ -2,7 +2,7 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library cheobservation version '1.0.243+build.386'
+library cheobservation version '1.0.246+build.389'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
 

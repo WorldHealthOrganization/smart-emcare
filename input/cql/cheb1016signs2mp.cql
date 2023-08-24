@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library cheb1016signs2mp version '1.0.251+build.394'
+library cheb1016signs2mp version '1.0.252+build.395'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include chebase version '1.0.251+build.394' called Base
-include chevalueset version '1.0.251+build.394' called val
-include b24combineddataelement version '1.0.251+build.394' called C
-include cheobservation version '1.0.251+build.394' called obs
+include chebase version '1.0.252+build.395' called Base
+include chevalueset version '1.0.252+build.395' called val
+include b24combineddataelement version '1.0.252+build.395' called C
+include cheobservation version '1.0.252+build.395' called obs
 
 
 

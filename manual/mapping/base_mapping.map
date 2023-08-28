@@ -1,0 +1,27 @@
+map '{{canonical_base}}/StructureMap/base_mapping' = 'base_mapping'
+
+group base_observation_boolean(source src, source item, source reference_id, target tgt){
+        src -> tgt.identifier = create('Identifier') as CodeID,
+            CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',
+            CodeID.use =  'official',
+            CodeID.value = 'uuid',
+            CodeID.id = uuid()
+         'id-cheb6de05';
+    src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
+        src.subject as subject -> tgt.subject = subject,
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = '{{canonical_base}}/StructureDefinition/cheobservation_boolean',
+            tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
+                coding.system = '{{cc_url}}',
+                coding.code = reference_id
+         'code-cheb6de05';
+    src.item as itemtimestamp where linkId  =  'timestamp' then {
+        itemtimestamp.answer first as atimestamp then {
+            atimestamp.value as val -> tgt.issued = val  '5af77f2c';
+        } '7f22f29f';
+    } 'aae7a11d';
+    src.subject as subject -> tgt.subject = subject  'patient';
+    item.answer first as a then {
+        a  where a.value = true -> tgt.status = 'final', tgt.value = true 'final-cheb6de05';
+        a  where a.value = false -> tgt.status = 'cancelled', tgt.value = false 'notfound-cheb6de05';
+    } 'bdab9370';
+}

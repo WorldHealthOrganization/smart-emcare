@@ -90,10 +90,7 @@ define existingweight:
   Base.GetObsValue("Weight")
 
 define existingestimnatedweight:
-  if existingweight is null then  
     Base.GetObsValue("Estimated Weight")
-  else 
-    null
 
 define existingheight:
   Base.GetObsValue("Height")
@@ -122,6 +119,11 @@ define estimatedweight:
   when AgeInMonths()<=24 and existinglength then weightfromlength
   else weightfromage
   end
+
+  
+define "Weight for treatment":
+    if existingweight is not null then  existingweight 
+    else estimatedweight
 
 define zscorefromvisual:
     if existingvisual is not null then

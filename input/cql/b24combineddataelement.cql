@@ -2,13 +2,13 @@
 @author: Patrick Delcroix
 @description: This library is part of the project CHE
 */
-library b24combineddataelement version '1.0.255+build.398'
+library b24combineddataelement version '1.0.313+build.456'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include chebase version '1.0.255+build.398' called Base
-include chevalueset version '1.0.255+build.398' called val
-include chezscore version '1.0.255+build.398' called Z
-include cheobservation version '1.0.255+build.398' called obs
+include chebase version '1.0.313+build.456' called Base
+include chevalueset version '1.0.313+build.456' called val
+include chezscore version '1.0.313+build.456' called Z
+include cheobservation version '1.0.313+build.456' called obs
 
 
 

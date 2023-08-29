@@ -5,7 +5,8 @@
 library chezscore version '{{LIB_VERSION}}'
 using FHIR version '{{FHIR_VERSION}}'
 include FHIRHelpers version '{{FHIR_VERSION}}' called FHIRHelpers 
-include chebase version '{{LIB_VERSION}}' called Base
+include pyfhirsdc version '{{pyfhirsdc_version}}' called pfsdc
+
 include WeightForAge version '1.0.4' called wfa
 include WeightForLength version '1.0.4' called wfl
 include WeightForHeight version '1.0.4' called wfh
@@ -27,32 +28,32 @@ parameter "encounterid" String
 context Patient
 
 define "Weight":
-  Base.coding('CHE.B6.DE06')
+  pfsdc.coding('CHE.B6.DE06')
 define "Estimated Weight":
-  Base.coding('CHE.B6.DE08')
+  pfsdc.coding('CHE.B6.DE08')
 define "MUAC":
-  Base.coding('CHE.B6.DE17')
+  pfsdc.coding('CHE.B6.DE17')
 define "Length":
-  Base.coding('CHE.B6.DE12')
+  pfsdc.coding('CHE.B6.DE12')
 define "Height":
-  Base.coding('CHE.B6.DE09')
+  pfsdc.coding('CHE.B6.DE09')
 define "Visually assess":
-  Base.coding('CHE.B6.DE18')
+  pfsdc.coding('CHE.B6.DE18')
 define "Underweight":
-  Base.coding('CHE.B6.DE20') 
+  pfsdc.coding('CHE.B6.DE20') 
 define "Severely Underweight":
-  Base.coding('CHE.B6.DE21') 
+  pfsdc.coding('CHE.B6.DE21') 
 
 /* pastweight : Previous Weight*/
 define "pastweightobs":
     if AgeInMonths()< 4  then
-      Base.GetHistoricObservation("Weight", 60)
+      pfsdc.GetHistoricObservation("Weight", 60)
     else if AgeInMonths()< 6  then
-      Base.GetHistoricObservation("Weight", 91)
+      pfsdc.GetHistoricObservation("Weight", 91)
     else if AgeInMonths()< 12  then
-      Base.GetHistoricObservation("Weight", 121)
+      pfsdc.GetHistoricObservation("Weight", 121)
     else 
-      Base.GetHistoricObservation("Weight", 180)
+      pfsdc.GetHistoricObservation("Weight", 180)
 
 define "pastweight":
     if "pastweightobs" is not null then
@@ -87,22 +88,22 @@ define "pastweightactualised":
 
 
 define existingweight:
-  Base.GetObsValue("Weight")
+  pfsdc.GetObsValue("Weight")
 
 define existingestimnatedweight:
-    Base.GetObsValue("Estimated Weight")
+    pfsdc.GetObsValue("Estimated Weight")
 
 define existingheight:
-  Base.GetObsValue("Height")
+  pfsdc.GetObsValue("Height")
 
 define existinglength:
-  Base.GetObsValue("Length")
+  pfsdc.GetObsValue("Length")
 
 define existingmuac:
-  Base.GetObsValue("MUAC")
+  pfsdc.GetObsValue("MUAC")
 
 define existingvisual:
-  Base.GetObsValue("Visually assess")
+  pfsdc.GetObsValue("Visually assess")
 //
 define zscorefrommuac:
   if existingmuac is null then null
@@ -143,9 +144,7 @@ define weightfromheight:
 
 define weightfromage:
     System.Quantity { value:Round(wfa.generateWeightFromAge("patientsex",AgeInDays() * ( 1.0 as System.Decimal ), zscorefrommuac),2), unit: 'kg'}
-/*
-(convert Base.HasObs("Weight") to 'Kg') does not work, so let's assume the weight is in Kg
-*/
+
 define "WAZ":
     if existingweight is not null then
          wfa.generateZScoreWeightForAge("patientsex", AgeInDays() , (existingweight.value * ( 1.0 as System.Decimal )))

@@ -1,11 +1,9 @@
 # Functional Requirements
 
-This page descibes the functional requirements for the CHE SMAR implimentation guide for implementors.
-
-| **          Requirement ID        ** | **          Activity ID and Description        ** | **          As a…        ** | **          I want to…        ** | **          So that…        ** | **          Review Comments        ** | ** ** |
+| **Requirement ID** | **Activity ID and Description** | **As a…** | **I want to…** | **So that…** | **Review Comments** ||
 |---|---|---|---|---|---|---|
-|                       Classification of Digital Health Interventions - Client            Identification and Registration (2.1)                   |   |   |   |   |   |   |
-|           Business Process A: Registration         |   |   |   |   |   |   |
+|                       **Classification of Digital Health Interventions - Client Identification and Registration (2.1)**                   |   |   |   |   |   |   |
+|           **Business Process A: Registration**         |   |   |   |   |   |   |
 |           CHE.FXREQ.001         |           Infant is Born         |           Neonate / Infant (Care Giver)         |           NA         |           NA         |   |   |
 |           CHE.FXREQ.002         |           Sick Neonate / Infant Arrives at Health Facility         |           Neonate / Infant (Care Giver)         |           NA         |           NA         |   |   |
 |           CHE.FXREQ.003         |           Sick Neonate / Infant Is Born         |           Neonate / Infant (Care Giver)         |           NA         |           NA         |   |   |
@@ -174,9 +172,9 @@ This page descibes the functional requirements for the CHE SMAR implimentation g
 |           CHE.FXREQ.012         |           General Solution Requirements - Modular Approach         |           All Users         |                       To be able to add data and calculations as well as forms to the            reference application, for localization (language support) and            adaptation (addition of core health and data content) as well as            calculations for decision-support and populating indicators                   |                       the tool and embedded forms (and associated interventions) need to            be able to be adapted and localized by the user            governments/WHO/partners without requiring assistance of engineers            from the vendor each time.                   |   |   |
 {: .dataframe.table.table-striped.table-bordered}
 
-| **Classification of Digital Health Interventions - Data Services - Data Collection Management and Use (4.1) / Data Coding (4.2) / Data Exchange and Interoperability (4.4)** | | | |
+| **Classification of Digital Health Interventions - Data Services - Data Collection Management and Use (4.1) / Data Coding (4.2) / Data Exchange and Interoperability (4.4)** ||||
 |---|---|---|---|
-|           Requirement ID         |           Category         |           Non-functional requirement         |                     |
+|           **Requirement ID**         |           **Category**         |           **Non-functional requirement**         |                     |
 |           CHE.NFXNREQ.001         |           Security-Confidentiality         |           Provide password protected access for authorized users         |                     |
 |           CHE.NFXNREQ.002         |           Security-Confidentiality         |                       Provide a means to ensure confidentiality and privacy of personal            health information                   |                     |
 |           CHE.NFXNREQ.003         |           Security-Confidentiality         |           Provide ability for allowed users to view confidential data           |                     |
@@ -252,7 +250,4 @@ This page descibes the functional requirements for the CHE SMAR implimentation g
 |           CHE.NFXNREQ.073         |           System Requirements-Hardware &amp; connectivity         |                       Enable use via a web interface and mobile applications for use on            various technology devices such as Computers, Laptops, Tablets and            Mobiles                   |                     |
 |           CHE.NFXNREQ.073         |           System Requirements-Hardware &amp; connectivity         |           Ability to work off-line and in low bandwidth areas         |                     |
 |           CHE.NFXNREQ.074         |           Documentation         |                       Provision of design, build, technical system/architecture, testing            documentation for future support and further configuration of the            solution for other Health intervention initiatives                   |                     |
-|                     |                     |                     |                     |
-|                     |                     |                     |                     |
 {: .dataframe.table.table-striped.table-bordered}
-

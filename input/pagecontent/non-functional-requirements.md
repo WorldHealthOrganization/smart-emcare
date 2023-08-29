@@ -252,7 +252,5 @@ This page descibes the non-functional requirements for the CHE SMAR implimentati
 |           CHE.NFXNREQ.073         |           System Requirements-Hardware &amp; connectivity         |                       Enable use via a web interface and mobile applications for use on            various technology devices such as Computers, Laptops, Tablets and            Mobiles                   |                     |
 |           CHE.NFXNREQ.073         |           System Requirements-Hardware &amp; connectivity         |           Ability to work off-line and in low bandwidth areas         |                     |
 |           CHE.NFXNREQ.074         |           Documentation         |                       Provision of design, build, technical system/architecture, testing            documentation for future support and further configuration of the            solution for other Health intervention initiatives                   |                     |
-|                     |                     |                     |                     |
-|                     |                     |                     |                     |
 {: .dataframe.table.table-striped.table-bordered}
 

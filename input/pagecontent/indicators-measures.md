@@ -14,7 +14,8 @@ This page includes indicators and performance metrics that would be aggregated f
 | Denominator computation | The calculation or how to derive this denominator. Any specific data elements noted here should align directly with the individual-level Data Element Name. |
 | Disaggregations | Are there any dis-aggregations that you would like to be able to do in order to conduct the necessary analysis? |
 | References | If there are any national or global guidelines (e.g. WHO guidelines) that dictate how and why this indicator should be calculated or reported, it should be noted here. If any guidelines or recommendations change, having a clear reference listed would help in updating or restructuring your data. |
-
+ {: .dataframe.table.table-striped.table-bordered}
+ 
 ### Indicators and performance metrics table
 
 | **Indicator code** | **Indicator name** | **Indicator definition** | **Numerator Definition** | **Numerator Computation** | **Denominator Definition** | **Denominator Computation** | **Disaggregation** | **Reference** |

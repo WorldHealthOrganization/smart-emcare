@@ -19,14 +19,3 @@ Description: "Patient profile for WHO CCC CHE"
   $primary-care-giver named primaryCaregiver 0..1 and
   $mother-vital-status named motherVitalStatus 0..1 and
   $hour-of-birth named hourOfBirth 0..1
-
-* extension[annonymous] ^short = "Patient remains to be annonymous"
-* extension[annonymous] ^definition = "Patient remains to be annonymous"
-* extension[estimatedBirthday] ^short = "Estimated birthdate of the patient"
-* extension[estimatedBirthday] ^definition = "Estimated birthdate of the patient"
-* extension[primaryCaregiver] ^short = "Primary caregiver of the patient"
-* extension[primaryCaregiver] ^definition = "Primary caregiver of the patient"
-* extension[motherVitalStatus] ^short = "Status of the child's mother"
-* extension[motherVitalStatus] ^definition = "Status of the child's mother"
-* extension[hourOfBirth] ^short = "Hour of birth of the patient"
-* extension[hourOfBirth] ^definition = "Hour of birth of the patient"

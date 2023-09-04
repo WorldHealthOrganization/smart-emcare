@@ -12,8 +12,6 @@ Title: "WHO CHE patient profile"
 Description: "Patient profile for WHO CCC CHE"
 * ^status = #draft
 * ^publisher = "World Health Organization"
-* extension ^slicing.discriminator.type = #value
-* extension ^slicing.discriminator.path = "url"
 
 * extension contains
   $annonymous named annonymous 0..1 and

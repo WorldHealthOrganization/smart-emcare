@@ -5,17 +5,17 @@ Alias: $primary-care-giver = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Struc
 Alias: $mother-vital-status = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/mothervitalstatus
 Alias: $hour-of-birth = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/hourofbirth
 
-Profile: ChePatient 
-Id: che-patient
+Profile: CHEPatient
 Parent: $who-patient
-Title: "WHO CHE patient profile"
-Description: "Patient profile for WHO CCC CHE"
+Id: che-patient
+Title: "CHE Patient Profile"
+Description: "CHE Patient profile for CCC CHE"
+* ^experimental = true 
 * ^status = #draft
-* ^publisher = "World Health Organization"
-
+* ^publisher = "WHO"
 * extension contains
-  $annonymous named annonymous 0..1 and
-  $estimated-birthday named estimatedBirthday 0..1 and
-  $primary-care-giver named primaryCaregiver 0..1 and
-  $mother-vital-status named motherVitalStatus 0..1 and
-  $hour-of-birth named hourOfBirth 0..1
+    $annonymous named annonymous 0..1 and
+    $estimated-birthday named estimatedBirthday 0..1 and
+    $primary-care-giver named primaryCaregiver 0..1 and
+    $mother-vital-status named motherVitalStatus 0..1 and
+    $hour-of-birth named hourOfBirth 0..1

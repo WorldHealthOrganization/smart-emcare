@@ -14,9 +14,8 @@ Description: "The client's identity is unknown or the client's prefers to remain
 * . 1..1
 * . ^short = "anonymous"
 * . ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"
-* extension 1..1
 * url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous" (exactly)
 * valueBoolean 1..1
 * valueBoolean only boolean
-* valueBoolean ^short = "anonymous"
+* valueBoolean ^short = "Patient identity anonymous"
 * valueBoolean ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"

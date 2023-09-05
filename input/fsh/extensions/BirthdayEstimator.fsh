@@ -1,7 +1,7 @@
 Alias: $dob-estimator = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/dob-estimator
 
-Extension: Birthday_Estimator
-Id: birthdateestimator
+Extension: BirthdayEstimator
+Id: birthdate-estimator-extension
 Title: "Birthday Estimator"
 Description: "Patient birthday estimated value or not"
 * ^name = "BirthdayEstimator"

@@ -19,10 +19,4 @@ Description: "The client's identity is unknown or the client's prefers to remain
 * valueBoolean 1..1
 * valueBoolean only boolean
 * valueBoolean ^short = "anonymous"
-* valueBoolean ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"// @Name: Annoynous extension
-// @Description: This describes whether patient remains to be annonymous
-
-Extension: Annonymous
-Id: che-annonymous-extension
-Description: "Whether patient remains to be annonymous"
-* value[x] only boolean
+* valueBoolean ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"

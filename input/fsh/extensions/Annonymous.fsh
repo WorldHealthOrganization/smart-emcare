@@ -13,10 +13,7 @@ Description: "The client's identity is unknown or the client's prefers to remain
 * ^context.type = #element
 * ^context.expression = "Patient"
 * . 1..1
-* . ^short = "anonymous"
+* . ^short = "Patient identity is not known"
 * . ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"
-* url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous" (exactly)
-* valueBoolean 1..1
-* valueBoolean only boolean
-* valueBoolean ^short = "Patient identity anonymous"
-* valueBoolean ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"
+* url only uri
+* value[x] only boolean

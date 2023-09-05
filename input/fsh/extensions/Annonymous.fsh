@@ -2,6 +2,7 @@ Extension: Anonymous
 Id: anonymous-extension
 Title: "Anonymous"
 Description: "The client's identity is unknown or the client's prefers to remain anonymous"
+* ^name = "Annonymous"
 * ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous"
 * ^version = "0.1.0"
 * ^experimental = false

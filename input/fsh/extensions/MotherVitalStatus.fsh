@@ -5,7 +5,6 @@ Id: mother-vital-status-extension
 Title: "Mother Vital Status"
 Description: "Vital status of the mother"
 * ^name = "MotherVitalStatus"
-* ^short = "Vital status of the mother of the child"
 * ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/mothervitalstatus"
 * ^version = "0.1.0"
 * ^experimental = false
@@ -16,7 +15,7 @@ Description: "Vital status of the mother"
 * ^context.type = #element
 * ^context.expression = "Patient"
 * . 1..1
-* . ^short = "motherVitalStatus"
+* . ^short = "Vital status of the mother of the child"
 * url only uri
 * value[x] 1..1
 * value[x] only CodeableConcept

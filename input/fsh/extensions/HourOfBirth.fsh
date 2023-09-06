@@ -15,7 +15,7 @@ Description: "Hour of birth of the child"
 * ^context.expression = "Patient"
 * . 1..1
 * . ^short = "hourofbirth"
-* . ^definition = "hour of birth"
+* . ^definition = "Hour of birth of the child"
 * url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/hourofbirth" (exactly)
 * value[x] 1..1
 * value[x] only integer

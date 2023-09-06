@@ -5,7 +5,6 @@ Id: post-coordination-extension
 Title: "ICD-11 Post Coordination"
 Description: "Add postcoordination to conditon according to ICD 11"
 * ^name = "Postcoordination"
-* ^short = "Postcoordination extension for ICD 11"
 * ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/postcoordination"
 * ^version = "0.1.0"
 * ^experimental = true
@@ -17,8 +16,8 @@ Description: "Add postcoordination to conditon according to ICD 11"
 * ^context.type = #element
 * ^context.expression = "Condition"
 * . 1..1
-* . ^short = "postcoordination"
-* . ^definition = "Add postcoordination to conditon"
+* . ^short = "Postcoordination extension for ICD 11"
+* . ^definition = "Add postcoordination to conditon according to ICD 11"
 * url only uri
 * value[x] 1..1
 * value[x] only CodeableConcept

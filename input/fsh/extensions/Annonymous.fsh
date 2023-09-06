@@ -3,7 +3,6 @@ Id: anonymous-extension
 Title: "Anonymous"
 Description: "The client's identity is unknown or the client's prefers to remain anonymous"
 * ^name = "Anonymous"
-* ^short = "Client identity is unknown or not available"
 * ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous"
 * ^version = "0.1.0"
 * ^experimental = false
@@ -14,7 +13,7 @@ Description: "The client's identity is unknown or the client's prefers to remain
 * ^context.type = #element
 * ^context.expression = "Patient"
 * . 1..1
-* . ^short = "Client's identity is not known"
+* . ^short = "Client identity is unknown or not available"
 * . ^definition = "The client's identity is unknown or the client's prefers to remain anonymous"
 * url only uri
 * value[x] only boolean

@@ -5,7 +5,6 @@ Id: birthdate-estimator-extension
 Title: "Birthday Estimator"
 Description: "Client's birthday estimated value or not"
 * ^name = "BirthdayEstimator"
-* ^short = "Client's birthday is estimated value"
 * ^version = "0.1.0"
 * ^experimental = false
 * ^publisher = "WHO"
@@ -15,7 +14,7 @@ Description: "Client's birthday estimated value or not"
 * ^context.type = #element
 * ^context.expression = "Client"
 * . 1..1
-* . ^short = "birthDateEstimator"
+* . ^short = "Client birthday is an estimated value"
 * . ^definition = "Client birthday estimated value or not"
 * value[x] only CodeableConcept
 * value[x] 1..1

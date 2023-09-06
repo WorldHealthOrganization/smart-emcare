@@ -3,7 +3,6 @@ Id: primary-care-giver-extension
 Title: "Primary Care Giver"
 Description: "Primary care giver of the patient"
 * ^name = "PrimaryCareGiver"
-* ^short = "Primary care giver of the patient"
 * ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver"
 * ^version = "0.1.0"
 * ^experimental = false
@@ -14,7 +13,7 @@ Description: "Primary care giver of the patient"
 * ^context.type = #element
 * ^context.expression = "Patient"
 * . 1..1
-* . ^short = "primarycaregiver"
+* . ^short = "Primary care giver of the patient"
 * . ^definition = "Primary Care Giver"
 * url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver" (exactly)
 * value[x] 1..1

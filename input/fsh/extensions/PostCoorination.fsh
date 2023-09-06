@@ -1,11 +1,11 @@
 Alias: $postcoordination = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/ValueSet/postcoordination
 
 Extension: PostCoordination
-Id: post-coordination
+Id: post-coordination-extension
 Title: "ICD-11 Post Coordination"
 Description: "Add postcoordination to conditon according to ICD 11"
 * ^name = "Postcoordination"
-* ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/postcoordination"
+* ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/postcoordination-extension"
 * ^version = "0.1.0"
 * ^experimental = true
 * ^status = #draft

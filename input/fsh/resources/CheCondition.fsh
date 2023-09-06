@@ -1,4 +1,4 @@
-Alias: $postcoordination-extension = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/postcoordination
+Alias: $postcoordination-ext = https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/postcoordination
 
 Profile: CHECondition
 Parent: Condition
@@ -14,4 +14,4 @@ Description: "CHE Condition"
 * ^contact.telecom.system = #url
 * ^contact.telecom.value = "http://who.int"
 * extension contains
-    $postcoordination-extension named postcoordination 0..1
+    $postcoordination-ext named postcoordination 0..1

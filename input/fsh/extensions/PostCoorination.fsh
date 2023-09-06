@@ -22,5 +22,5 @@ Description: "Add postcoordination to conditon according to ICD 11"
 * value[x] 1..1
 * value[x] only CodeableConcept
 * value[x] from $postcoordination (required)
-* value[x] ^short = "postcoordination"
+* value[x] ^short = "ICD 11 postcoordination value"
 * value[x] ^definition = "Add post-coordination to conditon according to ICD-11"

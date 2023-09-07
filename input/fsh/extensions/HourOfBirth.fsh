@@ -3,7 +3,7 @@ Id: hour-of-birth-extension
 Title: "Hour of Birth"
 Description: "Hour of birth of the child"
 * ^name = "HourOfBirth"
-* ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/hourofbirth"
+* ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/hourofbirth-ext"
 * ^version = "0.1.0"
 * ^experimental = true 
 * ^status = #draft
@@ -16,7 +16,7 @@ Description: "Hour of birth of the child"
 * . 1..1
 * . ^short = "hourofbirth"
 * . ^definition = "Hour of birth of the child"
-* url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/hourofbirth" (exactly)
+* url only uri
 * value[x] 1..1
 * value[x] only integer
 * value[x] ^short = "Hour of birth of the child"

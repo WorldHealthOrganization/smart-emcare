@@ -3,7 +3,7 @@ Id: primary-care-giver-extension
 Title: "Primary Care Giver"
 Description: "Primary care giver of the patient"
 * ^name = "PrimaryCareGiver"
-* ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver"
+* ^url = "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver-ext"
 * ^version = "0.1.0"
 * ^experimental = false
 * ^publisher = "WHO"

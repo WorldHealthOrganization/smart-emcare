@@ -40,6 +40,10 @@ define getPrimaryCareGiver:
 define isMotherPrimaryCareGiver:
   getPrimaryCareGiver is not null and Exists(getPrimaryCareGiver.relationship r where r ~ "Mother")
 
+define "Biological Mother caring for the child":
+  getPrimaryCareGiver is not null and Exists(getPrimaryCareGiver.relationship r where r ~ "Mother")
+
+
 define "Biological Mother Vital Status":
   pfsdc.GetExtension(Patient, 'motherVitalStatus').value
   

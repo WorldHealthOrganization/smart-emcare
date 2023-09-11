@@ -1,1 +1,15 @@
-# Adapting Guidelines for Country use
+The following implementation guide provides reference to resources as a guide for countries in adapting for their country specific use. The implementation guide provides the generic content require in digital systems, independently of a specific software application and with the intention that countries can adapt it to meet local needs. In a country specific setting the governments must interpret and adapt the content published in this implementation guide in line with the local policies, procedures and digital tools.
+
+To ensure that countries can effectively benefit from digital health investments, the SMART guideline approach is intended to facilitate the accurate reflection of WHO’s clinical, public health and data usage guidelines in the digital systems that countries are adapting.
+
+The standards-based technical artifacts in this implementation guideline is the third layer of knowledge representation L3 – Machine readable recommendations. It provides the codes necessary for software developers to incorporate standardized logic from the WHO guidelines into digital systems, testable for conformance to standards including fidelity to recommendations.
+
+A standards-based technical implementation guide bu8ildon operations (L2) by mapping the L2 content to value sets and HL7 FHIR resource standards. Alongside data standards from L2, this allows for semantic and syntactic interoperability at scale. The logic derived from guidelines which might include clinical decision support and calculations for performance indicators, which may be encoded into Clinical Quality Language (CQL).
+
+This ensures that the key indicators can be consistently extracted to support patient care, as well as case surveillance and program monitoring. The machine-readable representations in this implementation guide are intended for adaptation into countries’ digital health service delivery and reporting systems. Digital solutions comprising L3 machine readable recommendations maybe testable for conformance to interoperability standards.
+
+The fourth layer (L4), focuses on software applications and services within the digital ecosystem. It is intended to include executable reference software that accurately represent the intentions, operation and functional requirements of the WHO recommendations, addresses user and health system needs, and comprises machine-readable data and calculations within interoperability standards, as documented in the L1-L3 layers.
+
+As a fully functional application, it is intended to serve as a generic starting point, ready to be localized to the specific operational context of the users, population and health system within which it is deployed. Additional products at the L4 layer include terminology services to support consistent data representation for interoperability, reusable software libraries including software development kits, application programming interfaces (API), and function as a service to support updates to FHIR content and capabilities across subscribed digital systems.
+
+![SMART Guideline Layers](https://cdn.who.int/media/images/default-source/digital-health/image-web-2.png "SMART Guideline Layers")

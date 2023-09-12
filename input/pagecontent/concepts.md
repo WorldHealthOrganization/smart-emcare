@@ -1,5 +1,7 @@
 ### Concepts
 
+Key concepts used in the WHO Clinical Care in Crisis for CHE is described here. Additional terms are defined in the Glossary and List of Abbrevations in the WHO Digital Adaptation Kit: SMART Guidelines for CHE.
+
 | **Term**                                   | **Description**                                                                                                                                                                                                                                                                                                                                                                                             |
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Implementation Guide                       | A set of rules of how a particular interoperability or standards problem is solved though the use of FHIR resources. This implementation guide is based on the WHO guidance, as represented in the Digital Adaptation Kit (DAK): SMART Guidelines for Critical Care in Crisis, to support the adaptation of open standards for interoperability.                                                            |
@@ -12,3 +14,17 @@
 | Data Element                               | A unit of data that has a specific and precise meaning.                                                                                                                                                                                                                                                                                                                                                     |
 | Indicator                                  | Summary measures that capture relevant information on different attributes and dimensions of health status and performance of a health system.                                                                                                                                                                                                                                                              |
 | Clinical Practice Guidelines               | Clinical Practice Guidelines (CPG) provides a means of creating a computable representation of narrative clinical guideline that is faithful to guideline intent and supports the derivation of downstream capabilities such as cognitive and decsion support, quality measures, case reporting and documentation templates that direct clinical documentation in support determining guideline compliance. |
+
+### Abbrevations
+
+| **Term** | **Description**                            |
+| -------- | ------------------------------------------ |
+| CDS      | Clinical Decision Support                  |
+| CQL      | Clinical Quality Language                  |
+| FHIR     | Fast Healthcare Interoperability Resources |
+| DAK      | Digital Adaptation Kit                     |
+| IG       | Implementation Guide                       |
+| SMART    | Standard-based, Machine readable,          |
+| HL7      | Health Level Seven International           |
+| MOH      | Ministry of Health                         |
+| WHO      | World Health Organization                  |

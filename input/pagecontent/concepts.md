@@ -14,8 +14,11 @@ Key concepts used in the WHO Clinical Care in Crisis for CHE is described here. 
 | Data Element                               | A unit of data that has a specific and precise meaning.                                                                                                                                                                                                                                                                                                                                                     |
 | Indicator                                  | Summary measures that capture relevant information on different attributes and dimensions of health status and performance of a health system.                                                                                                                                                                                                                                                              |
 | Clinical Practice Guidelines               | Clinical Practice Guidelines (CPG) provides a means of creating a computable representation of narrative clinical guideline that is faithful to guideline intent and supports the derivation of downstream capabilities such as cognitive and decsion support, quality measures, case reporting and documentation templates that direct clinical documentation in support determining guideline compliance. |
+{: .dataframe.table.table-striped.table-bordered}
 
 ### Abbrevations
+
+The following table describes the abbrivations used throughout this implementation guide.
 
 | **Term** | **Description**                            |
 | -------- | ------------------------------------------ |
@@ -28,3 +31,4 @@ Key concepts used in the WHO Clinical Care in Crisis for CHE is described here. 
 | HL7      | Health Level Seven International           |
 | MOH      | Ministry of Health                         |
 | WHO      | World Health Organization                  |
+{: .dataframe.table.table-striped.table-bordered}

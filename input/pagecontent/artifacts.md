@@ -28,6 +28,6 @@ The following ValueSets and CodeSystems have been used as part of this implement
 
 {% include res-list-generator.md type="ValueSet" %}
 
-#### Measures and Indicators
+### Measures and Indicators
 
 {% include res-list-generator.md type="Measure" %}

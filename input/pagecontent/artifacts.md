@@ -10,8 +10,8 @@ The following Extensions have been defined as part of this implementation guide.
 
 {% include ext-list-generator.md %}
 
-
 ### Questionnaires
+
 The following Questionnaires have been used as part of the implementation guide.
 
 {% include res-list-generator.md type="Questionnaire" %}
@@ -24,8 +24,10 @@ The following ValueSets and CodeSystems have been used as part of this implement
 
 {% include res-list-generator.md type="CodeSystem" %}
 
-
 #### Valuesets
 
 {% include res-list-generator.md type="ValueSet" %}
 
+#### Measures and Indicators
+
+{% include res-list-generator.md type="Measure" %}

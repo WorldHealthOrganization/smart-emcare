@@ -11,7 +11,7 @@ include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
 //parameter "Encounter" Encounter$
-codesystem "RoleCodeSystem" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+codesystem "RoleCodeSystem" : 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes'
 code "Mother": 'MTH' from "RoleCodeSystem"
 
 context Patient

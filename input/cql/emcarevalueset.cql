@@ -9,7 +9,7 @@ include FHIRHelpers version '4.0.1' called FHIRHelpers
 
 
 
-codesystem "EmCare" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+codesystem "EmCare" : 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes'
 
 
 code "female": 'EmCare.A.DE17' from "EmCare" display 'female'

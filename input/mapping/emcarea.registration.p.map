@@ -1,12 +1,12 @@
-map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcarea.registration.p' = 'emcarea.registration.p'
+map 'https://smart.who.int/ccc/StructureMap/emcarea.registration.p' = 'emcarea.registration.p'
 uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
 uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient' alias 'Patient' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' alias 'RelatedPerson' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest' alias 'CommunicationRequest' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarepatient' alias 'EmCare Patient' as produced
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson' alias 'RelatedPerson' as produced
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest' alias 'CommunicationRequest' as produced
+uses 'https://smart.who.int/ccc/StructureDefinition/patient' alias 'Patient' as target
+uses 'https://smart.who.int/ccc/StructureDefinition/relatedperson' alias 'RelatedPerson' as target
+uses 'https://smart.who.int/ccc/StructureDefinition/communicationrequest' alias 'CommunicationRequest' as target
+uses 'https://smart.who.int/ccc/StructureDefinition/emcarepatient' alias 'EmCare Patient' as produced
+uses 'https://smart.who.int/ccc/StructureDefinition/relatedperson' alias 'RelatedPerson' as produced
+uses 'https://smart.who.int/ccc/StructureDefinition/communicationrequest' alias 'CommunicationRequest' as produced
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
@@ -79,14 +79,14 @@ group emcarepatient(source src : questionnaireResponse,target tgt : Patient){
         } 'aemcareade01';
     } 'c243b020';
     src.item first as item  where linkId = 'EmCare.A.DE03' and answer.exists() then {
-        item.answer first as a -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true 'aemcareade03';
+        item.answer first as a -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/anonymous',  ext.value = true 'aemcareade03';
     } '54d12495';
     src.item first as item  where linkId = 'EmCare.A.DE06' or linkId= 'EmCare.A.DE04' or linkId= 'EmCare.A.DE05' and answer.exists() then {
         src -> tgt as target,  target.name as name then SetOfficalGivenNameemcarepatient(src, name) '30643049';
     } '7483ae2e';
     src.item first as item  where linkId = 'EmCare.A.DE12' and answer.exists() then {
         item.answer first as a then {
-            a.value as val -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val 'aemcareade12';
+            a.value as val -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/birthDateEstimator',  ext.value = val 'aemcareade12';
         } 'aemcareade12';
     } 'c05cf203';
     src.item first as item  where linkId = 'EmCare.A.DE08' and answer.exists() then {
@@ -98,19 +98,19 @@ group emcarepatient(source src : questionnaireResponse,target tgt : Patient){
         item.answer first as a then MapValueSetExtCodeemcareade16(a, tgt) '225baa79';
     } 'bf4b35f0';
     src.item first as item  where linkId = 'EmCare.A.DE48' and answer.exists() then {
-        item.answer first as a -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver', ext.value= create('Reference') as ref, ref.reference = 'relatated-person-id' 'aemcareade48';
+        item.answer first as a -> tgt.extension = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/primarycaregiver', ext.value= create('Reference') as ref, ref.reference = 'relatated-person-id' 'aemcareade48';
     } '04772b09';
     src.item first as itm1  where linkId =  'EmCare.A.DE21.1' then {
         itm1.item first as item  where linkId =  'EmCare.A.DE31' and answer.exists() then {
             item.answer first as a then {
-                a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus', ext.value= val 'aemcareade31';
+                a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/Extension/motherVitalStatus', ext.value= val 'aemcareade31';
             } 'aemcareade31';
         } '7f408694';
     } '39f45e5d';
     src.item first as itm1  where linkId =  'EmCare.A.DE21.1' then {
         itm1.item first as item  where linkId =  'EmCare.A.DE32' and answer.exists() then {
             item.answer first as a then {
-                a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus', ext.value= val 'aemcareade32';
+                a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/Extension/fatherVitalStatus', ext.value= val 'aemcareade32';
             } 'aemcareade32';
         } '06ec2524';
     } 'f7424037';
@@ -158,7 +158,7 @@ group MapValueSetExtCodeemcareade24(source src,target tgt){
 group relatedperson(source src : questionnaireResponse,target tgt : RelatedPerson){
     src.item first as item  where linkId = 'emcarerelatedpersoncaregiverid' and answer.exists() then {
         item.answer first as a then {
-            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver', ext.value= create('Reference') as ref, ref.reference = append('/RelatedPerson/',val) 'aemcarerelatedpersoncaregiverid';
+            a.value as val -> tgt.extension = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/primary-caregiver', ext.value= create('Reference') as ref, ref.reference = append('/RelatedPerson/',val) 'aemcarerelatedpersoncaregiverid';
         } 'aemcarerelatedpersoncaregiverid';
     } '04cd0ec2';
     src.item first as itm1  where linkId =  'EmCare.A.DE21.1' then {

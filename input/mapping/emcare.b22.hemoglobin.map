@@ -1,8 +1,8 @@
-map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b22.hemoglobin' = 'emcare.b22.hemoglobin'
+map 'https://smart.who.int/ccc/StructureMap/emcare.b22.hemoglobin' = 'emcare.b22.hemoglobin'
 uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
 uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
+uses 'https://smart.who.int/ccc/StructureDefinition/observation' alias 'Observation' as target
+uses 'https://smart.who.int/ccc/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
@@ -33,9 +33,9 @@ group emcareobservationemcareb22de81(source src,target tgt){
          'id-emcareb22de81';
     src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
         src.subject as subject -> tgt.subject = subject,
-            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
-                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',
                 coding.code = 'EmCare.B22.DE81'
          'code-emcareb22de81';
     src.item as itemtimestamp where linkId  =  'timestamp' then {
@@ -60,9 +60,9 @@ group emcareobservationemcareb22de82(source src,target tgt){
          'id-emcareb22de82';
     src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
         src.subject as subject -> tgt.subject = subject,
-            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
-                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',
                 coding.code = 'EmCare.B22.DE82'
          'code-emcareb22de82';
     src.item as itemtimestamp where linkId  =  'timestamp' then {

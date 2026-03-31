@@ -1,10 +1,10 @@
-map 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/emcare.b23.classification' = 'emcare.b23.classification'
+map 'https://smart.who.int/ccc/StructureMap/emcare.b23.classification' = 'emcare.b23.classification'
 uses 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse' alias 'questionnaireResponse' as source
 uses 'http://hl7.org/fhir/StructureDefinition/Bundle' alias 'Bundle' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation' alias 'Observation' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/condition' alias 'Condition' as target
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
-uses 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcarecondition' alias 'EmCare Condition' as produced
+uses 'https://smart.who.int/ccc/StructureDefinition/observation' alias 'Observation' as target
+uses 'https://smart.who.int/ccc/StructureDefinition/condition' alias 'Condition' as target
+uses 'https://smart.who.int/ccc/StructureDefinition/emcareobservation' alias 'EmCare Observation' as produced
+uses 'https://smart.who.int/ccc/StructureDefinition/emcarecondition' alias 'EmCare Condition' as produced
 group bundletrans(source src : questionnaireResponse,target bundle : Bundle){
     src -> bundle.id = uuid() 'id';
     src -> bundle.type = 'batch' 'type';
@@ -977,9 +977,9 @@ group emcareobservationemcareb6de08(source src,target tgt){
          'id-emcareb6de08';
     src.encounter as encounter -> tgt.encounter = encounter '35bc6b82';
         src.subject as subject -> tgt.subject = subject,
-            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/emcareobservation',
+            tgt.meta = create('Meta') as newMeta, newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',
             tgt.code = create('CodeableConcept') as concept, concept.coding = create('Coding') as coding,
-                coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes',
+                coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',
                 coding.code = 'EmCare.B6.DE08'
          'code-emcareb6de08';
     src.item as itemtimestamp where linkId  =  'timestamp' then {
@@ -1005,7 +1005,7 @@ group emcareconditionemcareb23de01(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE01', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '38c776ef';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE01', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '38c776ef';
         } 'dcfcb65d';
     } '48b723fb';
     item.answer where value.code = 'agree' then {
@@ -1028,7 +1028,7 @@ group emcareconditionemcareb23de03(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE03', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '97f42802';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE03', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '97f42802';
         } '539676b6';
     } '72db4093';
     item.answer where value.code = 'agree' then {
@@ -1041,7 +1041,7 @@ group emcareconditionemcareb23de03(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE04' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE04', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '38e7535e';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE04', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '38e7535e';
         } 'dd1642cb';
     } 'c35c9cd0';
 }
@@ -1056,7 +1056,7 @@ group emcareconditionemcareb23de06(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE06', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'dd0fd01c';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE06', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'dd0fd01c';
         } '8ef845b0';
     } '558d6c0d';
     item.answer where value.code = 'agree' then {
@@ -1069,7 +1069,7 @@ group emcareconditionemcareb23de06(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE05' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE05', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '45430313';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE05', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '45430313';
         } 'fbb8aa6b';
     } '2361285f';
 }
@@ -1084,7 +1084,7 @@ group emcareconditionemcareb23de10(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE10', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '901c4fa4';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE10', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '901c4fa4';
         } '39e6334e';
     } 'f313d249';
     item.answer where value.code = 'agree' then {
@@ -1097,7 +1097,7 @@ group emcareconditionemcareb23de10(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE05' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE05', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '45430313';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE05', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '45430313';
         } 'fbb8aa6b';
     } '2361285f';
 }
@@ -1112,7 +1112,7 @@ group emcareconditionemcareb23de13(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE13', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '0b87b4e7';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE13', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '0b87b4e7';
         } '6cc1c549';
     } 'dc54929c';
     item.answer where value.code = 'agree' then {
@@ -1135,7 +1135,7 @@ group emcareconditionemcareb23de14(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE14', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'c77e81e6';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE14', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'c77e81e6';
         } 'a3de578a';
     } 'd565e84e';
     item.answer where value.code = 'agree' then {
@@ -1158,7 +1158,7 @@ group emcareconditionemcareb23de15(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE15', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '16e4a2c3';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE15', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '16e4a2c3';
         } '088a39f1';
     } 'b194144a';
     item.answer where value.code = 'agree' then {
@@ -1181,7 +1181,7 @@ group emcareconditionemcareb23de16(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE16', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '672b006b';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE16', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '672b006b';
         } 'c458ff7e';
     } 'a834b1c4';
     item.answer where value.code = 'agree' then {
@@ -1204,7 +1204,7 @@ group emcareconditionemcareb23de17(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE17', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'bd34c671';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE17', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'bd34c671';
         } '0cc3c5de';
     } '8b51a13d';
     item.answer where value.code = 'agree' then {
@@ -1227,7 +1227,7 @@ group emcareconditionemcareb23de18(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '422373d9';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '422373d9';
         } '8f1dcdd2';
     } '6c227934';
     item.answer where value.code = 'agree' then {
@@ -1250,7 +1250,7 @@ group emcareconditionemcareb23de18a(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18.a', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b2c23048';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18.a', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b2c23048';
         } '422663d8';
     } '12b34bed';
     item.answer where value.code = 'agree' then {
@@ -1273,7 +1273,7 @@ group emcareconditionemcareb23de100(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE100', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '515f36ee';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE100', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '515f36ee';
         } 'e9f1a397';
     } '5e6079c2';
     item.answer where value.code = 'agree' then {
@@ -1296,7 +1296,7 @@ group emcareconditionemcareb23de6101(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6101', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '6a9c0b56';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6101', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '6a9c0b56';
         } '970b5053';
     } 'ce2b70a1';
     item.answer where value.code = 'agree' then {
@@ -1319,7 +1319,7 @@ group emcareconditionemcareb23de6102(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6102', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '1522be60';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6102', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '1522be60';
         } '18159ba1';
     } 'cb2b50a2';
     item.answer where value.code = 'agree' then {
@@ -1342,7 +1342,7 @@ group emcareconditionemcareb23de6103(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6103', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '248ab88b';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6103', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '248ab88b';
         } '9f402fa1';
     } '5f770596';
     item.answer where value.code = 'agree' then {
@@ -1365,7 +1365,7 @@ group emcareconditionemcareb23de30(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE30', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '60650f2a';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE30', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '60650f2a';
         } '453d3cff';
     } 'e00da291';
     item.answer where value.code = 'agree' then {
@@ -1388,7 +1388,7 @@ group emcareconditionemcareb23de31(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE31', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'ab1c5076';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE31', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'ab1c5076';
         } '11935d2f';
     } 'e29a8881';
     item.answer where value.code = 'agree' then {
@@ -1411,7 +1411,7 @@ group emcareconditionemcareb23de32(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE32', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b634fab6';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE32', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b634fab6';
         } '4ead4dac';
     } '48ea19ef';
     item.answer where value.code = 'agree' then {
@@ -1425,7 +1425,7 @@ group emcareconditionemcareb23de32(source src,source item,target tgt){
     src.item first as itm1  where linkId =  'EmCare.B23.DE32' then {
         itm1.item first as item  where linkId =  'EmCare.B23.DE32a_l' and answer.exists() then {
             item.answer first as a where a.value=true then {
-                src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE32a_l', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e1fd65a9';
+                src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE32a_l', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e1fd65a9';
             } 'c8109922';
         } '812d89a8';
     } 'c3ccc3f2';
@@ -1441,7 +1441,7 @@ group emcareconditionemcareb23de33(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE33', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '57e99b51';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE33', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '57e99b51';
         } '82481cbe';
     } 'ef2558fa';
     item.answer where value.code = 'agree' then {
@@ -1464,7 +1464,7 @@ group emcareconditionemcareb23de19(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE19', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '8cb2637d';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE19', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '8cb2637d';
         } '69ddcad6';
     } '36529e3a';
     item.answer where value.code = 'agree' then {
@@ -1487,7 +1487,7 @@ group emcareconditionemcareb23de104(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE104', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '6627d17b';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE104', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '6627d17b';
         } '008eb1e8';
     } '99bdabd7';
     item.answer where value.code = 'agree' then {
@@ -1501,7 +1501,7 @@ group emcareconditionemcareb23de104(source src,source item,target tgt){
     src.item first as itm1  where linkId =  'EmCare.B23.DE104' then {
         itm1.item first as item  where linkId =  'EmCare.B23.DE26a_l' and answer.exists() then {
             item.answer first as a where a.value=true then {
-                src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE26a_l', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '2bb3282a';
+                src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE26a_l', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '2bb3282a';
             } '059c54a8';
         } 'bfa2f7ed';
     } 'd6b41478';
@@ -1517,7 +1517,7 @@ group emcareconditionemcareb23de105(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE105', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'bfa6a728';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE105', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'bfa6a728';
         } '503587f4';
     } 'b4cd8d75';
     item.answer where value.code = 'agree' then {
@@ -1540,7 +1540,7 @@ group emcareconditionemcareb23de27(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE27', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '10a11fd8';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE27', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '10a11fd8';
         } '7e9f6c96';
     } '47747496';
     item.answer where value.code = 'agree' then {
@@ -1563,7 +1563,7 @@ group emcareconditionemcareb23de28(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE28', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'bd635f9e';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE28', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'bd635f9e';
         } 'ac92c02f';
     } '591966f0';
     item.answer where value.code = 'agree' then {
@@ -1586,7 +1586,7 @@ group emcareconditionemcareb23de29(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE29', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '59037b30';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE29', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '59037b30';
         } 'cfcf61aa';
     } 'b6fcf002';
     item.answer where value.code = 'agree' then {
@@ -1609,7 +1609,7 @@ group emcareconditionemcareb23de62(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE62', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '1d89b4e7';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE62', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '1d89b4e7';
         } '7a9976ac';
     } '59bce4a5';
     item.answer where value.code = 'agree' then {
@@ -1632,7 +1632,7 @@ group emcareconditionemcareb23de63(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE63', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '7160c75f';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE63', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '7160c75f';
         } 'f74f505b';
     } 'ab307e84';
     item.answer where value.code = 'agree' then {
@@ -1655,7 +1655,7 @@ group emcareconditionemcareb23de64(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE64', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'f6ad72a0';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE64', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'f6ad72a0';
         } '9035e530';
     } '9a8830e5';
     item.answer where value.code = 'agree' then {
@@ -1678,7 +1678,7 @@ group emcareconditionemcareb23de34(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE34', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e5f9a7d3';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE34', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e5f9a7d3';
         } 'ff3ce60d';
     } 'c84a5f54';
     item.answer where value.code = 'agree' then {
@@ -1701,7 +1701,7 @@ group emcareconditionemcareb23de35(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE35', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '7f5b9cb3';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE35', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '7f5b9cb3';
         } '30144f76';
     } 'b15dce6e';
     item.answer where value.code = 'agree' then {
@@ -1714,7 +1714,7 @@ group emcareconditionemcareb23de35(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE36' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE36', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '337a4af0';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE36', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '337a4af0';
         } '00bff3d2';
     } '9a029988';
 }
@@ -1729,7 +1729,7 @@ group emcareconditionemcareb23de41(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE41', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e288c87d';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE41', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e288c87d';
         } '8173bdfa';
     } '2297565b';
     item.answer where value.code = 'agree' then {
@@ -1752,7 +1752,7 @@ group emcareconditionemcareb23de42(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE42', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '94e86dfd';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE42', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '94e86dfd';
         } '1282d921';
     } 'f89496b0';
     item.answer where value.code = 'agree' then {
@@ -1765,7 +1765,7 @@ group emcareconditionemcareb23de42(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE43a' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE43a', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '3982894f';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE43a', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '3982894f';
         } 'bb6efca4';
     } 'fc0928c7';
 }
@@ -1780,7 +1780,7 @@ group emcareconditionemcareb23de44(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE44', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e3f3e6d5';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE44', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e3f3e6d5';
         } 'bed4feb4';
     } '629e48b0';
     item.answer where value.code = 'agree' then {
@@ -1803,7 +1803,7 @@ group emcareconditionemcareb23de45(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE45', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '606d51c8';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE45', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '606d51c8';
         } '7d5d59ca';
     } 'e36660f4';
     item.answer where value.code = 'agree' then {
@@ -1816,7 +1816,7 @@ group emcareconditionemcareb23de45(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE46A' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE46A', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b043e119';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE46A', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b043e119';
         } 'b1d8b88c';
     } 'a1ec2dd1';
 }
@@ -1831,7 +1831,7 @@ group emcareconditionemcareb23de47(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE47', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '6bae8d25';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE47', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '6bae8d25';
         } '5e31a07c';
     } 'a43d53e8';
     item.answer where value.code = 'agree' then {
@@ -1844,7 +1844,7 @@ group emcareconditionemcareb23de47(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE48' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE48', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '88de7a80';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE48', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '88de7a80';
         } '7cd5181a';
     } '3c6f199b';
 }
@@ -1859,7 +1859,7 @@ group emcareconditionemcareb23de49(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE49', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b581f2e7';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE49', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b581f2e7';
         } '1cc86632';
     } 'f58199bf';
     item.answer where value.code = 'agree' then {
@@ -1872,7 +1872,7 @@ group emcareconditionemcareb23de49(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE50' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE50', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b871091f';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE50', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b871091f';
         } '3562dee3';
     } 'ba9bd30c';
 }
@@ -1887,7 +1887,7 @@ group emcareconditionemcareb23de52(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE52', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'eb984457';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE52', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'eb984457';
         } '124cd652';
     } 'c77f1d4e';
     item.answer where value.code = 'agree' then {
@@ -1900,7 +1900,7 @@ group emcareconditionemcareb23de52(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE52a' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE52a', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '3a81b32e';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE52a', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '3a81b32e';
         } '2c4ce5dc';
     } '510e64e3';
 }
@@ -1915,7 +1915,7 @@ group emcareconditionemcareb23de53(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE53', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '0f3a6755';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE53', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '0f3a6755';
         } '863552f3';
     } '35439fa7';
     item.answer where value.code = 'agree' then {
@@ -1928,7 +1928,7 @@ group emcareconditionemcareb23de53(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE53a' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE53a', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '172c98f5';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE53a', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '172c98f5';
         } '77f7bdf7';
     } '6481f816';
 }
@@ -1943,7 +1943,7 @@ group emcareconditionemcareb23de54(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE54', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'fafd5b25';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE54', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'fafd5b25';
         } '61c9d7c8';
     } '78b12d83';
     item.answer where value.code = 'agree' then {
@@ -1956,7 +1956,7 @@ group emcareconditionemcareb23de54(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE55' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE55', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '703de849';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE55', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '703de849';
         } '82394009';
     } '626ae745';
 }
@@ -1971,7 +1971,7 @@ group emcareconditionemcareb23de56(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE56', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '9a929971';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE56', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '9a929971';
         } 'b7c8a104';
     } '0dd631f3';
     item.answer where value.code = 'agree' then {
@@ -1994,7 +1994,7 @@ group emcareconditionemcareb23de57(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE57', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '2c0d395c';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE57', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '2c0d395c';
         } 'f04e9b50';
     } 'af692636';
     item.answer where value.code = 'agree' then {
@@ -2007,7 +2007,7 @@ group emcareconditionemcareb23de57(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE57a' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE57a', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '0273738c';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE57a', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '0273738c';
         } '3e41ae3b';
     } 'd8c20ee2';
 }
@@ -2022,7 +2022,7 @@ group emcareconditionemcareb23de58(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE58', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'd913f145';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE58', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'd913f145';
         } 'ecd18d6c';
     } 'a88f6164';
     item.answer where value.code = 'agree' then {
@@ -2045,7 +2045,7 @@ group emcareconditionemcareb23de59(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE59', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '8f74fb03';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE59', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '8f74fb03';
         } '4cae7202';
     } 'b30797dc';
     item.answer where value.code = 'agree' then {
@@ -2058,7 +2058,7 @@ group emcareconditionemcareb23de59(source src,source item,target tgt){
     } '2219f1ae';
     src.item first as item  where linkId = 'EmCare.B23.DE60' and answer.exists() then {
         item.answer first as a where a.value=true then {
-            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE60', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'da15433c';
+            src -> tgt.extension  = create('Extension') as ext ,  ext.url ='https://smart.who.int/ccc/StructureDefinition/postcoordination',  ext.value =  create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE60', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'da15433c';
         } '8622d264';
     } '0e509ca1';
 }
@@ -2073,7 +2073,7 @@ group emcareconditionemcareb23de61(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE61', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '9134fe36';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE61', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '9134fe36';
         } '280470c5';
     } '8aa97bdd';
     item.answer where value.code = 'agree' then {
@@ -2096,7 +2096,7 @@ group emcareconditionemcareb23de106(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE106', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '70f0a4fa';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE106', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '70f0a4fa';
         } 'd8d6d130';
     } '671ed411';
     item.answer where value.code = 'agree' then {
@@ -2119,7 +2119,7 @@ group emcareconditionemcareb23de107(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE107', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '4b1b0c22';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE107', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '4b1b0c22';
         } 'd096a052';
     } '8e8ee9b4';
     item.answer where value.code = 'agree' then {
@@ -2142,7 +2142,7 @@ group emcareconditionemcareb23de108(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE108', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '3de5c106';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE108', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '3de5c106';
         } '58d1e9ce';
     } '81cf1715';
     item.answer where value.code = 'agree' then {
@@ -2165,7 +2165,7 @@ group emcareconditioncollectoremcareb23de01(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE01', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '38c776ef';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE01', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '38c776ef';
         } 'dcfcb65d';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2182,7 +2182,7 @@ group emcareconditioncollectoremcareb23de03(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE03', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '97f42802';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE03', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '97f42802';
         } '539676b6';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2199,7 +2199,7 @@ group emcareconditioncollectoremcareb23de06(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE06', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'dd0fd01c';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE06', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'dd0fd01c';
         } '8ef845b0';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2216,7 +2216,7 @@ group emcareconditioncollectoremcareb23de10(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE10', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '901c4fa4';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE10', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '901c4fa4';
         } '39e6334e';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2233,7 +2233,7 @@ group emcareconditioncollectoremcareb23de13(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE13', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '0b87b4e7';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE13', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '0b87b4e7';
         } '6cc1c549';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2250,7 +2250,7 @@ group emcareconditioncollectoremcareb23de14(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE14', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'c77e81e6';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE14', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'c77e81e6';
         } 'a3de578a';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2267,7 +2267,7 @@ group emcareconditioncollectoremcareb23de15(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE15', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '16e4a2c3';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE15', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '16e4a2c3';
         } '088a39f1';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2284,7 +2284,7 @@ group emcareconditioncollectoremcareb23de16(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE16', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '672b006b';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE16', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '672b006b';
         } 'c458ff7e';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2301,7 +2301,7 @@ group emcareconditioncollectoremcareb23de17(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE17', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'bd34c671';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE17', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'bd34c671';
         } '0cc3c5de';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2318,7 +2318,7 @@ group emcareconditioncollectoremcareb23de18(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '422373d9';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '422373d9';
         } '8f1dcdd2';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2335,7 +2335,7 @@ group emcareconditioncollectoremcareb23de18a(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18.a', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b2c23048';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE18.a', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b2c23048';
         } '422663d8';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2352,7 +2352,7 @@ group emcareconditioncollectoremcareb23de100(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE100', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '515f36ee';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE100', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '515f36ee';
         } 'e9f1a397';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2369,7 +2369,7 @@ group emcareconditioncollectoremcareb23de6101(source src,source item,target tgt)
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6101', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '6a9c0b56';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6101', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '6a9c0b56';
         } '970b5053';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2386,7 +2386,7 @@ group emcareconditioncollectoremcareb23de6102(source src,source item,target tgt)
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6102', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '1522be60';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6102', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '1522be60';
         } '18159ba1';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2403,7 +2403,7 @@ group emcareconditioncollectoremcareb23de6103(source src,source item,target tgt)
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6103', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '248ab88b';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE6103', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '248ab88b';
         } '9f402fa1';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2420,7 +2420,7 @@ group emcareconditioncollectoremcareb23de30(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE30', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '60650f2a';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE30', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '60650f2a';
         } '453d3cff';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2437,7 +2437,7 @@ group emcareconditioncollectoremcareb23de31(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE31', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'ab1c5076';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE31', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'ab1c5076';
         } '11935d2f';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2454,7 +2454,7 @@ group emcareconditioncollectoremcareb23de32(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE32', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b634fab6';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE32', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b634fab6';
         } '4ead4dac';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2471,7 +2471,7 @@ group emcareconditioncollectoremcareb23de33(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE33', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '57e99b51';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE33', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '57e99b51';
         } '82481cbe';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2488,7 +2488,7 @@ group emcareconditioncollectoremcareb23de19(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE19', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '8cb2637d';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE19', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '8cb2637d';
         } '69ddcad6';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2505,7 +2505,7 @@ group emcareconditioncollectoremcareb23de104(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE104', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '6627d17b';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE104', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '6627d17b';
         } '008eb1e8';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2522,7 +2522,7 @@ group emcareconditioncollectoremcareb23de105(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE105', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'bfa6a728';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE105', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'bfa6a728';
         } '503587f4';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2539,7 +2539,7 @@ group emcareconditioncollectoremcareb23de27(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE27', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '10a11fd8';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE27', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '10a11fd8';
         } '7e9f6c96';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2556,7 +2556,7 @@ group emcareconditioncollectoremcareb23de28(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE28', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'bd635f9e';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE28', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'bd635f9e';
         } 'ac92c02f';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2573,7 +2573,7 @@ group emcareconditioncollectoremcareb23de29(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE29', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '59037b30';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE29', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '59037b30';
         } 'cfcf61aa';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2590,7 +2590,7 @@ group emcareconditioncollectoremcareb23de62(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE62', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '1d89b4e7';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE62', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '1d89b4e7';
         } '7a9976ac';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2607,7 +2607,7 @@ group emcareconditioncollectoremcareb23de63(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE63', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '7160c75f';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE63', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '7160c75f';
         } 'f74f505b';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2624,7 +2624,7 @@ group emcareconditioncollectoremcareb23de64(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE64', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'f6ad72a0';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE64', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'f6ad72a0';
         } '9035e530';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2641,7 +2641,7 @@ group emcareconditioncollectoremcareb23de34(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE34', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e5f9a7d3';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE34', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e5f9a7d3';
         } 'ff3ce60d';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2658,7 +2658,7 @@ group emcareconditioncollectoremcareb23de35(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE35', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '7f5b9cb3';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE35', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '7f5b9cb3';
         } '30144f76';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2675,7 +2675,7 @@ group emcareconditioncollectoremcareb23de41(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE41', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e288c87d';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE41', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e288c87d';
         } '8173bdfa';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2692,7 +2692,7 @@ group emcareconditioncollectoremcareb23de42(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE42', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '94e86dfd';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE42', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '94e86dfd';
         } '1282d921';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2709,7 +2709,7 @@ group emcareconditioncollectoremcareb23de44(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE44', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'e3f3e6d5';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE44', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'e3f3e6d5';
         } 'bed4feb4';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2726,7 +2726,7 @@ group emcareconditioncollectoremcareb23de45(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE45', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '606d51c8';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE45', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '606d51c8';
         } '7d5d59ca';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2743,7 +2743,7 @@ group emcareconditioncollectoremcareb23de47(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE47', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '6bae8d25';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE47', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '6bae8d25';
         } '5e31a07c';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2760,7 +2760,7 @@ group emcareconditioncollectoremcareb23de49(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE49', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'b581f2e7';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE49', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'b581f2e7';
         } '1cc86632';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2777,7 +2777,7 @@ group emcareconditioncollectoremcareb23de52(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE52', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'eb984457';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE52', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'eb984457';
         } '124cd652';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2794,7 +2794,7 @@ group emcareconditioncollectoremcareb23de53(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE53', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '0f3a6755';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE53', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '0f3a6755';
         } '863552f3';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2811,7 +2811,7 @@ group emcareconditioncollectoremcareb23de54(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE54', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'fafd5b25';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE54', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'fafd5b25';
         } '61c9d7c8';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2828,7 +2828,7 @@ group emcareconditioncollectoremcareb23de56(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE56', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '9a929971';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE56', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '9a929971';
         } 'b7c8a104';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2845,7 +2845,7 @@ group emcareconditioncollectoremcareb23de57(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE57', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '2c0d395c';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE57', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '2c0d395c';
         } 'f04e9b50';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2862,7 +2862,7 @@ group emcareconditioncollectoremcareb23de58(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE58', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'd913f145';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE58', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'd913f145';
         } 'ecd18d6c';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2879,7 +2879,7 @@ group emcareconditioncollectoremcareb23de59(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE59', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '8f74fb03';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE59', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '8f74fb03';
         } '4cae7202';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2896,7 +2896,7 @@ group emcareconditioncollectoremcareb23de61(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE61', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '9134fe36';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE61', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '9134fe36';
         } '280470c5';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2913,7 +2913,7 @@ group emcareconditioncollectoremcareb23de106(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE106', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '70f0a4fa';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE106', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '70f0a4fa';
         } 'd8d6d130';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2930,7 +2930,7 @@ group emcareconditioncollectoremcareb23de107(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE107', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '4b1b0c22';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE107', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '4b1b0c22';
         } 'd096a052';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2947,7 +2947,7 @@ group emcareconditioncollectoremcareb23de108(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE108', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' '3de5c106';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'EmCare.B23.DE108', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' '3de5c106';
         } '58d1e9ce';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';
@@ -2964,7 +2964,7 @@ group emcareconditioncollectorcollector(source src,source item,target tgt){
             } '46018ce4';
         } 'cce2a9b1';
         src -> tgt.code = create('CodeableConcept') as cs then {
-            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'collector', ccs.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes' 'ab5440b5';
+            src -> tgt.code = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'collector', ccs.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes' 'ab5440b5';
         } '6fc817a4';
          a -> tgt.clinicalStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'active', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical' 'b7901585';
          a -> tgt.verificationStatus = create('CodeableConcept') as cs, cs.coding = create('Coding') as ccs, ccs.code= 'unconfirmed', ccs.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' '3e544e1e';

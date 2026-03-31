@@ -11,7 +11,7 @@ include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
 //parameter "Encounter" Encounter$
-codesystem "RoleCodeSystem" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+codesystem "RoleCodeSystem" : 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes'
 code "Mother": 'MTH' from "RoleCodeSystem"
 
 context Patient
@@ -47,7 +47,7 @@ define getEncounter:
 
 define function EmCareExtensions(element Patient, id String):
   element.extension E
-      where E.url = ('https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/' + id)
+      where E.url = ('https://smart.who.int/ccc/StructureDefinition/' + id)
       return E
 
 define function EmCareExtension(element Patient, id String):
@@ -90,7 +90,7 @@ define "Person accompanying child today's Relationship to Client":
 define function getValue(O Observation):
   case  
       when  O is null then null
-      when O.value is CodeableConcept then Coalesce(First(O.value.coding C where C.system  = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'), First(O.value.coding))
+      when O.value is CodeableConcept then Coalesce(First(O.value.coding C where C.system  = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes'), First(O.value.coding))
       else O.value
   end
 
@@ -176,16 +176,16 @@ define function GetObsValue(id System.String, codesystem System.String):
     getValue(GetObservationDuringEncounter(coding(id, codesystem)))
 
 define function GetObsValue(id System.String):
-    getValue(GetObservationDuringEncounter(coding(id, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')))
+    getValue(GetObservationDuringEncounter(coding(id, 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes')))
 
 define function HasObsValueCode(id System.String, value System.Code):
-   HasObservationCodeDuringEncounterDone(coding(id, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') , value )
+   HasObservationCodeDuringEncounterDone(coding(id, 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes') , value )
   
 define function HasObsValueCode(id System.String, value System.String):
-   HasObservationCodeDuringEncounterDone(coding(id, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') , coding(value, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') )
+   HasObservationCodeDuringEncounterDone(coding(id, 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes') , coding(value, 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes') )
 
 define function HasObsValueCode(id System.Code, value System.String):
-   HasObservationCodeDuringEncounterDone(id , coding(value, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') )
+   HasObservationCodeDuringEncounterDone(id , coding(value, 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes') )
 
 // ************************   HasObs ************************/
 /*
@@ -278,7 +278,7 @@ define function coding(s FHIR.code, url System.String):
 define function coding(s System.String):
   System.Code {
                 code:  s ,
-                system:  'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+                system:  'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes'
             }
 
 

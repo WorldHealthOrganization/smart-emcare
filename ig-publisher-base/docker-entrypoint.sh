@@ -20,4 +20,4 @@ fi
 
 
 # gosu publisher "/home/publisher/bin/with-latest-sushi.sh"
-exec gosu publisher "$@"
+exec su-exec publisher "$@"

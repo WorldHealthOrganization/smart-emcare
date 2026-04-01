@@ -18,6 +18,17 @@ if [ "$MAP_NODE_UID" != "no" ]; then
     }
 fi
 
+# === Download WHO SMART template if not already present ===
+TEMPLATE_DIR="/home/publisher/local-template"
+if [ ! -d "$TEMPLATE_DIR/package" ]; then
+    echo "Downloading who.fhir.template from smart-base..."
+    mkdir -p "$TEMPLATE_DIR"
+    curl -L --silent --fail \
+         https://github.com/WorldHealthOrganization/smart-base/archive/refs/heads/main.tar.gz \
+         | tar -xz --strip-components=1 -C "$TEMPLATE_DIR" \
+           smart-base-main/local-template
+    echo "who.fhir.template downloaded successfully."
+fi
 
 # gosu publisher "/home/publisher/bin/with-latest-sushi.sh"
 exec su-exec publisher "$@"

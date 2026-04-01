@@ -11,7 +11,7 @@ RUN apk update &&\
     wget \
     graphviz \
     python3 \
-    openjdk11 \
+    openjdk17 \
     curl \
     && ln -sf python3 /usr/bin/python
 

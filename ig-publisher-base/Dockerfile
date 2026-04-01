@@ -5,9 +5,16 @@ ENV PYTHONUNBUFFERED=1
 #https://github.com/tianon/gosu/blob/master/INSTALL.md
 
 RUN apk update &&\
-    apk add --update --no-cache su-exec --repository="http://dl-cdn.alpinelinux.org/alpine/edge/testing"   &&\
-    apk add --update --no-cache  openssl wget graphviz python3  openjdk11 curl &&\
-    ln -sf python3 /usr/bin/python
+    apk add --update  --upgrade --no-cache\
+    su-exec \
+    openssl \
+    wget \
+    graphviz \
+    python3 \
+    openjdk11 \
+    curl \
+    && ln -sf python3 /usr/bin/python
+
 
 RUN python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools

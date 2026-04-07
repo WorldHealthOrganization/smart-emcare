@@ -1,4 +1,4 @@
-# smart-emcare
+# smart-Ccc
 Emergency Care - a digital platform/reference mobile application that is able to rapidly share WHO guidelines for child and newborn health and facilitate implementation in humanitarian settings.
 
 ## build from l2

@@ -1,0 +1,342 @@
+{
+    "resourceType": "PlanDefinition",
+    "id": "Cccdt01",
+    "url": "https://smart.who.int/ccc/PlanDefinition/Cccdt01",
+    "identifier": [
+        {
+            "use": "official",
+            "value": "Cccdt01"
+        }
+    ],
+    "version": "1.0.1.rc12.build.457",
+    "name": "Cccdt01",
+    "title": "Cccdt01",
+    "type": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/plan-definition-type",
+                "code": "eca-rule"
+            }
+        ]
+    },
+    "status": "active",
+    "experimental": false,
+    "date": "2023-04-11T11:19:20+00:00",
+    "library": [
+        "https://smart.who.int/ccc/Library/Cccdt01"
+    ],
+    "action": [
+        {
+            "id": "Cccdt01",
+            "description": "Register a child < 5 years",
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "registration"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccca.registration.p"
+        },
+        {
+            "id": "Cccdt02",
+            "description": "Register the child in the encounter",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt02"
+                    }
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "history-and-physical"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Cccb.registration.e"
+        },
+        {
+            "id": "Cccdt04",
+            "description": "Evaluate DangerSigns",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt04"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT0",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "triage"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b7.lti-dangersigns"
+        },
+        {
+            "id": "Cccdt03",
+            "description": "Determine Basic Anthropometric and others measurement",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt03"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT04",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "record-and-report"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b6.measurements"
+        },
+        {
+            "id": "Cccdt05",
+            "description": "Assess sick child for Symptoms 2 m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt05"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT03",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b18-21.symptoms.2m.m"
+        },
+        {
+            "id": "Cccdt06",
+            "description": "Assess sick child for Symptoms 2p",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "clas.\"age >= 2 months to <60 months\"",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt06"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT03",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b10-14.symptoms.2m.p"
+        },
+        {
+            "id": "Cccdt07",
+            "description": "Assess sick child for Signs 2 m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt07"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT05",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b18-21.signs.2m.m"
+        },
+        {
+            "id": "Cccdt08",
+            "description": "Assess sick child for Signs 2p",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "clas.\"age >= 2 months to <60 months\"",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt08"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT06",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "guideline-based-care"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b10-16.signs.2m.p"
+        },
+        {
+            "id": "Cccdt09",
+            "description": "Propose classification",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "clas.\"age >= 2 months to <60 months\"",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt09"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT10",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "determine-diagnosis"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b23.classification"
+        },
+        {
+            "id": "Cccdt10",
+            "description": "Do Test",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt10"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT07",
+                    "relationship": "after"
+                },
+                {
+                    "actionId": "CccDT08",
+                    "relationship": "after"
+                }
+            ],
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b22.assessmentstests"
+        },
+        {
+            "id": "Cccdt11",
+            "description": "Provide treatment",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInYears() < 5",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt11"
+                    }
+                }
+            ],
+            "relatedAction": [
+                {
+                    "actionId": "CccDT12",
+                    "relationship": "after"
+                },
+                {
+                    "actionId": "CccDT09",
+                    "relationship": "after"
+                }
+            ],
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://hl7.org/fhir/uv/cpg/CodeSystem/cpg-common-process",
+                        "code": "provide-counseling"
+                    }
+                ]
+            },
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.treatment"
+        },
+        {
+            "id": "Cccdt12",
+            "description": "Propose classification 2m",
+            "condition": [
+                {
+                    "kind": "applicability",
+                    "expression": {
+                        "description": "AgeInMonths() < 2",
+                        "language": "text/cql-identifier",
+                        "expression": "Cccdt12"
+                    }
+                }
+            ],
+            "definitionCanonical": "https://smart.who.int/ccc/ActivityDefinition/Ccc.b23.classification.2m"
+        }
+    ]
+}

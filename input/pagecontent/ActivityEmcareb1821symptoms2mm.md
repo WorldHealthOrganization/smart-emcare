@@ -3,4 +3,4 @@
 required for the execution
  | type | code / path | valueType | Description |
  |---|---|---|---|
-| Inputs | Observation | Observation | EmCare.B7.DE02 |
+| Inputs | Observation | Observation | Ccc.B7.DE02 |

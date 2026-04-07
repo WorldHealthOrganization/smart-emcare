@@ -1,6 +1,6 @@
 ### ActivityEmCare.B23.Classification.m
 
-{% include library-emcare.b23.classification.m.md %}
+
 
 #### Ouputs
 

@@ -1,6 +1,6 @@
 ### ActivityEmCare.B22.RespiratoryRate
 
-{% include library-emcare.b22.respiratoryrate.md %}
+
 
 #### Ouputs
 

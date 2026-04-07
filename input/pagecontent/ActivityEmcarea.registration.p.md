@@ -1,6 +1,6 @@
 ### ActivityEmCareA.Registration.P
 
-{% include library-emcarea.registration.p.md %}
+
 
 #### Ouputs
 

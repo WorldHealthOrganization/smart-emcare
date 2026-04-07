@@ -1,6 +1,6 @@
 ### ActivityEmCare.B22.SecondTemperature
 
-{% include library-emcare.b22.secondtemperature.md %}
+
 
 #### Ouputs
 

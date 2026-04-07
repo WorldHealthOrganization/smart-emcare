@@ -1,6 +1,6 @@
 ### ActivityEmCare.B22.Hemoglobin
 
-{% include library-emcare.b22.hemoglobin.md %}
+
 
 #### Ouputs
 

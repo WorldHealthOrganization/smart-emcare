@@ -1,6 +1,6 @@
 ### ActivityEmCare.B22.BronchodilatorTest
 
-{% include library-emcare.b22.bronchodilatortest.md %}
+
 
 #### Ouputs
 

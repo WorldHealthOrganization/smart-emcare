@@ -1,6 +1,6 @@
 ### ActivityEmCareB.Registration.E
 
-{% include library-emcareb.registration.e.md %}
+
 
 #### Ouputs
 

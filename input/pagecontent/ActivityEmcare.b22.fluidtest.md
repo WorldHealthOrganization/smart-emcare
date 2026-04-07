@@ -1,6 +1,6 @@
 ### ActivityEmCare.B22.FluidTest
 
-{% include library-emcare.b22.fluidtest.md %}
+
 
 #### Ouputs
 

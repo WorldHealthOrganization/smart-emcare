@@ -1,6 +1,6 @@
 ### ActivityEmCare.B22.BreastFeeding
 
-{% include library-emcare.b22.breastfeeding.md %}
+
 
 #### Ouputs
 

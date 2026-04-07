@@ -1,6 +1,6 @@
 ### ActivityEmCare.B6.Measurements
 
-{% include library-emcare.b6.measurements.md %}
+
 
 #### Ouputs
 

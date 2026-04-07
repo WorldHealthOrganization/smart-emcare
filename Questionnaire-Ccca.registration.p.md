@@ -1,0 +1,999 @@
+# CccA.Registration.P - WHO FHIR Implementation Guide (IG): Integrated Management of Childhood Illness (IMCI) in emergencies v0.1.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **CccA.Registration.P**
+
+## Questionnaire: CccA.Registration.P
+Branch:
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Questionnaire",
+  "id" : "Ccca.registration.p",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+    "valueCode" : "computable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+    "valueCode" : "structured"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "AgeInDays",
+      "language" : "text/fhirpath",
+      "expression" : "iif(%resource.repeat(item).where(linkId='dob').answer.first().exists(),(today() -%resource.repeat(item).where(linkId='dob').answer.first().value),{})"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "AgeInMonths",
+      "language" : "text/fhirpath",
+      "expression" : "iif(%resource.repeat(item).where(linkId='dob').answer.first().exists(),(today()-%resource.repeat(item).where(linkId='dob').answer.first().value)-(today()-%resource.repeat(item).where(linkId='dob').answer.first().value),{})"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "AgeInYears",
+      "language" : "text/fhirpath",
+      "expression" : "iif(%resource.repeat(item).where(linkId='dob').answer.first().exists(),(today()-%resource.repeat(item).where(linkId='dob').answer.first().value),{})"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "dol",
+      "language" : "text/fhirpath",
+      "expression" : "iif( %resource.repeat(item).where(linkId='Ccc.A.DE14.d').answer.first().exists()  ,%resource.repeat(item).where(linkId='Ccc.A.DE14.d').answer.first().value , 0 days)"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "wol",
+      "language" : "text/fhirpath",
+      "expression" : "iif( %resource.repeat(item).where(linkId='Ccc.A.DE14.w').answer.first().exists(),%resource.repeat(item).where(linkId='Ccc.A.DE14.w').answer.first().value , 0 weeks)"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "mol",
+      "language" : "text/fhirpath",
+      "expression" : "iif( %resource.repeat(item).where(linkId='Ccc.A.DE13.mo').answer.first().exists(),%resource.repeat(item).where(linkId='Ccc.A.DE13.mo').answer.first().value , 0 months)"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "yol",
+      "language" : "text/fhirpath",
+      "expression" : "iif( %resource.repeat(item).where(linkId='Ccc.A.DE13.a').answer.first().exists(),%resource.repeat(item).where(linkId='Ccc.A.DE13.a').answer.first().value, 0 years)"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/variable",
+    "valueExpression" : {
+      "name" : "cdob",
+      "language" : "text/fhirpath",
+      "expression" : "today() -%dol -%wol  -%mol - %yol"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+    "valueCanonical" : "https://smart.who.int/ccc/StructureMap/Ccca.registration.p"
+  }],
+  "url" : "https://smart.who.int/ccc/Questionnaire/Ccca.registration.p",
+  "version" : "0.1.0",
+  "name" : "CccA.Registration.P",
+  "title" : "CccA.Registration.P",
+  "status" : "active",
+  "experimental" : false,
+  "subjectType" : ["Patient"],
+  "date" : "2026-04-07T13:45:53+00:00",
+  "publisher" : "World Health Organization (WHO)",
+  "contact" : [{
+    "name" : "World Health Organization (WHO)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.who.int"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.who.int"
+    }]
+  }],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "item" : [{
+    "linkId" : "Ccc.A.DE01",
+    "text" : "National Unique identification",
+    "type" : "string",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://hl7.org/fhir/questionnaire-item-control",
+          "code" : "check-box",
+          "display" : "Check-box"
+        }],
+        "text" : "Check-box"
+      }
+    }],
+    "linkId" : "Ccc.A.DE03",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : true,
+    "answerOption" : [{
+      "valueCoding" : {
+        "code" : "Ccc.A.DE03",
+        "display" : "Child's Identity unknown/prefer to remain anonymous"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE03').answer.first().empty()"
+      }
+    }],
+    "linkId" : "Ccc.A.DE04",
+    "text" : "First Name",
+    "type" : "string",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE03').answer.first().empty()"
+      }
+    }],
+    "linkId" : "Ccc.A.DE05",
+    "text" : "Middle Name",
+    "type" : "string",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE03').answer.first().empty()"
+      }
+    }],
+    "linkId" : "Ccc.A.DE06",
+    "text" : "Last Name",
+    "type" : "string",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE11').answer.first().empty()"
+      }
+    }],
+    "linkId" : "dob",
+    "text" : "Date of Birth",
+    "type" : "date",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://hl7.org/fhir/questionnaire-item-control",
+          "code" : "check-box",
+          "display" : "Check-box"
+        }],
+        "text" : "Check-box"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='dob').answer.first().empty()"
+      }
+    }],
+    "linkId" : "Ccc.A.DE11",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : true,
+    "answerOption" : [{
+      "valueCoding" : {
+        "code" : "Ccc.A.DE11",
+        "display" : "Date of Birth not known"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://hl7.org/fhir/questionnaire-item-control",
+          "code" : "drop-down",
+          "display" : "Drop down"
+        }],
+        "text" : "Drop down"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE11').answer.first().exists()"
+      }
+    }],
+    "linkId" : "Ccc.A.DE12",
+    "text" : "Provide an estimated age or estimated date of birth",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.A.DE13",
+        "display" : "Estimated age in years/months for child (2 months or older)"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.A.DE14",
+        "display" : "Estimated age in weeks/days for young infant (under 2 months old)"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.A.DE15",
+        "display" : "Estimated Date of Birth"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE15'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE15.1",
+    "text" : "Estimated Date of Birth",
+    "type" : "date",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "key",
+        "valueId" : "Ccc.A.DE14.d"
+      },
+      {
+        "url" : "expression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "answer.first() >= 1 and answer.first() <= 8"
+        }
+      },
+      {
+        "url" : "severity",
+        "valueCode" : "error"
+      },
+      {
+        "url" : "human",
+        "valueString" : "Seven day maximum"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://unitsofmeasure.org",
+        "code" : "d"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE14'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE14.d",
+    "text" : "Age in days",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "key",
+        "valueId" : "Ccc.A.DE14.w"
+      },
+      {
+        "url" : "expression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "answer.first() >= 1 and answer.first() <= 8"
+        }
+      },
+      {
+        "url" : "severity",
+        "valueCode" : "error"
+      },
+      {
+        "url" : "human",
+        "valueString" : "Eight weeks maximum"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://unitsofmeasure.org",
+        "code" : "wk"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE14'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE14.w",
+    "text" : "Age in weeks",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "key",
+        "valueId" : "Ccc.A.DE13.mo"
+      },
+      {
+        "url" : "expression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "answer.first() >= 1 and answer.first() <= 12"
+        }
+      },
+      {
+        "url" : "severity",
+        "valueCode" : "error"
+      },
+      {
+        "url" : "human",
+        "valueString" : "Twelve months maximum"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://hl7.org/fhirpath/CodeSystem/calendar-units",
+        "code" : "month"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE13'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE13.mo",
+    "text" : "Age in months",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "key",
+        "valueId" : "Ccc.A.DE13.a"
+      },
+      {
+        "url" : "expression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "answer.first() >= 1 and answer.first() <= 4"
+        }
+      },
+      {
+        "url" : "severity",
+        "valueCode" : "error"
+      },
+      {
+        "url" : "human",
+        "valueString" : "Four years maximum"
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-constraint"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://hl7.org/fhirpath/CodeSystem/calendar-units",
+        "code" : "year"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE13'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE13.a",
+    "text" : "Age in years",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://unitsofmeasure.org",
+        "code" : "wk"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    }],
+    "linkId" : "eweek",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://unitsofmeasure.org",
+        "code" : "d"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "(%resource.repeat(item).where(linkId='Ccc.A.DE08').answer.first().exists() or %resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE15') and %resource.repeat(item).where(linkId='eweek').answer.first().value < 4 'weeks'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE13.2.d",
+    "text" : "Estimated age in days",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://hl7.org/fhirpath/CodeSystem/calendar-units",
+        "code" : "month"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "(%resource.repeat(item).where(linkId='Ccc.A.DE08').answer.first().exists() or %resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE15') and %resource.repeat(item).where(linkId='eweek').answer.first().value >= 4 'weeks' and  %resource.repeat(item).where(linkId='eweek').answer.first().value< 104 'weeks'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE13.2.mo",
+    "text" : "Estimated age in months",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+      "valueCoding" : {
+        "system" : "http://hl7.org/fhirpath/CodeSystem/calendar-units",
+        "code" : "year"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "(%resource.repeat(item).where(linkId='Ccc.A.DE08').answer.first().exists() or %resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE15') and %resource.repeat(item).where(linkId='eweek').answer.first().value >= 104 'weeks'"
+      }
+    }],
+    "linkId" : "Ccc.A.DE13.2.a",
+    "text" : "Estimated age in year",
+    "type" : "quantity",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE13' or %resource.repeat(item).where(linkId='Ccc.A.DE12').answer.first().value.code = 'Ccc.A.DE14'"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%cdob"
+      }
+    }],
+    "linkId" : "edob",
+    "text" : "Calculated Date of Birth",
+    "type" : "date",
+    "required" : false,
+    "repeats" : false,
+    "readOnly" : true
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "iif( %resource.repeat(item).where(linkId='dob').answer.first().exists(),%resource.repeat(item).where(linkId='dob').answer.first().value,iif( %resource.repeat(item).where(linkId='Ccc.A.DE15.1').answer.first().exists(),%resource.repeat(item).where(linkId='Ccc.A.DE15.1').answer.first().value,  %cdob ))"
+      }
+    }],
+    "linkId" : "Ccc.A.DE08",
+    "text" : "Consolidated Date of Birth",
+    "type" : "date",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemMedia",
+      "valueAttachment" : {
+        "contentType" : "png",
+        "url" : "https://www.clipartmax.com/png/middle/136-1360801_caillou.png"
+      }
+    }],
+    "linkId" : "Ccc.A.DE16",
+    "text" : "Sex",
+    "type" : "choice",
+    "required" : true,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.A.DE17",
+        "display" : "Female"
+      }
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemAnswerMedia",
+        "valueAttachment" : {
+          "contentType" : "png",
+          "url" : "https://www.clipartmax.com/png/small/47-470461_man-gender-sex-male-gender-symbol-comments-male-gender-icon-png.png"
+        }
+      }],
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.A.DE18",
+        "display" : "Male"
+      }
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemAnswerMedia",
+        "valueAttachment" : {
+          "contentType" : "png",
+          "url" : "https://www.clipartmax.com/png/small/193-1937816_clipart-female-symbol-female-gender-icon-png.png"
+        }
+      }],
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.A.DE19",
+        "display" : "Not Specified"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    }],
+    "linkId" : "Ccc.A.DE48",
+    "text" : "Caregiver",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://hl7.org/fhir/questionnaire-item-control",
+          "code" : "check-box",
+          "display" : "Check-box"
+        }],
+        "text" : "Check-box"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE48').answer.first().empty() and  %resource.repeat(item).where(linkId='Ccc.A.DE03').answer.first().empty()"
+      }
+    }],
+    "linkId" : "newrelatedperson",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : true,
+    "answerOption" : [{
+      "valueCoding" : {
+        "code" : "newrelatedperson",
+        "display" : "Register a new Caregiver"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    }],
+    "linkId" : "relatedpersonuuid",
+    "type" : "string",
+    "required" : false,
+    "repeats" : false,
+    "initial" : [{
+      "valueString" : "uuid()"
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "iif(%resource.repeat(item).where(linkId='newrelatedperson').answer.first().exists(), %resource.repeat(item).where(linkId='relatedpersonuuid').answer.first().value,{})"
+      }
+    }],
+    "linkId" : "Cccrelatedpersoncaregiverid",
+    "type" : "string",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Cccrelatedpersoncaregiverid').answer.first().exists()"
+      }
+    }],
+    "linkId" : "Ccc.A.DE21.1",
+    "type" : "group",
+    "required" : false,
+    "repeats" : false,
+    "item" : [{
+      "linkId" : "Ccc.A.DE21",
+      "text" : "Caregiver First Name",
+      "type" : "string",
+      "required" : true,
+      "repeats" : false
+    },
+    {
+      "linkId" : "Ccc.A.DE22",
+      "text" : "Caregiver Middle Name",
+      "type" : "string",
+      "required" : false,
+      "repeats" : false
+    },
+    {
+      "linkId" : "Ccc.A.DE23",
+      "text" : "Caregiver Last Name",
+      "type" : "string",
+      "required" : true,
+      "repeats" : false
+    },
+    {
+      "linkId" : "Ccc.A.DE35",
+      "text" : "Primary Caregiver&#8217;s Mobile telephone number",
+      "type" : "integer",
+      "required" : false,
+      "repeats" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+        "valueBoolean" : true
+      },
+      {
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%resource.repeat(item).where(linkId='newrelatedperson').answer.first().exists()"
+        }
+      }],
+      "linkId" : "relatedpersonid",
+      "type" : "string",
+      "required" : false,
+      "repeats" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE48').answer.first().empty()"
+        }
+      }],
+      "linkId" : "Ccc.A.DE24",
+      "text" : "Caregiver&#8217;s Relationship to Client",
+      "type" : "choice",
+      "required" : true,
+      "repeats" : false,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE25",
+          "display" : "Mother"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE26",
+          "display" : "Father"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE27",
+          "display" : "Sibling"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE28",
+          "display" : "Extended family"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE29",
+          "display" : "Legal Guardian"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE30",
+          "display" : "Not Related"
+        }
+      }]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE21.1').repeat(item).where(linkId='Ccc.A.DE24').answer.first().value.code != 'Ccc.A.DE25'"
+        }
+      }],
+      "linkId" : "Ccc.A.DE31",
+      "definition" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+      "text" : "Biological Mother Vital Status",
+      "type" : "choice",
+      "required" : true,
+      "repeats" : false,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE46",
+          "display" : "Dead"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE34",
+          "display" : "Alive"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE33",
+          "display" : "Unknown"
+        }
+      }],
+      "item" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "http://hl7.org/fhir/questionnaire-item-control",
+              "code" : "help"
+            }]
+          }
+        }],
+        "linkId" : "Ccc.A.DE31-help",
+        "text" : "The client&#8217;s mother and/or father&#8217;s vital status.",
+        "type" : "display"
+      }]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%resource.repeat(item).where(linkId='Ccc.A.DE21.1').repeat(item).where(linkId='Ccc.A.DE24').answer.first().value.code != 'Ccc.A.DE26'"
+        }
+      }],
+      "linkId" : "Ccc.A.DE32",
+      "definition" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+      "text" : "Biological Father Vital Status",
+      "type" : "choice",
+      "required" : true,
+      "repeats" : false,
+      "answerOption" : [{
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE46",
+          "display" : "Dead"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE34",
+          "display" : "Alive"
+        }
+      },
+      {
+        "valueCoding" : {
+          "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+          "code" : "Ccc.A.DE33",
+          "display" : "Unknown"
+        }
+      }],
+      "item" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "http://hl7.org/fhir/questionnaire-item-control",
+              "code" : "help"
+            }]
+          }
+        }],
+        "linkId" : "Ccc.A.DE32-help",
+        "text" : "The client&#8217;s mother and/or father&#8217;s vital status.",
+        "type" : "display"
+      }]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/questionnaire-item-control",
+            "code" : "check-box",
+            "display" : "Check-box"
+          }],
+          "text" : "Check-box"
+        }
+      },
+      {
+        "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+        "valueExpression" : {
+          "language" : "text/fhirpath",
+          "expression" : "%resource.repeat(item).where(linkId='Cccrelatedpersoncaregiverid').answer.first().value.code = 'newCaregiver' or %resource.repeat(item).where(linkId='Ccc.A.DE48').answer.first().exists()"
+        }
+      }],
+      "linkId" : "Ccc.A.DE38",
+      "type" : "choice",
+      "required" : false,
+      "repeats" : true,
+      "answerOption" : [{
+        "valueCoding" : {
+          "code" : "Ccc.A.DE38",
+          "display" : "Caregiver wants to receive SMS or other messages regarding the child's visits and health status"
+        }
+      }]
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "now()"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    }],
+    "linkId" : "timestamp",
+    "type" : "dateTime",
+    "required" : false
+  }]
+}
+
+```

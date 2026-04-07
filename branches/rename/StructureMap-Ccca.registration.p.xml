@@ -1,0 +1,2140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="Ccca.registration.p"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><pre>map &quot;https://smart.who.int/ccc/StructureMap/Ccca.registration.p&quot; = &quot;Ccca.registration.p&quot;
+
+
+uses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source
+uses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target
+uses &quot;https://smart.who.int/ccc/StructureDefinition/patient&quot; alias 'Patient' as target
+uses &quot;https://smart.who.int/ccc/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target
+uses &quot;https://smart.who.int/ccc/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target
+uses &quot;https://smart.who.int/ccc/StructureDefinition/Cccpatient&quot; alias 'Ccc Patient' as produced
+uses &quot;https://smart.who.int/ccc/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as produced
+uses &quot;https://smart.who.int/ccc/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as produced
+
+group bundletrans(source src : questionnaireResponse, target bundle : Bundle) {
+  src -&gt; bundle.id = uuid() &quot;id&quot;;
+  src -&gt; bundle.type = 'batch' &quot;type&quot;;
+  src -&gt; bundle.entry as entry then {
+    src.subject as subject then {
+      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;1153aa45&quot;;
+    } &quot;cf5b2513&quot;;
+    src -&gt; entry.resource = create('Patient') as tgt then {
+      src -&gt; tgt then Cccpatient(src, tgt) &quot;77f3ac03&quot;;
+    } &quot;75beb242&quot;;
+  } &quot;put-Cccpatient&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {
+      src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('RelatedPerson') as tgt then {
+        src -&gt; tgt then relatedperson(src, tgt) &quot;8f0b9602&quot;;
+        item.answer first as a then {
+          a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;78d8bc69&quot;;
+        } &quot;eec70023&quot;;
+      } &quot;00574b8e&quot;;
+    } &quot;74cc3511&quot;;
+  } &quot;54daac33&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'Ccc.A.DE38') and answer.exists() then {
+      src -&gt; bundle.entry as entry then {
+        src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/CommunicationRequest/', uuid) &quot;e5343f50&quot;;
+        src -&gt; entry.resource = create('CommunicationRequest') as tgt then {
+          src -&gt; tgt then communicationrequestCccade38(src, tgt) &quot;82d8a873&quot;;
+        } &quot;33eeb100&quot;;
+      } &quot;d4cd942b&quot;;
+    } &quot;5ca7be0f&quot;;
+  } &quot;b78fbe33&quot;;
+}
+
+group SetOfficalGivenNameCccpatient(source src, target tgt) {
+  src -&gt; tgt.use = 'official' then {
+    src.item first as item where (linkId = 'Ccc.A.DE06') and answer.exists() then {
+      item.answer first as a then {
+        a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;
+      } &quot;e0827d5d&quot;;
+    } &quot;607c4e16&quot;;
+    src.item first as item where (linkId = 'Ccc.A.DE04') and answer.exists() then {
+      item.answer first as a then {
+        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;
+      } &quot;18edd234&quot;;
+    } &quot;e9deb0f3&quot;;
+    src.item first as item where (linkId = 'Ccc.A.DE05') and answer.exists() then {
+      item.answer first as a then {
+        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;
+      } &quot;18edd234&quot;;
+    } &quot;d95279c0&quot;;
+  } &quot;ef0f6810&quot;;
+}
+
+group MapValueSetExtCodeCccade16(source src, target tgt) {
+  src -&gt; tgt then {
+    src -&gt; tgt then {
+      src where value.code = 'Ccc.A.DE17' -&gt; tgt.gender = 'female' &quot;368f2e2a&quot;;
+      src where value.code = 'Ccc.A.DE18' -&gt; tgt.gender = 'male' &quot;2ae3beca&quot;;
+      src where value.code = 'Ccc.A.DE19' -&gt; tgt.gender = 'unknown' &quot;de22e8b7&quot;;
+    } &quot;mapbase&quot;;
+  } &quot;57676688&quot;;
+}
+
+group Cccpatient(source src : questionnaireResponse, target tgt : Patient) {
+  src.item first as item where (linkId = 'Ccc.A.DE01') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {
+        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;
+      } &quot;aCccade01&quot;;
+    } &quot;aCccade01&quot;;
+  } &quot;c243b020&quot;;
+  src.item first as item where (linkId = 'Ccc.A.DE03') and answer.exists() then {
+    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/anonymous',  ext.value = true &quot;aCccade03&quot;;
+  } &quot;54d12495&quot;;
+  src.item first as item where (linkId = 'Ccc.A.DE06') or (linkId = 'Ccc.A.DE04') or ((linkId = 'Ccc.A.DE05') and answer.exists()) then {
+    src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameCccpatient(src, name) &quot;30643049&quot;;
+  } &quot;7483ae2e&quot;;
+  src.item first as item where (linkId = 'Ccc.A.DE12') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aCccade12&quot;;
+    } &quot;aCccade12&quot;;
+  } &quot;c05cf203&quot;;
+  src.item first as item where (linkId = 'Ccc.A.DE08') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val -&gt; tgt.birthDate = val &quot;aCccade08&quot;;
+    } &quot;aCccade08&quot;;
+  } &quot;bded6ae8&quot;;
+  src.item first as item where (linkId = 'Ccc.A.DE16') and answer.exists() then {
+    item.answer first as a then MapValueSetExtCodeCccade16(a, tgt) &quot;225baa79&quot;;
+  } &quot;bf4b35f0&quot;;
+  src.item first as item where (linkId = 'Ccc.A.DE48') and answer.exists() then {
+    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/primarycaregiver',  ext.value = create('Reference') as ref,  ref.reference = 'relatated-person-id' &quot;aCccade48&quot;;
+  } &quot;04772b09&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'Ccc.A.DE31') and answer.exists() then {
+      item.answer first as a then {
+        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/Extension/motherVitalStatus',  ext.value = val &quot;aCccade31&quot;;
+      } &quot;aCccade31&quot;;
+    } &quot;7f408694&quot;;
+  } &quot;39f45e5d&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'Ccc.A.DE32') and answer.exists() then {
+      item.answer first as a then {
+        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/Extension/fatherVitalStatus',  ext.value = val &quot;aCccade32&quot;;
+      } &quot;aCccade32&quot;;
+    } &quot;06ec2524&quot;;
+  } &quot;f7424037&quot;;
+}
+
+group SetOfficalGivenNamerelatedperson(source src, target tgt) {
+  src -&gt; tgt.use = 'official' then {
+    src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+      itm1.item first as item where (linkId = 'Ccc.A.DE23') and answer.exists() then {
+        item.answer first as a then {
+          a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;
+        } &quot;e0827d5d&quot;;
+      } &quot;8c426238&quot;;
+    } &quot;4cc155ee&quot;;
+    src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+      itm1.item first as item where (linkId = 'Ccc.A.DE21') and answer.exists() then {
+        item.answer first as a then {
+          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;
+        } &quot;18edd234&quot;;
+      } &quot;ad3fbc15&quot;;
+    } &quot;8bc880ed&quot;;
+    src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+      itm1.item first as item where (linkId = 'Ccc.A.DE22') and answer.exists() then {
+        item.answer first as a then {
+          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;
+        } &quot;18edd234&quot;;
+      } &quot;e9ba83c8&quot;;
+    } &quot;17d8d988&quot;;
+  } &quot;f41b9847&quot;;
+}
+
+group MapValueSetExtCodeCccade24(source src, target tgt) {
+  src -&gt; tgt then {
+    src -&gt;  tgt.relationship = create('CodeableConcept') as cc,  cc.coding = create('Coding') as coding then {
+      src where value.code = 'Ccc.A.DE25' -&gt;  coding.code = 'MTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;abd34a78&quot;;
+      src where value.code = 'Ccc.A.DE26' -&gt;  coding.code = 'FTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;b53d1d15&quot;;
+      src where value.code = 'Ccc.A.DE27' -&gt;  coding.code = 'SIB',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;949ee35f&quot;;
+      src where value.code = 'Ccc.A.DE28' -&gt;  coding.code = 'EXT',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;7c5a4400&quot;;
+      src where value.code = 'Ccc.A.DE29' -&gt;  coding.code = 'PRNINLAW',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;544df0cc&quot;;
+      src where value.code = 'Ccc.A.DE30' -&gt;  coding.code = 'U',  coding.system = 'http://terminology.hl7.org/CodeSystem/v2-0131' &quot;8c2d96fc&quot;;
+    } &quot;4a251df5&quot;;
+  } &quot;1b7b6d7a&quot;;
+}
+
+group relatedperson(source src : questionnaireResponse, target tgt : RelatedPerson) {
+  src.item first as item where (linkId = 'Cccrelatedpersoncaregiverid') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/primary-caregiver',  ext.value = create('Reference') as ref,  ref.reference = append('/RelatedPerson/', val) &quot;aCccrelatedpersoncaregiverid&quot;;
+    } &quot;aCccrelatedpersoncaregiverid&quot;;
+  } &quot;04cd0ec2&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'Ccc.A.DE23') or (linkId = 'Ccc.A.DE21') or ((linkId = 'Ccc.A.DE22') and answer.exists()) then {
+      src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNamerelatedperson(src, name) &quot;8e1455ea&quot;;
+    } &quot;18dc21d5&quot;;
+  } &quot;f0e6459e&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'Ccc.A.DE35') and answer.exists() then {
+      item.answer first as a then {
+        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aCccade35&quot;;
+      } &quot;aCccade35&quot;;
+    } &quot;9731ba92&quot;;
+  } &quot;30b90d37&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {
+      item.answer first as a -&gt; tgt then {
+        src.subject as subject -&gt; tgt.patient = subject &quot;patient&quot;;
+      } &quot;arelatedpersonid&quot;;
+    } &quot;d79d72db&quot;;
+  } &quot;d50c1aed&quot;;
+  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {
+    itm1.item first as item where (linkId = 'Ccc.A.DE24') and answer.exists() then {
+      item.answer first as a then MapValueSetExtCodeCccade24(a, tgt) &quot;24e5e488&quot;;
+    } &quot;6adb811a&quot;;
+  } &quot;92a0e955&quot;;
+}
+
+group communicationrequestCccade38(source src, target tgt) {
+  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;053233cd&quot;;
+  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;
+  src.subject as subject -&gt; tgt.subject = subject &quot;fe3bec4d&quot;;
+  src -&gt; tgt.recipient = create('Reference') as ref then {
+    src -&gt; ref.type = 'RelatedPerson' &quot;c26ab31f&quot;;
+    src.item first as item where linkId = 'CccrelatedpersonCaregiveruuid' -&gt; tgt then {
+      item.answer first as a -&gt; tgt then {
+        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;25b16148&quot;;
+      } &quot;00b2016a&quot;;
+    } &quot;3c6c4c80&quot;;
+  } &quot;eaa7d3cf&quot;;
+}
+
+</pre></div>
+  </text>
+  <url value="https://smart.who.int/ccc/StructureMap/Ccca.registration.p"/>
+  <version value="0.1.0"/>
+  <name value="Ccca.registration.p"/>
+  <status value="active"/>
+  <date value="2026-04-07T13:36:32+00:00"/>
+  <publisher value="World Health Organization (WHO)"/>
+  <contact>
+    <name value="World Health Organization (WHO)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.who.int"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.who.int"/>
+    </telecom>
+  </contact>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <structure>
+    <url value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse"/>
+    <mode value="source"/>
+    <alias value="'questionnaireResponse'"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="target"/>
+    <alias value="'Bundle'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/patient"/>
+    <mode value="target"/>
+    <alias value="'Patient'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/relatedperson"/>
+    <mode value="target"/>
+    <alias value="'RelatedPerson'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/communicationrequest"/>
+    <mode value="target"/>
+    <alias value="'CommunicationRequest'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/Cccpatient"/>
+    <mode value="produced"/>
+    <alias value="'Ccc Patient'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/relatedperson"/>
+    <mode value="produced"/>
+    <alias value="'RelatedPerson'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/communicationrequest"/>
+    <mode value="produced"/>
+    <alias value="'CommunicationRequest'"/>
+  </structure>
+  <group>
+    <name value="bundletrans"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <type value="questionnaireResponse"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="bundle"/>
+      <type value="Bundle"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="id"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="bundle"/>
+        <contextType value="variable"/>
+        <element value="id"/>
+        <transform value="uuid"/>
+      </target>
+    </rule>
+    <rule>
+      <name value="type"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="bundle"/>
+        <contextType value="variable"/>
+        <element value="type"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="batch"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="put-Cccpatient"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="bundle"/>
+        <contextType value="variable"/>
+        <element value="entry"/>
+        <variable value="entry"/>
+      </target>
+      <rule>
+        <name value="cf5b2513"/>
+        <source>
+          <context value="src"/>
+          <element value="subject"/>
+          <variable value="subject"/>
+        </source>
+        <rule>
+          <name value="1153aa45"/>
+          <source>
+            <context value="subject"/>
+            <element value="id"/>
+            <variable value="idval"/>
+          </source>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="request"/>
+            <variable value="request"/>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="method"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="PUT"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="url"/>
+            <transform value="append"/>
+            <parameter>
+              <valueString value="/Patient/"/>
+            </parameter>
+            <parameter>
+              <valueId value="idval"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+      <rule>
+        <name value="75beb242"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="entry"/>
+          <contextType value="variable"/>
+          <element value="resource"/>
+          <variable value="tgt"/>
+          <transform value="create"/>
+          <parameter>
+            <valueString value="Patient"/>
+          </parameter>
+        </target>
+        <rule>
+          <name value="77f3ac03"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <contextType value="variable"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="tgt"/>
+            </parameter>
+          </target>
+          <dependent>
+            <name value="Cccpatient"/>
+            <variable value="src"/>
+            <variable value="tgt"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="54daac33"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="74cc3511"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'relatedpersonid') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="00574b8e"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <context value="bundle"/>
+            <contextType value="variable"/>
+            <element value="entry"/>
+            <variable value="entry"/>
+          </target>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="request"/>
+            <variable value="request"/>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="method"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="POST"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="resource"/>
+            <variable value="tgt"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="RelatedPerson"/>
+            </parameter>
+          </target>
+          <rule>
+            <name value="8f0b9602"/>
+            <source>
+              <context value="src"/>
+            </source>
+            <target>
+              <contextType value="variable"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="tgt"/>
+              </parameter>
+            </target>
+            <dependent>
+              <name value="relatedperson"/>
+              <variable value="src"/>
+              <variable value="tgt"/>
+            </dependent>
+          </rule>
+          <rule>
+            <name value="eec70023"/>
+            <source>
+              <context value="item"/>
+              <element value="answer"/>
+              <listMode value="first"/>
+              <variable value="a"/>
+            </source>
+            <rule>
+              <name value="78d8bc69"/>
+              <source>
+                <context value="a"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="request"/>
+                <contextType value="variable"/>
+                <element value="url"/>
+                <transform value="append"/>
+                <parameter>
+                  <valueString value="/RelatedPerson/"/>
+                </parameter>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="b78fbe33"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="5ca7be0f"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE38') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="d4cd942b"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <context value="bundle"/>
+            <contextType value="variable"/>
+            <element value="entry"/>
+            <variable value="entry"/>
+          </target>
+          <rule>
+            <name value="e5343f50"/>
+            <source>
+              <context value="src"/>
+            </source>
+            <target>
+              <context value="entry"/>
+              <contextType value="variable"/>
+              <element value="request"/>
+              <variable value="request"/>
+            </target>
+            <target>
+              <context value="request"/>
+              <contextType value="variable"/>
+              <element value="method"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="POST"/>
+              </parameter>
+            </target>
+            <target>
+              <contextType value="variable"/>
+              <variable value="uuid"/>
+              <transform value="uuid"/>
+            </target>
+            <target>
+              <context value="request"/>
+              <contextType value="variable"/>
+              <element value="url"/>
+              <transform value="append"/>
+              <parameter>
+                <valueString value="/CommunicationRequest/"/>
+              </parameter>
+              <parameter>
+                <valueId value="uuid"/>
+              </parameter>
+            </target>
+          </rule>
+          <rule>
+            <name value="33eeb100"/>
+            <source>
+              <context value="src"/>
+            </source>
+            <target>
+              <context value="entry"/>
+              <contextType value="variable"/>
+              <element value="resource"/>
+              <variable value="tgt"/>
+              <transform value="create"/>
+              <parameter>
+                <valueString value="CommunicationRequest"/>
+              </parameter>
+            </target>
+            <rule>
+              <name value="82d8a873"/>
+              <source>
+                <context value="src"/>
+              </source>
+              <target>
+                <contextType value="variable"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="tgt"/>
+                </parameter>
+              </target>
+              <dependent>
+                <name value="communicationrequestCccade38"/>
+                <variable value="src"/>
+                <variable value="tgt"/>
+              </dependent>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="SetOfficalGivenNameCccpatient"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="ef0f6810"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="use"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="official"/>
+        </parameter>
+      </target>
+      <rule>
+        <name value="607c4e16"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE06') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="e0827d5d"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <rule>
+            <name value="77d1bd4f"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="family"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="e9deb0f3"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE04') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="18edd234"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <rule>
+            <name value="5d3d44f6"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="given"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="d95279c0"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE05') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="18edd234"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <rule>
+            <name value="5d3d44f6"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="given"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapValueSetExtCodeCccade16"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="57676688"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <contextType value="variable"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="tgt"/>
+        </parameter>
+      </target>
+      <rule>
+        <name value="mapbase"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <contextType value="variable"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="tgt"/>
+          </parameter>
+        </target>
+        <rule>
+          <name value="368f2e2a"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE17'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="gender"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="female"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="2ae3beca"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE18'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="gender"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="male"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="de22e8b7"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE19'"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="gender"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="unknown"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="Cccpatient"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <type value="questionnaireResponse"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="Patient"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="c243b020"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE01') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="aCccade01"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <rule>
+          <name value="aCccade01"/>
+          <source>
+            <context value="a"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="identifier"/>
+            <variable value="identifier"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="Identifier"/>
+            </parameter>
+          </target>
+          <rule>
+            <name value="id"/>
+            <source>
+              <context value="val"/>
+            </source>
+            <target>
+              <context value="identifier"/>
+              <contextType value="variable"/>
+              <element value="value"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="identifier"/>
+              <contextType value="variable"/>
+              <element value="use"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="official"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="54d12495"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE03') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="aCccade03"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="extension"/>
+          <variable value="ext"/>
+          <transform value="create"/>
+          <parameter>
+            <valueString value="Extension"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="ext"/>
+          <contextType value="variable"/>
+          <element value="url"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="https://smart.who.int/ccc/StructureDefinition/anonymous"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="ext"/>
+          <contextType value="variable"/>
+          <element value="value"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueBoolean value="true"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="7483ae2e"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE06') or (linkId = 'Ccc.A.DE04') or ((linkId = 'Ccc.A.DE05') and answer.exists())"/>
+      </source>
+      <rule>
+        <name value="30643049"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <contextType value="variable"/>
+          <variable value="target"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="tgt"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="target"/>
+          <contextType value="variable"/>
+          <element value="name"/>
+          <variable value="name"/>
+        </target>
+        <dependent>
+          <name value="SetOfficalGivenNameCccpatient"/>
+          <variable value="src"/>
+          <variable value="name"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="c05cf203"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE12') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="aCccade12"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <rule>
+          <name value="aCccade12"/>
+          <source>
+            <context value="a"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="extension"/>
+            <variable value="ext"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="Extension"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="ext"/>
+            <contextType value="variable"/>
+            <element value="url"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="https://smart.who.int/ccc/StructureDefinition/birthDateEstimator"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="ext"/>
+            <contextType value="variable"/>
+            <element value="value"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="bded6ae8"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE08') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="aCccade08"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <rule>
+          <name value="aCccade08"/>
+          <source>
+            <context value="a"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="birthDate"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="bf4b35f0"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE16') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="225baa79"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <dependent>
+          <name value="MapValueSetExtCodeCccade16"/>
+          <variable value="a"/>
+          <variable value="tgt"/>
+        </dependent>
+      </rule>
+    </rule>
+    <rule>
+      <name value="04772b09"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.A.DE48') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="aCccade48"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="extension"/>
+          <variable value="ext"/>
+          <transform value="create"/>
+          <parameter>
+            <valueString value="Extension"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="ext"/>
+          <contextType value="variable"/>
+          <element value="url"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="https://smart.who.int/ccc/StructureDefinition/primarycaregiver"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="ext"/>
+          <contextType value="variable"/>
+          <element value="value"/>
+          <variable value="ref"/>
+          <transform value="create"/>
+          <parameter>
+            <valueString value="Reference"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="ref"/>
+          <contextType value="variable"/>
+          <element value="reference"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="relatated-person-id"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="39f45e5d"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="7f408694"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE31') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="aCccade31"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <rule>
+            <name value="aCccade31"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="extension"/>
+              <variable value="ext"/>
+              <transform value="create"/>
+              <parameter>
+                <valueString value="Extension"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="ext"/>
+              <contextType value="variable"/>
+              <element value="url"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="https://smart.who.int/ccc/Extension/motherVitalStatus"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="ext"/>
+              <contextType value="variable"/>
+              <element value="value"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="f7424037"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="06ec2524"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE32') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="aCccade32"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <rule>
+            <name value="aCccade32"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="extension"/>
+              <variable value="ext"/>
+              <transform value="create"/>
+              <parameter>
+                <valueString value="Extension"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="ext"/>
+              <contextType value="variable"/>
+              <element value="url"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="https://smart.who.int/ccc/Extension/fatherVitalStatus"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="ext"/>
+              <contextType value="variable"/>
+              <element value="value"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="SetOfficalGivenNamerelatedperson"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="f41b9847"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="use"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="official"/>
+        </parameter>
+      </target>
+      <rule>
+        <name value="4cc155ee"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="itm1"/>
+          <condition value="linkId = 'Ccc.A.DE21.1'"/>
+        </source>
+        <rule>
+          <name value="8c426238"/>
+          <source>
+            <context value="itm1"/>
+            <element value="item"/>
+            <listMode value="first"/>
+            <variable value="item"/>
+            <condition value="(linkId = 'Ccc.A.DE23') and answer.exists()"/>
+          </source>
+          <rule>
+            <name value="e0827d5d"/>
+            <source>
+              <context value="item"/>
+              <element value="answer"/>
+              <listMode value="first"/>
+              <variable value="a"/>
+            </source>
+            <rule>
+              <name value="77d1bd4f"/>
+              <source>
+                <context value="a"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="family"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="8bc880ed"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="itm1"/>
+          <condition value="linkId = 'Ccc.A.DE21.1'"/>
+        </source>
+        <rule>
+          <name value="ad3fbc15"/>
+          <source>
+            <context value="itm1"/>
+            <element value="item"/>
+            <listMode value="first"/>
+            <variable value="item"/>
+            <condition value="(linkId = 'Ccc.A.DE21') and answer.exists()"/>
+          </source>
+          <rule>
+            <name value="18edd234"/>
+            <source>
+              <context value="item"/>
+              <element value="answer"/>
+              <listMode value="first"/>
+              <variable value="a"/>
+            </source>
+            <rule>
+              <name value="5d3d44f6"/>
+              <source>
+                <context value="a"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="given"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+      <rule>
+        <name value="17d8d988"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="itm1"/>
+          <condition value="linkId = 'Ccc.A.DE21.1'"/>
+        </source>
+        <rule>
+          <name value="e9ba83c8"/>
+          <source>
+            <context value="itm1"/>
+            <element value="item"/>
+            <listMode value="first"/>
+            <variable value="item"/>
+            <condition value="(linkId = 'Ccc.A.DE22') and answer.exists()"/>
+          </source>
+          <rule>
+            <name value="18edd234"/>
+            <source>
+              <context value="item"/>
+              <element value="answer"/>
+              <listMode value="first"/>
+              <variable value="a"/>
+            </source>
+            <rule>
+              <name value="5d3d44f6"/>
+              <source>
+                <context value="a"/>
+                <element value="value"/>
+                <variable value="val"/>
+              </source>
+              <target>
+                <context value="tgt"/>
+                <contextType value="variable"/>
+                <element value="given"/>
+                <transform value="copy"/>
+                <parameter>
+                  <valueId value="val"/>
+                </parameter>
+              </target>
+            </rule>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="MapValueSetExtCodeCccade24"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="1b7b6d7a"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <contextType value="variable"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="tgt"/>
+        </parameter>
+      </target>
+      <rule>
+        <name value="4a251df5"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <contextType value="variable"/>
+          <element value="relationship"/>
+          <variable value="cc"/>
+          <transform value="create"/>
+          <parameter>
+            <valueString value="CodeableConcept"/>
+          </parameter>
+        </target>
+        <target>
+          <context value="cc"/>
+          <contextType value="variable"/>
+          <element value="coding"/>
+          <variable value="coding"/>
+          <transform value="create"/>
+          <parameter>
+            <valueString value="Coding"/>
+          </parameter>
+        </target>
+        <rule>
+          <name value="abd34a78"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE25'"/>
+          </source>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="MTH"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="system"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="b53d1d15"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE26'"/>
+          </source>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="FTH"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="system"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="949ee35f"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE27'"/>
+          </source>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="SIB"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="system"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="7c5a4400"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE28'"/>
+          </source>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="EXT"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="system"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="544df0cc"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE29'"/>
+          </source>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="PRNINLAW"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="system"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="8c2d96fc"/>
+          <source>
+            <context value="src"/>
+            <condition value="value.code = 'Ccc.A.DE30'"/>
+          </source>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="code"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="U"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="coding"/>
+            <contextType value="variable"/>
+            <element value="system"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="http://terminology.hl7.org/CodeSystem/v2-0131"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="relatedperson"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <type value="questionnaireResponse"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="RelatedPerson"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="04cd0ec2"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Cccrelatedpersoncaregiverid') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="aCccrelatedpersoncaregiverid"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <rule>
+          <name value="aCccrelatedpersoncaregiverid"/>
+          <source>
+            <context value="a"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="extension"/>
+            <variable value="ext"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="Extension"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="ext"/>
+            <contextType value="variable"/>
+            <element value="url"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="https://smart.who.int/ccc/StructureDefinition/primary-caregiver"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="ext"/>
+            <contextType value="variable"/>
+            <element value="value"/>
+            <variable value="ref"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="Reference"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="ref"/>
+            <contextType value="variable"/>
+            <element value="reference"/>
+            <transform value="append"/>
+            <parameter>
+              <valueString value="/RelatedPerson/"/>
+            </parameter>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="f0e6459e"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="18dc21d5"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE23') or (linkId = 'Ccc.A.DE21') or ((linkId = 'Ccc.A.DE22') and answer.exists())"/>
+        </source>
+        <rule>
+          <name value="8e1455ea"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <contextType value="variable"/>
+            <variable value="target"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="tgt"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="target"/>
+            <contextType value="variable"/>
+            <element value="name"/>
+            <variable value="name"/>
+          </target>
+          <dependent>
+            <name value="SetOfficalGivenNamerelatedperson"/>
+            <variable value="src"/>
+            <variable value="name"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="30b90d37"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="9731ba92"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE35') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="aCccade35"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <rule>
+            <name value="aCccade35"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="telecom"/>
+              <variable value="tel"/>
+            </target>
+            <target>
+              <context value="tel"/>
+              <contextType value="variable"/>
+              <element value="system"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="phone"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="tel"/>
+              <contextType value="variable"/>
+              <element value="use"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="mobile"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="tel"/>
+              <contextType value="variable"/>
+              <element value="value"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="d50c1aed"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="d79d72db"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'relatedpersonid') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="arelatedpersonid"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <target>
+            <contextType value="variable"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="tgt"/>
+            </parameter>
+          </target>
+          <rule>
+            <name value="patient"/>
+            <source>
+              <context value="src"/>
+              <element value="subject"/>
+              <variable value="subject"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="patient"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="subject"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="92a0e955"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="itm1"/>
+        <condition value="linkId = 'Ccc.A.DE21.1'"/>
+      </source>
+      <rule>
+        <name value="6adb811a"/>
+        <source>
+          <context value="itm1"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="(linkId = 'Ccc.A.DE24') and answer.exists()"/>
+        </source>
+        <rule>
+          <name value="24e5e488"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <dependent>
+            <name value="MapValueSetExtCodeCccade24"/>
+            <variable value="a"/>
+            <variable value="tgt"/>
+          </dependent>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="communicationrequestCccade38"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="053233cd"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="category"/>
+        <variable value="cc"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="CodeableConcept"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="cc"/>
+        <contextType value="variable"/>
+        <element value="coding"/>
+        <variable value="c"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Coding"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="c"/>
+        <contextType value="variable"/>
+        <element value="system"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="http://hl7.org/fhir/ValueSet/communication-category"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="c"/>
+        <contextType value="variable"/>
+        <element value="code"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="notification"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="quest"/>
+      <source>
+        <context value="src"/>
+        <element value="questionnaire"/>
+        <variable value="q"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="about"/>
+        <variable value="ref"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Reference"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="ref"/>
+        <contextType value="variable"/>
+        <element value="type"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="Questionnaire"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="ref"/>
+        <contextType value="variable"/>
+        <element value="reference"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="q"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="fe3bec4d"/>
+      <source>
+        <context value="src"/>
+        <element value="subject"/>
+        <variable value="subject"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="subject"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="subject"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="eaa7d3cf"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="recipient"/>
+        <variable value="ref"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Reference"/>
+        </parameter>
+      </target>
+      <rule>
+        <name value="c26ab31f"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="ref"/>
+          <contextType value="variable"/>
+          <element value="type"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueString value="RelatedPerson"/>
+          </parameter>
+        </target>
+      </rule>
+      <rule>
+        <name value="3c6c4c80"/>
+        <source>
+          <context value="src"/>
+          <element value="item"/>
+          <listMode value="first"/>
+          <variable value="item"/>
+          <condition value="linkId = 'CccrelatedpersonCaregiveruuid'"/>
+        </source>
+        <target>
+          <contextType value="variable"/>
+          <transform value="copy"/>
+          <parameter>
+            <valueId value="tgt"/>
+          </parameter>
+        </target>
+        <rule>
+          <name value="00b2016a"/>
+          <source>
+            <context value="item"/>
+            <element value="answer"/>
+            <listMode value="first"/>
+            <variable value="a"/>
+          </source>
+          <target>
+            <contextType value="variable"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="tgt"/>
+            </parameter>
+          </target>
+          <rule>
+            <name value="25b16148"/>
+            <source>
+              <context value="a"/>
+              <element value="value"/>
+              <variable value="val"/>
+            </source>
+            <target>
+              <context value="ref"/>
+              <contextType value="variable"/>
+              <element value="reference"/>
+              <transform value="append"/>
+              <parameter>
+                <valueString value="/RelatedPerson/"/>
+              </parameter>
+              <parameter>
+                <valueId value="val"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

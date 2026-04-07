@@ -1,0 +1,888 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://smart.who.int/ccc/StructureMap/Ccc.b22.hemoglobin> a fhir:StructureMap ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:id [ fhir:v "Ccc.b22.hemoglobin"] ; # 
+  fhir:text [
+     fhir:status [ fhir:v "generated" ] ;
+     fhir:div [ fhir:v "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map \"https://smart.who.int/ccc/StructureMap/Ccc.b22.hemoglobin\" = \"Ccc.b22.hemoglobin\"#xD;\n#xD;\n#xD;\nuses \"http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse\" alias 'questionnaireResponse' as source#xD;\nuses \"http://hl7.org/fhir/StructureDefinition/Bundle\" alias 'Bundle' as target#xD;\nuses \"https://smart.who.int/ccc/StructureDefinition/observation\" alias 'Observation' as target#xD;\nuses \"https://smart.who.int/ccc/StructureDefinition/Cccobservation\" alias 'Ccc Observation' as produced#xD;\n#xD;\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {#xD;\n  src -&gt; bundle.id = uuid() \"id\";#xD;\n  src -&gt; bundle.type = 'batch' \"type\";#xD;\n  src.item first as item where (linkId = 'Ccc.B22.DE81') and answer.exists() then {#xD;\n    src -&gt; bundle.entry as entry then {#xD;\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) \"b50ac4c5\";#xD;\n      src -&gt; entry.resource = create('Observation') as tgt then {#xD;\n        src -&gt; tgt then CccobservationCccb22de81(src, tgt) \"f56b8d65\";#xD;\n      } \"42cac8d1\";#xD;\n    } \"00ff1e0b\";#xD;\n  } \"f4f9d360\";#xD;\n  src.item first as item where (linkId = 'Ccc.B22.DE82') and answer.exists() then {#xD;\n    src -&gt; bundle.entry as entry then {#xD;\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) \"b50ac4c5\";#xD;\n      src -&gt; entry.resource = create('Observation') as tgt then {#xD;\n        src -&gt; tgt then CccobservationCccb22de82(src, tgt) \"1118b2e0\";#xD;\n      } \"565f125e\";#xD;\n    } \"cc5012ad\";#xD;\n  } \"ba583c69\";#xD;\n}#xD;\n#xD;\ngroup CccobservationCccb22de81(source src, target tgt) {#xD;\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() \"id-Cccb22de81\";#xD;\n  src.encounter as encounter -&gt; tgt.encounter = encounter \"35bc6b82\";#xD;\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B22.DE81' \"code-Cccb22de81\";#xD;\n  src.item as itemtimestamp where linkId = 'timestamp' then {#xD;\n    itemtimestamp.answer first as atimestamp then {#xD;\n      atimestamp.value as val -&gt; tgt.issued = val \"5af77f2c\";#xD;\n    } \"7f22f29f\";#xD;\n  } \"aae7a11d\";#xD;\n  src.subject as subject -&gt; tgt.subject = subject \"patient\";#xD;\n  src.item first as item where (linkId = 'Ccc.B22.DE81') and answer.exists() then {#xD;\n    item.answer first as a then {#xD;\n      a.value as val -&gt;  tgt.value = val,  tgt.status = 'final' \"afa0ccc0\";#xD;\n    } \"d40466ff\";#xD;\n  } \"dfc1d2c2\";#xD;\n}#xD;\n#xD;\ngroup CccobservationCccb22de82(source src, target tgt) {#xD;\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() \"id-Cccb22de82\";#xD;\n  src.encounter as encounter -&gt; tgt.encounter = encounter \"35bc6b82\";#xD;\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B22.DE82' \"code-Cccb22de82\";#xD;\n  src.item as itemtimestamp where linkId = 'timestamp' then {#xD;\n    itemtimestamp.answer first as atimestamp then {#xD;\n      atimestamp.value as val -&gt; tgt.issued = val \"5af77f2c\";#xD;\n    } \"7f22f29f\";#xD;\n  } \"aae7a11d\";#xD;\n  src.subject as subject -&gt; tgt.subject = subject \"patient\";#xD;\n  src.item first as item where (linkId = 'Ccc.B22.DE82') and answer.exists() then {#xD;\n    item.answer first as a then {#xD;\n      a.value as val then {#xD;\n        val where val.code = 'true' -&gt;  tgt.status = 'final',  tgt.value = true \"8a65aaa5\";#xD;\n      } \"26c2c8c7\";#xD;\n    } \"721205d5\";#xD;\n  } \"cc79d81a\";#xD;\n}#xD;\n#xD;\n</pre></div>"^^rdf:XMLLiteral ]
+  ] ; # 
+  fhir:url [
+     fhir:v "https://smart.who.int/ccc/StructureMap/Ccc.b22.hemoglobin"^^xsd:anyURI ;
+     fhir:l <https://smart.who.int/ccc/StructureMap/Ccc.b22.hemoglobin>
+  ] ; # 
+  fhir:version [ fhir:v "0.1.0"] ; # 
+  fhir:name [ fhir:v "Ccc.b22.hemoglobin"] ; # 
+  fhir:status [ fhir:v "active"] ; # 
+  fhir:date [ fhir:v "2026-04-07T13:42:05+00:00"^^xsd:dateTime] ; # 
+  fhir:publisher [ fhir:v "World Health Organization (WHO)"] ; # 
+  fhir:contact ( [
+     fhir:name [ fhir:v "World Health Organization (WHO)" ] ;
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.who.int" ]
+     ] )
+  ] [
+     fhir:telecom ( [
+       fhir:system [ fhir:v "url" ] ;
+       fhir:value [ fhir:v "https://www.who.int" ]
+     ] )
+  ] ) ; # 
+  fhir:jurisdiction ( [
+     fhir:coding ( [
+       fhir:system [
+         fhir:v "http://unstats.un.org/unsd/methods/m49/m49.htm"^^xsd:anyURI ;
+         fhir:l <http://unstats.un.org/unsd/methods/m49/m49.htm>
+       ] ;
+       fhir:code [ fhir:v "001" ]
+     ] )
+  ] ) ; # 
+  fhir:structure ( [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse>
+     ] ;
+     fhir:mode [ fhir:v "source" ] ;
+     fhir:alias [ fhir:v "'questionnaireResponse'" ]
+  ] [
+     fhir:url [
+       fhir:v "http://hl7.org/fhir/StructureDefinition/Bundle"^^xsd:anyURI ;
+       fhir:l <http://hl7.org/fhir/StructureDefinition/Bundle>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "'Bundle'" ]
+  ] [
+     fhir:url [
+       fhir:v "https://smart.who.int/ccc/StructureDefinition/observation"^^xsd:anyURI ;
+       fhir:l <https://smart.who.int/ccc/StructureDefinition/observation>
+     ] ;
+     fhir:mode [ fhir:v "target" ] ;
+     fhir:alias [ fhir:v "'Observation'" ]
+  ] [
+     fhir:url [
+       fhir:v "https://smart.who.int/ccc/StructureDefinition/Cccobservation"^^xsd:anyURI ;
+       fhir:l <https://smart.who.int/ccc/StructureDefinition/Cccobservation>
+     ] ;
+     fhir:mode [ fhir:v "produced" ] ;
+     fhir:alias [ fhir:v "'Ccc Observation'" ]
+  ] ) ; # 
+  fhir:group ( [
+     fhir:name [ fhir:v "bundletrans" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:type [ fhir:v "questionnaireResponse" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "bundle" ] ;
+       fhir:type [ fhir:v "Bundle" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "id" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:transform [ fhir:v "uuid" ]
+       ] )
+     ] [
+       fhir:name [ fhir:v "type" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "bundle" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "type" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "batch"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "f4f9d360" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:listMode [ fhir:v "first" ] ;
+         fhir:variable [ fhir:v "item" ] ;
+         fhir:condition [ fhir:v "(linkId = 'Ccc.B22.DE81') and answer.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "00ff1e0b" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "bundle" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "entry" ] ;
+           fhir:variable [ fhir:v "entry" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "b50ac4c5" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "src" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "entry" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "request" ] ;
+             fhir:variable [ fhir:v "request" ]
+           ] [
+             fhir:context [ fhir:v "request" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "method" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "POST"
+               ]
+             ] )
+           ] [
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:variable [ fhir:v "uuid" ] ;
+             fhir:transform [ fhir:v "uuid" ]
+           ] [
+             fhir:context [ fhir:v "request" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "url" ] ;
+             fhir:transform [ fhir:v "append" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "/Observation/"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "uuid"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "42cac8d1" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "src" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "entry" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "resource" ] ;
+             fhir:variable [ fhir:v "tgt" ] ;
+             fhir:transform [ fhir:v "create" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "Observation"
+               ]
+             ] )
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "f56b8d65" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "src" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "tgt"
+                 ]
+               ] )
+             ] ) ;
+             fhir:dependent ( [
+               fhir:name [ fhir:v "CccobservationCccb22de81" ] ;
+               fhir:variable ( [ fhir:v "src" ] [ fhir:v "tgt" ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "ba583c69" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:listMode [ fhir:v "first" ] ;
+         fhir:variable [ fhir:v "item" ] ;
+         fhir:condition [ fhir:v "(linkId = 'Ccc.B22.DE82') and answer.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "cc5012ad" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "src" ]
+         ] ) ;
+         fhir:target ( [
+           fhir:context [ fhir:v "bundle" ] ;
+           fhir:contextType [ fhir:v "variable" ] ;
+           fhir:element [ fhir:v "entry" ] ;
+           fhir:variable [ fhir:v "entry" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "b50ac4c5" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "src" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "entry" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "request" ] ;
+             fhir:variable [ fhir:v "request" ]
+           ] [
+             fhir:context [ fhir:v "request" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "method" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "POST"
+               ]
+             ] )
+           ] [
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:variable [ fhir:v "uuid" ] ;
+             fhir:transform [ fhir:v "uuid" ]
+           ] [
+             fhir:context [ fhir:v "request" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "url" ] ;
+             fhir:transform [ fhir:v "append" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "/Observation/"
+               ]
+             ] [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "uuid"
+               ]
+             ] )
+           ] )
+         ] [
+           fhir:name [ fhir:v "565f125e" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "src" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "entry" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "resource" ] ;
+             fhir:variable [ fhir:v "tgt" ] ;
+             fhir:transform [ fhir:v "create" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "Observation"
+               ]
+             ] )
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "1118b2e0" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "src" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Id ;
+                   fhir:v "tgt"
+                 ]
+               ] )
+             ] ) ;
+             fhir:dependent ( [
+               fhir:name [ fhir:v "CccobservationCccb22de82" ] ;
+               fhir:variable ( [ fhir:v "src" ] [ fhir:v "tgt" ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "CccobservationCccb22de81" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "id-Cccb22de81" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "identifier" ] ;
+         fhir:variable [ fhir:v "CodeID" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Identifier"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "system" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "http://hl7.org/fhir/namingsystem-identifier-type"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "use" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "official"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "value" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "uuid"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:transform [ fhir:v "uuid" ]
+       ] )
+     ] [
+       fhir:name [ fhir:v "35bc6b82" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "encounter" ] ;
+         fhir:variable [ fhir:v "encounter" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "encounter" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "encounter"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "code-Cccb22de81" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:variable [ fhir:v "subject" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "subject"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meta" ] ;
+         fhir:variable [ fhir:v "newMeta" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Meta"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "newMeta" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "profile" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "concept" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "CodeableConcept"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "concept" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "coding" ] ;
+         fhir:variable [ fhir:v "coding" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Coding"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "coding" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "system" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "coding" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Ccc.B22.DE81"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "aae7a11d" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:variable [ fhir:v "itemtimestamp" ] ;
+         fhir:condition [ fhir:v "linkId = 'timestamp'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "7f22f29f" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "itemtimestamp" ] ;
+           fhir:element [ fhir:v "answer" ] ;
+           fhir:listMode [ fhir:v "first" ] ;
+           fhir:variable [ fhir:v "atimestamp" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "5af77f2c" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "atimestamp" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "issued" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "val"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "patient" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:variable [ fhir:v "subject" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "subject"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "dfc1d2c2" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:listMode [ fhir:v "first" ] ;
+         fhir:variable [ fhir:v "item" ] ;
+         fhir:condition [ fhir:v "(linkId = 'Ccc.B22.DE81') and answer.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "d40466ff" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "item" ] ;
+           fhir:element [ fhir:v "answer" ] ;
+           fhir:listMode [ fhir:v "first" ] ;
+           fhir:variable [ fhir:v "a" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "afa0ccc0" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "a" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "val"
+               ]
+             ] )
+           ] [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "status" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:String ;
+                 fhir:v "final"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] [
+     fhir:name [ fhir:v "CccobservationCccb22de82" ] ;
+     fhir:typeMode [ fhir:v "none" ] ;
+     fhir:input ( [
+       fhir:name [ fhir:v "src" ] ;
+       fhir:mode [ fhir:v "source" ]
+     ] [
+       fhir:name [ fhir:v "tgt" ] ;
+       fhir:mode [ fhir:v "target" ]
+     ] ) ;
+     fhir:rule ( [
+       fhir:name [ fhir:v "id-Cccb22de82" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "identifier" ] ;
+         fhir:variable [ fhir:v "CodeID" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Identifier"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "system" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "http://hl7.org/fhir/namingsystem-identifier-type"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "use" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "official"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "value" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "uuid"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "CodeID" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "id" ] ;
+         fhir:transform [ fhir:v "uuid" ]
+       ] )
+     ] [
+       fhir:name [ fhir:v "35bc6b82" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "encounter" ] ;
+         fhir:variable [ fhir:v "encounter" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "encounter" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "encounter"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "code-Cccb22de82" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:variable [ fhir:v "subject" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "subject"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "meta" ] ;
+         fhir:variable [ fhir:v "newMeta" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Meta"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "newMeta" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "profile" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:variable [ fhir:v "concept" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "CodeableConcept"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "concept" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "coding" ] ;
+         fhir:variable [ fhir:v "coding" ] ;
+         fhir:transform [ fhir:v "create" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Coding"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "coding" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "system" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
+           ]
+         ] )
+       ] [
+         fhir:context [ fhir:v "coding" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "code" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:String ;
+             fhir:v "Ccc.B22.DE82"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "aae7a11d" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:variable [ fhir:v "itemtimestamp" ] ;
+         fhir:condition [ fhir:v "linkId = 'timestamp'" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "7f22f29f" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "itemtimestamp" ] ;
+           fhir:element [ fhir:v "answer" ] ;
+           fhir:listMode [ fhir:v "first" ] ;
+           fhir:variable [ fhir:v "atimestamp" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "5af77f2c" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "atimestamp" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:target ( [
+             fhir:context [ fhir:v "tgt" ] ;
+             fhir:contextType [ fhir:v "variable" ] ;
+             fhir:element [ fhir:v "issued" ] ;
+             fhir:transform [ fhir:v "copy" ] ;
+             fhir:parameter ( [
+               fhir:value [
+                 a fhir:Id ;
+                 fhir:v "val"
+               ]
+             ] )
+           ] )
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "patient" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:variable [ fhir:v "subject" ]
+       ] ) ;
+       fhir:target ( [
+         fhir:context [ fhir:v "tgt" ] ;
+         fhir:contextType [ fhir:v "variable" ] ;
+         fhir:element [ fhir:v "subject" ] ;
+         fhir:transform [ fhir:v "copy" ] ;
+         fhir:parameter ( [
+           fhir:value [
+             a fhir:Id ;
+             fhir:v "subject"
+           ]
+         ] )
+       ] )
+     ] [
+       fhir:name [ fhir:v "cc79d81a" ] ;
+       fhir:source ( [
+         fhir:context [ fhir:v "src" ] ;
+         fhir:element [ fhir:v "item" ] ;
+         fhir:listMode [ fhir:v "first" ] ;
+         fhir:variable [ fhir:v "item" ] ;
+         fhir:condition [ fhir:v "(linkId = 'Ccc.B22.DE82') and answer.exists()" ]
+       ] ) ;
+       fhir:rule ( [
+         fhir:name [ fhir:v "721205d5" ] ;
+         fhir:source ( [
+           fhir:context [ fhir:v "item" ] ;
+           fhir:element [ fhir:v "answer" ] ;
+           fhir:listMode [ fhir:v "first" ] ;
+           fhir:variable [ fhir:v "a" ]
+         ] ) ;
+         fhir:rule ( [
+           fhir:name [ fhir:v "26c2c8c7" ] ;
+           fhir:source ( [
+             fhir:context [ fhir:v "a" ] ;
+             fhir:element [ fhir:v "value" ] ;
+             fhir:variable [ fhir:v "val" ]
+           ] ) ;
+           fhir:rule ( [
+             fhir:name [ fhir:v "8a65aaa5" ] ;
+             fhir:source ( [
+               fhir:context [ fhir:v "val" ] ;
+               fhir:condition [ fhir:v "val.code = 'true'" ]
+             ] ) ;
+             fhir:target ( [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "status" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:String ;
+                   fhir:v "final"
+                 ]
+               ] )
+             ] [
+               fhir:context [ fhir:v "tgt" ] ;
+               fhir:contextType [ fhir:v "variable" ] ;
+               fhir:element [ fhir:v "value" ] ;
+               fhir:transform [ fhir:v "copy" ] ;
+               fhir:parameter ( [
+                 fhir:value [
+                   a fhir:Boolean ;
+                   fhir:v true
+                 ]
+               ] )
+             ] )
+           ] )
+         ] )
+       ] )
+     ] )
+  ] ) . # 
+
+# -------------------------------------------------------------------------------------
+

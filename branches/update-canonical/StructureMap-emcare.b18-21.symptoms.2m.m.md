@@ -1,0 +1,1706 @@
+# emcare.b18-21.symptoms.2m.m - WHO FHIR Implementation Guide (IG): Integrated Management of Childhood Illness (IMCI) in emergencies v0.1.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **emcare.b18-21.symptoms.2m.m**
+
+## StructureMap: emcare.b18-21.symptoms.2m.m 
+
+| | |
+| :--- | :--- |
+| *Official URL*:https://smart.who.int/ccc/StructureMap/emcare.b18-21.symptoms.2m.m | *Version*:0.1.0 |
+| Active as of 2026-04-07 | *Computable Name*:emcare.b18-21.symptoms.2m.m |
+
+```
+map "https://smart.who.int/ccc/StructureMap/emcare.b18-21.symptoms.2m.m" = "emcare.b18-21.symptoms.2m.m"
+
+
+uses "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse" alias 'questionnaireResponse' as source
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias 'Bundle' as target
+uses "https://smart.who.int/ccc/StructureDefinition/observation" alias 'Observation' as target
+uses "https://smart.who.int/ccc/StructureDefinition/emcareobservation" alias 'EmCare Observation' as produced
+
+group bundletrans(source src : questionnaireResponse, target bundle : Bundle) {
+  src -> bundle.id = uuid() "id";
+  src -> bundle.type = 'batch' "type";
+  src.item first as item where (linkId = 'EmCare.B7.DE03') and answer.exists() then {
+    src -> bundle.entry as entry then {
+      src ->  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) "b50ac4c5";
+      src -> entry.resource = create('Observation') as tgt then {
+        src -> tgt then emcareobservationemcareb7de03(src, tgt) "f2e89805";
+      } "8dded58a";
+    } "6d815194";
+  } "a2e85aba";
+  src.item first as item where (linkId = 'EmCare.B18S1.DE02') and answer.exists() then {
+    src -> bundle.entry as entry then {
+      src ->  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) "b50ac4c5";
+      src -> entry.resource = create('Observation') as tgt then {
+        src -> tgt then emcareobservationemcareb18s1de02(src, tgt) "25a99ee2";
+      } "9a78f7db";
+    } "94862cbd";
+  } "49e0dedf";
+  src.item first as item where (linkId = 'EmCare.B11S1.DE01') and answer.exists() then {
+    src -> bundle.entry as entry then {
+      src ->  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) "b50ac4c5";
+      src -> entry.resource = create('Observation') as tgt then {
+        src -> tgt then emcareobservationemcareb11s1de01(src, tgt) "43d4af59";
+      } "bfd970ae";
+    } "b8eb69b0";
+  } "e1f73648";
+  src.item first as item where (linkId = 'EmCare.B21S1.DE06') and answer.exists() then {
+    src -> bundle.entry as entry then {
+      src ->  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) "b50ac4c5";
+      src -> entry.resource = create('Observation') as tgt then {
+        src -> tgt then emcareobservationemcareb21s1de06(src, tgt) "4fe5485a";
+      } "c849765a";
+    } "ce9b0830";
+  } "919b4a1a";
+}
+
+group emcareobservationemcareb7de03(source src, target tgt) {
+  src ->  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() "id-emcareb7de03";
+  src.encounter as encounter -> tgt.encounter = encounter "35bc6b82";
+  src.subject as subject ->  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B7.DE03' "code-emcareb7de03";
+  src.item as itemtimestamp where linkId = 'timestamp' then {
+    itemtimestamp.answer first as atimestamp then {
+      atimestamp.value as val -> tgt.issued = val "5af77f2c";
+    } "7f22f29f";
+  } "aae7a11d";
+  src.subject as subject -> tgt.subject = subject "patient";
+  src.item first as item where (linkId = 'EmCare.B7.DE03') and answer.exists() then {
+    item.answer first as a then {
+      a where a.value = true ->  tgt.status = 'final',  tgt.value = true "final-emcareb7de03";
+      a where a.value = false ->  tgt.status = 'cancelled',  tgt.value = false "notfound-emcareb7de03";
+    } "bdab9370";
+  } "4ef6d709";
+}
+
+group emcareobservationemcareb18s1de02(source src, target tgt) {
+  src ->  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() "id-emcareb18s1de02";
+  src.encounter as encounter -> tgt.encounter = encounter "35bc6b82";
+  src.subject as subject ->  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B18S1.DE02' "code-emcareb18s1de02";
+  src.item as itemtimestamp where linkId = 'timestamp' then {
+    itemtimestamp.answer first as atimestamp then {
+      atimestamp.value as val -> tgt.issued = val "5af77f2c";
+    } "7f22f29f";
+  } "aae7a11d";
+  src.subject as subject -> tgt.subject = subject "patient";
+  src.item first as item where (linkId = 'EmCare.B18S1.DE02') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val then {
+        val where val.code = 'none' -> tgt.swrapin_entry_createtatus = 'cancelled' "d0a13fda";
+        val where val.code != 'none' ->  tgt.value = create('CodeableConcept') as cc,  cc.coding = val,  tgt.status = 'final' "a1050460";
+      } "310f4b1f";
+    } "6af9bfcc";
+  } "da9e8c81";
+}
+
+group emcareobservationemcareb11s1de01(source src, target tgt) {
+  src ->  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() "id-emcareb11s1de01";
+  src.encounter as encounter -> tgt.encounter = encounter "35bc6b82";
+  src.subject as subject ->  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B11S1.DE01' "code-emcareb11s1de01";
+  src.item as itemtimestamp where linkId = 'timestamp' then {
+    itemtimestamp.answer first as atimestamp then {
+      atimestamp.value as val -> tgt.issued = val "5af77f2c";
+    } "7f22f29f";
+  } "aae7a11d";
+  src.subject as subject -> tgt.subject = subject "patient";
+  src.item first as item where (linkId = 'EmCare.B11S1.DE01') and answer.exists() then {
+    item.answer first as a then {
+      a where a.value = true ->  tgt.status = 'final',  tgt.value = true "final-emcareb11s1de01";
+      a where a.value = false ->  tgt.status = 'cancelled',  tgt.value = false "notfound-emcareb11s1de01";
+    } "bdab9370";
+  } "7b8564b3";
+}
+
+group emcareobservationemcareb21s1de06(source src, target tgt) {
+  src ->  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() "id-emcareb21s1de06";
+  src.encounter as encounter -> tgt.encounter = encounter "35bc6b82";
+  src.subject as subject ->  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/emcareobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/emcare-custom-codes',  coding.code = 'EmCare.B21S1.DE06' "code-emcareb21s1de06";
+  src.item as itemtimestamp where linkId = 'timestamp' then {
+    itemtimestamp.answer first as atimestamp then {
+      atimestamp.value as val -> tgt.issued = val "5af77f2c";
+    } "7f22f29f";
+  } "aae7a11d";
+  src.subject as subject -> tgt.subject = subject "patient";
+  src.item first as item where (linkId = 'EmCare.B21S1.DE06') and answer.exists() then {
+    item.answer first as a then {
+      a where a.value = true ->  tgt.status = 'final',  tgt.value = true "final-emcareb21s1de06";
+      a where a.value = false ->  tgt.status = 'cancelled',  tgt.value = false "notfound-emcareb21s1de06";
+    } "bdab9370";
+  } "54923cd5";
+}
+
+
+```
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "StructureMap",
+  "id" : "emcare.b18-21.symptoms.2m.m",
+  "url" : "https://smart.who.int/ccc/StructureMap/emcare.b18-21.symptoms.2m.m",
+  "version" : "0.1.0",
+  "name" : "emcare.b18-21.symptoms.2m.m",
+  "status" : "active",
+  "date" : "2026-04-07T12:55:48+00:00",
+  "publisher" : "World Health Organization (WHO)",
+  "contact" : [{
+    "name" : "World Health Organization (WHO)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.who.int"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.who.int"
+    }]
+  }],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse",
+    "mode" : "source",
+    "alias" : "'questionnaireResponse'"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "mode" : "target",
+    "alias" : "'Bundle'"
+  },
+  {
+    "url" : "https://smart.who.int/ccc/StructureDefinition/observation",
+    "mode" : "target",
+    "alias" : "'Observation'"
+  },
+  {
+    "url" : "https://smart.who.int/ccc/StructureDefinition/emcareobservation",
+    "mode" : "produced",
+    "alias" : "'EmCare Observation'"
+  }],
+  "group" : [{
+    "name" : "bundletrans",
+    "typeMode" : "none",
+    "input" : [{
+      "name" : "src",
+      "type" : "questionnaireResponse",
+      "mode" : "source"
+    },
+    {
+      "name" : "bundle",
+      "type" : "Bundle",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "id",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "bundle",
+        "contextType" : "variable",
+        "element" : "id",
+        "transform" : "uuid"
+      }]
+    },
+    {
+      "name" : "type",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "bundle",
+        "contextType" : "variable",
+        "element" : "type",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "batch"
+        }]
+      }]
+    },
+    {
+      "name" : "a2e85aba",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B7.DE03') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "6d815194",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "bundle",
+          "contextType" : "variable",
+          "element" : "entry",
+          "variable" : "entry"
+        }],
+        "rule" : [{
+          "name" : "b50ac4c5",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "request",
+            "variable" : "request"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "method",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "POST"
+            }]
+          },
+          {
+            "contextType" : "variable",
+            "variable" : "uuid",
+            "transform" : "uuid"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "url",
+            "transform" : "append",
+            "parameter" : [{
+              "valueString" : "/Observation/"
+            },
+            {
+              "valueId" : "uuid"
+            }]
+          }]
+        },
+        {
+          "name" : "8dded58a",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "resource",
+            "variable" : "tgt",
+            "transform" : "create",
+            "parameter" : [{
+              "valueString" : "Observation"
+            }]
+          }],
+          "rule" : [{
+            "name" : "f2e89805",
+            "source" : [{
+              "context" : "src"
+            }],
+            "target" : [{
+              "contextType" : "variable",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "tgt"
+              }]
+            }],
+            "dependent" : [{
+              "name" : "emcareobservationemcareb7de03",
+              "variable" : ["src", "tgt"]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "49e0dedf",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B18S1.DE02') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "94862cbd",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "bundle",
+          "contextType" : "variable",
+          "element" : "entry",
+          "variable" : "entry"
+        }],
+        "rule" : [{
+          "name" : "b50ac4c5",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "request",
+            "variable" : "request"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "method",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "POST"
+            }]
+          },
+          {
+            "contextType" : "variable",
+            "variable" : "uuid",
+            "transform" : "uuid"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "url",
+            "transform" : "append",
+            "parameter" : [{
+              "valueString" : "/Observation/"
+            },
+            {
+              "valueId" : "uuid"
+            }]
+          }]
+        },
+        {
+          "name" : "9a78f7db",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "resource",
+            "variable" : "tgt",
+            "transform" : "create",
+            "parameter" : [{
+              "valueString" : "Observation"
+            }]
+          }],
+          "rule" : [{
+            "name" : "25a99ee2",
+            "source" : [{
+              "context" : "src"
+            }],
+            "target" : [{
+              "contextType" : "variable",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "tgt"
+              }]
+            }],
+            "dependent" : [{
+              "name" : "emcareobservationemcareb18s1de02",
+              "variable" : ["src", "tgt"]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "e1f73648",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B11S1.DE01') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "b8eb69b0",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "bundle",
+          "contextType" : "variable",
+          "element" : "entry",
+          "variable" : "entry"
+        }],
+        "rule" : [{
+          "name" : "b50ac4c5",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "request",
+            "variable" : "request"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "method",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "POST"
+            }]
+          },
+          {
+            "contextType" : "variable",
+            "variable" : "uuid",
+            "transform" : "uuid"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "url",
+            "transform" : "append",
+            "parameter" : [{
+              "valueString" : "/Observation/"
+            },
+            {
+              "valueId" : "uuid"
+            }]
+          }]
+        },
+        {
+          "name" : "bfd970ae",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "resource",
+            "variable" : "tgt",
+            "transform" : "create",
+            "parameter" : [{
+              "valueString" : "Observation"
+            }]
+          }],
+          "rule" : [{
+            "name" : "43d4af59",
+            "source" : [{
+              "context" : "src"
+            }],
+            "target" : [{
+              "contextType" : "variable",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "tgt"
+              }]
+            }],
+            "dependent" : [{
+              "name" : "emcareobservationemcareb11s1de01",
+              "variable" : ["src", "tgt"]
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "919b4a1a",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B21S1.DE06') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "ce9b0830",
+        "source" : [{
+          "context" : "src"
+        }],
+        "target" : [{
+          "context" : "bundle",
+          "contextType" : "variable",
+          "element" : "entry",
+          "variable" : "entry"
+        }],
+        "rule" : [{
+          "name" : "b50ac4c5",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "request",
+            "variable" : "request"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "method",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "POST"
+            }]
+          },
+          {
+            "contextType" : "variable",
+            "variable" : "uuid",
+            "transform" : "uuid"
+          },
+          {
+            "context" : "request",
+            "contextType" : "variable",
+            "element" : "url",
+            "transform" : "append",
+            "parameter" : [{
+              "valueString" : "/Observation/"
+            },
+            {
+              "valueId" : "uuid"
+            }]
+          }]
+        },
+        {
+          "name" : "c849765a",
+          "source" : [{
+            "context" : "src"
+          }],
+          "target" : [{
+            "context" : "entry",
+            "contextType" : "variable",
+            "element" : "resource",
+            "variable" : "tgt",
+            "transform" : "create",
+            "parameter" : [{
+              "valueString" : "Observation"
+            }]
+          }],
+          "rule" : [{
+            "name" : "4fe5485a",
+            "source" : [{
+              "context" : "src"
+            }],
+            "target" : [{
+              "contextType" : "variable",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "tgt"
+              }]
+            }],
+            "dependent" : [{
+              "name" : "emcareobservationemcareb21s1de06",
+              "variable" : ["src", "tgt"]
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "emcareobservationemcareb7de03",
+    "typeMode" : "none",
+    "input" : [{
+      "name" : "src",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "id-emcareb7de03",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "identifier",
+        "variable" : "CodeID",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Identifier"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "http://hl7.org/fhir/namingsystem-identifier-type"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "use",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "official"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "value",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "uuid"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "id",
+        "transform" : "uuid"
+      }]
+    },
+    {
+      "name" : "35bc6b82",
+      "source" : [{
+        "context" : "src",
+        "element" : "encounter",
+        "variable" : "encounter"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "encounter",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "encounter"
+        }]
+      }]
+    },
+    {
+      "name" : "code-emcareb7de03",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meta",
+        "variable" : "newMeta",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Meta"
+        }]
+      },
+      {
+        "context" : "newMeta",
+        "contextType" : "variable",
+        "element" : "profile",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/StructureDefinition/emcareobservation"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "code",
+        "variable" : "concept",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "CodeableConcept"
+        }]
+      },
+      {
+        "context" : "concept",
+        "contextType" : "variable",
+        "element" : "coding",
+        "variable" : "coding",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Coding"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/CodeSystem/emcare-custom-codes"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "code",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "EmCare.B7.DE03"
+        }]
+      }]
+    },
+    {
+      "name" : "aae7a11d",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "variable" : "itemtimestamp",
+        "condition" : "linkId = 'timestamp'"
+      }],
+      "rule" : [{
+        "name" : "7f22f29f",
+        "source" : [{
+          "context" : "itemtimestamp",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "atimestamp"
+        }],
+        "rule" : [{
+          "name" : "5af77f2c",
+          "source" : [{
+            "context" : "atimestamp",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "issued",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "val"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "patient",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      }]
+    },
+    {
+      "name" : "4ef6d709",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B7.DE03') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "bdab9370",
+        "source" : [{
+          "context" : "item",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "a"
+        }],
+        "rule" : [{
+          "name" : "final-emcareb7de03",
+          "source" : [{
+            "context" : "a",
+            "condition" : "a.value = true"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "status",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "final"
+            }]
+          },
+          {
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "value",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueBoolean" : true
+            }]
+          }]
+        },
+        {
+          "name" : "notfound-emcareb7de03",
+          "source" : [{
+            "context" : "a",
+            "condition" : "a.value = false"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "status",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "cancelled"
+            }]
+          },
+          {
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "value",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueBoolean" : false
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "emcareobservationemcareb18s1de02",
+    "typeMode" : "none",
+    "input" : [{
+      "name" : "src",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "id-emcareb18s1de02",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "identifier",
+        "variable" : "CodeID",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Identifier"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "http://hl7.org/fhir/namingsystem-identifier-type"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "use",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "official"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "value",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "uuid"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "id",
+        "transform" : "uuid"
+      }]
+    },
+    {
+      "name" : "35bc6b82",
+      "source" : [{
+        "context" : "src",
+        "element" : "encounter",
+        "variable" : "encounter"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "encounter",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "encounter"
+        }]
+      }]
+    },
+    {
+      "name" : "code-emcareb18s1de02",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meta",
+        "variable" : "newMeta",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Meta"
+        }]
+      },
+      {
+        "context" : "newMeta",
+        "contextType" : "variable",
+        "element" : "profile",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/StructureDefinition/emcareobservation"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "code",
+        "variable" : "concept",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "CodeableConcept"
+        }]
+      },
+      {
+        "context" : "concept",
+        "contextType" : "variable",
+        "element" : "coding",
+        "variable" : "coding",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Coding"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/CodeSystem/emcare-custom-codes"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "code",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "EmCare.B18S1.DE02"
+        }]
+      }]
+    },
+    {
+      "name" : "aae7a11d",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "variable" : "itemtimestamp",
+        "condition" : "linkId = 'timestamp'"
+      }],
+      "rule" : [{
+        "name" : "7f22f29f",
+        "source" : [{
+          "context" : "itemtimestamp",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "atimestamp"
+        }],
+        "rule" : [{
+          "name" : "5af77f2c",
+          "source" : [{
+            "context" : "atimestamp",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "issued",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "val"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "patient",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      }]
+    },
+    {
+      "name" : "da9e8c81",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B18S1.DE02') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "6af9bfcc",
+        "source" : [{
+          "context" : "item",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "a"
+        }],
+        "rule" : [{
+          "name" : "310f4b1f",
+          "source" : [{
+            "context" : "a",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "rule" : [{
+            "name" : "d0a13fda",
+            "source" : [{
+              "context" : "val",
+              "condition" : "val.code = 'none'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "swrapin_entry_createtatus",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "cancelled"
+              }]
+            }]
+          },
+          {
+            "name" : "a1050460",
+            "source" : [{
+              "context" : "val",
+              "condition" : "val.code != 'none'"
+            }],
+            "target" : [{
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "value",
+              "variable" : "cc",
+              "transform" : "create",
+              "parameter" : [{
+                "valueString" : "CodeableConcept"
+              }]
+            },
+            {
+              "context" : "cc",
+              "contextType" : "variable",
+              "element" : "coding",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueId" : "val"
+              }]
+            },
+            {
+              "context" : "tgt",
+              "contextType" : "variable",
+              "element" : "status",
+              "transform" : "copy",
+              "parameter" : [{
+                "valueString" : "final"
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "emcareobservationemcareb11s1de01",
+    "typeMode" : "none",
+    "input" : [{
+      "name" : "src",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "id-emcareb11s1de01",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "identifier",
+        "variable" : "CodeID",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Identifier"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "http://hl7.org/fhir/namingsystem-identifier-type"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "use",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "official"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "value",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "uuid"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "id",
+        "transform" : "uuid"
+      }]
+    },
+    {
+      "name" : "35bc6b82",
+      "source" : [{
+        "context" : "src",
+        "element" : "encounter",
+        "variable" : "encounter"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "encounter",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "encounter"
+        }]
+      }]
+    },
+    {
+      "name" : "code-emcareb11s1de01",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meta",
+        "variable" : "newMeta",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Meta"
+        }]
+      },
+      {
+        "context" : "newMeta",
+        "contextType" : "variable",
+        "element" : "profile",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/StructureDefinition/emcareobservation"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "code",
+        "variable" : "concept",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "CodeableConcept"
+        }]
+      },
+      {
+        "context" : "concept",
+        "contextType" : "variable",
+        "element" : "coding",
+        "variable" : "coding",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Coding"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/CodeSystem/emcare-custom-codes"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "code",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "EmCare.B11S1.DE01"
+        }]
+      }]
+    },
+    {
+      "name" : "aae7a11d",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "variable" : "itemtimestamp",
+        "condition" : "linkId = 'timestamp'"
+      }],
+      "rule" : [{
+        "name" : "7f22f29f",
+        "source" : [{
+          "context" : "itemtimestamp",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "atimestamp"
+        }],
+        "rule" : [{
+          "name" : "5af77f2c",
+          "source" : [{
+            "context" : "atimestamp",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "issued",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "val"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "patient",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      }]
+    },
+    {
+      "name" : "7b8564b3",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B11S1.DE01') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "bdab9370",
+        "source" : [{
+          "context" : "item",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "a"
+        }],
+        "rule" : [{
+          "name" : "final-emcareb11s1de01",
+          "source" : [{
+            "context" : "a",
+            "condition" : "a.value = true"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "status",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "final"
+            }]
+          },
+          {
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "value",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueBoolean" : true
+            }]
+          }]
+        },
+        {
+          "name" : "notfound-emcareb11s1de01",
+          "source" : [{
+            "context" : "a",
+            "condition" : "a.value = false"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "status",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "cancelled"
+            }]
+          },
+          {
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "value",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueBoolean" : false
+            }]
+          }]
+        }]
+      }]
+    }]
+  },
+  {
+    "name" : "emcareobservationemcareb21s1de06",
+    "typeMode" : "none",
+    "input" : [{
+      "name" : "src",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "id-emcareb21s1de06",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "identifier",
+        "variable" : "CodeID",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Identifier"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "http://hl7.org/fhir/namingsystem-identifier-type"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "use",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "official"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "value",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "uuid"
+        }]
+      },
+      {
+        "context" : "CodeID",
+        "contextType" : "variable",
+        "element" : "id",
+        "transform" : "uuid"
+      }]
+    },
+    {
+      "name" : "35bc6b82",
+      "source" : [{
+        "context" : "src",
+        "element" : "encounter",
+        "variable" : "encounter"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "encounter",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "encounter"
+        }]
+      }]
+    },
+    {
+      "name" : "code-emcareb21s1de06",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "meta",
+        "variable" : "newMeta",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Meta"
+        }]
+      },
+      {
+        "context" : "newMeta",
+        "contextType" : "variable",
+        "element" : "profile",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/StructureDefinition/emcareobservation"
+        }]
+      },
+      {
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "code",
+        "variable" : "concept",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "CodeableConcept"
+        }]
+      },
+      {
+        "context" : "concept",
+        "contextType" : "variable",
+        "element" : "coding",
+        "variable" : "coding",
+        "transform" : "create",
+        "parameter" : [{
+          "valueString" : "Coding"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "system",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "https://smart.who.int/ccc/CodeSystem/emcare-custom-codes"
+        }]
+      },
+      {
+        "context" : "coding",
+        "contextType" : "variable",
+        "element" : "code",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueString" : "EmCare.B21S1.DE06"
+        }]
+      }]
+    },
+    {
+      "name" : "aae7a11d",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "variable" : "itemtimestamp",
+        "condition" : "linkId = 'timestamp'"
+      }],
+      "rule" : [{
+        "name" : "7f22f29f",
+        "source" : [{
+          "context" : "itemtimestamp",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "atimestamp"
+        }],
+        "rule" : [{
+          "name" : "5af77f2c",
+          "source" : [{
+            "context" : "atimestamp",
+            "element" : "value",
+            "variable" : "val"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "issued",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueId" : "val"
+            }]
+          }]
+        }]
+      }]
+    },
+    {
+      "name" : "patient",
+      "source" : [{
+        "context" : "src",
+        "element" : "subject",
+        "variable" : "subject"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "contextType" : "variable",
+        "element" : "subject",
+        "transform" : "copy",
+        "parameter" : [{
+          "valueId" : "subject"
+        }]
+      }]
+    },
+    {
+      "name" : "54923cd5",
+      "source" : [{
+        "context" : "src",
+        "element" : "item",
+        "listMode" : "first",
+        "variable" : "item",
+        "condition" : "(linkId = 'EmCare.B21S1.DE06') and answer.exists()"
+      }],
+      "rule" : [{
+        "name" : "bdab9370",
+        "source" : [{
+          "context" : "item",
+          "element" : "answer",
+          "listMode" : "first",
+          "variable" : "a"
+        }],
+        "rule" : [{
+          "name" : "final-emcareb21s1de06",
+          "source" : [{
+            "context" : "a",
+            "condition" : "a.value = true"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "status",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "final"
+            }]
+          },
+          {
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "value",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueBoolean" : true
+            }]
+          }]
+        },
+        {
+          "name" : "notfound-emcareb21s1de06",
+          "source" : [{
+            "context" : "a",
+            "condition" : "a.value = false"
+          }],
+          "target" : [{
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "status",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueString" : "cancelled"
+            }]
+          },
+          {
+            "context" : "tgt",
+            "contextType" : "variable",
+            "element" : "value",
+            "transform" : "copy",
+            "parameter" : [{
+              "valueBoolean" : false
+            }]
+          }]
+        }]
+      }]
+    }]
+  }]
+}
+
+```

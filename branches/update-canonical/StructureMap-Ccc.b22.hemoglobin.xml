@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="Ccc.b22.hemoglobin"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><pre>map &quot;https://smart.who.int/ccc/StructureMap/Ccc.b22.hemoglobin&quot; = &quot;Ccc.b22.hemoglobin&quot;
+
+
+uses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source
+uses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target
+uses &quot;https://smart.who.int/ccc/StructureDefinition/observation&quot; alias 'Observation' as target
+uses &quot;https://smart.who.int/ccc/StructureDefinition/Cccobservation&quot; alias 'Ccc Observation' as produced
+
+group bundletrans(source src : questionnaireResponse, target bundle : Bundle) {
+  src -&gt; bundle.id = uuid() &quot;id&quot;;
+  src -&gt; bundle.type = 'batch' &quot;type&quot;;
+  src.item first as item where (linkId = 'Ccc.B22.DE81') and answer.exists() then {
+    src -&gt; bundle.entry as entry then {
+      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;
+      src -&gt; entry.resource = create('Observation') as tgt then {
+        src -&gt; tgt then CccobservationCccb22de81(src, tgt) &quot;f56b8d65&quot;;
+      } &quot;42cac8d1&quot;;
+    } &quot;00ff1e0b&quot;;
+  } &quot;f4f9d360&quot;;
+  src.item first as item where (linkId = 'Ccc.B22.DE82') and answer.exists() then {
+    src -&gt; bundle.entry as entry then {
+      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;
+      src -&gt; entry.resource = create('Observation') as tgt then {
+        src -&gt; tgt then CccobservationCccb22de82(src, tgt) &quot;1118b2e0&quot;;
+      } &quot;565f125e&quot;;
+    } &quot;cc5012ad&quot;;
+  } &quot;ba583c69&quot;;
+}
+
+group CccobservationCccb22de81(source src, target tgt) {
+  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb22de81&quot;;
+  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;
+  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B22.DE81' &quot;code-Cccb22de81&quot;;
+  src.item as itemtimestamp where linkId = 'timestamp' then {
+    itemtimestamp.answer first as atimestamp then {
+      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;
+    } &quot;7f22f29f&quot;;
+  } &quot;aae7a11d&quot;;
+  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;
+  src.item first as item where (linkId = 'Ccc.B22.DE81') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val -&gt;  tgt.value = val,  tgt.status = 'final' &quot;afa0ccc0&quot;;
+    } &quot;d40466ff&quot;;
+  } &quot;dfc1d2c2&quot;;
+}
+
+group CccobservationCccb22de82(source src, target tgt) {
+  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb22de82&quot;;
+  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;
+  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B22.DE82' &quot;code-Cccb22de82&quot;;
+  src.item as itemtimestamp where linkId = 'timestamp' then {
+    itemtimestamp.answer first as atimestamp then {
+      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;
+    } &quot;7f22f29f&quot;;
+  } &quot;aae7a11d&quot;;
+  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;
+  src.item first as item where (linkId = 'Ccc.B22.DE82') and answer.exists() then {
+    item.answer first as a then {
+      a.value as val then {
+        val where val.code = 'true' -&gt;  tgt.status = 'final',  tgt.value = true &quot;8a65aaa5&quot;;
+      } &quot;26c2c8c7&quot;;
+    } &quot;721205d5&quot;;
+  } &quot;cc79d81a&quot;;
+}
+
+</pre></div>
+  </text>
+  <url value="https://smart.who.int/ccc/StructureMap/Ccc.b22.hemoglobin"/>
+  <version value="0.1.0"/>
+  <name value="Ccc.b22.hemoglobin"/>
+  <status value="active"/>
+  <date value="2026-04-07T13:42:05+00:00"/>
+  <publisher value="World Health Organization (WHO)"/>
+  <contact>
+    <name value="World Health Organization (WHO)"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.who.int"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="https://www.who.int"/>
+    </telecom>
+  </contact>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <structure>
+    <url value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse"/>
+    <mode value="source"/>
+    <alias value="'questionnaireResponse'"/>
+  </structure>
+  <structure>
+    <url value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+    <mode value="target"/>
+    <alias value="'Bundle'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/observation"/>
+    <mode value="target"/>
+    <alias value="'Observation'"/>
+  </structure>
+  <structure>
+    <url value="https://smart.who.int/ccc/StructureDefinition/Cccobservation"/>
+    <mode value="produced"/>
+    <alias value="'Ccc Observation'"/>
+  </structure>
+  <group>
+    <name value="bundletrans"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <type value="questionnaireResponse"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="bundle"/>
+      <type value="Bundle"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="id"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="bundle"/>
+        <contextType value="variable"/>
+        <element value="id"/>
+        <transform value="uuid"/>
+      </target>
+    </rule>
+    <rule>
+      <name value="type"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="bundle"/>
+        <contextType value="variable"/>
+        <element value="type"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="batch"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="f4f9d360"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.B22.DE81') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="00ff1e0b"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="bundle"/>
+          <contextType value="variable"/>
+          <element value="entry"/>
+          <variable value="entry"/>
+        </target>
+        <rule>
+          <name value="b50ac4c5"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="request"/>
+            <variable value="request"/>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="method"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="POST"/>
+            </parameter>
+          </target>
+          <target>
+            <contextType value="variable"/>
+            <variable value="uuid"/>
+            <transform value="uuid"/>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="url"/>
+            <transform value="append"/>
+            <parameter>
+              <valueString value="/Observation/"/>
+            </parameter>
+            <parameter>
+              <valueId value="uuid"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="42cac8d1"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="resource"/>
+            <variable value="tgt"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="Observation"/>
+            </parameter>
+          </target>
+          <rule>
+            <name value="f56b8d65"/>
+            <source>
+              <context value="src"/>
+            </source>
+            <target>
+              <contextType value="variable"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="tgt"/>
+              </parameter>
+            </target>
+            <dependent>
+              <name value="CccobservationCccb22de81"/>
+              <variable value="src"/>
+              <variable value="tgt"/>
+            </dependent>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="ba583c69"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.B22.DE82') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="cc5012ad"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="bundle"/>
+          <contextType value="variable"/>
+          <element value="entry"/>
+          <variable value="entry"/>
+        </target>
+        <rule>
+          <name value="b50ac4c5"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="request"/>
+            <variable value="request"/>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="method"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="POST"/>
+            </parameter>
+          </target>
+          <target>
+            <contextType value="variable"/>
+            <variable value="uuid"/>
+            <transform value="uuid"/>
+          </target>
+          <target>
+            <context value="request"/>
+            <contextType value="variable"/>
+            <element value="url"/>
+            <transform value="append"/>
+            <parameter>
+              <valueString value="/Observation/"/>
+            </parameter>
+            <parameter>
+              <valueId value="uuid"/>
+            </parameter>
+          </target>
+        </rule>
+        <rule>
+          <name value="565f125e"/>
+          <source>
+            <context value="src"/>
+          </source>
+          <target>
+            <context value="entry"/>
+            <contextType value="variable"/>
+            <element value="resource"/>
+            <variable value="tgt"/>
+            <transform value="create"/>
+            <parameter>
+              <valueString value="Observation"/>
+            </parameter>
+          </target>
+          <rule>
+            <name value="1118b2e0"/>
+            <source>
+              <context value="src"/>
+            </source>
+            <target>
+              <contextType value="variable"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueId value="tgt"/>
+              </parameter>
+            </target>
+            <dependent>
+              <name value="CccobservationCccb22de82"/>
+              <variable value="src"/>
+              <variable value="tgt"/>
+            </dependent>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="CccobservationCccb22de81"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="id-Cccb22de81"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="identifier"/>
+        <variable value="CodeID"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Identifier"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="system"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="http://hl7.org/fhir/namingsystem-identifier-type"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="use"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="official"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="value"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="uuid"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="id"/>
+        <transform value="uuid"/>
+      </target>
+    </rule>
+    <rule>
+      <name value="35bc6b82"/>
+      <source>
+        <context value="src"/>
+        <element value="encounter"/>
+        <variable value="encounter"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="encounter"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="encounter"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="code-Cccb22de81"/>
+      <source>
+        <context value="src"/>
+        <element value="subject"/>
+        <variable value="subject"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="subject"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="subject"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="meta"/>
+        <variable value="newMeta"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Meta"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="newMeta"/>
+        <contextType value="variable"/>
+        <element value="profile"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="https://smart.who.int/ccc/StructureDefinition/Cccobservation"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="code"/>
+        <variable value="concept"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="CodeableConcept"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="concept"/>
+        <contextType value="variable"/>
+        <element value="coding"/>
+        <variable value="coding"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Coding"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="coding"/>
+        <contextType value="variable"/>
+        <element value="system"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="coding"/>
+        <contextType value="variable"/>
+        <element value="code"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="Ccc.B22.DE81"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="aae7a11d"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <variable value="itemtimestamp"/>
+        <condition value="linkId = 'timestamp'"/>
+      </source>
+      <rule>
+        <name value="7f22f29f"/>
+        <source>
+          <context value="itemtimestamp"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="atimestamp"/>
+        </source>
+        <rule>
+          <name value="5af77f2c"/>
+          <source>
+            <context value="atimestamp"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="issued"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="patient"/>
+      <source>
+        <context value="src"/>
+        <element value="subject"/>
+        <variable value="subject"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="subject"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="subject"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="dfc1d2c2"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.B22.DE81') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="d40466ff"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <rule>
+          <name value="afa0ccc0"/>
+          <source>
+            <context value="a"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="value"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="status"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueString value="final"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+  <group>
+    <name value="CccobservationCccb22de82"/>
+    <typeMode value="none"/>
+    <input>
+      <name value="src"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="id-Cccb22de82"/>
+      <source>
+        <context value="src"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="identifier"/>
+        <variable value="CodeID"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Identifier"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="system"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="http://hl7.org/fhir/namingsystem-identifier-type"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="use"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="official"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="value"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="uuid"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="CodeID"/>
+        <contextType value="variable"/>
+        <element value="id"/>
+        <transform value="uuid"/>
+      </target>
+    </rule>
+    <rule>
+      <name value="35bc6b82"/>
+      <source>
+        <context value="src"/>
+        <element value="encounter"/>
+        <variable value="encounter"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="encounter"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="encounter"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="code-Cccb22de82"/>
+      <source>
+        <context value="src"/>
+        <element value="subject"/>
+        <variable value="subject"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="subject"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="subject"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="meta"/>
+        <variable value="newMeta"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Meta"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="newMeta"/>
+        <contextType value="variable"/>
+        <element value="profile"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="https://smart.who.int/ccc/StructureDefinition/Cccobservation"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="code"/>
+        <variable value="concept"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="CodeableConcept"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="concept"/>
+        <contextType value="variable"/>
+        <element value="coding"/>
+        <variable value="coding"/>
+        <transform value="create"/>
+        <parameter>
+          <valueString value="Coding"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="coding"/>
+        <contextType value="variable"/>
+        <element value="system"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"/>
+        </parameter>
+      </target>
+      <target>
+        <context value="coding"/>
+        <contextType value="variable"/>
+        <element value="code"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueString value="Ccc.B22.DE82"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="aae7a11d"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <variable value="itemtimestamp"/>
+        <condition value="linkId = 'timestamp'"/>
+      </source>
+      <rule>
+        <name value="7f22f29f"/>
+        <source>
+          <context value="itemtimestamp"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="atimestamp"/>
+        </source>
+        <rule>
+          <name value="5af77f2c"/>
+          <source>
+            <context value="atimestamp"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <target>
+            <context value="tgt"/>
+            <contextType value="variable"/>
+            <element value="issued"/>
+            <transform value="copy"/>
+            <parameter>
+              <valueId value="val"/>
+            </parameter>
+          </target>
+        </rule>
+      </rule>
+    </rule>
+    <rule>
+      <name value="patient"/>
+      <source>
+        <context value="src"/>
+        <element value="subject"/>
+        <variable value="subject"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <contextType value="variable"/>
+        <element value="subject"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="subject"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="cc79d81a"/>
+      <source>
+        <context value="src"/>
+        <element value="item"/>
+        <listMode value="first"/>
+        <variable value="item"/>
+        <condition value="(linkId = 'Ccc.B22.DE82') and answer.exists()"/>
+      </source>
+      <rule>
+        <name value="721205d5"/>
+        <source>
+          <context value="item"/>
+          <element value="answer"/>
+          <listMode value="first"/>
+          <variable value="a"/>
+        </source>
+        <rule>
+          <name value="26c2c8c7"/>
+          <source>
+            <context value="a"/>
+            <element value="value"/>
+            <variable value="val"/>
+          </source>
+          <rule>
+            <name value="8a65aaa5"/>
+            <source>
+              <context value="val"/>
+              <condition value="val.code = 'true'"/>
+            </source>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="status"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueString value="final"/>
+              </parameter>
+            </target>
+            <target>
+              <context value="tgt"/>
+              <contextType value="variable"/>
+              <element value="value"/>
+              <transform value="copy"/>
+              <parameter>
+                <valueBoolean value="true"/>
+              </parameter>
+            </target>
+          </rule>
+        </rule>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

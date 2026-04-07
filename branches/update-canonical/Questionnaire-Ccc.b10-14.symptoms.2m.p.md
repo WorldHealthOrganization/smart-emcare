@@ -1,0 +1,589 @@
+# Ccc.B10-14.Symptoms.2m.p - WHO FHIR Implementation Guide (IG): Integrated Management of Childhood Illness (IMCI) in emergencies v0.1.0
+
+* [**Table of Contents**](toc.md)
+* [**Artifacts Summary**](artifacts.md)
+* **Ccc.B10-14.Symptoms.2m.p**
+
+## Questionnaire: Ccc.B10-14.Symptoms.2m.p
+Branch:
+
+
+
+## Resource Content
+
+```json
+{
+  "resourceType" : "Questionnaire",
+  "id" : "Ccc.b10-14.symptoms.2m.p",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+    "valueCode" : "shareable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+    "valueCode" : "computable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeCapability",
+    "valueCode" : "publishable"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/cpg/StructureDefinition/cpg-knowledgeRepresentationLevel",
+    "valueCode" : "structured"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-targetStructureMap",
+    "valueCanonical" : "https://smart.who.int/ccc/StructureMap/Ccc.b10-14.symptoms.2m.p"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/cqf-library",
+    "valueCanonical" : "https://smart.who.int/ccc/Library/Cccb1014symptoms2mp"
+  }],
+  "url" : "https://smart.who.int/ccc/Questionnaire/Ccc.b10-14.symptoms.2m.p",
+  "version" : "0.1.0",
+  "name" : "Ccc.B10-14.Symptoms.2m.p",
+  "title" : "Ccc.B10-14.Symptoms.2m.p",
+  "status" : "active",
+  "experimental" : false,
+  "subjectType" : ["Patient"],
+  "date" : "2026-04-07T13:42:05+00:00",
+  "publisher" : "World Health Organization (WHO)",
+  "contact" : [{
+    "name" : "World Health Organization (WHO)",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.who.int"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://www.who.int"
+    }]
+  }],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "item" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+      "valueExpression" : {
+        "language" : "text/cql-identifier",
+        "expression" : "danger signs"
+      }
+    }],
+    "linkId" : "Danger Signs",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+      "valueExpression" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Ccc.b12s1.de01"
+      }
+    }],
+    "linkId" : "Ccc.B12S1.DE01",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+      "valueExpression" : {
+        "language" : "text/cql-identifier",
+        "expression" : "ageinmonths"
+      }
+    }],
+    "linkId" : "AgeInMonths",
+    "text" : "Age",
+    "type" : "integer",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    }],
+    "linkId" : "Ccc.B10S1.DE05",
+    "text" : "Cough",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B10S1.DE05').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B10S1.DE06",
+    "text" : "Cough for how long?",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE08",
+        "display" : "14 days or more"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE07",
+        "display" : "Less than 14 days"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    }],
+    "linkId" : "Ccc.B10S1.DE01",
+    "text" : "Difficulty Breathing",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/questionnaire-item-control",
+            "code" : "help"
+          }]
+        }
+      }],
+      "linkId" : "Ccc.B10S1.DE01-help",
+      "text" : "Difficult breathing is any unusual pattern of breathing. Caregivers describe this<br />\nin different ways. They may say that their child’s breathing is “fast” or “noisy” or “interrupted.” If a mother answers no, look to see if you think the child has cough or difficult breathing.",
+      "type" : "display"
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B10S1.DE01').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B10S1.DE02",
+    "text" : "Difficulty breathing for how long?",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE08",
+        "display" : "14 days or more"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE07",
+        "display" : "Less than 14 days"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    }],
+    "linkId" : "Ccc.B11S1.DE01",
+    "text" : "Diarrhoea",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/questionnaire-item-control",
+            "code" : "help"
+          }]
+        }
+      }],
+      "linkId" : "Ccc.B11S1.DE01-help",
+      "text" : "Diarrhoea occurs when stools contain more water than normal, and are loose or watery.  Diarrhoea is defined as three or more loose or watery stools in a 24-hour period.",
+      "type" : "display"
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B11S1.DE01').answer.first().value= true"
+      }
+    }],
+    "linkId" : "Ccc.B11S1.DE02",
+    "text" : "Diarrhoea for how long?",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE08",
+        "display" : "14 days or more"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE07",
+        "display" : "Less than 14 days"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B11S1.DE01').answer.first().value= true"
+      }
+    }],
+    "linkId" : "Ccc.B11S1.DE05",
+    "text" : "Blood in the stool in this Illness",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/questionnaire-item-control",
+            "code" : "help"
+          }]
+        }
+      }],
+      "linkId" : "Ccc.B11S1.DE05-help",
+      "text" : "Ask the mother if she has seen blood in the stools at any time during this episode of diarrhoea. Dysentery is diarrhoea with blood in the stool, with or without mucus. The most common cause of dysentery is Shigella bacteria. Dysentery will require specific treatments.",
+      "type" : "display"
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    }],
+    "linkId" : "Ccc.B12S1.DE02",
+    "text" : "Fever Reported",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/questionnaire-item-control",
+            "code" : "help"
+          }]
+        }
+      }],
+      "linkId" : "Ccc.B12S1.DE02-help",
+      "text" : "Ask the caregiver: “Does the child have fever?” The child has a history of fever if the child has had any fever with this illness",
+      "type" : "display"
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B.G.DE06').answer.first().value= true and %resource.repeat(item).where(linkId='Ccc.B12S1.DE02').answer.first().value=true"
+      }
+    }],
+    "linkId" : "Ccc.B12S1.DE03-l",
+    "text" : "Fever for how long?",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B12S1.DE05",
+        "display" : "7 Days or more"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B12S1.DE04",
+        "display" : "Less than 7 days"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "iif(%resource.repeat(item).where(linkId='Ccc.B.G.DE06').answer.first().value= true and %resource.repeat(item).where(linkId='Ccc.B12S1.DE02').answer.first().value=false,'Ccc.B12S1.DE04',%resource.repeat(item).where(linkId='Ccc.B12S1.DE03-l').answer.first().value)"
+      }
+    }],
+    "linkId" : "Ccc.B12S1.DE03",
+    "text" : "Fever for how long?",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B12S1.DE05",
+        "display" : "7 Days or more"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B12S1.DE04",
+        "display" : "Less than 7 days"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B12S1.DE01').answer.first().value = true or %resource.repeat(item).where(linkId='Ccc.B12S1.DE02').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B.G.DE06",
+    "text" : "Fever",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B12S1.DE03-l').answer.first().value.code = 'Ccc.B12S1.DE05'  and %resource.repeat(item).where(linkId='Ccc.B.G.DE06').answer.first().value =  true"
+      }
+    }],
+    "linkId" : "Ccc.B12S1.DE06",
+    "text" : "Has Fever been present every day since the Fever started?",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    }],
+    "linkId" : "Ccc.B13S1.DE01",
+    "text" : "Ear problem",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B13S1.DE01').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B13S1.DE02",
+    "text" : "Ear pain",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false,
+    "item" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/questionnaire-item-control",
+            "code" : "help"
+          }]
+        }
+      }],
+      "linkId" : "Ccc.B13S1.DE02-help",
+      "text" : "If the carIf the caregiver is not sure that the child has ear pain, ask if the child has been irritable and rubbing his ear. egiver is not sure that the child has ear pain, ask if the child has been irritable and rubbing his ear.",
+      "type" : "display"
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B13S1.DE01').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B13S1.DE03",
+    "text" : "Ear discharge",
+    "type" : "boolean",
+    "required" : false,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B13S1.DE03').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B13S1.DE04",
+    "text" : "Ear discharge for how long?",
+    "type" : "choice",
+    "required" : false,
+    "repeats" : false,
+    "answerOption" : [{
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE08",
+        "display" : "14 days or more"
+      }
+    },
+    {
+      "valueCoding" : {
+        "system" : "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes",
+        "code" : "Ccc.B10S1.DE07",
+        "display" : "Less than 14 days"
+      }
+    }]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    }],
+    "linkId" : "Ccc.B14S1.DE03",
+    "text" : "Eye Problem",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Danger Signs').answer.first().empty() or %resource.repeat(item).where(linkId='Danger Signs').answer.first().value = false"
+      }
+    }],
+    "linkId" : "Ccc.B14S1.DE01",
+    "text" : "Skin Problem",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+      "valueCode" : "horizontal"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "%resource.repeat(item).where(linkId='Ccc.B14S1.DE01').answer.first().value = true"
+      }
+    }],
+    "linkId" : "Ccc.B14S1.DE02",
+    "text" : "Itchy Skin",
+    "type" : "boolean",
+    "required" : true,
+    "repeats" : false
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+      "valueExpression" : {
+        "language" : "text/fhirpath",
+        "expression" : "now()"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+      "valueBoolean" : true
+    }],
+    "linkId" : "timestamp",
+    "type" : "dateTime",
+    "required" : false
+  }]
+}
+
+```

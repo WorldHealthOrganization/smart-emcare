@@ -1,3 +1,3 @@
 ### ActivityEmCare.B22.AssessmentsTests
 
-{% include LibraryEmcare.b22.assessmentstests.md %}
+{% include library-emcare.b22.assessmentstests.md %}

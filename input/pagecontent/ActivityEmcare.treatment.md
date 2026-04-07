@@ -1,3 +1,3 @@
 ### ActivityEmCare.Treatment
 
-{% include LibraryEmcare.treatment.md %}
+{% include library-emcare.treatment.md %}

@@ -1,6 +1,6 @@
 ### ActivityEmCare.B7.LTI-DangerSigns
 
-{% include library-emcare.b7.lti-dangersigns.md %}
+
 
 #### Ouputs
 

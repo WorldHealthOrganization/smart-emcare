@@ -1,6 +1,6 @@
 ### ActivityEmCare.B18-21.Symptoms.2m.m
 
-{% include library-emcare.b18-21.symptoms.2m.m.md %}
+
 
 #### Ouputs
 

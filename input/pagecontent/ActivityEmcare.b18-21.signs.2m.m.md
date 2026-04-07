@@ -1,6 +1,6 @@
 ### ActivityEmCare.B18-21.Signs.2m.m
 
-{% include library-emcare.b18-21.signs.2m.m.md %}
+
 
 #### Ouputs
 

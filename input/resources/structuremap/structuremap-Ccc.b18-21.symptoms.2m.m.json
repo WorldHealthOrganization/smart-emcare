@@ -3,9 +3,9 @@
     "id": "Ccc.b18-21.symptoms.2m.m",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/Ccc.b18-21.symptoms.2m.m&quot; = &quot;Ccc.b18-21.symptoms.2m.m&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B7.DE03') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb7de03(src, tgt) &quot;f2e89805&quot;;\r\n      } &quot;8dded58a&quot;;\r\n    } &quot;6d815194&quot;;\r\n  } &quot;a2e85aba&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B18S1.DE02') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb18s1de02(src, tgt) &quot;25a99ee2&quot;;\r\n      } &quot;9a78f7db&quot;;\r\n    } &quot;94862cbd&quot;;\r\n  } &quot;49e0dedf&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B11S1.DE01') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb11s1de01(src, tgt) &quot;43d4af59&quot;;\r\n      } &quot;bfd970ae&quot;;\r\n    } &quot;b8eb69b0&quot;;\r\n  } &quot;e1f73648&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B21S1.DE06') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb21s1de06(src, tgt) &quot;4fe5485a&quot;;\r\n      } &quot;c849765a&quot;;\r\n    } &quot;ce9b0830&quot;;\r\n  } &quot;919b4a1a&quot;;\r\n}\r\n\r\ngroup CccobservationCccb7de03(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb7de03&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes',  coding.code = 'EmCare.B7.DE03' &quot;code-Cccb7de03&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B7.DE03') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb7de03&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb7de03&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;4ef6d709&quot;;\r\n}\r\n\r\ngroup CccobservationCccb18s1de02(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb18s1de02&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes',  coding.code = 'EmCare.B18S1.DE02' &quot;code-Cccb18s1de02&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B18S1.DE02') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val then {\r\n        val where val.code = 'none' -&gt; tgt.swrapin_entry_createtatus = 'cancelled' &quot;d0a13fda&quot;;\r\n        val where val.code != 'none' -&gt;  tgt.value = create('CodeableConcept') as cc,  cc.coding = val,  tgt.status = 'final' &quot;a1050460&quot;;\r\n      } &quot;310f4b1f&quot;;\r\n    } &quot;6af9bfcc&quot;;\r\n  } &quot;da9e8c81&quot;;\r\n}\r\n\r\ngroup CccobservationCccb11s1de01(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb11s1de01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes',  coding.code = 'EmCare.B11S1.DE01' &quot;code-Cccb11s1de01&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B11S1.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb11s1de01&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb11s1de01&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;7b8564b3&quot;;\r\n}\r\n\r\ngroup CccobservationCccb21s1de06(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb21s1de06&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes',  coding.code = 'EmCare.B21S1.DE06' &quot;code-Cccb21s1de06&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B21S1.DE06') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb21s1de06&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb21s1de06&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;54923cd5&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://smart.who.int/ccc/StructureMap/Ccc.b18-21.symptoms.2m.m&quot; = &quot;Ccc.b18-21.symptoms.2m.m&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/Cccobservation&quot; alias 'Ccc Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B7.DE03') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb7de03(src, tgt) &quot;f2e89805&quot;;\r\n      } &quot;8dded58a&quot;;\r\n    } &quot;6d815194&quot;;\r\n  } &quot;a2e85aba&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B18S1.DE02') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb18s1de02(src, tgt) &quot;25a99ee2&quot;;\r\n      } &quot;9a78f7db&quot;;\r\n    } &quot;94862cbd&quot;;\r\n  } &quot;49e0dedf&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B11S1.DE01') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb11s1de01(src, tgt) &quot;43d4af59&quot;;\r\n      } &quot;bfd970ae&quot;;\r\n    } &quot;b8eb69b0&quot;;\r\n  } &quot;e1f73648&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B21S1.DE06') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb21s1de06(src, tgt) &quot;4fe5485a&quot;;\r\n      } &quot;c849765a&quot;;\r\n    } &quot;ce9b0830&quot;;\r\n  } &quot;919b4a1a&quot;;\r\n}\r\n\r\ngroup CccobservationCccb7de03(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb7de03&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B7.DE03' &quot;code-Cccb7de03&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B7.DE03') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb7de03&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb7de03&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;4ef6d709&quot;;\r\n}\r\n\r\ngroup CccobservationCccb18s1de02(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb18s1de02&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B18S1.DE02' &quot;code-Cccb18s1de02&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B18S1.DE02') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val then {\r\n        val where val.code = 'none' -&gt; tgt.swrapin_entry_createtatus = 'cancelled' &quot;d0a13fda&quot;;\r\n        val where val.code != 'none' -&gt;  tgt.value = create('CodeableConcept') as cc,  cc.coding = val,  tgt.status = 'final' &quot;a1050460&quot;;\r\n      } &quot;310f4b1f&quot;;\r\n    } &quot;6af9bfcc&quot;;\r\n  } &quot;da9e8c81&quot;;\r\n}\r\n\r\ngroup CccobservationCccb11s1de01(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb11s1de01&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B11S1.DE01' &quot;code-Cccb11s1de01&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B11S1.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb11s1de01&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb11s1de01&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;7b8564b3&quot;;\r\n}\r\n\r\ngroup CccobservationCccb21s1de06(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb21s1de06&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B21S1.DE06' &quot;code-Cccb21s1de06&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B21S1.DE06') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb21s1de06&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb21s1de06&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;54923cd5&quot;;\r\n}\r\n\r\n</pre></div>"
     },
-    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/Ccc.b18-21.symptoms.2m.m",
+    "url": "https://smart.who.int/ccc/StructureMap/Ccc.b18-21.symptoms.2m.m",
     "name": "Ccc.b18-21.symptoms.2m.m",
     "status": "active",
     "structure": [
@@ -20,14 +20,14 @@
             "alias": "'Bundle'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation",
+            "url": "https://smart.who.int/ccc/StructureDefinition/observation",
             "mode": "target",
             "alias": "'Observation'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation",
+            "url": "https://smart.who.int/ccc/StructureDefinition/Cccobservation",
             "mode": "produced",
-            "alias": "'EmCare Observation'"
+            "alias": "'Ccc Observation'"
         }
     ],
     "group": [
@@ -92,7 +92,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B7.DE03') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B7.DE03') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -222,7 +222,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B18S1.DE02') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B18S1.DE02') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -352,7 +352,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B11S1.DE01') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B11S1.DE01') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -482,7 +482,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B21S1.DE06') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B21S1.DE06') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -744,7 +744,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation"
+                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
                                 }
                             ]
                         },
@@ -779,7 +779,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes"
+                                    "valueString": "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
                                 }
                             ]
                         },
@@ -790,7 +790,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "EmCare.B7.DE03"
+                                    "valueString": "Ccc.B7.DE03"
                                 }
                             ]
                         }
@@ -876,7 +876,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B7.DE03') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B7.DE03') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1101,7 +1101,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation"
+                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
                                 }
                             ]
                         },
@@ -1136,7 +1136,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes"
+                                    "valueString": "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
                                 }
                             ]
                         },
@@ -1147,7 +1147,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "EmCare.B18S1.DE02"
+                                    "valueString": "Ccc.B18S1.DE02"
                                 }
                             ]
                         }
@@ -1233,7 +1233,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B18S1.DE02') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B18S1.DE02') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1471,7 +1471,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation"
+                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
                                 }
                             ]
                         },
@@ -1506,7 +1506,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes"
+                                    "valueString": "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
                                 }
                             ]
                         },
@@ -1517,7 +1517,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "EmCare.B11S1.DE01"
+                                    "valueString": "Ccc.B11S1.DE01"
                                 }
                             ]
                         }
@@ -1603,7 +1603,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B11S1.DE01') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B11S1.DE01') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1828,7 +1828,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation"
+                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
                                 }
                             ]
                         },
@@ -1863,7 +1863,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes"
+                                    "valueString": "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
                                 }
                             ]
                         },
@@ -1874,7 +1874,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "EmCare.B21S1.DE06"
+                                    "valueString": "Ccc.B21S1.DE06"
                                 }
                             ]
                         }
@@ -1960,7 +1960,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B21S1.DE06') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B21S1.DE06') and answer.exists()"
                         }
                     ],
                     "rule": [

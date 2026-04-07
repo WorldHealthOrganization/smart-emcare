@@ -3,9 +3,9 @@
     "id": "Ccca.registration.p",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/Ccca.registration.p&quot; = &quot;Ccca.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccpatient&quot; alias 'EmCare Patient' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;1153aa45&quot;;\r\n    } &quot;cf5b2513&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then Cccpatient(src, tgt) &quot;77f3ac03&quot;;\r\n    } &quot;75beb242&quot;;\r\n  } &quot;put-Cccpatient&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {\r\n      src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('RelatedPerson') as tgt then {\r\n        src -&gt; tgt then relatedperson(src, tgt) &quot;8f0b9602&quot;;\r\n        item.answer first as a then {\r\n          a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;78d8bc69&quot;;\r\n        } &quot;eec70023&quot;;\r\n      } &quot;00574b8e&quot;;\r\n    } &quot;74cc3511&quot;;\r\n  } &quot;54daac33&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE38') and answer.exists() then {\r\n      src -&gt; bundle.entry as entry then {\r\n        src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/CommunicationRequest/', uuid) &quot;e5343f50&quot;;\r\n        src -&gt; entry.resource = create('CommunicationRequest') as tgt then {\r\n          src -&gt; tgt then communicationrequestCccade38(src, tgt) &quot;82d8a873&quot;;\r\n        } &quot;33eeb100&quot;;\r\n      } &quot;d4cd942b&quot;;\r\n    } &quot;5ca7be0f&quot;;\r\n  } &quot;b78fbe33&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameCccpatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as item where (linkId = 'EmCare.A.DE06') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n      } &quot;e0827d5d&quot;;\r\n    } &quot;607c4e16&quot;;\r\n    src.item first as item where (linkId = 'EmCare.A.DE04') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;e9deb0f3&quot;;\r\n    src.item first as item where (linkId = 'EmCare.A.DE05') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;d95279c0&quot;;\r\n  } &quot;ef0f6810&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeCccade16(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt; tgt then {\r\n      src where value.code = 'EmCare.A.DE17' -&gt; tgt.gender = 'female' &quot;368f2e2a&quot;;\r\n      src where value.code = 'EmCare.A.DE18' -&gt; tgt.gender = 'male' &quot;2ae3beca&quot;;\r\n      src where value.code = 'EmCare.A.DE19' -&gt; tgt.gender = 'unknown' &quot;de22e8b7&quot;;\r\n    } &quot;mapbase&quot;;\r\n  } &quot;57676688&quot;;\r\n}\r\n\r\ngroup Cccpatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item first as item where (linkId = 'EmCare.A.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;aCccade01&quot;;\r\n    } &quot;aCccade01&quot;;\r\n  } &quot;c243b020&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE03') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous',  ext.value = true &quot;aCccade03&quot;;\r\n  } &quot;54d12495&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE06') or (linkId = 'EmCare.A.DE04') or ((linkId = 'EmCare.A.DE05') and answer.exists()) then {\r\n    src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameCccpatient(src, name) &quot;30643049&quot;;\r\n  } &quot;7483ae2e&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE12') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aCccade12&quot;;\r\n    } &quot;aCccade12&quot;;\r\n  } &quot;c05cf203&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE08') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;aCccade08&quot;;\r\n    } &quot;aCccade08&quot;;\r\n  } &quot;bded6ae8&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE16') and answer.exists() then {\r\n    item.answer first as a then MapValueSetExtCodeCccade16(a, tgt) &quot;225baa79&quot;;\r\n  } &quot;bf4b35f0&quot;;\r\n  src.item first as item where (linkId = 'EmCare.A.DE48') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver',  ext.value = create('Reference') as ref,  ref.reference = 'relatated-person-id' &quot;aCccade48&quot;;\r\n  } &quot;04772b09&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE31') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus',  ext.value = val &quot;aCccade31&quot;;\r\n      } &quot;aCccade31&quot;;\r\n    } &quot;7f408694&quot;;\r\n  } &quot;39f45e5d&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE32') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus',  ext.value = val &quot;aCccade32&quot;;\r\n      } &quot;aCccade32&quot;;\r\n    } &quot;06ec2524&quot;;\r\n  } &quot;f7424037&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNamerelatedperson(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'EmCare.A.DE23') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n        } &quot;e0827d5d&quot;;\r\n      } &quot;8c426238&quot;;\r\n    } &quot;4cc155ee&quot;;\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'EmCare.A.DE21') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;ad3fbc15&quot;;\r\n    } &quot;8bc880ed&quot;;\r\n    src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'EmCare.A.DE22') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;e9ba83c8&quot;;\r\n    } &quot;17d8d988&quot;;\r\n  } &quot;f41b9847&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeCccade24(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt;  tgt.relationship = create('CodeableConcept') as cc,  cc.coding = create('Coding') as coding then {\r\n      src where value.code = 'EmCare.A.DE25' -&gt;  coding.code = 'MTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;abd34a78&quot;;\r\n      src where value.code = 'EmCare.A.DE26' -&gt;  coding.code = 'FTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;b53d1d15&quot;;\r\n      src where value.code = 'EmCare.A.DE27' -&gt;  coding.code = 'SIB',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;949ee35f&quot;;\r\n      src where value.code = 'EmCare.A.DE28' -&gt;  coding.code = 'EXT',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;7c5a4400&quot;;\r\n      src where value.code = 'EmCare.A.DE29' -&gt;  coding.code = 'PRNINLAW',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;544df0cc&quot;;\r\n      src where value.code = 'EmCare.A.DE30' -&gt;  coding.code = 'U',  coding.system = 'http://terminology.hl7.org/CodeSystem/v2-0131' &quot;8c2d96fc&quot;;\r\n    } &quot;4a251df5&quot;;\r\n  } &quot;1b7b6d7a&quot;;\r\n}\r\n\r\ngroup relatedperson(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'Cccrelatedpersoncaregiverid') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver',  ext.value = create('Reference') as ref,  ref.reference = append('/RelatedPerson/', val) &quot;aCccrelatedpersoncaregiverid&quot;;\r\n    } &quot;aCccrelatedpersoncaregiverid&quot;;\r\n  } &quot;04cd0ec2&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE23') or (linkId = 'EmCare.A.DE21') or ((linkId = 'EmCare.A.DE22') and answer.exists()) then {\r\n      src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNamerelatedperson(src, name) &quot;8e1455ea&quot;;\r\n    } &quot;18dc21d5&quot;;\r\n  } &quot;f0e6459e&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE35') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aCccade35&quot;;\r\n      } &quot;aCccade35&quot;;\r\n    } &quot;9731ba92&quot;;\r\n  } &quot;30b90d37&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {\r\n      item.answer first as a -&gt; tgt then {\r\n        src.subject as subject -&gt; tgt.patient = subject &quot;patient&quot;;\r\n      } &quot;arelatedpersonid&quot;;\r\n    } &quot;d79d72db&quot;;\r\n  } &quot;d50c1aed&quot;;\r\n  src.item first as itm1 where linkId = 'EmCare.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'EmCare.A.DE24') and answer.exists() then {\r\n      item.answer first as a then MapValueSetExtCodeCccade24(a, tgt) &quot;24e5e488&quot;;\r\n    } &quot;6adb811a&quot;;\r\n  } &quot;92a0e955&quot;;\r\n}\r\n\r\ngroup communicationrequestCccade38(source src, target tgt) {\r\n  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;053233cd&quot;;\r\n  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;fe3bec4d&quot;;\r\n  src -&gt; tgt.recipient = create('Reference') as ref then {\r\n    src -&gt; ref.type = 'RelatedPerson' &quot;c26ab31f&quot;;\r\n    src.item first as item where linkId = 'CccrelatedpersonCaregiveruuid' -&gt; tgt then {\r\n      item.answer first as a -&gt; tgt then {\r\n        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;25b16148&quot;;\r\n      } &quot;00b2016a&quot;;\r\n    } &quot;3c6c4c80&quot;;\r\n  } &quot;eaa7d3cf&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://smart.who.int/ccc/StructureMap/Ccca.registration.p&quot; = &quot;Ccca.registration.p&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/patient&quot; alias 'Patient' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/Cccpatient&quot; alias 'Ccc Patient' as produced\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/relatedperson&quot; alias 'RelatedPerson' as produced\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/communicationrequest&quot; alias 'CommunicationRequest' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.subject as subject then {\r\n      subject.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Patient/', idval) &quot;1153aa45&quot;;\r\n    } &quot;cf5b2513&quot;;\r\n    src -&gt; entry.resource = create('Patient') as tgt then {\r\n      src -&gt; tgt then Cccpatient(src, tgt) &quot;77f3ac03&quot;;\r\n    } &quot;75beb242&quot;;\r\n  } &quot;put-Cccpatient&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {\r\n      src -&gt;  bundle.entry as entry,  entry.request as request,  request.method = 'POST',  entry.resource = create('RelatedPerson') as tgt then {\r\n        src -&gt; tgt then relatedperson(src, tgt) &quot;8f0b9602&quot;;\r\n        item.answer first as a then {\r\n          a.value as val -&gt; request.url = append('/RelatedPerson/', val) &quot;78d8bc69&quot;;\r\n        } &quot;eec70023&quot;;\r\n      } &quot;00574b8e&quot;;\r\n    } &quot;74cc3511&quot;;\r\n  } &quot;54daac33&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'Ccc.A.DE38') and answer.exists() then {\r\n      src -&gt; bundle.entry as entry then {\r\n        src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/CommunicationRequest/', uuid) &quot;e5343f50&quot;;\r\n        src -&gt; entry.resource = create('CommunicationRequest') as tgt then {\r\n          src -&gt; tgt then communicationrequestCccade38(src, tgt) &quot;82d8a873&quot;;\r\n        } &quot;33eeb100&quot;;\r\n      } &quot;d4cd942b&quot;;\r\n    } &quot;5ca7be0f&quot;;\r\n  } &quot;b78fbe33&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNameCccpatient(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as item where (linkId = 'Ccc.A.DE06') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n      } &quot;e0827d5d&quot;;\r\n    } &quot;607c4e16&quot;;\r\n    src.item first as item where (linkId = 'Ccc.A.DE04') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;e9deb0f3&quot;;\r\n    src.item first as item where (linkId = 'Ccc.A.DE05') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n      } &quot;18edd234&quot;;\r\n    } &quot;d95279c0&quot;;\r\n  } &quot;ef0f6810&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeCccade16(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt; tgt then {\r\n      src where value.code = 'Ccc.A.DE17' -&gt; tgt.gender = 'female' &quot;368f2e2a&quot;;\r\n      src where value.code = 'Ccc.A.DE18' -&gt; tgt.gender = 'male' &quot;2ae3beca&quot;;\r\n      src where value.code = 'Ccc.A.DE19' -&gt; tgt.gender = 'unknown' &quot;de22e8b7&quot;;\r\n    } &quot;mapbase&quot;;\r\n  } &quot;57676688&quot;;\r\n}\r\n\r\ngroup Cccpatient(source src : questionnaireResponse, target tgt : Patient) {\r\n  src.item first as item where (linkId = 'Ccc.A.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.identifier = create('Identifier') as identifier then {\r\n        val -&gt;  identifier.value = val,  identifier.use = 'official' &quot;id&quot;;\r\n      } &quot;aCccade01&quot;;\r\n    } &quot;aCccade01&quot;;\r\n  } &quot;c243b020&quot;;\r\n  src.item first as item where (linkId = 'Ccc.A.DE03') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/anonymous',  ext.value = true &quot;aCccade03&quot;;\r\n  } &quot;54d12495&quot;;\r\n  src.item first as item where (linkId = 'Ccc.A.DE06') or (linkId = 'Ccc.A.DE04') or ((linkId = 'Ccc.A.DE05') and answer.exists()) then {\r\n    src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNameCccpatient(src, name) &quot;30643049&quot;;\r\n  } &quot;7483ae2e&quot;;\r\n  src.item first as item where (linkId = 'Ccc.A.DE12') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/birthDateEstimator',  ext.value = val &quot;aCccade12&quot;;\r\n    } &quot;aCccade12&quot;;\r\n  } &quot;c05cf203&quot;;\r\n  src.item first as item where (linkId = 'Ccc.A.DE08') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt; tgt.birthDate = val &quot;aCccade08&quot;;\r\n    } &quot;aCccade08&quot;;\r\n  } &quot;bded6ae8&quot;;\r\n  src.item first as item where (linkId = 'Ccc.A.DE16') and answer.exists() then {\r\n    item.answer first as a then MapValueSetExtCodeCccade16(a, tgt) &quot;225baa79&quot;;\r\n  } &quot;bf4b35f0&quot;;\r\n  src.item first as item where (linkId = 'Ccc.A.DE48') and answer.exists() then {\r\n    item.answer first as a -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/primarycaregiver',  ext.value = create('Reference') as ref,  ref.reference = 'relatated-person-id' &quot;aCccade48&quot;;\r\n  } &quot;04772b09&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'Ccc.A.DE31') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/Extension/motherVitalStatus',  ext.value = val &quot;aCccade31&quot;;\r\n      } &quot;aCccade31&quot;;\r\n    } &quot;7f408694&quot;;\r\n  } &quot;39f45e5d&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'Ccc.A.DE32') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/Extension/fatherVitalStatus',  ext.value = val &quot;aCccade32&quot;;\r\n      } &quot;aCccade32&quot;;\r\n    } &quot;06ec2524&quot;;\r\n  } &quot;f7424037&quot;;\r\n}\r\n\r\ngroup SetOfficalGivenNamerelatedperson(source src, target tgt) {\r\n  src -&gt; tgt.use = 'official' then {\r\n    src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'Ccc.A.DE23') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.family = val &quot;77d1bd4f&quot;;\r\n        } &quot;e0827d5d&quot;;\r\n      } &quot;8c426238&quot;;\r\n    } &quot;4cc155ee&quot;;\r\n    src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'Ccc.A.DE21') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;ad3fbc15&quot;;\r\n    } &quot;8bc880ed&quot;;\r\n    src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n      itm1.item first as item where (linkId = 'Ccc.A.DE22') and answer.exists() then {\r\n        item.answer first as a then {\r\n          a.value as val -&gt; tgt.given = val &quot;5d3d44f6&quot;;\r\n        } &quot;18edd234&quot;;\r\n      } &quot;e9ba83c8&quot;;\r\n    } &quot;17d8d988&quot;;\r\n  } &quot;f41b9847&quot;;\r\n}\r\n\r\ngroup MapValueSetExtCodeCccade24(source src, target tgt) {\r\n  src -&gt; tgt then {\r\n    src -&gt;  tgt.relationship = create('CodeableConcept') as cc,  cc.coding = create('Coding') as coding then {\r\n      src where value.code = 'Ccc.A.DE25' -&gt;  coding.code = 'MTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;abd34a78&quot;;\r\n      src where value.code = 'Ccc.A.DE26' -&gt;  coding.code = 'FTH',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;b53d1d15&quot;;\r\n      src where value.code = 'Ccc.A.DE27' -&gt;  coding.code = 'SIB',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;949ee35f&quot;;\r\n      src where value.code = 'Ccc.A.DE28' -&gt;  coding.code = 'EXT',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;7c5a4400&quot;;\r\n      src where value.code = 'Ccc.A.DE29' -&gt;  coding.code = 'PRNINLAW',  coding.system = 'http://terminology.hl7.org/CodeSystem/v3-RoleCode' &quot;544df0cc&quot;;\r\n      src where value.code = 'Ccc.A.DE30' -&gt;  coding.code = 'U',  coding.system = 'http://terminology.hl7.org/CodeSystem/v2-0131' &quot;8c2d96fc&quot;;\r\n    } &quot;4a251df5&quot;;\r\n  } &quot;1b7b6d7a&quot;;\r\n}\r\n\r\ngroup relatedperson(source src : questionnaireResponse, target tgt : RelatedPerson) {\r\n  src.item first as item where (linkId = 'Cccrelatedpersoncaregiverid') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.extension = create('Extension') as ext,  ext.url = 'https://smart.who.int/ccc/StructureDefinition/primary-caregiver',  ext.value = create('Reference') as ref,  ref.reference = append('/RelatedPerson/', val) &quot;aCccrelatedpersoncaregiverid&quot;;\r\n    } &quot;aCccrelatedpersoncaregiverid&quot;;\r\n  } &quot;04cd0ec2&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'Ccc.A.DE23') or (linkId = 'Ccc.A.DE21') or ((linkId = 'Ccc.A.DE22') and answer.exists()) then {\r\n      src -&gt;  tgt as target,  target.name as name then SetOfficalGivenNamerelatedperson(src, name) &quot;8e1455ea&quot;;\r\n    } &quot;18dc21d5&quot;;\r\n  } &quot;f0e6459e&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'Ccc.A.DE35') and answer.exists() then {\r\n      item.answer first as a then {\r\n        a.value as val -&gt;  tgt.telecom as tel,  tel.system = 'phone',  tel.use = 'mobile',  tel.value = val &quot;aCccade35&quot;;\r\n      } &quot;aCccade35&quot;;\r\n    } &quot;9731ba92&quot;;\r\n  } &quot;30b90d37&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'relatedpersonid') and answer.exists() then {\r\n      item.answer first as a -&gt; tgt then {\r\n        src.subject as subject -&gt; tgt.patient = subject &quot;patient&quot;;\r\n      } &quot;arelatedpersonid&quot;;\r\n    } &quot;d79d72db&quot;;\r\n  } &quot;d50c1aed&quot;;\r\n  src.item first as itm1 where linkId = 'Ccc.A.DE21.1' then {\r\n    itm1.item first as item where (linkId = 'Ccc.A.DE24') and answer.exists() then {\r\n      item.answer first as a then MapValueSetExtCodeCccade24(a, tgt) &quot;24e5e488&quot;;\r\n    } &quot;6adb811a&quot;;\r\n  } &quot;92a0e955&quot;;\r\n}\r\n\r\ngroup communicationrequestCccade38(source src, target tgt) {\r\n  src -&gt;  tgt.category = create('CodeableConcept') as cc,  cc.coding = create('Coding') as c,  c.system = 'http://hl7.org/fhir/ValueSet/communication-category',  c.code = 'notification' &quot;053233cd&quot;;\r\n  src.questionnaire as q -&gt;  tgt.about = create('Reference') as ref,  ref.type = 'Questionnaire',  ref.reference = q &quot;quest&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;fe3bec4d&quot;;\r\n  src -&gt; tgt.recipient = create('Reference') as ref then {\r\n    src -&gt; ref.type = 'RelatedPerson' &quot;c26ab31f&quot;;\r\n    src.item first as item where linkId = 'CccrelatedpersonCaregiveruuid' -&gt; tgt then {\r\n      item.answer first as a -&gt; tgt then {\r\n        a.value as val -&gt; ref.reference = append('/RelatedPerson/', val) &quot;25b16148&quot;;\r\n      } &quot;00b2016a&quot;;\r\n    } &quot;3c6c4c80&quot;;\r\n  } &quot;eaa7d3cf&quot;;\r\n}\r\n\r\n</pre></div>"
     },
-    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/Ccca.registration.p",
+    "url": "https://smart.who.int/ccc/StructureMap/Ccca.registration.p",
     "name": "Ccca.registration.p",
     "status": "active",
     "structure": [
@@ -20,32 +20,32 @@
             "alias": "'Bundle'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/patient",
+            "url": "https://smart.who.int/ccc/StructureDefinition/patient",
             "mode": "target",
             "alias": "'Patient'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson",
+            "url": "https://smart.who.int/ccc/StructureDefinition/relatedperson",
             "mode": "target",
             "alias": "'RelatedPerson'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest",
+            "url": "https://smart.who.int/ccc/StructureDefinition/communicationrequest",
             "mode": "target",
             "alias": "'CommunicationRequest'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccpatient",
+            "url": "https://smart.who.int/ccc/StructureDefinition/Cccpatient",
             "mode": "produced",
-            "alias": "'EmCare Patient'"
+            "alias": "'Ccc Patient'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/relatedperson",
+            "url": "https://smart.who.int/ccc/StructureDefinition/relatedperson",
             "mode": "produced",
             "alias": "'RelatedPerson'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/communicationrequest",
+            "url": "https://smart.who.int/ccc/StructureDefinition/communicationrequest",
             "mode": "produced",
             "alias": "'CommunicationRequest'"
         }
@@ -237,7 +237,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -379,7 +379,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -391,7 +391,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE38') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE38') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -560,7 +560,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE06') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE06') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -610,7 +610,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE04') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE04') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -660,7 +660,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE05') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE05') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -763,7 +763,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE17'"
+                                            "condition": "value.code = 'Ccc.A.DE17'"
                                         }
                                     ],
                                     "target": [
@@ -785,7 +785,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE18'"
+                                            "condition": "value.code = 'Ccc.A.DE18'"
                                         }
                                     ],
                                     "target": [
@@ -807,7 +807,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE19'"
+                                            "condition": "value.code = 'Ccc.A.DE19'"
                                         }
                                     ],
                                     "target": [
@@ -854,7 +854,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE01') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.A.DE01') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -939,7 +939,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE03') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.A.DE03') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -973,7 +973,7 @@
                                     "transform": "copy",
                                     "parameter": [
                                         {
-                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/anonymous"
+                                            "valueString": "https://smart.who.int/ccc/StructureDefinition/anonymous"
                                         }
                                     ]
                                 },
@@ -1000,7 +1000,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE06') or (linkId = 'EmCare.A.DE04') or ((linkId = 'EmCare.A.DE05') and answer.exists())"
+                            "condition": "(linkId = 'Ccc.A.DE06') or (linkId = 'Ccc.A.DE04') or ((linkId = 'Ccc.A.DE05') and answer.exists())"
                         }
                     ],
                     "rule": [
@@ -1049,7 +1049,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE12') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.A.DE12') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1093,7 +1093,7 @@
                                             "transform": "copy",
                                             "parameter": [
                                                 {
-                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/birthDateEstimator"
+                                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/birthDateEstimator"
                                                 }
                                             ]
                                         },
@@ -1122,7 +1122,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE08') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.A.DE08') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1172,7 +1172,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE16') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.A.DE16') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1206,7 +1206,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.A.DE48') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.A.DE48') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -1240,7 +1240,7 @@
                                     "transform": "copy",
                                     "parameter": [
                                         {
-                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primarycaregiver"
+                                            "valueString": "https://smart.who.int/ccc/StructureDefinition/primarycaregiver"
                                         }
                                     ]
                                 },
@@ -1279,7 +1279,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -1291,7 +1291,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE31') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE31') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -1335,7 +1335,7 @@
                                                     "transform": "copy",
                                                     "parameter": [
                                                         {
-                                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/motherVitalStatus"
+                                                            "valueString": "https://smart.who.int/ccc/Extension/motherVitalStatus"
                                                         }
                                                     ]
                                                 },
@@ -1366,7 +1366,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -1378,7 +1378,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE32') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE32') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -1422,7 +1422,7 @@
                                                     "transform": "copy",
                                                     "parameter": [
                                                         {
-                                                            "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/Extension/fatherVitalStatus"
+                                                            "valueString": "https://smart.who.int/ccc/Extension/fatherVitalStatus"
                                                         }
                                                     ]
                                                 },
@@ -1490,7 +1490,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "itm1",
-                                    "condition": "linkId = 'EmCare.A.DE21.1'"
+                                    "condition": "linkId = 'Ccc.A.DE21.1'"
                                 }
                             ],
                             "rule": [
@@ -1502,7 +1502,7 @@
                                             "element": "item",
                                             "listMode": "first",
                                             "variable": "item",
-                                            "condition": "(linkId = 'EmCare.A.DE23') and answer.exists()"
+                                            "condition": "(linkId = 'Ccc.A.DE23') and answer.exists()"
                                         }
                                     ],
                                     "rule": [
@@ -1554,7 +1554,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "itm1",
-                                    "condition": "linkId = 'EmCare.A.DE21.1'"
+                                    "condition": "linkId = 'Ccc.A.DE21.1'"
                                 }
                             ],
                             "rule": [
@@ -1566,7 +1566,7 @@
                                             "element": "item",
                                             "listMode": "first",
                                             "variable": "item",
-                                            "condition": "(linkId = 'EmCare.A.DE21') and answer.exists()"
+                                            "condition": "(linkId = 'Ccc.A.DE21') and answer.exists()"
                                         }
                                     ],
                                     "rule": [
@@ -1618,7 +1618,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "itm1",
-                                    "condition": "linkId = 'EmCare.A.DE21.1'"
+                                    "condition": "linkId = 'Ccc.A.DE21.1'"
                                 }
                             ],
                             "rule": [
@@ -1630,7 +1630,7 @@
                                             "element": "item",
                                             "listMode": "first",
                                             "variable": "item",
-                                            "condition": "(linkId = 'EmCare.A.DE22') and answer.exists()"
+                                            "condition": "(linkId = 'Ccc.A.DE22') and answer.exists()"
                                         }
                                     ],
                                     "rule": [
@@ -1750,7 +1750,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE25'"
+                                            "condition": "value.code = 'Ccc.A.DE25'"
                                         }
                                     ],
                                     "target": [
@@ -1783,7 +1783,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE26'"
+                                            "condition": "value.code = 'Ccc.A.DE26'"
                                         }
                                     ],
                                     "target": [
@@ -1816,7 +1816,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE27'"
+                                            "condition": "value.code = 'Ccc.A.DE27'"
                                         }
                                     ],
                                     "target": [
@@ -1849,7 +1849,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE28'"
+                                            "condition": "value.code = 'Ccc.A.DE28'"
                                         }
                                     ],
                                     "target": [
@@ -1882,7 +1882,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE29'"
+                                            "condition": "value.code = 'Ccc.A.DE29'"
                                         }
                                     ],
                                     "target": [
@@ -1915,7 +1915,7 @@
                                     "source": [
                                         {
                                             "context": "src",
-                                            "condition": "value.code = 'EmCare.A.DE30'"
+                                            "condition": "value.code = 'Ccc.A.DE30'"
                                         }
                                     ],
                                     "target": [
@@ -2017,7 +2017,7 @@
                                             "transform": "copy",
                                             "parameter": [
                                                 {
-                                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/primary-caregiver"
+                                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/primary-caregiver"
                                                 }
                                             ]
                                         },
@@ -2061,7 +2061,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -2073,7 +2073,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE23') or (linkId = 'EmCare.A.DE21') or ((linkId = 'EmCare.A.DE22') and answer.exists())"
+                                    "condition": "(linkId = 'Ccc.A.DE23') or (linkId = 'Ccc.A.DE21') or ((linkId = 'Ccc.A.DE22') and answer.exists())"
                                 }
                             ],
                             "rule": [
@@ -2124,7 +2124,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -2136,7 +2136,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE35') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE35') and answer.exists()"
                                 }
                             ],
                             "rule": [
@@ -2216,7 +2216,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -2291,7 +2291,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "itm1",
-                            "condition": "linkId = 'EmCare.A.DE21.1'"
+                            "condition": "linkId = 'Ccc.A.DE21.1'"
                         }
                     ],
                     "rule": [
@@ -2303,7 +2303,7 @@
                                     "element": "item",
                                     "listMode": "first",
                                     "variable": "item",
-                                    "condition": "(linkId = 'EmCare.A.DE24') and answer.exists()"
+                                    "condition": "(linkId = 'Ccc.A.DE24') and answer.exists()"
                                 }
                             ],
                             "rule": [

@@ -1,13 +1,13 @@
 /*
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare
+@description: This library is part of the project Ccc
 */
-library emcarecombineddataelements version '1.0.1.rc12.build.457'
+library Ccccombineddataelements version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.457' called Base
-include emcareobservation version '1.0.1.rc12.build.457' called obs
-include emcarevalueset version '1.0.1.rc12.build.457' called val
+include Cccbase version '1.0.1.rc12.build.457' called Base
+include Cccobservation version '1.0.1.rc12.build.457' called obs
+include Cccvalueset version '1.0.1.rc12.build.457' called val
 
 
 
@@ -71,26 +71,26 @@ define "age  >= 24 hours":
     "nnb"
 
 /* 
-none : EmCare.B.G.DE01
+none : Ccc.B.G.DE01
     "child"
 */
 define "none":
     "child"
 
-/* alias danger signs : emcare.b.g.de01*/
+/* alias danger signs : Ccc.b.g.de01*/
 define "danger signs":
-    "emcare.b.g.de01"
+    "Ccc.b.g.de01"
 
-/* alias severe classification up to assessments and tests excluding severe dehydration : emcare.b.g.de05*/
+/* alias severe classification up to assessments and tests excluding severe dehydration : Ccc.b.g.de05*/
 define "severe classification up to assessments and tests excluding severe dehydration":
-    "emcare.b.g.de05"
+    "Ccc.b.g.de05"
 
 /* 
 none : DL-G-CL1-23-30
     "Diarrhoea" = true
 */
 define "none":
-    Base.GetObsValue('EmCare.B11S1.DE01') = true
+    Base.GetObsValue('Ccc.B11S1.DE01') = true
 
 /* alias severe dehydration : dl-g-cl1-23-30*/
 define "severe dehydration":
@@ -101,7 +101,7 @@ none : DL-G-CL1-24-32
     "Diarrhoea" = true and  "Severe Dehydration"!=true
 */
 define "none":
-    Base.GetObsValue('EmCare.B11S1.DE01') = true and  Coalesce("severe dehydration",false)!=true
+    Base.GetObsValue('Ccc.B11S1.DE01') = true and  Coalesce("severe dehydration",false)!=true
 
 /* alias some dehydration : dl-g-cl1-24-32*/
 define "some dehydration":
@@ -136,12 +136,12 @@ define "none":
     AgeInMonths()<2
 
 /* 
-none : EmCare.B12S1.DE01
+none : Ccc.B12S1.DE01
     "Measured temperature" = "High" or "Measured temperature" = "Very High" or  "Hot to Touch" = true or  "Fever Reported" = true
 */
 define "none":
-    Base.HasObsValueCode('EmCare.B6.DE01A', 'High') or Base.HasObsValueCode('EmCare.B6.DE01A', '2') or  Base.GetObsValue('EmCare.B6.DE05') = true or  Base.GetObsValue('EmCare.B12S1.DE02') = true
+    Base.HasObsValueCode('Ccc.B6.DE01A', 'High') or Base.HasObsValueCode('Ccc.B6.DE01A', '2') or  Base.GetObsValue('Ccc.B6.DE05') = true or  Base.GetObsValue('Ccc.B12S1.DE02') = true
 
-/* alias fever : emcare.b12s1.de01*/
+/* alias fever : Ccc.b12s1.de01*/
 define "fever":
-    "emcare.b12s1.de01"
+    "Ccc.b12s1.de01"

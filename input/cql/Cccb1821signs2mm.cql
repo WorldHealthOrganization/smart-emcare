@@ -1,15 +1,15 @@
 /*
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare
+@description: This library is part of the project Ccc
 */
-library emcareb1821signs2mm version '1.0.1.rc12.build.457'
+library Cccb1821signs2mm version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.457' called Base
-include emcareobservation version '1.0.1.rc12.build.457' called obs
-include emcarevalueset version '1.0.1.rc12.build.457' called val
-include emcarezscore version '1.0.1.rc12.build.457' called Z
-include emcarecombineddataelements version '1.0.1.rc12.build.457' called c
+include Cccbase version '1.0.1.rc12.build.457' called Base
+include Cccobservation version '1.0.1.rc12.build.457' called obs
+include Cccvalueset version '1.0.1.rc12.build.457' called val
+include Ccczscore version '1.0.1.rc12.build.457' called Z
+include Ccccombineddataelements version '1.0.1.rc12.build.457' called c
 
 
 
@@ -50,48 +50,48 @@ define "none":
     AgeInDays()
 
 /* 
-none : EmCare.B20S1.DE01
+none : Ccc.B20S1.DE01
     o"Diarrhoea"
 */
 define "none":
-    Base.GetObsValue('EmCare.B11S1.DE01')
+    Base.GetObsValue('Ccc.B11S1.DE01')
 
-/* alias diarrhoea : emcare.b20s1.de01*/
+/* alias diarrhoea : Ccc.b20s1.de01*/
 define "diarrhoea":
-    "emcare.b20s1.de01"
+    "Ccc.b20s1.de01"
 
 /* 
-none : EmCare.A.DE31
+none : Ccc.A.DE31
     Base."Biological Mother Vital Status"
 */
 define "none":
     Base."Biological Mother Vital Status"
 
-/* alias biological mother vital status : emcare.a.de31*/
+/* alias biological mother vital status : Ccc.a.de31*/
 define "biological mother vital status":
-    "emcare.a.de31"
+    "Ccc.a.de31"
 
 /* 
-none : EmCare.B21S1.DE01
+none : Ccc.B21S1.DE01
     o"Breastfed"
 */
 define "none":
-    Base.GetObsValue('EmCare.B21S1.DE06')
+    Base.GetObsValue('Ccc.B21S1.DE06')
 
-/* alias breastfed : emcare.b21s1.de01*/
+/* alias breastfed : Ccc.b21s1.de01*/
 define "breastfed":
-    "emcare.b21s1.de01"
+    "Ccc.b21s1.de01"
 
 /* 
-none : EmCare.B18S1.DE02
+none : Ccc.B18S1.DE02
     o"Difficulty with Feeding"
 */
 define "none":
-    Base.GetObsValue('EmCare.B18S1.DE02')
+    Base.GetObsValue('Ccc.B18S1.DE02')
 
-/* alias difficulty with feeding : emcare.b18s1.de02*/
+/* alias difficulty with feeding : Ccc.b18s1.de02*/
 define "difficulty with feeding":
-    "emcare.b18s1.de02"
+    "Ccc.b18s1.de02"
 
 /* 
 none : YI_sever_but_dhey
@@ -116,22 +116,22 @@ define "yi severe classification":
     "yi_sever"
 
 /* 
-none : EmCare.B7.DE03
+none : Ccc.B7.DE03
     o"Convulsion(s) in this Illness"
 */
 define "none":
-    Base.GetObsValue('EmCare.B7.DE03')
+    Base.GetObsValue('Ccc.B7.DE03')
 
-/* alias convulsion(s) in this illness : emcare.b7.de03*/
+/* alias convulsion(s) in this illness : Ccc.b7.de03*/
 define "convulsion(s) in this illness":
-    "emcare.b7.de03"
+    "Ccc.b7.de03"
 
 /* 
 none : Respiratory Rate profile
     o"Respiratory Rate (breaths per minute)"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE01')
+    Base.GetObsValue('Ccc.B22.DE01')
 
 /* 
 none : force-collection
@@ -145,11 +145,11 @@ none : Respiratory Rate Second Count Profile
     o"Respiratory Rate Second Count (breaths per minute)"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE04')
+    Base.GetObsValue('Ccc.B22.DE04')
 
 /* 
 none : Fast Breathing profile
     o"Fast Breathing"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE07')
+    Base.GetObsValue('Ccc.B22.DE07')

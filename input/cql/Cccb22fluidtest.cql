@@ -1,14 +1,14 @@
 /*
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare
+@description: This library is part of the project Ccc
 */
-library emcareb22fluidtest version '1.0.1.rc12.build.457'
+library Cccb22fluidtest version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.457' called Base
-include emcareobservation version '1.0.1.rc12.build.457' called obs
-include emcarevalueset version '1.0.1.rc12.build.457' called val
-include emcarecombineddataelements version '1.0.1.rc12.build.457' called c
+include Cccbase version '1.0.1.rc12.build.457' called Base
+include Cccobservation version '1.0.1.rc12.build.457' called obs
+include Cccvalueset version '1.0.1.rc12.build.457' called val
+include Ccccombineddataelements version '1.0.1.rc12.build.457' called c
 
 
 
@@ -21,7 +21,7 @@ none : oftrp
     o"Unable to Perform Oral Fluid Test"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE14')
+    Base.GetObsValue('Ccc.B22.DE14')
 
 /* alias unable to perform oral fluid test profile : oftrp*/
 define "unable to perform oral fluid test profile":
@@ -39,23 +39,23 @@ define "danger signs":
     "ds"
 
 /* 
-none : EmCare.B7.DE09
+none : Ccc.B7.DE09
     Coalesce(o"Not able to drink or breastfeed",false)
 */
 define "none":
-    Coalesce(Base.GetObsValue('EmCare.B7.DE09'),false)
+    Coalesce(Base.GetObsValue('Ccc.B7.DE09'),false)
 
-/* alias not able to drink or breastfeed : emcare.b7.de09*/
+/* alias not able to drink or breastfeed : Ccc.b7.de09*/
 define "not able to drink or breastfeed":
-    "emcare.b7.de09"
+    "Ccc.b7.de09"
 
 /* 
-none : EmCare.B7.DE10
+none : Ccc.B7.DE10
     Coalesce(o"Vomiting Everything",false)
 */
 define "none":
-    Coalesce(Base.GetObsValue('EmCare.B7.DE10'),false)
+    Coalesce(Base.GetObsValue('Ccc.B7.DE10'),false)
 
-/* alias vomiting everything : emcare.b7.de10*/
+/* alias vomiting everything : Ccc.b7.de10*/
 define "vomiting everything":
-    "emcare.b7.de10"
+    "Ccc.b7.de10"

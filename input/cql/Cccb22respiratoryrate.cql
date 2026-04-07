@@ -1,13 +1,13 @@
 /*
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare
+@description: This library is part of the project Ccc
 */
-library emcareb22respiratoryrate version '1.0.1.rc12.build.457'
+library Cccb22respiratoryrate version '1.0.1.rc12.build.457'
 using FHIR version '4.0.1'
 include FHIRHelpers version '4.0.1' called FHIRHelpers 
-include emcarebase version '1.0.1.rc12.build.457' called Base
-include emcareobservation version '1.0.1.rc12.build.457' called obs
-include emcarevalueset version '1.0.1.rc12.build.457' called val
+include Cccbase version '1.0.1.rc12.build.457' called Base
+include Cccobservation version '1.0.1.rc12.build.457' called obs
+include Cccvalueset version '1.0.1.rc12.build.457' called val
 
 
 
@@ -31,7 +31,7 @@ none : Respiratory Rate profile
     o"Respiratory Rate (breaths per minute)"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE01')
+    Base.GetObsValue('Ccc.B22.DE01')
 
 /* 
 none : force-collection
@@ -45,11 +45,11 @@ none : Respiratory Rate Second Count Profile
     o"Respiratory Rate Second Count (breaths per minute)"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE04')
+    Base.GetObsValue('Ccc.B22.DE04')
 
 /* 
 none : Fast Breathing profile
     o"Fast Breathing"
 */
 define "none":
-    Base.GetObsValue('EmCare.B22.DE07')
+    Base.GetObsValue('Ccc.B22.DE07')

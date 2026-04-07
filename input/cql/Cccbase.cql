@@ -1,9 +1,9 @@
 /*nter"
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
+@description: This library is part of the project Ccc Project, its allows standardisation for the observation processing
 */
 
-library emcarebase version '1.0.1.rc12.build.156'
+library Cccbase version '1.0.1.rc12.build.156'
 
 using FHIR version '4.0.1'
 
@@ -11,7 +11,7 @@ include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
 //parameter "Encounter" Encounter$
-codesystem "RoleCodeSystem" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+codesystem "RoleCodeSystem" : 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes'
 code "Mother": 'MTH' from "RoleCodeSystem"
 
 context Patient
@@ -45,16 +45,16 @@ define getEncounters:
 define getEncounter:
     singleton from getEncounters
 
-define function EmCareExtensions(element Patient, id String):
+define function CccExtensions(element Patient, id String):
   element.extension E
-      where E.url = ('https://fhir.dk.swisstph-mis.ch/matchbox/fhir//StructureDefinition/' + id)
+      where E.url = ('https://smart.who.int/ccc/StructureDefinition/' + id)
       return E
 
-define function EmCareExtension(element Patient, id String):
-  singleton from EmCareExtensions(element, id)
+define function CccExtension(element Patient, id String):
+  singleton from CccExtensions(element, id)
 
 define getPrimaryCareGiverReference:
-  EmCareExtension(Patient, 'primarycaregiver').value
+  CccExtension(Patient, 'primarycaregiver').value
 
 define getPrimaryCareGiver:
   [RelatedPerson] RP where RP.id = Last(Split(getPrimaryCareGiverReference.reference, '/'))
@@ -64,10 +64,10 @@ define isMotherPrimaryCareGiver:
   getPrimaryCareGiver is not null and Exists(getPrimaryCareGiver.relationship r where r ~ "Mother")
 
 define "Biological Mother Vital Status":
-  EmCareExtension(Patient, 'motherVitalStatus').value
+  CccExtension(Patient, 'motherVitalStatus').value
   
 define "Biological Father Vital Status":
-  EmCareExtension(Patient, 'fatherVitalStatus').value
+  CccExtension(Patient, 'fatherVitalStatus').value
 // person accompanying the child is a participant with a null type
 define getRelatedPersonReferenceAccompanyingTheChild:
   Coalesce(First(getEncounter.participant P where not exists(P.type) ).individual, getPrimaryCareGiverReference)
@@ -90,7 +90,7 @@ define "Person accompanying child today's Relationship to Client":
 define function getValue(O Observation):
   case  
       when  O is null then null
-      when O.value is CodeableConcept then Coalesce(First(O.value.coding C where C.system  = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'), First(O.value.coding))
+      when O.value is CodeableConcept then Coalesce(First(O.value.coding C where C.system  = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes'), First(O.value.coding))
       else O.value
   end
 
@@ -133,7 +133,7 @@ define function HasObservationCodeDuringEncounterDone(id System.Code, valueCode 
         and O.value is FHIR.CodeableConcept
         and O.value ~ valueCode)
 
-//Exists([Observation] O where O.status in { 'final', 'amended', 'corrected'} and O.value is FHIR.CodeableConcept   and Exists( O.value.coding C where C is FHIR.Coding and C.code = FHIR.code {value: 'EmCare.B20S2.DE04'}) )"
+//Exists([Observation] O where O.status in { 'final', 'amended', 'corrected'} and O.value is FHIR.CodeableConcept   and Exists( O.value.coding C where C is FHIR.Coding and C.code = FHIR.code {value: 'Ccc.B20S2.DE04'}) )"
 
 /*
 define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
@@ -176,16 +176,16 @@ define function GetObsValue(id System.String, codesystem System.String):
     getValue(GetObservationDuringEncounter(coding(id, codesystem)))
 
 define function GetObsValue(id System.String):
-    getValue(GetObservationDuringEncounter(coding(id, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes')))
+    getValue(GetObservationDuringEncounter(coding(id, 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes')))
 
 define function HasObsValueCode(id System.String, value System.Code):
-   HasObservationCodeDuringEncounterDone(coding(id, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') , value )
+   HasObservationCodeDuringEncounterDone(coding(id, 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes') , value )
   
 define function HasObsValueCode(id System.String, value System.String):
-   HasObservationCodeDuringEncounterDone(coding(id, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') , coding(value, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') )
+   HasObservationCodeDuringEncounterDone(coding(id, 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes') , coding(value, 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes') )
 
 define function HasObsValueCode(id System.Code, value System.String):
-   HasObservationCodeDuringEncounterDone(id , coding(value, 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes') )
+   HasObservationCodeDuringEncounterDone(id , coding(value, 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes') )
 
 // ************************   HasObs ************************/
 /*
@@ -278,7 +278,7 @@ define function coding(s FHIR.code, url System.String):
 define function coding(s System.String):
   System.Code {
                 code:  s ,
-                system:  'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+                system:  'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes'
             }
 
 

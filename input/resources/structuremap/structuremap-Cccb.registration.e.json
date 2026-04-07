@@ -3,9 +3,9 @@
     "id": "Cccb.registration.e",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/Cccb.registration.e&quot; = &quot;Cccb.registration.e&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter&quot; alias 'Encounter' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccencounter&quot; alias 'EmCare Encounter' as produced\r\nuses &quot;https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation&quot; alias 'EmCare Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.encounter as encounter then {\r\n      encounter.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Encounter/', idval) &quot;f7ed42d5&quot;;\r\n    } &quot;49f4ed45&quot;;\r\n    src -&gt; entry.resource = create('Encounter') as tgt then {\r\n      src -&gt; tgt then Cccencounter(src, tgt) &quot;fd415ba8&quot;;\r\n      src.subject as sub -&gt; tgt.subject = sub &quot;23252e10&quot;;\r\n    } &quot;8f0160c6&quot;;\r\n  } &quot;put-Cccencounter&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B3.DE05') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb3de05(src, tgt) &quot;918130f9&quot;;\r\n      } &quot;172606cb&quot;;\r\n    } &quot;a322e7db&quot;;\r\n  } &quot;1af195c5&quot;;\r\n}\r\n\r\ngroup Cccencounter(source src : questionnaireResponse, target tgt : Encounter) {\r\n  src.item first as item where (linkId = 'EmCare.B3.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.reasonCode = create('CodeableConcept') as CC,  CC.text = 'new consultation',  CC.coding = val &quot;aCccb3de01&quot;;\r\n    } &quot;aCccb3de01&quot;;\r\n  } &quot;5ea28a7f&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B3.DE06') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.type = create('CodeableConcept') as CC,  CC.text = 'new consultation',  CC.coding = val &quot;aCccb3de06&quot;;\r\n    } &quot;aCccb3de06&quot;;\r\n  } &quot;58ee7f8b&quot;;\r\n}\r\n\r\ngroup CccobservationCccb3de05(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb3de05&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes',  coding.code = 'EmCare.B3.DE05' &quot;code-Cccb3de05&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'EmCare.B3.DE05') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb3de05&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb3de05&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;5cf8dcb4&quot;;\r\n}\r\n\r\n</pre></div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>map &quot;https://smart.who.int/ccc/StructureMap/Cccb.registration.e&quot; = &quot;Cccb.registration.e&quot;\r\n\r\n\r\nuses &quot;http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse&quot; alias 'questionnaireResponse' as source\r\nuses &quot;http://hl7.org/fhir/StructureDefinition/Bundle&quot; alias 'Bundle' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/encounter&quot; alias 'Encounter' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/observation&quot; alias 'Observation' as target\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/Cccencounter&quot; alias 'Ccc Encounter' as produced\r\nuses &quot;https://smart.who.int/ccc/StructureDefinition/Cccobservation&quot; alias 'Ccc Observation' as produced\r\n\r\ngroup bundletrans(source src : questionnaireResponse, target bundle : Bundle) {\r\n  src -&gt; bundle.id = uuid() &quot;id&quot;;\r\n  src -&gt; bundle.type = 'batch' &quot;type&quot;;\r\n  src -&gt; bundle.entry as entry then {\r\n    src.encounter as encounter then {\r\n      encounter.id as idval -&gt;  entry.request as request,  request.method = 'PUT',  request.url = append('/Encounter/', idval) &quot;f7ed42d5&quot;;\r\n    } &quot;49f4ed45&quot;;\r\n    src -&gt; entry.resource = create('Encounter') as tgt then {\r\n      src -&gt; tgt then Cccencounter(src, tgt) &quot;fd415ba8&quot;;\r\n      src.subject as sub -&gt; tgt.subject = sub &quot;23252e10&quot;;\r\n    } &quot;8f0160c6&quot;;\r\n  } &quot;put-Cccencounter&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B3.DE05') and answer.exists() then {\r\n    src -&gt; bundle.entry as entry then {\r\n      src -&gt;  entry.request as request,  request.method = 'POST',  uuid() as uuid,  request.url = append('/Observation/', uuid) &quot;b50ac4c5&quot;;\r\n      src -&gt; entry.resource = create('Observation') as tgt then {\r\n        src -&gt; tgt then CccobservationCccb3de05(src, tgt) &quot;918130f9&quot;;\r\n      } &quot;172606cb&quot;;\r\n    } &quot;a322e7db&quot;;\r\n  } &quot;1af195c5&quot;;\r\n}\r\n\r\ngroup Cccencounter(source src : questionnaireResponse, target tgt : Encounter) {\r\n  src.item first as item where (linkId = 'Ccc.B3.DE01') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.reasonCode = create('CodeableConcept') as CC,  CC.text = 'new consultation',  CC.coding = val &quot;aCccb3de01&quot;;\r\n    } &quot;aCccb3de01&quot;;\r\n  } &quot;5ea28a7f&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B3.DE06') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a.value as val -&gt;  tgt.type = create('CodeableConcept') as CC,  CC.text = 'new consultation',  CC.coding = val &quot;aCccb3de06&quot;;\r\n    } &quot;aCccb3de06&quot;;\r\n  } &quot;58ee7f8b&quot;;\r\n}\r\n\r\ngroup CccobservationCccb3de05(source src, target tgt) {\r\n  src -&gt;  tgt.identifier = create('Identifier') as CodeID,  CodeID.system = 'http://hl7.org/fhir/namingsystem-identifier-type',  CodeID.use = 'official',  CodeID.value = 'uuid',  CodeID.id = uuid() &quot;id-Cccb3de05&quot;;\r\n  src.encounter as encounter -&gt; tgt.encounter = encounter &quot;35bc6b82&quot;;\r\n  src.subject as subject -&gt;  tgt.subject = subject,  tgt.meta = create('Meta') as newMeta,  newMeta.profile = 'https://smart.who.int/ccc/StructureDefinition/Cccobservation',  tgt.code = create('CodeableConcept') as concept,  concept.coding = create('Coding') as coding,  coding.system = 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes',  coding.code = 'Ccc.B3.DE05' &quot;code-Cccb3de05&quot;;\r\n  src.item as itemtimestamp where linkId = 'timestamp' then {\r\n    itemtimestamp.answer first as atimestamp then {\r\n      atimestamp.value as val -&gt; tgt.issued = val &quot;5af77f2c&quot;;\r\n    } &quot;7f22f29f&quot;;\r\n  } &quot;aae7a11d&quot;;\r\n  src.subject as subject -&gt; tgt.subject = subject &quot;patient&quot;;\r\n  src.item first as item where (linkId = 'Ccc.B3.DE05') and answer.exists() then {\r\n    item.answer first as a then {\r\n      a where a.value = true -&gt;  tgt.status = 'final',  tgt.value = true &quot;final-Cccb3de05&quot;;\r\n      a where a.value = false -&gt;  tgt.status = 'cancelled',  tgt.value = false &quot;notfound-Cccb3de05&quot;;\r\n    } &quot;bdab9370&quot;;\r\n  } &quot;5cf8dcb4&quot;;\r\n}\r\n\r\n</pre></div>"
     },
-    "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureMap/Cccb.registration.e",
+    "url": "https://smart.who.int/ccc/StructureMap/Cccb.registration.e",
     "name": "Cccb.registration.e",
     "status": "active",
     "structure": [
@@ -20,24 +20,24 @@
             "alias": "'Bundle'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/encounter",
+            "url": "https://smart.who.int/ccc/StructureDefinition/encounter",
             "mode": "target",
             "alias": "'Encounter'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/observation",
+            "url": "https://smart.who.int/ccc/StructureDefinition/observation",
             "mode": "target",
             "alias": "'Observation'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccencounter",
+            "url": "https://smart.who.int/ccc/StructureDefinition/Cccencounter",
             "mode": "produced",
-            "alias": "'EmCare Encounter'"
+            "alias": "'Ccc Encounter'"
         },
         {
-            "url": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation",
+            "url": "https://smart.who.int/ccc/StructureDefinition/Cccobservation",
             "mode": "produced",
-            "alias": "'EmCare Observation'"
+            "alias": "'Ccc Observation'"
         }
     ],
     "group": [
@@ -250,7 +250,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B3.DE05') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B3.DE05') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -398,7 +398,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B3.DE01') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B3.DE01') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -471,7 +471,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B3.DE06') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B3.DE06') and answer.exists()"
                         }
                     ],
                     "rule": [
@@ -676,7 +676,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/StructureDefinition/Cccobservation"
+                                    "valueString": "https://smart.who.int/ccc/StructureDefinition/Cccobservation"
                                 }
                             ]
                         },
@@ -711,7 +711,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/Ccc-custom-codes"
+                                    "valueString": "https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes"
                                 }
                             ]
                         },
@@ -722,7 +722,7 @@
                             "transform": "copy",
                             "parameter": [
                                 {
-                                    "valueString": "EmCare.B3.DE05"
+                                    "valueString": "Ccc.B3.DE05"
                                 }
                             ]
                         }
@@ -808,7 +808,7 @@
                             "element": "item",
                             "listMode": "first",
                             "variable": "item",
-                            "condition": "(linkId = 'EmCare.B3.DE05') and answer.exists()"
+                            "condition": "(linkId = 'Ccc.B3.DE05') and answer.exists()"
                         }
                     ],
                     "rule": [

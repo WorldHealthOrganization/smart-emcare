@@ -1,9 +1,9 @@
 /*nter"
 @author: Patrick Delcroix
-@description: This library is part of the project EmCare Project, its allows standardisation for the observation processing
+@description: This library is part of the project Ccc Project, its allows standardisation for the observation processing
 */
 
-library emcarebase version '{{LIB_VERSION}}'
+library Cccbase version '{{LIB_VERSION}}'
 
 using FHIR version '{{FHIR_VERSION}}'
 
@@ -11,7 +11,7 @@ include FHIRHelpers version '4.0.1'
 
 parameter "encounterid" String
 //parameter "Encounter" Encounter$
-codesystem "RoleCodeSystem" : 'https://fhir.dk.swisstph-mis.ch/matchbox/fhir/CodeSystem/emcare-custom-codes'
+codesystem "RoleCodeSystem" : 'https://smart.who.int/ccc/CodeSystem/Ccc-custom-codes'
 code "Mother": 'MTH' from "RoleCodeSystem"
 
 context Patient
@@ -45,24 +45,24 @@ define getEncounters:
 define getEncounter:
     singleton from getEncounters
 
-define function EmCareExtensions(element Patient, id String):
+define function CccExtensions(element Patient, id String):
   element.extension E
       where E.url = ('{{canonical_base}}StructureDefinition/' + id)
       return E
 
-define function EmCareExtension(element Patient, id String):
-  singleton from EmCareExtensions(element, id)
+define function CccExtension(element Patient, id String):
+  singleton from CccExtensions(element, id)
 
-define function EmCareExtensions(element Encounter, id String):
+define function CccExtensions(element Encounter, id String):
   element.extension E
       where E.url = ('{{canonical_base}}StructureDefinition/' + id)
       return E
 
-define function EmCareExtension(element Encounter, id String):
-  singleton from EmCareExtensions(element, id)
+define function CccExtension(element Encounter, id String):
+  singleton from CccExtensions(element, id)
 
 define getPrimaryCareGiverReference:
-  EmCareExtension(Patient, 'primarycaregiver').value
+  CccExtension(Patient, 'primarycaregiver').value
 
 define getPrimaryCareGiver:
   [RelatedPerson] RP where RP.id = Last(Split(getPrimaryCareGiverReference.reference, '/'))
@@ -72,10 +72,10 @@ define isMotherPrimaryCareGiver:
   getPrimaryCareGiver is not null and Exists(getPrimaryCareGiver.relationship r where r ~ "Mother")
 
 define "Biological Mother Vital Status":
-  EmCareExtension(Patient, 'motherVitalStatus').value
+  CccExtension(Patient, 'motherVitalStatus').value
   
 define "Biological Father Vital Status":
-  EmCareExtension(Patient, 'fatherVitalStatus').value
+  CccExtension(Patient, 'fatherVitalStatus').value
 // person accompanying the child is a participant with a null type
 define getRelatedPersonReferenceAccompanyingTheChild:
   Coalesce(First(getEncounter.participant P where not exists(P.type) ).individual, getPrimaryCareGiverReference)
@@ -91,7 +91,7 @@ define getRelatedPersonAccompanyingTheChild:
 
 define "Person accompanying child today's Relationship to Client":
 //WORKARROUND   getRelatedPersonAccompanyingTheChild.relationship
-  EmCareExtension(getEncounter, 'motherpresent').value
+  CccExtension(getEncounter, 'motherpresent').value
 
 
 
@@ -151,7 +151,7 @@ define function HasObservationCodeDuringEncounterDone(id System.Code, valueCode 
         and O.value is FHIR.CodeableConcept
         and O.value ~ valueCode)
 
-//Exists([Observation] O where O.status in { 'final', 'amended', 'corrected'} and O.value is FHIR.CodeableConcept   and Exists( O.value.coding C where C is FHIR.Coding and C.code = FHIR.code {value: 'EmCare.B20S2.DE04'}) )"
+//Exists([Observation] O where O.status in { 'final', 'amended', 'corrected'} and O.value is FHIR.CodeableConcept   and Exists( O.value.coding C where C is FHIR.Coding and C.code = FHIR.code {value: 'Ccc.B20S2.DE04'}) )"
 
 /*
 define function GetObservationDuringEncounterNotFound(idlist List<System.Code>):
